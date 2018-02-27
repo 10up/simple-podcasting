@@ -1,10 +1,11 @@
 <?php
+namespace podcasting;
 
 /**
  * Add a custom podcasts taxonomy.
  */
-function ninetofive_podcasting_create_podcasts_taxonomy() {
-	register_taxonomy( NineToFive_Podcasting::$taxonomy, 'post', array(
+function podcasting_create_podcasts_taxonomy() {
+	register_taxonomy( Podcasting_Podcasting::$taxonomy, 'post', array(
 		'labels'        => array(
 			'name'              => 'Podcasts',
 			'singular_name'     => 'Podcast',
@@ -26,30 +27,30 @@ function ninetofive_podcasting_create_podcasts_taxonomy() {
 		'rewrite'           => array( 'slug' => 'podcasts' ),
 	) );
 }
-add_action( 'init', 'ninetofive_podcasting_create_podcasts_taxonomy' );
+add_action( 'init', __NAMESPACE__ . '\podcasting_create_podcasts_taxonomy' );
 
 /**
  * Filter the menu so podcasts are parent-less.
  */
 
-function ninetofive_podcasting_filter_parent_file( $file ) {
+function podcasting_filter_parent_file( $file ) {
 	$screen = get_current_screen();
 
 	if (
 		( 'edit-tags' === $screen->base || 'term' === $screen->base ) &&
-		'ninetofive_podcasts' === $screen->taxonomy
+		'podcasting_podcasts' === $screen->taxonomy
 	) {
-		return 'edit-tags.php?taxonomy=ninetofive_podcasts&amp;podcasts=true';
+		return 'edit-tags.php?taxonomy=podcasting_podcasts&amp;podcasts=true';
 	}
 	return $file;
 }
-add_filter( 'parent_file', 'ninetofive_podcasting_filter_parent_file' );
+add_filter( 'parent_file', __NAMESPACE__ . '\podcasting_filter_parent_file' );
 
 /**
  * Set up term meta for podcasts.
  */
-function ninetofive_podcasting_register_term_meta() {
-	$podcasting_meta_fields = ninetofive_podcasting_get_meta_fields();
+function podcasting_register_term_meta() {
+	$podcasting_meta_fields = podcasting_get_meta_fields();
 
 	foreach( $podcasting_meta_fields as $field ) {
 		register_meta( 'term', $field['slug'], array(
@@ -61,30 +62,30 @@ function ninetofive_podcasting_register_term_meta() {
 		) );
 	}
 }
-add_action( 'init', 'ninetofive_podcasting_register_term_meta' );
+add_action( 'init', __NAMESPACE__ . '\podcasting_register_term_meta' );
 
 /**
  * Add "Podcasts" as its own top level menu item.
  */
-function ninetofive_podcasting_add_top_level_menu() {
-	remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=ninetofive_podcasts' );
+function podcasting_add_top_level_menu() {
+	remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=podcasting_podcasts' );
 	add_menu_page(
 		'Podcasts',
 		'Podcasts',
 		'manage_options',
-		'edit-tags.php?taxonomy=ninetofive_podcasts&amp;podcasts=true',
+		'edit-tags.php?taxonomy=podcasting_podcasts&amp;podcasts=true',
 		null,
 		'dashicons-microphone',
 		13
 	);
 }
-add_action( 'admin_menu', 'ninetofive_podcasting_add_top_level_menu' );
+add_action( 'admin_menu', __NAMESPACE__ . '\podcasting_add_top_level_menu' );
 
 /**
  * Add podcasting fields to the term screen.
  */
-function ninetofive_podcasting_add_podcasting_term_meta_fields() {
-	$podcasting_meta_fields = ninetofive_podcasting_get_meta_fields();
+function podcasting_add_podcasting_term_meta_fields() {
+	$podcasting_meta_fields = podcasting_get_meta_fields();
 
 	foreach( $podcasting_meta_fields as $field ) {
 		switch ( $field['type'] ) {
@@ -92,20 +93,20 @@ function ninetofive_podcasting_add_podcasting_term_meta_fields() {
 				$fm = new Fieldmanager_TextField( array(
 					'name' => $field['slug'],
 				) );
-				$fm->add_term_meta_box( $field['title'], NineToFive_Podcasting::$taxonomy );
+				$fm->add_term_meta_box( $field['title'], Podcasting_Podcasting::$taxonomy );
 				break;
 			case 'textarea':
 				$fm = new Fieldmanager_TextArea( array(
 					'name' => $field['slug'],
 				) );
-				$fm->add_term_meta_box( $field['title'], NineToFive_Podcasting::$taxonomy );
+				$fm->add_term_meta_box( $field['title'], Podcasting_Podcasting::$taxonomy );
 				break;
 			case 'select':
 				$fm = new Fieldmanager_Select( array(
 					'name'    => $field['slug'],
 					'options' => $field['options'],
 				) );
-				$fm->add_term_meta_box( $field['title'], NineToFive_Podcasting::$taxonomy );
+				$fm->add_term_meta_box( $field['title'], Podcasting_Podcasting::$taxonomy );
 				break;
 			case 'image':
 				$fm = new Fieldmanager_Media( array(
@@ -116,31 +117,31 @@ function ninetofive_podcasting_add_podcasting_term_meta_fields() {
 					'preview_size' => 'thumbnail',
 					'description'  => $field['description'],
 				) );
-				$fm->add_term_meta_box( $field['title'], NineToFive_Podcasting::$taxonomy );
+				$fm->add_term_meta_box( $field['title'], Podcasting_Podcasting::$taxonomy );
 				break;
 		}
 
 	}
 }
-add_action( 'fm_term_' . NineToFive_Podcasting::$taxonomy, 'ninetofive_podcasting_add_podcasting_term_meta_fields' );
+add_action( 'fm_term_' . Podcasting_Podcasting::$taxonomy, __NAMESPACE__ . '\podcasting_add_podcasting_term_meta_fields' );
 
 /**
  * Add podcasting nonce to the term screen.
  */
-function ninetofive_podcasting_add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
+function podcasting_add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	echo '<style>
 	.term-description-wrap{
 		display: none;
 	} </style>';
 	if ( $taxonomy ) {
-		$url = get_term_feed_link( $term->term_id, NineToFive_Podcasting::$taxonomy );
+		$url = get_term_feed_link( $term->term_id, Podcasting_Podcasting::$taxonomy );
 		echo '<strong>Your Podcast Feed: </strong> <a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		echo 'This is the URL you submit to iTunes or podcasting service.';
 	}
 
 }
-add_action( NineToFive_Podcasting::$taxonomy . '_add_form_fields', 'ninetofive_podcasting_add_podcasting_term_meta_nonce' );
-add_action( NineToFive_Podcasting::$taxonomy . '_edit_form_fields', 'ninetofive_podcasting_add_podcasting_term_meta_nonce', 99, 2 );
+add_action( Podcasting_Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\podcasting_add_podcasting_term_meta_nonce' );
+add_action( Podcasting_Podcasting::$taxonomy . '_edit_form_fields', __NAMESPACE__ . '\podcasting_add_podcasting_term_meta_nonce', 99, 2 );
 /**
  * Add a feed link to the podcasting term table.
  *
@@ -149,32 +150,32 @@ add_action( NineToFive_Podcasting::$taxonomy . '_edit_form_fields', 'ninetofive_
  * @param int    $term_id     Term ID.
  *
  */
-function ninetofive_podcasting_add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
+function podcasting_add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
 
 	if ( 'feedurl' === $column_name ) {
-		$url = get_term_feed_link( $term_id, NineToFive_Podcasting::$taxonomy );
+		$url = get_term_feed_link( $term_id, Podcasting_Podcasting::$taxonomy );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a>';
 	}
 	return $string;
 }
-add_filter( 'manage_' . NineToFive_Podcasting::$taxonomy . '_custom_column', 'ninetofive_podcasting_add_podcasting_term_feed_link_column',10,3);
+add_filter( 'manage_' . Podcasting_Podcasting::$taxonomy . '_custom_column', __NAMESPACE__ . '\podcasting_add_podcasting_term_feed_link_column',10,3);
 
 /**
  * Add a custom column for the podcast feed link.
  * @param Array $columns An array of columns
  */
-function ninetofive_podcasting_add_custom_term_columns( $columns ){
+function podcasting_add_custom_term_columns( $columns ){
 	$columns['feedurl'] = 'Feed URL';
 	unset( $columns['description'] );
 	unset( $columns['author'] );
 	return $columns;
 }
-add_filter( 'manage_edit-' . NineToFive_Podcasting::$taxonomy . '_columns', 'ninetofive_podcasting_add_custom_term_columns', 99 );
+add_filter( 'manage_edit-' . Podcasting_Podcasting::$taxonomy . '_columns', __NAMESPACE__ . '\podcasting_add_custom_term_columns', 99 );
 
 /**
  * Get the meta fields used for podcasts.
  */
-function ninetofive_podcasting_get_meta_fields() {
+function podcasting_get_meta_fields() {
 	return array(
 		array(
 			'slug'  => 'podcasting_subtitle',
@@ -221,19 +222,19 @@ function ninetofive_podcasting_get_meta_fields() {
 			'slug'    => 'podcasting_category_1',
 			'title'   => 'Podcast category 1',
 			'type'    => 'select',
-			'options' => ninetofive_podcasting_get_podcasting_categories(),
+			'options' => podcasting_get_podcasting_categories(),
 		),
 		array(
 			'slug'    => 'podcasting_category_2',
 			'title'   => 'Podcast category 2',
 			'type'    => 'select',
-			'options' => ninetofive_podcasting_get_podcasting_categories(),
+			'options' => podcasting_get_podcasting_categories(),
 		),
 		array(
 			'slug'    => 'podcasting_category_3',
 			'title'   => 'Podcast category 3',
 			'type'    => 'select',
-			'options' => ninetofive_podcasting_get_podcasting_categories(),
+			'options' => podcasting_get_podcasting_categories(),
 		),
 	);
 }
@@ -241,7 +242,7 @@ function ninetofive_podcasting_get_meta_fields() {
 /**
  * Get the podcasting categories.
  */
-function ninetofive_podcasting_get_podcasting_categories() {
+function podcasting_get_podcasting_categories() {
 	$to_return = array( 'None' );
 	$categories = array(
 		"Arts" => array(

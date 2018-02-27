@@ -1,12 +1,13 @@
 <?php
+namespace podcasting;
 
-function ninetofive_podcasting_add_meta_box() {
-	add_meta_box( 'podcasting', __( 'Podcasting' ), 'ninetofive_podcasting_meta_box_html', 'post', 'advanced' );
+function podcasting_add_meta_box() {
+	add_meta_box( 'podcasting', __( 'Podcasting' ), 'podcasting_meta_box_html', 'post', 'advanced' );
 }
 
-add_action( 'add_meta_boxes', 'ninetofive_podcasting_add_meta_box' );
+add_action( 'add_meta_boxes', __NAMESPACE__ . '\podcasting_add_meta_box' );
 
-function ninetofive_podcasting_meta_box_html( $post ) {
+function podcasting_meta_box_html( $post ) {
 	$options = wp_parse_args(
 						get_post_meta( $post->ID, 'podcast_episode', true ),
 						array(
@@ -51,7 +52,7 @@ function ninetofive_podcasting_meta_box_html( $post ) {
 	<?php
 }
 
-function ninetofive_podcasting_save_meta_box( $post_id ) {
+function podcasting_save_meta_box( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
@@ -141,9 +142,9 @@ function ninetofive_podcasting_save_meta_box( $post_id ) {
 	update_post_meta( $post_id, 'podcast_episode', $podcast_options );
 }
 
-add_action( 'save_post', 'ninetofive_podcasting_save_meta_box' );
+add_action( 'save_post', __NAMESPACE__ . '\podcasting_save_meta_box' );
 
-function ninetofive_podcasting_edit_post_enqueues( $hook_suffix ) {
+function podcasting_edit_post_enqueues( $hook_suffix ) {
 	$screens = array(
 		'post.php',
 		'post-new.php'
@@ -163,12 +164,12 @@ function ninetofive_podcasting_edit_post_enqueues( $hook_suffix ) {
 
 	wp_localize_script( 'podcasting_edit_post_screen', 'Podcasting', array(
 		'postID'     => get_the_ID(),
-		'modalUrl'   => ninetofive_podcasting_get_media_modal_url(),
+		'modalUrl'   => podcasting_get_media_modal_url(),
 	) );
 }
-add_action( 'admin_enqueue_scripts', 'ninetofive_podcasting_edit_post_enqueues' );
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_post_enqueues' );
 
-function ninetofive_podcasting_get_media_modal_url() {
+function podcasting_get_media_modal_url() {
 	$post_id = get_the_ID();
 
 	$url = 'media-upload.php';

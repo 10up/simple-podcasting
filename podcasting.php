@@ -12,23 +12,20 @@ namespace podcasting;
 /**
  * Podcasting for WordPress.
  *
- * Code from WordPress.com Podcasting feature, see https://wordpressvip.zendesk.com/hc/requests/72370.
- *
  */
-
 $NineToFive_Podcasting_init = new NineToFive_Podcasting();
 
 
 class NineToFive_Podcasting {
 
 	// Taxonomy to use.
-	static $taxonomy = 'ninetofive_podcasts';
+	static $taxonomy = 'podcasting_podcasts';
 
 	function __construct() {
 
 		require_once plugin_dir_path( __FILE__ ) . 'podcasting/datatypes.php';
 
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'ninetofive_podcasting_edit_term_enqueues' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_podcasting_edit_term_enqueues' ) );
 
 		if ( self::podcasting_is_enabled() ) {
 
@@ -47,7 +44,7 @@ class NineToFive_Podcasting {
 	 *
 	 * @param  string $hook_suffix The $hook_suffix for the current admin page.
 	 */
-	public static function ninetofive_podcasting_edit_term_enqueues( $hook_suffix ) {
+	public static function podcasting_podcasting_edit_term_enqueues( $hook_suffix ) {
 		$screens = array(
 			'edit-tags.php',
 			'term.php'

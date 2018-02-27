@@ -1,14 +1,16 @@
 <?php
+namespace podcasting;
+
 /**
  * Register the widget for use in Appearance -> Widgets
  */
-add_action( 'widgets_init', 'ninetofive_podcasting_widget_init' );
+add_action( 'widgets_init', __NAMESPACE__ . '\podcasting_widget_init' );
 
-function ninetofive_podcasting_widget_init() {
-	register_widget( 'NineToFive_Podcast_Widget' );
+function podcasting_widget_init() {
+	register_widget( 'Podcasting_Podcast_Widget' );
 }
 
-class NineToFive_Podcast_Widget extends WP_Widget {
+class Podcasting_Podcast_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct( 'podcast', __( 'Podcast' ), array(
 			'classname'   => 'widget-podcast',
@@ -17,7 +19,7 @@ class NineToFive_Podcast_Widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
-		$podcast_category = get_option( 'ninetofive_podcasting_archive' );
+		$podcast_category = get_option( 'podcasting_archive' );
 
 		if ( empty( $podcast_category ) ) {
 			return;
