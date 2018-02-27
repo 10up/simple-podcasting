@@ -1,5 +1,15 @@
 <?php
 /**
+ * Plugin Name: Podcasting for WordPress
+ * Plugin URI: http://wordpress.org/
+ * Description: Podcasting, enhanced by 10up.
+ * Author: 10up, original code from Automattic
+ * Version: 1.0.0
+ * Author URI: http://10up.com/
+ */
+namespace podcasting;
+
+/**
  * Podcasting for WordPress.
  *
  * Code from WordPress.com Podcasting feature, see https://wordpressvip.zendesk.com/hc/requests/72370.
