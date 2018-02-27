@@ -1,0 +1,297 @@
+<?php
+/**
+ * Add an itunes podcasting header.
+ */
+function ninetofive_podcasting_xmlns() {
+	echo "\n\t" . 'xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"' . "\n";
+}
+add_action( 'rss2_ns', 'ninetofive_podcasting_xmlns' );
+
+/**
+ * Get the current term_id.
+ */
+function ninetofive_podcasting_get_the_term(){
+	$queried_object = get_queried_object();
+	if ( ! $queried_object || ! $queried_object->term_id ) {
+		return false;
+	}
+	return $queried_object;
+}
+
+/**
+ * Adjust the title for podcasting feeds.
+ * @param  string $output The feed title.
+ * @return string         The adjusted feed title.
+ */
+function ninetofive_podcasting_bloginfo_rss_name( $output ) {
+	$term = ninetofive_podcasting_get_the_term();
+	if ( ! $term ) {
+		return $output;
+	}
+	$title = get_term_meta( $term->term_id, 'podcasting_title', true );
+	if ( empty( $title ) ) {
+		$title = get_bloginfo( 'name' );
+		$title = "$title &#187; {$term->name}";
+	} else {
+		$output = $title;
+	}
+
+	return $output;
+}
+add_filter( 'wp_title_rss', 'ninetofive_podcasting_bloginfo_rss_name' );
+
+// Don't show audio widgets in the feed.
+add_filter( 'wp_audio_shortcode', '__return_empty_string', 999 );
+
+/**
+ * Adjust the excerpt, use the content instead.
+ */
+add_filter( 'the_excerpt_rss', function() {
+	global $post;
+
+	return $post ? apply_filters( 'the_content', $post->post_content ) : '';
+} );
+
+/**
+ * Adjust the podcasting feed header.
+ * @return [type] [description]
+ */
+function ninetofive_podcasting_feed_head() {
+
+	$term = ninetofive_podcasting_get_the_term();
+	if ( ! $term ) {
+		return $output;
+	}
+	$subtitle = get_term_meta( $term->term_id, 'podcasting_subtitle', true );
+
+	if ( empty( $subtitle ) ) {
+		$subtitle = get_bloginfo( 'description' );
+	}
+
+	if ( ! empty( $subtitle ) ) {
+		echo '<itunes:subtitle>' . esc_html( wp_strip_all_tags( $subtitle ) ) . "</itunes:subtitle>\n";
+	}
+
+	$summary = get_term_meta( $term->term_id, 'podcasting_summary', true );
+
+	if ( empty( $summary ) ) {
+		$summary = get_bloginfo( 'description' );
+	}
+
+	if ( ! empty( $summary ) ) {
+		echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $summary ) ) . "</itunes:summary>\n";
+	}
+
+	$author = get_term_meta( $term->term_id, 'podcasting_talent_name', true );
+
+	if ( ! empty( $author ) ) {
+		echo '<itunes:author>' . esc_html( wp_strip_all_tags( $author ) ) . "</itunes:author>\n";
+	}
+
+	$copyright = get_term_meta( $term->term_id, 'podcasting_copyright', true );
+
+	if ( !empty( $copyright ) ) {
+		echo '<copyright>' . esc_html( wp_strip_all_tags( $copyright ) ) . "</copyright>\n";
+	}
+
+	$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
+
+	echo '<itunes:explicit>';
+
+	if ( empty( $explicit ) ) {
+		echo 'no';
+	} else {
+		echo esc_html( $explicit );
+	}
+
+	echo "</itunes:explicit>\n";
+
+	$image = get_term_meta( $term->term_id, 'podcasting_image', true );
+
+	if ( ! empty( $image ) ) {
+		echo "<itunes:image href='" . esc_url( wp_get_attachment_url( $image ) ) . "' />\n";
+	}
+
+	$keywords = get_term_meta( $term->term_id, 'podcasting_keywords', true );
+
+	if ( ! empty( $keywords ) ) {
+		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
+	}
+
+	$category_1 = ninetofive_podcasting_generate_category( 'podcasting_category_1' );
+
+	if ( ! empty( $category_1 ) ) {
+		echo wp_kses_post( $category_1 );
+	}
+
+	$category_2 = ninetofive_podcasting_generate_category( 'podcasting_category_2' );
+
+	if ( ! empty( $category_2 ) ) {
+		echo wp_kses_post( $category_2 );
+	}
+
+	$category_3 = ninetofive_podcasting_generate_category( 'podcasting_category_3' );
+
+	if ( ! empty( $category_3 ) ) {
+		echo wp_kses_post( $category_3 );
+	}
+}
+add_action( 'rss2_head', 'ninetofive_podcasting_feed_head' );
+
+function ninetofive_podcasting_feed_item() {
+	global $post;
+	$term = ninetofive_podcasting_get_the_term();
+	if ( ! $term ) {
+		return false;
+	}
+
+	$post_meta = get_post_meta( $post->ID, 'podcast_episode', true );
+
+	$author = get_option( 'podcasting_talent_name' );
+	if ( empty( $author ) ) {
+		$author = get_the_author();
+	}
+
+	echo "<itunes:author>" . esc_html( $author ) . "</itunes:author>\n";
+
+	$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
+
+	echo "<itunes:explicit>";
+
+	if ( empty( $explicit ) ) {
+		echo 'no';
+	} else {
+		echo esc_html( $explicit );
+	}
+
+	echo "</itunes:explicit>\n";
+
+	if ( has_post_thumbnail( $post->ID ) ) {
+		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' );
+		if ( ! empty( $image ) ) {
+			if ( is_array( $image ) ) {
+				$image = $image[0];
+			}
+			// iTunes barfs on https images, so force http here.
+			$image = str_replace( 'https://', 'http://', $image );
+			echo "<itunes:image href='" . esc_url( $image ) . "' />\n";
+		}
+	}
+
+	$keywords = '';
+	if ( ! empty( $keywords ) ) {
+		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
+	}
+
+	if ( has_excerpt() ) {
+		$excerpt = get_the_excerpt();
+	} else {
+		$excerpt = get_term_meta( $term->term_id, 'podcasting_summary', true );
+	}
+	$excerpt = apply_filters( 'the_excerpt_rss', $excerpt );
+
+	echo "<itunes:summary>" . esc_html( wp_strip_all_tags( $excerpt ) ) . "</itunes:summary>\n";
+
+	$subtitle = wp_trim_words( $excerpt, 10, '&#8230;' );
+
+	echo "<itunes:subtitle>" . esc_html( $subtitle ) . "</itunes:subtitle>\n";
+
+	if ( ! empty( $post_meta['enclosure'] ) ) {
+		echo "<enclosure url='" .
+		esc_url( str_replace( 'https://', 'http://', $post_meta['enclosure']['url'] ) ) .
+		"' length='" .
+		esc_attr( $post_meta['enclosure']['length'] ) .
+		"' type='" .
+		esc_attr( $post_meta['enclosure']['mime'] ) .
+		"' />\n";
+	}
+
+	// Add an enclosure duration if available.
+	if ( isset( $post_meta['enclosure']['duration'] ) && ! empty( $post_meta['enclosure']['duration'] ) ) {
+		echo '<itunes:duration>' . esc_html( $post_meta['enclosure']['duration'] ) . "</itunes:duration>\n";
+	}
+}
+add_action( 'rss2_item', 'ninetofive_podcasting_feed_item' );
+
+/**
+ * Adjust the enclosure feed for podcasts.
+ * @param  string $enclosure The enclosure (media url).
+ * @return string            The adjusted enclosure.
+ */
+function ninetofive_podcasting_rss_enclosure( $enclosure ) {
+	global $post;
+
+	$post_meta = get_post_meta( $post->ID, 'podcast_episode', true );
+
+	if ( empty( $post_meta['enclosure'] ) ) {
+		return $enclosure;
+	}
+
+	return '';
+}
+add_filter( 'rss_enclosure', 'ninetofive_podcasting_rss_enclosure' );
+
+/**
+ * Generate the category elements from the given option (e.g. podcasting_category_1)
+ *
+ * @param  string $option option to retrieve via get_term_meta
+ * @return string The category tag that can be echoed into the feed
+ */
+function ninetofive_podcasting_generate_category( $option ) {
+	$term = ninetofive_podcasting_get_the_term();
+	if ( ! $term ) {
+		return false;
+	}
+
+	$category = get_term_meta( $term->term_id, $option, true );
+	$strcat = '';
+	switch ( $category ) {
+		case 'Education,Education':
+			$category = 'Education';
+			break;
+		case 'Education,Education Technology':
+			$category = 'Education, Educational Technology';
+			break;
+		case 'Tech News':
+			$category = 'Technology,Tech News';
+			break;
+		case 'Sports &amp; Recreation,Technology':
+			$category = 'Technology';
+			break;
+		case 'Sports &amp; Recreation,Gadgets':
+			$category = 'Technology,Gadgets';
+			break;
+	}
+
+	if ( ! empty( $category ) ) {
+		$splits = explode( ',', $category );
+		if ( 2 === count( $splits ) ) {
+			$strcat .= "<itunes:category text='" . esc_attr( $splits[0] ) . "'>\n";
+			$strcat .= "\t<itunes:category text='" . esc_attr( $splits[1] ) . "' />\n";
+			$strcat .= "</itunes:category>\n";
+		} else {
+			$strcat .= "<itunes:category text='" . esc_attr( $category ) . "' />\n";
+		}
+	}
+
+	return $strcat;
+}
+
+/**
+ * Ensure the excerpt is actually used for the excerpt.
+ *
+ * @param  string $output The excerpt.
+ *
+ * @return string         The filtered excerpt.
+ */
+function ninetofive_podcasting_empty_rss_excerpt( $output ) {
+	$excerpt = get_the_excerpt();
+
+	if ( empty( $excerpt ) ) {
+		return '';
+	}
+
+	return $output;
+}
+// Run it super late after any other filters may have inserted something
+add_filter( 'the_excerpt_rss', 'ninetofive_podcasting_empty_rss_excerpt', 1000 );
