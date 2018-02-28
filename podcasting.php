@@ -57,13 +57,13 @@ class Podcasting {
 
 		wp_enqueue_style(
 			'podcasting_edit_term_screen',
-			get_theme_file_uri() . '/plugins/podcasting/podcasting/podcasting-edit-term.css'
+			plugin_dir_url( __FILE__ ) . 'assets/css/podcasting-edit-term.css'
 		);
 
 		if ( 'edit-tags.php' === $hook_suffix ) {
 			wp_enqueue_script(
 				'podcasting_edit_term_screen',
-				get_theme_file_uri() . '/plugins/podcasting/podcasting/podcasting-edit-term.js',
+				plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-term.js',
 				array( 'jquery' ),
 				true
 			);
