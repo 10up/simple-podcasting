@@ -1,29 +1,36 @@
 <?php
 /**
+ * Plugin Name: Podcasting for WordPress
+ * Plugin URI: http://wordpress.org/
+ * Description: Podcasting, enhanced by 10up.
+ * Author: 10up, original code from Automattic
+ * Version: 1.0.0
+ * Author URI: http://10up.com/
+ */
+namespace tenup_podcasting;
+
+/**
  * Podcasting for WordPress.
  *
- * Code from WordPress.com Podcasting feature, see https://wordpressvip.zendesk.com/hc/requests/72370.
- *
  */
+$init = new Podcasting();
 
-$NineToFive_Podcasting_init = new NineToFive_Podcasting();
 
-
-class NineToFive_Podcasting {
+class Podcasting {
 
 	// Taxonomy to use.
-	static $taxonomy = 'ninetofive_podcasts';
+	static $taxonomy = 'podcasting_podcasts';
 
 	function __construct() {
 
 		require_once plugin_dir_path( __FILE__ ) . 'podcasting/datatypes.php';
 
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'ninetofive_podcasting_edit_term_enqueues' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_podcasting_edit_term_enqueues' ) );
 
 		if ( self::podcasting_is_enabled() ) {
 
 			if ( ! is_admin() ) {
-				add_action( 'wp', array( 'NineToFive_Podcasting', 'podcasting_custom_feed' ) );
+				add_action( 'wp', array( 'Podcasting', 'podcasting_custom_feed' ) );
 			}
 
 			require_once plugin_dir_path( __FILE__ ) . 'podcasting/widget.php';
@@ -37,7 +44,7 @@ class NineToFive_Podcasting {
 	 *
 	 * @param  string $hook_suffix The $hook_suffix for the current admin page.
 	 */
-	public static function ninetofive_podcasting_edit_term_enqueues( $hook_suffix ) {
+	public static function podcasting_edit_term_enqueues( $hook_suffix ) {
 		$screens = array(
 			'edit-tags.php',
 			'term.php'
@@ -67,9 +74,9 @@ class NineToFive_Podcasting {
 	 *
 	 * @uses podcasting/customize-feed.php
 	 */
-	public static function podcasting_custom_feed() {
+	public static function custom_feed() {
 		// Check to see if the current term is in the podcasting taxonomy.
-		if ( is_feed() && is_tax( NineToFive_Podcasting::$taxonomy ) ) {
+		if ( is_feed() && is_tax( Podcasting::$taxonomy ) ) {
 			remove_action( 'rss2_head', 'rss2_blavatar' );
 			remove_action( 'rss2_head', 'rss2_site_icon' );
 			remove_filter( 'the_excerpt_rss', 'add_bug_to_feed', 100 );
@@ -88,9 +95,9 @@ class NineToFive_Podcasting {
 	 *
 	 * @return bool
 	 */
-	static function podcasting_is_enabled() {
+	static function is_enabled() {
 		$podcasting_terms = get_terms( array(
-			'taxonomy'      => NineToFive_Podcasting::$taxonomy,
+			'taxonomy'      => Podcasting::$taxonomy,
 			'hide_empty'    => false,
 			'fields'        => 'ids',
 			'no_found_rows' => true,
