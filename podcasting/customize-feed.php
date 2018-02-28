@@ -26,7 +26,7 @@ function get_the_term(){
  * @return string         The adjusted feed title.
  */
 function bloginfo_rss_name( $output ) {
-	$term = podcasting_get_the_term();
+	$term = get_the_term();
 	if ( ! $term ) {
 		return $output;
 	}
@@ -59,8 +59,7 @@ add_filter( 'the_excerpt_rss', function() {
  * @return [type] [description]
  */
 function feed_head() {
-
-	$term = podcasting_get_the_term();
+	$term = get_the_term();
 	if ( ! $term ) {
 		return $output;
 	}
@@ -120,19 +119,19 @@ function feed_head() {
 		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
 	}
 
-	$category_1 = podcasting_generate_category( 'podcasting_category_1' );
+	$category_1 = generate_category( 'podcasting_category_1' );
 
 	if ( ! empty( $category_1 ) ) {
 		echo wp_kses_post( $category_1 );
 	}
 
-	$category_2 = podcasting_generate_category( 'podcasting_category_2' );
+	$category_2 = generate_category( 'podcasting_category_2' );
 
 	if ( ! empty( $category_2 ) ) {
 		echo wp_kses_post( $category_2 );
 	}
 
-	$category_3 = podcasting_generate_category( 'podcasting_category_3' );
+	$category_3 = generate_category( 'podcasting_category_3' );
 
 	if ( ! empty( $category_3 ) ) {
 		echo wp_kses_post( $category_3 );
@@ -142,7 +141,7 @@ add_action( 'rss2_head', __NAMESPACE__ . '\feed_head' );
 
 function feed_item() {
 	global $post;
-	$term = podcasting_get_the_term();
+	$term = get_the_term();
 	if ( ! $term ) {
 		return false;
 	}
@@ -240,7 +239,7 @@ add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
  * @return string The category tag that can be echoed into the feed
  */
 function generate_category( $option ) {
-	$term = podcasting_get_the_term();
+	$term = get_the_term();
 	if ( ! $term ) {
 		return false;
 	}
