@@ -50,7 +50,7 @@ add_filter( 'parent_file', __NAMESPACE__ . '\filter_parent_file' );
  * Set up term meta for podcasts.
  */
 function register_term_meta() {
-	$podcasting_meta_fields = podcasting_get_meta_fields();
+	$podcasting_meta_fields = get_meta_fields();
 
 	foreach( $podcasting_meta_fields as $field ) {
 		register_meta( 'term', $field['slug'], array(
@@ -85,31 +85,31 @@ add_action( 'admin_menu', __NAMESPACE__ . '\add_top_level_menu' );
  * Add podcasting fields to the term screen.
  */
 function add_podcasting_term_meta_fields() {
-	$podcasting_meta_fields = podcasting_get_meta_fields();
+	$podcasting_meta_fields = get_meta_fields();
 
 	foreach( $podcasting_meta_fields as $field ) {
 		switch ( $field['type'] ) {
 			case 'textfield':
-				$fm = new Fieldmanager_TextField( array(
+				$fm = new \Fieldmanager_TextField( array(
 					'name' => $field['slug'],
 				) );
 				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
 				break;
 			case 'textarea':
-				$fm = new Fieldmanager_TextArea( array(
+				$fm = new \Fieldmanager_TextArea( array(
 					'name' => $field['slug'],
 				) );
 				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
 				break;
 			case 'select':
-				$fm = new Fieldmanager_Select( array(
+				$fm = new \Fieldmanager_Select( array(
 					'name'    => $field['slug'],
 					'options' => $field['options'],
 				) );
 				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
 				break;
 			case 'image':
-				$fm = new Fieldmanager_Media( array(
+				$fm = new \Fieldmanager_Media( array(
 					'name'         => $field['slug'],
 					'button_label' => 'Select Image',
 					'modal_title'  => $field['title'],
@@ -222,19 +222,19 @@ function get_meta_fields() {
 			'slug'    => 'podcasting_category_1',
 			'title'   => 'Podcast category 1',
 			'type'    => 'select',
-			'options' => podcasting_get_podcasting_categories(),
+			'options' => get_podcasting_categories(),
 		),
 		array(
 			'slug'    => 'podcasting_category_2',
 			'title'   => 'Podcast category 2',
 			'type'    => 'select',
-			'options' => podcasting_get_podcasting_categories(),
+			'options' => get_podcasting_categories(),
 		),
 		array(
 			'slug'    => 'podcasting_category_3',
 			'title'   => 'Podcast category 3',
 			'type'    => 'select',
-			'options' => podcasting_get_podcasting_categories(),
+			'options' => get_podcasting_categories(),
 		),
 	);
 }

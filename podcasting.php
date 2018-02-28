@@ -23,9 +23,10 @@ class Podcasting {
 
 	function __construct() {
 
+		require_once plugin_dir_path( __FILE__ ) . 'vendor/fieldmanager/fieldmanager.php';
 		require_once plugin_dir_path( __FILE__ ) . 'podcasting/datatypes.php';
 
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_podcasting_edit_term_enqueues' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_edit_term_enqueues' ) );
 
 		if ( self::podcasting_is_enabled() ) {
 
@@ -95,7 +96,7 @@ class Podcasting {
 	 *
 	 * @return bool
 	 */
-	static function is_enabled() {
+	static function podcasting_is_enabled() {
 		$podcasting_terms = get_terms( array(
 			'taxonomy'      => Podcasting::$taxonomy,
 			'hide_empty'    => false,

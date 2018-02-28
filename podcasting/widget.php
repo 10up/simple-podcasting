@@ -7,10 +7,10 @@ namespace tenup_podcasting;
 add_action( 'widgets_init', __NAMESPACE__ . '\widget_init' );
 
 function widget_init() {
-	register_widget( 'Podcast_Widget' );
+	register_widget( __NAMESPACE__ . '\Podcast_Widget' );
 }
 
-class Podcast_Widget extends WP_Widget {
+class Podcast_Widget extends \WP_Widget {
 	function __construct() {
 		parent::__construct( 'podcast', __( 'Podcast' ), array(
 			'classname'   => 'widget-podcast',
