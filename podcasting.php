@@ -31,7 +31,7 @@ class Podcasting {
 		if ( self::podcasting_is_enabled() ) {
 
 			if ( ! is_admin() ) {
-				add_action( 'wp', array( 'Podcasting', 'podcasting_custom_feed' ) );
+				add_action( 'wp', array( __NAMESPACE__ . '\Podcasting', 'custom_feed' ) );
 			}
 
 			require_once plugin_dir_path( __FILE__ ) . 'podcasting/widget.php';
