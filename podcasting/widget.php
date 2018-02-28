@@ -1,16 +1,16 @@
 <?php
-namespace podcasting;
+namespace tenup_podcasting;
 
 /**
  * Register the widget for use in Appearance -> Widgets
  */
-add_action( 'widgets_init', __NAMESPACE__ . '\podcasting_widget_init' );
+add_action( 'widgets_init', __NAMESPACE__ . '\widget_init' );
 
-function podcasting_widget_init() {
-	register_widget( 'Podcasting_Podcast_Widget' );
+function widget_init() {
+	register_widget( 'Podcast_Widget' );
 }
 
-class Podcasting_Podcast_Widget extends WP_Widget {
+class Podcast_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct( 'podcast', __( 'Podcast' ), array(
 			'classname'   => 'widget-podcast',

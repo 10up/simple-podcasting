@@ -1,11 +1,11 @@
 <?php
-namespace podcasting;
+namespace tenup_podcasting;
 
 /**
  * Add a custom podcasts taxonomy.
  */
-function podcasting_create_podcasts_taxonomy() {
-	register_taxonomy( Podcasting_Podcasting::$taxonomy, 'post', array(
+function create_podcasts_taxonomy() {
+	register_taxonomy( Podcasting::$taxonomy, 'post', array(
 		'labels'        => array(
 			'name'              => 'Podcasts',
 			'singular_name'     => 'Podcast',
@@ -27,13 +27,13 @@ function podcasting_create_podcasts_taxonomy() {
 		'rewrite'           => array( 'slug' => 'podcasts' ),
 	) );
 }
-add_action( 'init', __NAMESPACE__ . '\podcasting_create_podcasts_taxonomy' );
+add_action( 'init', __NAMESPACE__ . '\create_podcasts_taxonomy' );
 
 /**
  * Filter the menu so podcasts are parent-less.
  */
 
-function podcasting_filter_parent_file( $file ) {
+function filter_parent_file( $file ) {
 	$screen = get_current_screen();
 
 	if (
@@ -44,12 +44,12 @@ function podcasting_filter_parent_file( $file ) {
 	}
 	return $file;
 }
-add_filter( 'parent_file', __NAMESPACE__ . '\podcasting_filter_parent_file' );
+add_filter( 'parent_file', __NAMESPACE__ . '\filter_parent_file' );
 
 /**
  * Set up term meta for podcasts.
  */
-function podcasting_register_term_meta() {
+function register_term_meta() {
 	$podcasting_meta_fields = podcasting_get_meta_fields();
 
 	foreach( $podcasting_meta_fields as $field ) {
@@ -62,12 +62,12 @@ function podcasting_register_term_meta() {
 		) );
 	}
 }
-add_action( 'init', __NAMESPACE__ . '\podcasting_register_term_meta' );
+add_action( 'init', __NAMESPACE__ . '\register_term_meta' );
 
 /**
  * Add "Podcasts" as its own top level menu item.
  */
-function podcasting_add_top_level_menu() {
+function add_top_level_menu() {
 	remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=podcasting_podcasts' );
 	add_menu_page(
 		'Podcasts',
@@ -79,12 +79,12 @@ function podcasting_add_top_level_menu() {
 		13
 	);
 }
-add_action( 'admin_menu', __NAMESPACE__ . '\podcasting_add_top_level_menu' );
+add_action( 'admin_menu', __NAMESPACE__ . '\add_top_level_menu' );
 
 /**
  * Add podcasting fields to the term screen.
  */
-function podcasting_add_podcasting_term_meta_fields() {
+function add_podcasting_term_meta_fields() {
 	$podcasting_meta_fields = podcasting_get_meta_fields();
 
 	foreach( $podcasting_meta_fields as $field ) {
@@ -93,20 +93,20 @@ function podcasting_add_podcasting_term_meta_fields() {
 				$fm = new Fieldmanager_TextField( array(
 					'name' => $field['slug'],
 				) );
-				$fm->add_term_meta_box( $field['title'], Podcasting_Podcasting::$taxonomy );
+				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
 				break;
 			case 'textarea':
 				$fm = new Fieldmanager_TextArea( array(
 					'name' => $field['slug'],
 				) );
-				$fm->add_term_meta_box( $field['title'], Podcasting_Podcasting::$taxonomy );
+				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
 				break;
 			case 'select':
 				$fm = new Fieldmanager_Select( array(
 					'name'    => $field['slug'],
 					'options' => $field['options'],
 				) );
-				$fm->add_term_meta_box( $field['title'], Podcasting_Podcasting::$taxonomy );
+				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
 				break;
 			case 'image':
 				$fm = new Fieldmanager_Media( array(
@@ -117,31 +117,31 @@ function podcasting_add_podcasting_term_meta_fields() {
 					'preview_size' => 'thumbnail',
 					'description'  => $field['description'],
 				) );
-				$fm->add_term_meta_box( $field['title'], Podcasting_Podcasting::$taxonomy );
+				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
 				break;
 		}
 
 	}
 }
-add_action( 'fm_term_' . Podcasting_Podcasting::$taxonomy, __NAMESPACE__ . '\podcasting_add_podcasting_term_meta_fields' );
+add_action( 'fm_term_' . Podcasting::$taxonomy, __NAMESPACE__ . '\add_podcasting_term_meta_fields' );
 
 /**
  * Add podcasting nonce to the term screen.
  */
-function podcasting_add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
+function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	echo '<style>
 	.term-description-wrap{
 		display: none;
 	} </style>';
 	if ( $taxonomy ) {
-		$url = get_term_feed_link( $term->term_id, Podcasting_Podcasting::$taxonomy );
+		$url = get_term_feed_link( $term->term_id, Podcasting::$taxonomy );
 		echo '<strong>Your Podcast Feed: </strong> <a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		echo 'This is the URL you submit to iTunes or podcasting service.';
 	}
 
 }
-add_action( Podcasting_Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\podcasting_add_podcasting_term_meta_nonce' );
-add_action( Podcasting_Podcasting::$taxonomy . '_edit_form_fields', __NAMESPACE__ . '\podcasting_add_podcasting_term_meta_nonce', 99, 2 );
+add_action( Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
+add_action( Podcasting::$taxonomy . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
 /**
  * Add a feed link to the podcasting term table.
  *
@@ -150,32 +150,32 @@ add_action( Podcasting_Podcasting::$taxonomy . '_edit_form_fields', __NAMESPACE_
  * @param int    $term_id     Term ID.
  *
  */
-function podcasting_add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
+function add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
 
 	if ( 'feedurl' === $column_name ) {
-		$url = get_term_feed_link( $term_id, Podcasting_Podcasting::$taxonomy );
+		$url = get_term_feed_link( $term_id, Podcasting::$taxonomy );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a>';
 	}
 	return $string;
 }
-add_filter( 'manage_' . Podcasting_Podcasting::$taxonomy . '_custom_column', __NAMESPACE__ . '\podcasting_add_podcasting_term_feed_link_column',10,3);
+add_filter( 'manage_' . Podcasting::$taxonomy . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column',10,3);
 
 /**
  * Add a custom column for the podcast feed link.
  * @param Array $columns An array of columns
  */
-function podcasting_add_custom_term_columns( $columns ){
+function add_custom_term_columns( $columns ){
 	$columns['feedurl'] = 'Feed URL';
 	unset( $columns['description'] );
 	unset( $columns['author'] );
 	return $columns;
 }
-add_filter( 'manage_edit-' . Podcasting_Podcasting::$taxonomy . '_columns', __NAMESPACE__ . '\podcasting_add_custom_term_columns', 99 );
+add_filter( 'manage_edit-' . Podcasting::$taxonomy . '_columns', __NAMESPACE__ . '\add_custom_term_columns', 99 );
 
 /**
  * Get the meta fields used for podcasts.
  */
-function podcasting_get_meta_fields() {
+function get_meta_fields() {
 	return array(
 		array(
 			'slug'  => 'podcasting_subtitle',
@@ -242,7 +242,7 @@ function podcasting_get_meta_fields() {
 /**
  * Get the podcasting categories.
  */
-function podcasting_get_podcasting_categories() {
+function get_podcasting_categories() {
 	$to_return = array( 'None' );
 	$categories = array(
 		"Arts" => array(

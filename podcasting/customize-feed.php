@@ -1,18 +1,18 @@
 <?php
-namespace podcasting;
+namespace tenup_podcasting;
 
 /**
  * Add an itunes podcasting header.
  */
-function podcasting_xmlns() {
+function xmlns() {
 	echo "\n\t" . 'xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"' . "\n";
 }
-add_action( 'rss2_ns', __NAMESPACE__ . '\podcasting_xmlns' );
+add_action( 'rss2_ns', __NAMESPACE__ . '\xmlns' );
 
 /**
  * Get the current term_id.
  */
-function podcasting_get_the_term(){
+function get_the_term(){
 	$queried_object = get_queried_object();
 	if ( ! $queried_object || ! $queried_object->term_id ) {
 		return false;
@@ -25,7 +25,7 @@ function podcasting_get_the_term(){
  * @param  string $output The feed title.
  * @return string         The adjusted feed title.
  */
-function podcasting_bloginfo_rss_name( $output ) {
+function bloginfo_rss_name( $output ) {
 	$term = podcasting_get_the_term();
 	if ( ! $term ) {
 		return $output;
@@ -40,7 +40,7 @@ function podcasting_bloginfo_rss_name( $output ) {
 
 	return $output;
 }
-add_filter( 'wp_title_rss', __NAMESPACE__ . '\podcasting_bloginfo_rss_name' );
+add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
 
 // Don't show audio widgets in the feed.
 add_filter( 'wp_audio_shortcode', '__return_empty_string', 999 );
@@ -58,7 +58,7 @@ add_filter( 'the_excerpt_rss', function() {
  * Adjust the podcasting feed header.
  * @return [type] [description]
  */
-function podcasting_feed_head() {
+function feed_head() {
 
 	$term = podcasting_get_the_term();
 	if ( ! $term ) {
@@ -138,9 +138,9 @@ function podcasting_feed_head() {
 		echo wp_kses_post( $category_3 );
 	}
 }
-add_action( 'rss2_head', __NAMESPACE__ . '\podcasting_feed_head' );
+add_action( 'rss2_head', __NAMESPACE__ . '\feed_head' );
 
-function podcasting_feed_item() {
+function feed_item() {
 	global $post;
 	$term = podcasting_get_the_term();
 	if ( ! $term ) {
@@ -213,14 +213,14 @@ function podcasting_feed_item() {
 		echo '<itunes:duration>' . esc_html( $post_meta['enclosure']['duration'] ) . "</itunes:duration>\n";
 	}
 }
-add_action( 'rss2_item', __NAMESPACE__ . '\podcasting_feed_item' );
+add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
 
 /**
  * Adjust the enclosure feed for podcasts.
  * @param  string $enclosure The enclosure (media url).
  * @return string            The adjusted enclosure.
  */
-function podcasting_rss_enclosure( $enclosure ) {
+function rss_enclosure( $enclosure ) {
 	global $post;
 
 	$post_meta = get_post_meta( $post->ID, 'podcast_episode', true );
@@ -231,7 +231,7 @@ function podcasting_rss_enclosure( $enclosure ) {
 
 	return '';
 }
-add_filter( 'rss_enclosure', __NAMESPACE__ . '\podcasting_rss_enclosure' );
+add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
 
 /**
  * Generate the category elements from the given option (e.g. podcasting_category_1)
@@ -239,7 +239,7 @@ add_filter( 'rss_enclosure', __NAMESPACE__ . '\podcasting_rss_enclosure' );
  * @param  string $option option to retrieve via get_term_meta
  * @return string The category tag that can be echoed into the feed
  */
-function podcasting_generate_category( $option ) {
+function generate_category( $option ) {
 	$term = podcasting_get_the_term();
 	if ( ! $term ) {
 		return false;
@@ -286,7 +286,7 @@ function podcasting_generate_category( $option ) {
  *
  * @return string         The filtered excerpt.
  */
-function podcasting_empty_rss_excerpt( $output ) {
+function empty_rss_excerpt( $output ) {
 	$excerpt = get_the_excerpt();
 
 	if ( empty( $excerpt ) ) {
@@ -296,4 +296,4 @@ function podcasting_empty_rss_excerpt( $output ) {
 	return $output;
 }
 // Run it super late after any other filters may have inserted something
-add_filter( 'the_excerpt_rss', __NAMESPACE__ . '\podcasting_empty_rss_excerpt', 1000 );
+add_filter( 'the_excerpt_rss', __NAMESPACE__ . '\empty_rss_excerpt', 1000 );

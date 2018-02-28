@@ -1,20 +1,21 @@
 <?php
-namespace podcasting;
+namespace tenup_podcasting;
 
-function podcasting_add_meta_box() {
+function add_meta_box() {
 	add_meta_box( 'podcasting', __( 'Podcasting' ), 'podcasting_meta_box_html', 'post', 'advanced' );
 }
 
-add_action( 'add_meta_boxes', __NAMESPACE__ . '\podcasting_add_meta_box' );
+add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_meta_box' );
 
-function podcasting_meta_box_html( $post ) {
+function meta_box_html( $post ) {
 	$options = wp_parse_args(
-						get_post_meta( $post->ID, 'podcast_episode', true ),
-						array(
-							'closed_captioned'  => 'no',
-							'explicit_content'  => 'no',
-							'podcast_enclosure' => '',
-						) );
+		get_post_meta( $post->ID, 'podcast_episode', true ),
+		array(
+			'closed_captioned'  => 'no',
+			'explicit_content'  => 'no',
+			'podcast_enclosure' => '',
+		)
+	);
 
 	wp_nonce_field( plugin_basename( __FILE__ ), 'podcasting' );
 
@@ -52,7 +53,7 @@ function podcasting_meta_box_html( $post ) {
 	<?php
 }
 
-function podcasting_save_meta_box( $post_id ) {
+function save_meta_box( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
@@ -142,9 +143,9 @@ function podcasting_save_meta_box( $post_id ) {
 	update_post_meta( $post_id, 'podcast_episode', $podcast_options );
 }
 
-add_action( 'save_post', __NAMESPACE__ . '\podcasting_save_meta_box' );
+add_action( 'save_post', __NAMESPACE__ . '\save_meta_box' );
 
-function podcasting_edit_post_enqueues( $hook_suffix ) {
+function edit_post_enqueues( $hook_suffix ) {
 	$screens = array(
 		'post.php',
 		'post-new.php'
@@ -167,9 +168,9 @@ function podcasting_edit_post_enqueues( $hook_suffix ) {
 		'modalUrl'   => podcasting_get_media_modal_url(),
 	) );
 }
-add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_post_enqueues' );
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\edit_post_enqueues' );
 
-function podcasting_get_media_modal_url() {
+function get_media_modal_url() {
 	$post_id = get_the_ID();
 
 	$url = 'media-upload.php';
