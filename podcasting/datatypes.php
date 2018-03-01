@@ -81,49 +81,163 @@ function add_top_level_menu() {
 }
 add_action( 'admin_menu', __NAMESPACE__ . '\add_top_level_menu' );
 
+function add_podcasting_term_add_meta_fields( $term ) {
+	$podcasting_meta_fields = get_meta_fields();
+	foreach( $podcasting_meta_fields as $field ) {
+		?>
+		<label
+			for="name"
+		><?php echo esc_html( $field['title'] ); ?></label>
+		<?php the_field( $field, '' );
+	}
+}
+
+function the_field( $field, $value = '', $term_id = false ) {
+	switch ( $field['type'] ) {
+		case 'textfield':
+		?>
+			<input
+				name="<?php echo esc_attr( $field['slug'] ); ?>"
+				id="<?php echo esc_attr( $field['slug'] ); ?>"
+				type="text"
+				value="<?php echo esc_attr( $value ); ?>"
+				size="40"
+				aria-required="true"
+			>
+		<?php
+			break;
+		case 'textarea':
+		?>
+			<textarea name="<?php echo esc_attr( $field['slug'] ); ?>" id="<?php echo esc_attr( $field['slug'] ); ?>" rows="5" cols="40"></textarea>
+		<?php
+			break;
+		case 'select':
+		?>
+			<select
+				name="<?php echo esc_attr( $field['slug'] ); ?>"
+				id="<?php echo esc_attr( $field['slug'] ); ?>"
+				class="postform"
+			>
+		<?php
+			$categories = $field['options'];
+			foreach( $categories as $category ) {
+				$slug = sanitize_title( $category );
+				?>
+				<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug, $value ); ?>>
+					<?php echo esc_html( $category ); ?>
+				</option>
+				<?php
+			}
+			?>
+			</select>
+			<?php
+			break;
+		case 'image':
+			$image_url = get_term_meta( $term_id, $field['slug'] . '_url', true );
+		?>
+		<div class="media-wrapper">
+			<?php
+			$has_image = ( '' === $value );
+			?>
+			<div class="podasting-existing-image <?php echo ( $has_image ? 'hidden' : '' ); ?>">
+				<a href="#" >
+					<img
+					src="<?php echo esc_url( $image_url ); ?>"
+					alt=""
+					class="podcast-image-thumbnail"
+				>
+				</a>
+				<input
+					type="hidden"
+					id="<?php echo esc_attr( $field['slug'] ); ?>"
+					name="<?php echo esc_attr( $field['slug'] ); ?>"
+					value="<?php echo esc_attr( $value ); ?>"
+				>
+				<br />
+				<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
+					remove image
+				</a>
+			<?php
+			?>
+			</div>
+			<div class="podcasting-upload-image <?php echo ( ! $has_image ? 'hidden' : '' ); ?>">
+				<input
+					type="button"
+					class="podcasting-media-button button-secondary"
+					id="image-<?php echo esc_attr( $field['slug'] ); ?>"
+					value="Select Image"
+					data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
+					data-choose="Podcast Image"
+					data-update="Choose Selected Image"
+					data-preview-size="thumbnail"
+					data-mime-type="image"
+				>
+			</div>
+		</div>
+		<?php
+			break;
+
+	}
+	if ( isset( $field['description'] ) ) {
+	?>
+		<p class="description"><?php echo esc_html( $field['description'] ); ?></p>
+	<?php
+	}
+}
+
+/**
+ * Save podcasting fields from the term screen to term meta.
+ */
+function save_podcasting_term_meta( $term_id ) {
+	$podcasting_meta_fields = get_meta_fields();
+	foreach ( $podcasting_meta_fields as $field ) {
+		$slug = $field['slug'];
+
+		if ( isset( $_POST[ $slug ] ) ) {
+			$sanitized_value = sanitize_text_field( $_POST[ $slug ] );
+
+			// If the field is an image field, store the image URL along with the slug.
+			if ( strpos( $slug, '_image' ) ) {
+				$image_url = wp_get_attachment_url( (int) $sanitized_value );
+				update_term_meta( $term_id, $slug . '_url', $image_url );
+			}
+			update_term_meta( $term_id, $slug, $sanitized_value );
+		}
+	}
+}
+add_action( 'edited_' . Podcasting::$taxonomy, __NAMESPACE__ . '\save_podcasting_term_meta' );
+
 /**
  * Add podcasting fields to the term screen.
  */
-function add_podcasting_term_meta_fields() {
+function add_podcasting_term_edit_meta_fields( $term ) {
 	$podcasting_meta_fields = get_meta_fields();
-
-	foreach( $podcasting_meta_fields as $field ) {
-		switch ( $field['type'] ) {
-			case 'textfield':
-				$fm = new \Fieldmanager_TextField( array(
-					'name' => $field['slug'],
-				) );
-				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
-				break;
-			case 'textarea':
-				$fm = new \Fieldmanager_TextArea( array(
-					'name' => $field['slug'],
-				) );
-				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
-				break;
-			case 'select':
-				$fm = new \Fieldmanager_Select( array(
-					'name'    => $field['slug'],
-					'options' => $field['options'],
-				) );
-				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
-				break;
-			case 'image':
-				$fm = new \Fieldmanager_Media( array(
-					'name'         => $field['slug'],
-					'button_label' => 'Select Image',
-					'modal_title'  => $field['title'],
-					'modal_button_label' => 'Select Image',
-					'preview_size' => 'thumbnail',
-					'description'  => $field['description'],
-				) );
-				$fm->add_term_meta_box( $field['title'], Podcasting::$taxonomy );
-				break;
-		}
-
+	?>
+	<table class="form-table">
+		<tbody><tr class="form-field form-required term-name-wrap">
+	<?php
+	foreach ( $podcasting_meta_fields as $field ) {
+		$value = get_term_meta( $term->term_id, $field['slug'], true );
+		$value = $value ? $value : '';
+		?>
+		<tr class="form-field form-required term-name-wrap">
+			<th scope="row">
+				<label
+					for="name"
+				><?php echo esc_html( $field['title'] ); ?></label>
+			</th>
+			<td>
+				<?php the_field( $field, $value, $term->term_id ); ?>
+			</td>
+		</tr>
+		<?php
 	}
+	?>
+	<tbody>
+	</table>
+		<tbody><tr class="form-field form-required term-name-wrap">
+	<?php
 }
-add_action( 'fm_term_' . Podcasting::$taxonomy, __NAMESPACE__ . '\add_podcasting_term_meta_fields' );
 
 /**
  * Add podcasting nonce to the term screen.
@@ -133,15 +247,20 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	.term-description-wrap{
 		display: none;
 	} </style>';
+	wp_enqueue_media();
 	if ( $taxonomy ) {
 		$url = get_term_feed_link( $term->term_id, Podcasting::$taxonomy );
 		echo '<strong>Your Podcast Feed: </strong> <a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		echo 'This is the URL you submit to iTunes or podcasting service.';
 	}
-
 }
 add_action( Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
 add_action( Podcasting::$taxonomy . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
+
+add_action( Podcasting::$taxonomy . '_edit_form', __NAMESPACE__ . '\add_podcasting_term_edit_meta_fields' );
+add_action( Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_add_meta_fields' );
+
+
 /**
  * Add a feed link to the podcasting term table.
  *
