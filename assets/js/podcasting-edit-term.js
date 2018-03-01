@@ -17,13 +17,13 @@ jQuery( document ).ready( function( $ ) {
 
 	var mediaUploader;
 
-	// Handle and media buttons.
+	// Handle media upload buttons.
 	$( 'input.podcasting-media-button' ).on( 'click', function( e ) {
 		e.preventDefault();
 
 		var $button   = $( e.currentTarget ),
 			$hidden   = $( document.getElementById( $button.data( 'slug' ) ) ),
-			$wrapper  = $button.parents( '.media-wrapper' );
+			$wrapper  = $button.parents( '.media-wrapper' ),
 			$image    = $wrapper.find( 'img' ),
 			$existing = $wrapper.find( '.podasting-existing-image' ),
 			$upload   = $wrapper.find( '.podcasting-upload-image' );
@@ -60,4 +60,22 @@ jQuery( document ).ready( function( $ ) {
 		// Open the uploader dialog
 		mediaUploader.open();
 	});
+
+	// Handle media remove buttons.
+	$( '.podcast-media-remove' ).on( 'click', function( e ) {
+		e.preventDefault();
+
+		var $link   = $( e.currentTarget ),
+			$wrapper  = $link.parents( '.media-wrapper' ),
+			$button   = $wrapper.find( '.podcasting-media-button' ),
+			$hidden   = $( document.getElementById( $button.data( 'slug' ) ) ),
+			$existing = $wrapper.find( '.podasting-existing-image' ),
+			$upload   = $wrapper.find( '.podcasting-upload-image' );
+
+			// Update the display.
+			$upload.removeClass('hidden');
+			$existing.addClass('hidden');
+			$hidden.val( '' );
+
+	} );
 } );

@@ -92,7 +92,7 @@ function add_podcasting_term_add_meta_fields( $term ) {
 	}
 }
 
-function the_field( $field, $value = '', $term_id ) {
+function the_field( $field, $value = '', $term_id = false ) {
 	switch ( $field['type'] ) {
 		case 'textfield':
 		?>
@@ -136,7 +136,6 @@ function the_field( $field, $value = '', $term_id ) {
 			$image_url = get_term_meta( $term_id, $field['slug'] . '_url', true );
 		?>
 		<div class="media-wrapper">
-			Uploaded image:<br>
 			<?php
 			$has_image = ( '' === $value );
 			?>
@@ -154,9 +153,9 @@ function the_field( $field, $value = '', $term_id ) {
 					name="<?php echo esc_attr( $field['slug'] ); ?>"
 					value="<?php echo esc_attr( $value ); ?>"
 				>
-				<br>
+				<br />
 				<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
-					remove
+					remove image
 				</a>
 			<?php
 			?>
@@ -174,6 +173,7 @@ function the_field( $field, $value = '', $term_id ) {
 					data-mime-type="image"
 				>
 			</div>
+		</div>
 		<?php
 			break;
 
@@ -192,18 +192,18 @@ function save_podcasting_term_meta( $term_id ) {
 	$podcasting_meta_fields = get_meta_fields();
 	foreach ( $podcasting_meta_fields as $field ) {
 		$slug = $field['slug'];
+
 		if ( isset( $_POST[ $slug ] ) ) {
 			$sanitized_value = sanitize_text_field( $_POST[ $slug ] );
-			// Store the image URL along with the slug.
-			if ( strpos( '_image', $slug ) ) {
+
+			// If the field is an image field, store the image URL along with the slug.
+			if ( strpos( $slug, '_image' ) ) {
 				$image_url = wp_get_attachment_url( (int) $sanitized_value );
 				update_term_meta( $term_id, $slug . '_url', $image_url );
 			}
 			update_term_meta( $term_id, $slug, $sanitized_value );
 		}
 	}
-
-
 }
 add_action( 'edited_' . Podcasting::$taxonomy, __NAMESPACE__ . '\save_podcasting_term_meta' );
 
