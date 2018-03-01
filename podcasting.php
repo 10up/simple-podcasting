@@ -23,7 +23,6 @@ class Podcasting {
 
 	function __construct() {
 
-		require_once plugin_dir_path( __FILE__ ) . 'vendor/fieldmanager/fieldmanager.php';
 		require_once plugin_dir_path( __FILE__ ) . 'podcasting/datatypes.php';
 
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_edit_term_enqueues' ) );
