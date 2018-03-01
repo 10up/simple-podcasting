@@ -92,7 +92,7 @@ function add_podcasting_term_add_meta_fields( $term ) {
 	}
 }
 
-function the_field( $field, $value = '' ) {
+function the_field( $field, $value = '', $term_id ) {
 	switch ( $field['type'] ) {
 		case 'textfield':
 		?>
@@ -133,6 +133,48 @@ function the_field( $field, $value = '' ) {
 			<?php
 			break;
 		case 'image':
+			$image_url = get_term_meta( $term_id, $field['slug'] . '_url', true );
+		?>
+		<div class="media-wrapper">
+			Uploaded image:<br>
+			<?php
+			$has_image = ( '' === $value );
+			?>
+			<div class="podasting-existing-image <?php echo ( $has_image ? 'hidden' : '' ); ?>">
+				<a href="#" >
+					<img
+					src="<?php echo esc_url( $image_url ); ?>"
+					alt=""
+					class="podcast-image-thumbnail"
+				>
+				</a>
+				<input
+					type="hidden"
+					id="<?php echo esc_attr( $field['slug'] ); ?>"
+					name="<?php echo esc_attr( $field['slug'] ); ?>"
+					value="<?php echo esc_attr( $value ); ?>"
+				>
+				<br>
+				<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
+					remove
+				</a>
+			<?php
+			?>
+			</div>
+			<div class="podcasting-upload-image <?php echo ( ! $has_image ? 'hidden' : '' ); ?>">
+				<input
+					type="button"
+					class="podcasting-media-button button-secondary"
+					id="image-<?php echo esc_attr( $field['slug'] ); ?>"
+					value="Select Image"
+					data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
+					data-choose="Podcast Image"
+					data-update="Choose Selected Image"
+					data-preview-size="thumbnail"
+					data-mime-type="image"
+				>
+			</div>
+		<?php
 			break;
 
 	}
@@ -149,9 +191,15 @@ function the_field( $field, $value = '' ) {
 function save_podcasting_term_meta( $term_id ) {
 	$podcasting_meta_fields = get_meta_fields();
 	foreach ( $podcasting_meta_fields as $field ) {
-		if ( isset( $_POST[ $field['slug'] ] ) ) {
-			$sanitized_value = sanitize_text_field( $_POST[ $field['slug'] ] );
-			update_term_meta( $term_id, $field['slug'], $sanitized_value );
+		$slug = $field['slug'];
+		if ( isset( $_POST[ $slug ] ) ) {
+			$sanitized_value = sanitize_text_field( $_POST[ $slug ] );
+			// Store the image URL along with the slug.
+			if ( strpos( '_image', $slug ) ) {
+				$image_url = wp_get_attachment_url( (int) $sanitized_value );
+				update_term_meta( $term_id, $slug . '_url', $image_url );
+			}
+			update_term_meta( $term_id, $slug, $sanitized_value );
 		}
 	}
 
@@ -179,7 +227,7 @@ function add_podcasting_term_edit_meta_fields( $term ) {
 				><?php echo esc_html( $field['title'] ); ?></label>
 			</th>
 			<td>
-				<?php the_field( $field, $value ); ?>
+				<?php the_field( $field, $value, $term->term_id ); ?>
 			</td>
 		</tr>
 		<?php
@@ -199,6 +247,7 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	.term-description-wrap{
 		display: none;
 	} </style>';
+	wp_enqueue_media();
 	if ( $taxonomy ) {
 		$url = get_term_feed_link( $term->term_id, Podcasting::$taxonomy );
 		echo '<strong>Your Podcast Feed: </strong> <a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
