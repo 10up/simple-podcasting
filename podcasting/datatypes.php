@@ -81,7 +81,6 @@ function add_top_level_menu() {
 }
 add_action( 'admin_menu', __NAMESPACE__ . '\add_top_level_menu' );
 
-
 function add_podcasting_term_add_meta_fields( $term ) {
 	$podcasting_meta_fields = get_meta_fields();
 	foreach( $podcasting_meta_fields as $field ) {
@@ -122,9 +121,9 @@ function the_field( $field, $value = '' ) {
 		<?php
 			$categories = $field['options'];
 			foreach( $categories as $category ) {
-				error_log( json_encode( $category, JSON_PRETTY_PRINT ) );
+				$slug = sanitize_title( $category );
 				?>
-				<option value="<?php echo sanitize_title( $category ); ?>">
+				<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug, $value ); ?>>
 					<?php echo esc_html( $category ); ?>
 				</option>
 				<?php
@@ -145,18 +144,32 @@ function the_field( $field, $value = '' ) {
 }
 
 /**
+ * Save podcasting fields from the term screen to term meta.
+ */
+function save_podcasting_term_meta( $term_id ) {
+	$podcasting_meta_fields = get_meta_fields();
+	foreach ( $podcasting_meta_fields as $field ) {
+		if ( isset( $_POST[ $field['slug'] ] ) ) {
+			$sanitized_value = sanitize_text_field( $_POST[ $field['slug'] ] );
+			update_term_meta( $term_id, $field['slug'], $sanitized_value );
+		}
+	}
+
+
+}
+add_action( 'edited_' . Podcasting::$taxonomy, __NAMESPACE__ . '\save_podcasting_term_meta' );
+
+/**
  * Add podcasting fields to the term screen.
  */
 function add_podcasting_term_edit_meta_fields( $term ) {
 	$podcasting_meta_fields = get_meta_fields();
-			error_log( json_encode( $term, JSON_PRETTY_PRINT ) );
 	?>
 	<table class="form-table">
 		<tbody><tr class="form-field form-required term-name-wrap">
 	<?php
-	foreach( $podcasting_meta_fields as $field ) {
-
-		$value = get_term_meta( $term->term_id, 'podcasting_' . $field['slug'], true );
+	foreach ( $podcasting_meta_fields as $field ) {
+		$value = get_term_meta( $term->term_id, $field['slug'], true );
 		$value = $value ? $value : '';
 		?>
 		<tr class="form-field form-required term-name-wrap">
@@ -170,11 +183,6 @@ function add_podcasting_term_edit_meta_fields( $term ) {
 			</td>
 		</tr>
 		<?php
-				/*
-
-				*/
-
-
 	}
 	?>
 	<tbody>
@@ -195,9 +203,7 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 		$url = get_term_feed_link( $term->term_id, Podcasting::$taxonomy );
 		echo '<strong>Your Podcast Feed: </strong> <a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		echo 'This is the URL you submit to iTunes or podcasting service.';
-
 	}
-
 }
 add_action( Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
 add_action( Podcasting::$taxonomy . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
