@@ -24,6 +24,7 @@ class Podcasting {
 	function __construct() {
 
 		require_once plugin_dir_path( __FILE__ ) . 'podcasting/datatypes.php';
+		register_activation_hook( __FILE__, 'flush_rewrite_rules' );
 
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_edit_term_enqueues' ) );
 
