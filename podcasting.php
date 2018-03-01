@@ -36,7 +36,7 @@ class Podcasting {
 
 			require_once plugin_dir_path( __FILE__ ) . 'podcasting/widget.php';
 			require_once plugin_dir_path( __FILE__ ) . 'podcasting/post-meta-box.php';
-			}
+		}
 
 	}
 
