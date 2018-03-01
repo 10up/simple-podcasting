@@ -23,7 +23,6 @@ class Podcasting {
 
 	function __construct() {
 
-		require_once plugin_dir_path( __FILE__ ) . 'vendor/fieldmanager/fieldmanager.php';
 		require_once plugin_dir_path( __FILE__ ) . 'podcasting/datatypes.php';
 
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_edit_term_enqueues' ) );
@@ -57,17 +56,15 @@ class Podcasting {
 
 		wp_enqueue_style(
 			'podcasting_edit_term_screen',
-			get_theme_file_uri() . '/plugins/podcasting/podcasting/podcasting-edit-term.css'
+			plugin_dir_url( __FILE__ ) . 'assets/css/podcasting-edit-term.css'
 		);
 
-		if ( 'edit-tags.php' === $hook_suffix ) {
-			wp_enqueue_script(
-				'podcasting_edit_term_screen',
-				get_theme_file_uri() . '/plugins/podcasting/podcasting/podcasting-edit-term.js',
-				array( 'jquery' ),
-				true
-			);
-		}
+		wp_enqueue_script(
+			'podcasting_edit_term_screen',
+			plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-term.js',
+			array( 'jquery' ),
+			true
+		);
 	}
 
 	/**

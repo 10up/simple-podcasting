@@ -1,11 +1,16 @@
 <?php
 namespace tenup_podcasting;
 
-function add_meta_box() {
-	add_meta_box( 'podcasting', __( 'Podcasting' ), 'podcasting_meta_box_html', 'post', 'advanced' );
+function add_podcasting_meta_box() {
+	add_meta_box(
+		'podcasting',
+		__( 'Podcasting' ),
+		__NAMESPACE__ . '\meta_box_html',
+		'post',
+		'advanced'
+	);
 }
-
-add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_meta_box' );
+add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );
 
 function meta_box_html( $post ) {
 	$options = wp_parse_args(
@@ -157,7 +162,7 @@ function edit_post_enqueues( $hook_suffix ) {
 
 	wp_enqueue_script(
 		'podcasting_edit_post_screen',
-		get_theme_file_uri() . '/plugins/podcasting/podcasting/podcasting-edit-post.js',
+		plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-post.js',
 		array( 'jquery', 'media-upload' ),
 		'20120911',
 		true
@@ -165,7 +170,7 @@ function edit_post_enqueues( $hook_suffix ) {
 
 	wp_localize_script( 'podcasting_edit_post_screen', 'Podcasting', array(
 		'postID'     => get_the_ID(),
-		'modalUrl'   => podcasting_get_media_modal_url(),
+		'modalUrl'   => get_media_modal_url(),
 	) );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\edit_post_enqueues' );
