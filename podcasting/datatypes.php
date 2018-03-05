@@ -32,7 +32,6 @@ add_action( 'init', __NAMESPACE__ . '\create_podcasts_taxonomy' );
 /**
  * Filter the menu so podcasts are parent-less.
  */
-
 function filter_parent_file( $file ) {
 	$screen = get_current_screen();
 
@@ -81,6 +80,9 @@ function add_top_level_menu() {
 }
 add_action( 'admin_menu', __NAMESPACE__ . '\add_top_level_menu' );
 
+/**
+ * Add fields to the add term screen.
+ */
 function add_podcasting_term_add_meta_fields( $term ) {
 	$podcasting_meta_fields = get_meta_fields();
 	foreach( $podcasting_meta_fields as $field ) {
@@ -92,6 +94,13 @@ function add_podcasting_term_add_meta_fields( $term ) {
 	}
 }
 
+/**
+ * Generate and output a single field.
+ *
+ * @param  array   $field   The field data.
+ * @param  string  $value   The existing field value.
+ * @param  boolean $term_id The term id, or false for the new term form.
+ */
 function the_field( $field, $value = '', $term_id = false ) {
 	switch ( $field['type'] ) {
 		case 'textfield':
@@ -267,7 +276,6 @@ add_action( Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\add_po
  * @param string $string      Blank string.
  * @param string $column_name Name of the column.
  * @param int    $term_id     Term ID.
- *
  */
 function add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
 

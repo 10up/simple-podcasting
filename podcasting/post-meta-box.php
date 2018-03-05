@@ -1,6 +1,13 @@
 <?php
+/**
+ * Add a meta box to the post edit screen, plus handlers for saving.
+ */
+
 namespace tenup_podcasting;
 
+/**
+ * Add a Podcasting metabox to the post edit screen.
+ */
 function add_podcasting_meta_box() {
 	add_meta_box(
 		'podcasting',
@@ -12,6 +19,10 @@ function add_podcasting_meta_box() {
 }
 add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );
 
+/**
+ * Output the Podcasting meta box.
+ * @param  object WP_Post $post The current post.
+ */
 function meta_box_html( $post ) {
 	$options = wp_parse_args(
 		get_post_meta( $post->ID, 'podcast_episode', true ),
@@ -26,7 +37,6 @@ function meta_box_html( $post ) {
 
 	$enclosure_url = ( isset( $options['enclosure']['url'] ) ) ? $options['enclosure']['url'] : '';
 	?>
-
 	<p>
 		<label for="podcast_closed_captioned">
 			<?php esc_html_e( 'Closed Captioned' ); ?>
@@ -58,6 +68,11 @@ function meta_box_html( $post ) {
 	<?php
 }
 
+/**
+ * Handle the post save event, saving any data from the meta box.
+ * @param  [type] $post_id [description]
+ * @return [type]          [description]
+ */
 function save_meta_box( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
@@ -103,6 +118,11 @@ function save_meta_box( $post_id ) {
 		}
 	}
 
+	/**
+	 * Retrieve the enclosure and store its metadata in post meta.
+	 *
+	 * @todo only retrieve enclosure metadata when a podcasting term id is selected and the url has changed.
+	 */
 	if ( $url ) {
 		// Modeled after WordPress do_enclose()
 		$headers = wp_get_http_headers( $url );
@@ -147,9 +167,13 @@ function save_meta_box( $post_id ) {
 
 	update_post_meta( $post_id, 'podcast_episode', $podcast_options );
 }
-
 add_action( 'save_post', __NAMESPACE__ . '\save_meta_box' );
 
+/**
+ * Enqueue helper script for the post edit and new post screens.
+ *
+ * @param  string $hook_suffix The current admin page.
+ */
 function edit_post_enqueues( $hook_suffix ) {
 	$screens = array(
 		'post.php',
@@ -175,6 +199,10 @@ function edit_post_enqueues( $hook_suffix ) {
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\edit_post_enqueues' );
 
+/**
+ * Helper function to retrieve the media URL to use in the post meta box.
+ * @return string The constructed media url.
+ */
 function get_media_modal_url() {
 	$post_id = get_the_ID();
 
