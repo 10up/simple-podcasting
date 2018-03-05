@@ -1,4 +1,7 @@
 <?php
+/**
+ * Customize the feed for a specific podcast. Insert the podcast data stored in term meta.
+ */
 namespace tenup_podcasting;
 
 /**
@@ -10,7 +13,9 @@ function xmlns() {
 add_action( 'rss2_ns', __NAMESPACE__ . '\xmlns' );
 
 /**
- * Get the current term_id.
+ * Get the current term, verifying that is has a term_id.
+ *
+ * @return object WP_Term or false if not a term feed.
  */
 function get_the_term(){
 	$queried_object = get_queried_object();
@@ -22,7 +27,9 @@ function get_the_term(){
 
 /**
  * Adjust the title for podcasting feeds.
+ *
  * @param  string $output The feed title.
+ *
  * @return string         The adjusted feed title.
  */
 function bloginfo_rss_name( $output ) {
@@ -54,9 +61,7 @@ add_filter( 'the_excerpt_rss', function() {
 	return $post ? apply_filters( 'the_content', $post->post_content ) : '';
 } );
 
-/**
- * Adjust the podcasting feed header.
- * @return [type] [description]
+ * Add podcasting details to the feed header.
  */
 function feed_head() {
 	$term = get_the_term();
@@ -167,6 +172,7 @@ function feed_item() {
 
 	echo "</itunes:explicit>\n";
 
+	// Add the featured image if available.
 	if ( has_post_thumbnail( $post->ID ) ) {
 		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' );
 		if ( ! empty( $image ) ) {
@@ -179,6 +185,7 @@ function feed_item() {
 		}
 	}
 
+	// @todo add a filter here
 	$keywords = '';
 	if ( ! empty( $keywords ) ) {
 		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
@@ -216,7 +223,9 @@ add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
 
 /**
  * Adjust the enclosure feed for podcasts.
+ *
  * @param  string $enclosure The enclosure (media url).
+ *
  * @return string            The adjusted enclosure.
  */
 function rss_enclosure( $enclosure ) {

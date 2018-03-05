@@ -16,9 +16,11 @@ namespace tenup_podcasting;
 $init = new Podcasting();
 
 
+/**
+ * The main podcasting class used to set up the plugin.
+ */
 class Podcasting {
 
-	// Taxonomy to use.
 	static $taxonomy = 'podcasting_podcasts';
 
 	function __construct() {
@@ -40,7 +42,7 @@ class Podcasting {
 	}
 
 	/**
-	 * Enqueue some admin styles.
+	 * Enqueue admin scripts and styles on the term and term edit screens.
 	 *
 	 * @param  string $hook_suffix The $hook_suffix for the current admin page.
 	 */
@@ -73,7 +75,8 @@ class Podcasting {
 	 * @uses podcasting/customize-feed.php
 	 */
 	public static function custom_feed() {
-		// Check to see if the current term is in the podcasting taxonomy.
+
+		// Is this a feed for a term in the podcasting taxonomy?
 		if ( is_feed() && is_tax( Podcasting::$taxonomy ) ) {
 			remove_action( 'rss2_head', 'rss2_blavatar' );
 			remove_action( 'rss2_head', 'rss2_site_icon' );
