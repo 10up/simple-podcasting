@@ -53,20 +53,12 @@ add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
 add_filter( 'wp_audio_shortcode', '__return_empty_string', 999 );
 
 /**
- * Adjust the excerpt, use the content instead.
- */
-add_filter( 'the_excerpt_rss', function() {
-	global $post;
-
-	return $post ? apply_filters( 'the_content', $post->post_content ) : '';
-} );
-
  * Add podcasting details to the feed header.
  */
 function feed_head() {
 	$term = get_the_term();
 	if ( ! $term ) {
-		return $output;
+		return;
 	}
 	$subtitle = get_term_meta( $term->term_id, 'podcasting_subtitle', true );
 
