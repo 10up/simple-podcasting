@@ -160,8 +160,6 @@ function feed_item() {
 			if ( is_array( $image ) ) {
 				$image = $image[0];
 			}
-			// iTunes barfs on https images, so force http here.
-			$image = str_replace( 'https://', 'http://', $image );
 			echo "<itunes:image href='" . esc_url( $image ) . "' />\n";
 		}
 	}
