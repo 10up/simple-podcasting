@@ -116,26 +116,15 @@ function feed_head() {
 		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
 	}
 
-	$category_1 = generate_category( 'podcasting_category_1' );
-
-	if ( ! empty( $category_1 ) ) {
-		echo wp_kses_post( $category_1 );
-	}
-
-	$category_2 = generate_category( 'podcasting_category_2' );
-
-	if ( ! empty( $category_2 ) ) {
-		echo wp_kses_post( $category_2 );
-	}
-
-	$category_3 = generate_category( 'podcasting_category_3' );
-
-	if ( ! empty( $category_3 ) ) {
-		echo wp_kses_post( $category_3 );
-	}
+	generate_category( 'podcasting_category_1' );
+	generate_category( 'podcasting_category_2' );
+	generate_category( 'podcasting_category_3' );
 }
 add_action( 'rss2_head', __NAMESPACE__ . '\feed_head' );
 
+/**
+ * Output the feed for a single podcast.
+ */
 function feed_item() {
 	global $post;
 	$term = get_the_term();
@@ -234,10 +223,9 @@ function rss_enclosure( $enclosure ) {
 add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
 
 /**
- * Generate the category elements from the given option (e.g. podcasting_category_1)
+ * Generate the category elements from the given option (e.g. podcasting_category_1).
  *
  * @param  string $option option to retrieve via get_term_meta
- * @return string The category tag that can be echoed into the feed
  */
 function generate_category( $option ) {
 	$term = get_the_term();
@@ -246,7 +234,6 @@ function generate_category( $option ) {
 	}
 
 	$category = get_term_meta( $term->term_id, $option, true );
-	$strcat = '';
 	switch ( $category ) {
 		case 'Education,Education':
 			$category = 'Education';
@@ -267,16 +254,15 @@ function generate_category( $option ) {
 
 	if ( ! empty( $category ) ) {
 		$splits = explode( ',', $category );
+
 		if ( 2 === count( $splits ) ) {
-			$strcat .= "<itunes:category text='" . esc_attr( $splits[0] ) . "'>\n";
-			$strcat .= "\t<itunes:category text='" . esc_attr( $splits[1] ) . "' />\n";
-			$strcat .= "</itunes:category>\n";
+			echo "<itunes:category text=\"" . esc_attr( $splits[0] ) . "\">\n";
+			echo "\t<itunes:category text=\"" . esc_attr( $splits[1] ) . "\" />\n";
+			echo "</itunes:category>\n";
 		} else {
-			$strcat .= "<itunes:category text='" . esc_attr( $category ) . "' />\n";
+			echo "<itunes:category text=\"" . esc_attr( $category ) . "\" />\n";
 		}
 	}
-
-	return $strcat;
 }
 
 /**
@@ -295,5 +281,5 @@ function empty_rss_excerpt( $output ) {
 
 	return $output;
 }
-// Run it super late after any other filters may have inserted something
+// Run it super late after any other filters may have inserted something.
 add_filter( 'the_excerpt_rss', __NAMESPACE__ . '\empty_rss_excerpt', 1000 );
