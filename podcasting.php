@@ -34,7 +34,6 @@ class Podcasting {
 				add_action( 'wp', array( __NAMESPACE__ . '\Podcasting', 'custom_feed' ) );
 			}
 
-			require_once plugin_dir_path( __FILE__ ) . 'podcasting/widget.php';
 			require_once plugin_dir_path( __FILE__ ) . 'podcasting/post-meta-box.php';
 		}
 
