@@ -12,6 +12,24 @@ namespace tenup_podcasting;
 const TAXONOMY_NAME = 'podcasting_podcasts';
 
 /**
+ * Is podcasting enabled?
+ *
+ * If there are any podcast terms set up, podcasting is enabled.
+ *
+ * @return bool
+ */
+function podcasting_is_enabled() {
+	$podcasting_terms = get_terms( array(
+		'taxonomy'      => TAXONOMY_NAME,
+		'hide_empty'    => false,
+		'fields'        => 'ids',
+		'no_found_rows' => true,
+	) );
+
+	return ! empty( $podcasting_terms );
+}
+
+/**
  * Podcasting for WordPress.
  *
  */
@@ -30,7 +48,7 @@ class Podcasting {
 
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_edit_term_enqueues' ) );
 
-		if ( self::podcasting_is_enabled() ) {
+		if ( podcasting_is_enabled() ) {
 
 			if ( ! is_admin() ) {
 				add_action( 'wp', array( __NAMESPACE__ . '\Podcasting', 'custom_feed' ) );
@@ -87,23 +105,6 @@ class Podcasting {
 			} );
 			require_once plugin_dir_path( __FILE__ ) . 'podcasting/customize-feed.php';
 		}
-	}
-
-	/**
-	 * Is podcasting enabled?
-	 *
-	 * If there are any podcast terms set up, podcasting is enabled.
-	 *
-	 * @return bool
-	 */
-	static function podcasting_is_enabled() {
-		$podcasting_terms = get_terms( array(
-			'taxonomy'      => TAXONOMY_NAME,
-			'hide_empty'    => false,
-			'fields'        => 'ids',
-			'no_found_rows' => true,
-		) );
-		return ! empty( $podcasting_terms );
 	}
 
 }
