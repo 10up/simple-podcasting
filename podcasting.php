@@ -86,24 +86,9 @@ function custom_feed() {
 }
 add_action( 'wp', __NAMESPACE__ . '\custom_feed' );
 
-/**
- * Podcasting for WordPress.
- *
- */
-$init = new Podcasting();
-
-
-/**
- * The main podcasting class used to set up the plugin.
- */
-class Podcasting {
-
-	function __construct() {
-
-		if ( podcasting_is_enabled() ) {
-			require_once plugin_dir_path( __FILE__ ) . 'podcasting/post-meta-box.php';
-		}
-
+function setup_edit_screen() {
+	if ( podcasting_is_enabled() ) {
+		require_once plugin_dir_path( __FILE__ ) . 'podcasting/post-meta-box.php';
 	}
-
 }
+add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
