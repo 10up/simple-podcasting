@@ -5,7 +5,7 @@ namespace tenup_podcasting;
  * Add a custom podcasts taxonomy.
  */
 function create_podcasts_taxonomy() {
-	register_taxonomy( Podcasting::$taxonomy, 'post', array(
+	register_taxonomy( TAXONOMY_NAME, 'post', array(
 		'labels'        => array(
 			'name'              => 'Podcasts',
 			'singular_name'     => 'Podcast',
@@ -214,7 +214,7 @@ function save_podcasting_term_meta( $term_id ) {
 		}
 	}
 }
-add_action( 'edited_' . Podcasting::$taxonomy, __NAMESPACE__ . '\save_podcasting_term_meta' );
+add_action( 'edited_' . TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
 
 /**
  * Add podcasting fields to the term screen.
@@ -258,16 +258,16 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	} </style>';
 	wp_enqueue_media();
 	if ( $taxonomy ) {
-		$url = get_term_feed_link( $term->term_id, Podcasting::$taxonomy );
+		$url = get_term_feed_link( $term->term_id, TAXONOMY_NAME );
 		echo '<strong>Your Podcast Feed: </strong> <a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		echo 'This is the URL you submit to iTunes or podcasting service.';
 	}
 }
-add_action( Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
-add_action( Podcasting::$taxonomy . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
+add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
+add_action( TAXONOMY_NAME . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
 
-add_action( Podcasting::$taxonomy . '_edit_form', __NAMESPACE__ . '\add_podcasting_term_edit_meta_fields' );
-add_action( Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_add_meta_fields' );
+add_action( TAXONOMY_NAME . '_edit_form', __NAMESPACE__ . '\add_podcasting_term_edit_meta_fields' );
+add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_add_meta_fields' );
 
 
 /**
@@ -280,12 +280,12 @@ add_action( Podcasting::$taxonomy . '_add_form_fields', __NAMESPACE__ . '\add_po
 function add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
 
 	if ( 'feedurl' === $column_name ) {
-		$url = get_term_feed_link( $term_id, Podcasting::$taxonomy );
+		$url = get_term_feed_link( $term_id, TAXONOMY_NAME );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a>';
 	}
 	return $string;
 }
-add_filter( 'manage_' . Podcasting::$taxonomy . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column',10,3);
+add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column',10,3);
 
 /**
  * Add a custom column for the podcast feed link.
@@ -297,7 +297,7 @@ function add_custom_term_columns( $columns ){
 	unset( $columns['author'] );
 	return $columns;
 }
-add_filter( 'manage_edit-' . Podcasting::$taxonomy . '_columns', __NAMESPACE__ . '\add_custom_term_columns', 99 );
+add_filter( 'manage_edit-' . TAXONOMY_NAME . '_columns', __NAMESPACE__ . '\add_custom_term_columns', 99 );
 
 /**
  * Get the meta fields used for podcasts.

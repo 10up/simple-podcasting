@@ -9,6 +9,8 @@
  */
 namespace tenup_podcasting;
 
+const TAXONOMY_NAME = 'podcasting_podcasts';
+
 /**
  * Podcasting for WordPress.
  *
@@ -20,8 +22,6 @@ $init = new Podcasting();
  * The main podcasting class used to set up the plugin.
  */
 class Podcasting {
-
-	static $taxonomy = 'podcasting_podcasts';
 
 	function __construct() {
 
@@ -77,7 +77,7 @@ class Podcasting {
 	public static function custom_feed() {
 
 		// Is this a feed for a term in the podcasting taxonomy?
-		if ( is_feed() && is_tax( Podcasting::$taxonomy ) ) {
+		if ( is_feed() && is_tax( TAXONOMY_NAME ) ) {
 			remove_action( 'rss2_head', 'rss2_blavatar' );
 			remove_action( 'rss2_head', 'rss2_site_icon' );
 			remove_filter( 'the_excerpt_rss', 'add_bug_to_feed', 100 );
@@ -98,7 +98,7 @@ class Podcasting {
 	 */
 	static function podcasting_is_enabled() {
 		$podcasting_terms = get_terms( array(
-			'taxonomy'      => Podcasting::$taxonomy,
+			'taxonomy'      => TAXONOMY_NAME,
 			'hide_empty'    => false,
 			'fields'        => 'ids',
 			'no_found_rows' => true,
