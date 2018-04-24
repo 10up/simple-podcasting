@@ -34,6 +34,36 @@ function podcasting_is_enabled() {
 }
 
 /**
+ * Enqueue admin scripts and styles on the term and term edit screens.
+ *
+ * @param  string $hook_suffix The $hook_suffix for the current admin page.
+ */
+function podcasting_edit_term_enqueues( $hook_suffix ) {
+	$screens = array(
+		'edit-tags.php',
+		'term.php'
+	);
+
+	if ( ! in_array( $hook_suffix, $screens, true ) ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'podcasting_edit_term_screen',
+		plugin_dir_url( __FILE__ ) . 'assets/css/podcasting-edit-term.css'
+	);
+
+	wp_enqueue_script(
+		'podcasting_edit_term_screen',
+		plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-term.js',
+		array( 'jquery' ),
+		true
+	);
+}
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
+
+
+/**
  * Podcasting for WordPress.
  *
  */
@@ -47,8 +77,6 @@ class Podcasting {
 
 	function __construct() {
 
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'podcasting_edit_term_enqueues' ) );
-
 		if ( podcasting_is_enabled() ) {
 
 			if ( ! is_admin() ) {
@@ -58,34 +86,6 @@ class Podcasting {
 			require_once plugin_dir_path( __FILE__ ) . 'podcasting/post-meta-box.php';
 		}
 
-	}
-
-	/**
-	 * Enqueue admin scripts and styles on the term and term edit screens.
-	 *
-	 * @param  string $hook_suffix The $hook_suffix for the current admin page.
-	 */
-	public static function podcasting_edit_term_enqueues( $hook_suffix ) {
-		$screens = array(
-			'edit-tags.php',
-			'term.php'
-		);
-
-		if ( ! in_array( $hook_suffix, $screens, true ) ) {
-			return;
-		}
-
-		wp_enqueue_style(
-			'podcasting_edit_term_screen',
-			plugin_dir_url( __FILE__ ) . 'assets/css/podcasting-edit-term.css'
-		);
-
-		wp_enqueue_script(
-			'podcasting_edit_term_screen',
-			plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-term.js',
-			array( 'jquery' ),
-			true
-		);
 	}
 
 	/**
