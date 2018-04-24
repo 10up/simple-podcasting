@@ -62,6 +62,29 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
 
+/**
+ * Load the file containing iTunes specific feed hooks.
+ *
+ * @uses podcasting/customize-feed.php
+ */
+function custom_feed() {
+	if ( is_admin() || ! podcasting_is_enabled() ) {
+		return;
+	}
+
+	// Is this a feed for a term in the podcasting taxonomy?
+	if ( is_feed() && is_tax( TAXONOMY_NAME ) ) {
+		remove_action( 'rss2_head', 'rss2_blavatar' );
+		remove_action( 'rss2_head', 'rss2_site_icon' );
+		remove_filter( 'the_excerpt_rss', 'add_bug_to_feed', 100 );
+		remove_action( 'rss2_head', 'rsscloud_add_rss_cloud_element' );
+		add_filter( 'wp_feed_cache_transient_lifetime', function() {
+			return HOUR_IN_SECONDS;
+		} );
+		require_once plugin_dir_path( __FILE__ ) . 'podcasting/customize-feed.php';
+	}
+}
+add_action( 'wp', __NAMESPACE__ . '\custom_feed' );
 
 /**
  * Podcasting for WordPress.
@@ -78,34 +101,9 @@ class Podcasting {
 	function __construct() {
 
 		if ( podcasting_is_enabled() ) {
-
-			if ( ! is_admin() ) {
-				add_action( 'wp', array( __NAMESPACE__ . '\Podcasting', 'custom_feed' ) );
-			}
-
 			require_once plugin_dir_path( __FILE__ ) . 'podcasting/post-meta-box.php';
 		}
 
-	}
-
-	/**
-	 * Load the file containing iTunes specific feed hooks.
-	 *
-	 * @uses podcasting/customize-feed.php
-	 */
-	public static function custom_feed() {
-
-		// Is this a feed for a term in the podcasting taxonomy?
-		if ( is_feed() && is_tax( TAXONOMY_NAME ) ) {
-			remove_action( 'rss2_head', 'rss2_blavatar' );
-			remove_action( 'rss2_head', 'rss2_site_icon' );
-			remove_filter( 'the_excerpt_rss', 'add_bug_to_feed', 100 );
-			remove_action( 'rss2_head', 'rsscloud_add_rss_cloud_element' );
-			add_filter( 'wp_feed_cache_transient_lifetime', function() {
-				return HOUR_IN_SECONDS;
-			} );
-			require_once plugin_dir_path( __FILE__ ) . 'podcasting/customize-feed.php';
-		}
 	}
 
 }
