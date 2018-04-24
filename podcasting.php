@@ -50,12 +50,12 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 
 	wp_enqueue_style(
 		'podcasting_edit_term_screen',
-		plugin_dir_url( __FILE__ ) . 'assets/css/podcasting-edit-term.css'
+		plugin_dir_url( __FILE__ ) . 'podcasting/assets/css/podcasting-edit-term.css'
 	);
 
 	wp_enqueue_script(
 		'podcasting_edit_term_screen',
-		plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-term.js',
+		plugin_dir_url( __FILE__ ) . 'podcasting/assets/js/podcasting-edit-term.js',
 		array( 'jquery' ),
 		true
 	);
