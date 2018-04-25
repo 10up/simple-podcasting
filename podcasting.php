@@ -11,7 +11,7 @@ namespace tenup_podcasting;
 
 const TAXONOMY_NAME = 'podcasting_podcasts';
 
-require_once plugin_dir_path( __FILE__ ) . 'podcasting/datatypes.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/datatypes.php';
 
 register_activation_hook( __FILE__, 'flush_rewrite_rules' );
 
@@ -50,12 +50,12 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 
 	wp_enqueue_style(
 		'podcasting_edit_term_screen',
-		plugin_dir_url( __FILE__ ) . 'podcasting/assets/css/podcasting-edit-term.css'
+		plugin_dir_url( __FILE__ ) . 'assets/css/podcasting-edit-term.css'
 	);
 
 	wp_enqueue_script(
 		'podcasting_edit_term_screen',
-		plugin_dir_url( __FILE__ ) . 'podcasting/assets/js/podcasting-edit-term.js',
+		plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-term.js',
 		array( 'jquery' ),
 		true
 	);
@@ -65,7 +65,7 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqu
 /**
  * Load the file containing iTunes specific feed hooks.
  *
- * @uses podcasting/customize-feed.php
+ * @uses includes/customize-feed.php
  */
 function custom_feed() {
 	if ( is_admin() || ! podcasting_is_enabled() ) {
@@ -81,14 +81,14 @@ function custom_feed() {
 		add_filter( 'wp_feed_cache_transient_lifetime', function() {
 			return HOUR_IN_SECONDS;
 		} );
-		require_once plugin_dir_path( __FILE__ ) . 'podcasting/customize-feed.php';
+		require_once plugin_dir_path( __FILE__ ) . 'includes/customize-feed.php';
 	}
 }
 add_action( 'wp', __NAMESPACE__ . '\custom_feed' );
 
 function setup_edit_screen() {
 	if ( podcasting_is_enabled() ) {
-		require_once plugin_dir_path( __FILE__ ) . 'podcasting/post-meta-box.php';
+		require_once plugin_dir_path( __FILE__ ) . 'includes/post-meta-box.php';
 	}
 }
 add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
