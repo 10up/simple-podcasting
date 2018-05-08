@@ -186,7 +186,7 @@ function edit_post_enqueues( $hook_suffix ) {
 
 	wp_enqueue_script(
 		'podcasting_edit_post_screen',
-		plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-post.js',
+		plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/podcasting-edit-post.js',
 		array( 'jquery' ),
 		'20120911',
 		true
