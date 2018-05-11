@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "yoda": [ 0 ],
+    "indent": [ 2, "tab", { "SwitchCase": 2 } ],
+    "linebreak-style": [ 0, "unix" ],
+    "quotes": [ 2, "single" ],
+    "semi": [ 2, "always" ],
+    "space-in-parens": [ 0, "always" ],
+    "no-unused-vars": [ 1 ],
+    "no-console": [ 1 ],
+    "no-alert": [ 1 ],
+    "camelcase": [ 2 ]
+  },
+  globals: {
+  	"wp"
+  }
+}

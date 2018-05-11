@@ -1,0 +1,1 @@
+{"version":3,"sources":["css/block-editor.css"],"names":[],"mappings":"AAMA,6BACC,qBAAwB,CACxB","file":"block-editor.min.css","sourcesContent":["/**\n * The following styles get applied inside the editor only.\n *\n * Replace them with your own styles or remove the file completely.\n */\n\n.wp-block-podcasting-podcast {\n\tborder: 1px dotted #f00;\n}\n"]}

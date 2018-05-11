@@ -102,7 +102,7 @@ add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
 function block_init() {
 	$dir = dirname( __FILE__ );
 
-	$block_js = 'assets/js/blocks.js';
+	$block_js = 'dist/js/blocks.min.js';
 	wp_register_script(
 		'podcasting-block-editor',
 		plugins_url( $block_js, __FILE__ ),
