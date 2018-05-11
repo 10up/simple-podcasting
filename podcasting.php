@@ -102,7 +102,7 @@ add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
 function block_init() {
 	$dir = dirname( __FILE__ );
 
-	$block_js = 'blocks/block.js';
+	$block_js = 'assets/js/blocks.js';
 	wp_register_script(
 		'podcasting-block-editor',
 		plugins_url( $block_js, __FILE__ ),
@@ -114,7 +114,7 @@ function block_init() {
 		filemtime( "$dir/$block_js" )
 	);
 
-	$editor_css = 'blocks/editor.css';
+	$editor_css = 'assets/css/block-editor.css';
 	wp_register_style(
 		'podcasting-block-editor',
 		plugins_url( $editor_css, __FILE__ ),
@@ -124,7 +124,7 @@ function block_init() {
 		filemtime( "$dir/$editor_css" )
 	);
 
-	$style_css = 'blocks/style.css';
+	$style_css = 'assets/css/block-style.css';
 	wp_register_style(
 		'podcasting-block',
 		plugins_url( $style_css, __FILE__ ),

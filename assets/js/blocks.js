@@ -15,6 +15,8 @@
 	 */
 	var __ = wp.i18n.__;
 
+	var MediaUploadButton = wp.blocks.MediaUploadButton;
+
 	/**
 	 * Every block starts by registering a new block type definition.
 	 * @see https://wordpress.org/gutenberg/handbook/block-api/
@@ -24,13 +26,17 @@
 		 * This is the display title for your block, which can be translated with `i18n` functions.
 		 * The block inserter will show this name.
 		 */
-		title: __( 'Podcast' ),
+		title: __( 'Podcast', 'podcasting' ),
+
+		description: __( 'Insert a podcast episode into a post and add to a podcast feed.', 'podcasting'),
 
 		/**
 		 * Blocks are grouped into categories to help users browse and discover them.
 		 * The categories provided by core are `common`, `embed`, `formatting`, `layout` and `widgets`.
 		 */
-		category: 'embed',
+		category: 'common',
+
+		icon: 'microphone',
 
 		/**
 		 * Optional block extended support features.
@@ -38,6 +44,26 @@
 		supports: {
 			// Removes support for an HTML mode.
 			html: false,
+		},
+
+		attributes: {
+			src: {
+				type: 'string',
+				source: 'attribute',
+				selector: 'audio',
+				attribute: 'src',
+			},
+			align: {
+				type: 'string',
+			},
+			caption: {
+				type: 'array',
+				source: 'children',
+				selector: 'figcaption',
+			},
+			id: {
+				type: 'number',
+			},
 		},
 
 		/**
@@ -50,9 +76,22 @@
 		 */
 		edit: function( props ) {
 			return el(
-				'p',
+				'div',
 				{ className: props.className },
-				__( 'Hello from the editor!' )
+				el( blocks.MediaUploadButton, {
+					buttonProps: {
+						className: attributes.mediaID
+							? 'image-button'
+							: 'components-button button button-large',
+					},
+					onSelect: onSelectImage,
+					type: 'image',
+					value: attributes.mediaID,
+				},
+				attributes.mediaID
+					? el( 'img', { src: attributes.mediaURL } )
+					: 'Upload Image'
+				),
 			);
 		},
 
