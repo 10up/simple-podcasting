@@ -63,8 +63,6 @@ function meta_box_html( $post ) {
 
 	<p class="howto"><?php esc_html_e( 'Optional: Use this field if you have more than one audio/video file in your post.' ); ?></p>
 
-	<p><a href="http://en.support.wordpress.com/audio/podcasting/" target="_blank"><?php esc_html_e( 'Need help? No problem! Check out our support documentation.' ); ?></a></p>
-
 	<?php
 }
 
