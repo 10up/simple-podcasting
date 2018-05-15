@@ -124,7 +124,7 @@ function block_init() {
 		filemtime( "$dir/$editor_css" )
 	);
 
-	$style_css = 'assets/css/block-style.css';
+	$style_css = 'assets/css/block-display.css';
 	wp_register_style(
 		'podcasting-block',
 		plugins_url( $style_css, __FILE__ ),
