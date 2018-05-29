@@ -14,7 +14,11 @@ function add_podcasting_meta_box() {
 		__( 'Podcasting' ),
 		__NAMESPACE__ . '\meta_box_html',
 		'post',
-		'advanced'
+		'advanced',
+		'default',
+		array(
+			'__back_compat_meta_box' => true,
+		)
 	);
 }
 add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );

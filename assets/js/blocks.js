@@ -1,120 +1,3 @@
-// ( function( wp ) {
-// 	/**
-// 	 * Registers a new block provided a unique name and an object defining its behavior.
-// 	 * @see https://github.com/WordPress/gutenberg/tree/master/blocks#api
-// 	 */
-// 	var registerBlockType = wp.blocks.registerBlockType;
-// 	/**
-// 	 * Returns a new element of given type. Element is an abstraction layer atop React.
-// 	 * @see https://github.com/WordPress/gutenberg/tree/master/element#element
-// 	 */
-// 	var el = wp.element.createElement;
-// 	/**
-// 	 * Retrieves the translation of text.
-// 	 * @see https://github.com/WordPress/gutenberg/tree/master/i18n#api
-// 	 */
-// 	var __ = wp.i18n.__;
-
-// 	var MediaUploadButton = wp.blocks.MediaUploadButton;
-
-// 	/**
-// 	 * Every block starts by registering a new block type definition.
-// 	 * @see https://wordpress.org/gutenberg/handbook/block-api/
-// 	 */
-// 	registerBlockType( 'podcasting/podcast', {
-// 		/**
-// 		 * This is the display title for your block, which can be translated with `i18n` functions.
-// 		 * The block inserter will show this name.
-// 		 */
-// 		title: __( 'Podcast' ),
-
-// 		description: __( 'Insert a podcast episode into a post and add to a podcast feed.' ),
-
-// 		/**
-// 		 * Blocks are grouped into categories to help users browse and discover them.
-// 		 * The categories provided by core are `common`, `embed`, `formatting`, `layout` and `widgets`.
-// 		 */
-// 		category: 'common',
-
-// 		icon: 'microphone',
-
-// 		/**
-// 		 * Optional block extended support features.
-// 		 */
-// 		supports: {
-// 			// Removes support for an HTML mode.
-// 			html: false,
-// 		},
-
-// 		attributes: {
-// 			src: {
-// 				type: 'string',
-// 				source: 'attribute',
-// 				selector: 'audio',
-// 				attribute: 'src',
-// 			},
-// 			align: {
-// 				type: 'string',
-// 			},
-// 			caption: {
-// 				type: 'array',
-// 				source: 'children',
-// 				selector: 'figcaption',
-// 			},
-// 			id: {
-// 				type: 'number',
-// 			},
-// 		},
-
-// 		/**
-// 		 * The edit function describes the structure of your block in the context of the editor.
-// 		 * This represents what the editor will render when the block is used.
-// 		 * @see https://wordpress.org/gutenberg/handbook/block-edit-save/#edit
-// 		 *
-// 		 * @param {Object} [props] Properties passed from the editor.
-// 		 * @return {Element}       Element to render.
-// 		 */
-// 		edit: function( props ) {
-// 			return el(
-// 				'div',
-// 				{ className: props.className },
-// 				el( blocks.MediaUploadButton, {
-// 					buttonProps: {
-// 						className: attributes.mediaID
-// 							? 'image-button'
-// 							: 'components-button button button-large',
-// 					},
-// 					onSelect: onSelectImage,
-// 					type: 'image',
-// 					value: attributes.mediaID,
-// 				},
-// 				attributes.mediaID
-// 					? el( 'img', { src: attributes.mediaURL } )
-// 					: 'Upload Image'
-// 				),
-// 			);
-// 		},
-
-// 		/**
-// 		 * The save function defines the way in which the different attributes should be combined
-// 		 * into the final markup, which is then serialized by Gutenberg into `post_content`.
-// 		 * @see https://wordpress.org/gutenberg/handbook/block-edit-save/#save
-// 		 *
-// 		 * @return {Element}       Element to render.
-// 		 */
-// 		save: function() {
-// 			return el(
-// 				'p',
-// 				{},
-// 				__( 'Hello from the saved content!' )
-// 			);
-// 		}
-// 	} );
-// } )(
-// 	window.wp
-// );
-
-
 /**
  * Internal block libraries
  */
@@ -123,9 +6,15 @@ const {
     registerBlockType,
     Editable,
     MediaUpload,
+    RichText,
+    InspectorControls,
+    BlockControls,
 } = wp.blocks;
 const {
     Button,
+    FormToggle,
+    PanelBody,
+    PanelRow,
 } = wp.components;
 
 /**
@@ -138,55 +27,112 @@ export default registerBlockType(
 		description: __( 'Insert a podcast episode into a post and add to a podcast feed.' ),
         category: 'common',
         icon: 'microphone',
+        useOnce: true,
         attributes: {
-            imgURL: {
-                type: 'string',
-                source: 'attribute',
-                attribute: 'src',
-                selector: 'img',
-            },
-            imgID: {
+            id: {
                 type: 'number',
             },
-            imgAlt: {
+            src: {
+             type: 'string',
+             source: 'attribute',
+             selector: 'audio',
+             attribute: 'src',
+            },
+            caption: {
+                type: 'array',
+                source: 'children',
+                selector: 'figcaption',
+            },
+            podcastTerm: {
                 type: 'string',
-                source: 'attribute',
-                attribute: 'alt',
-                selector: 'img',
+            },
+            captioned: {
+                type: 'boolean',
+                source: 'meta',
+                meta: 'podcast_captioned',
+                default: false,
+            },
+            explicit: {
+                type: 'boolean',
+                source: 'meta',
+                meta: 'podcast_explicit',
+                default: false,
+            },
+            podcastEpisode: {
+                type: 'string',
+                source: 'meta',
+                meta: 'podcast_episode'
             }
         },
         edit: props => {
-            const { attributes: { imgID, imgURL, imgAlt },
+            const { attributes: { id, src, align, caption, podcastTerm, captioned, explicit, podcastEpisode },
                 className, setAttributes, isSelected } = props;
-            const onSelectImage = img => {
+            const onSelectAttachment = attachment => {
                 setAttributes( {
-                    imgID: img.id,
-                    imgURL: img.url,
-                    imgAlt: img.alt,
+                    id: attachment.id,
+                    src: attachment.url,
+                    caption: attachment.title,
                 } );
             };
-            const onRemoveImage = () => {
+            const onRemoveAttachment = () => {
                 setAttributes({
-                    imgID: null,
-                    imgURL: null,
-                    imgAlt: null,
+                    id: null,
+                    src: null,
+                    caption: null,
                 });
             }
-            return (
+            const toggleExplicit  = () => setAttributes( { explicit: ! explicit } );
+            const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
+
+            return [
+                isSelected && (
+                    <InspectorControls>
+                        <PanelBody
+                          title={ __( 'Podcast Settings' ) }
+                        >
+                            <PanelRow>
+                                <label
+                                    htmlFor="podcast-captioned-form-toggle"
+                                >
+                                    { __( 'Closed Captioned' ) }
+                                </label>
+                                <FormToggle
+                                    id="podcast-captioned-form-toggle"
+                                    label={ __( 'Closed Captioned' ) }
+                                    checked={ captioned }
+                                    onChange={ toggleCaptioned }
+                                />
+                            </PanelRow>
+                            <PanelRow>
+                                <label
+                                    htmlFor="podcast-explicit-form-toggle"
+                                >
+                                    { __( 'Explicit Content' ) }
+                                </label>
+                                <FormToggle
+                                    id="podcast-explicit-form-toggle"
+                                    label={ __( 'Explicit Content' ) }
+                                    checked={ explicit }
+                                    onChange={ toggleExplicit }
+                                />
+                            </PanelRow>
+                        </PanelBody>
+                    </InspectorControls>
+                ),
                 <div className={ className }>
 
-                    { ! imgID ? (
+                    { ! id ? (
 
                         <MediaUpload
-                            onSelect={ onSelectImage }
-                            type="image"
-                            value={ imgID }
+                            onSelect={ onSelectAttachment }
+                            type="audio"
+                            value={ id }
                             render={ ( { open } ) => (
                                 <Button
                                     className={ "button button-large" }
                                     onClick={ open }
                                 >
-                                    { __( 'Upload Image' ) }
+                                    { __( 'Upload / Select Podcast' ) }
                                 </Button>
                             ) }
                         >
@@ -194,38 +140,30 @@ export default registerBlockType(
 
                     ) : (
 
-                        <p class="image-wrapper">
-                            <img
-                                src={ imgURL }
-                                alt={ imgAlt }
-                            />
-
-                            { isSelected ? (
-
-                                <Button
-                                    className="remove-image"
-                                    onClick={ onRemoveImage }
-                                >
-                                    { __( 'Remove' ) }
-                                </Button>
-
-                            ) : null }
-
-                        </p>
+                        <figure key="audio" className={ className }>
+                            <audio controls="controls" src={ src } />
+                            { ( ( caption && caption.length ) || !! isSelected ) && (
+                                <RichText
+                                    tagName="figcaption"
+                                    placeholder={ __( 'Write caption…' ) }
+                                    value={ caption }
+                                    onChange={ ( value ) => setAttributes( { caption: value } ) }
+                                    isSelected={ isSelected }
+                                />
+                            ) }
+                        </figure>
                     )}
 
                 </div>
-            );
+            ];
         },
         save: props => {
-            const { imgURL, imgAlt } = props.attributes;
+            const { id, src, align, caption, podcastTerm, captioned, explicit, podcastEpisode } = props.attributes;
             return (
-                <p>
-                    <img
-                        src={ imgURL }
-                        alt={ imgAlt }
-                    />
-                </p>
+                <figure className={ id ? `podcast-${ id }` : null }>
+                    <audio controls="controls" src={ src } />
+                    { caption && caption.length > 0 && <figcaption>{ caption }</figcaption> }
+                </figure>
             );
         },
     },

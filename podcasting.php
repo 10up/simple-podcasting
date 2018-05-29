@@ -113,7 +113,7 @@ function block_init() {
 		),
 		filemtime( "$dir/$block_js" )
 	);
-
+/**
 	$editor_css = 'assets/css/block-editor.css';
 	wp_register_style(
 		'podcasting-block-editor',
@@ -133,7 +133,7 @@ function block_init() {
 		),
 		filemtime( "$dir/$style_css" )
 	);
-
+**/
 	register_block_type( 'podcasting/podcast', array(
 		'editor_script' => 'podcasting-block-editor',
 		'editor_style'  => 'podcasting-block-editor',
