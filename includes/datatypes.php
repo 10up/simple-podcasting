@@ -43,6 +43,7 @@ function create_podcasts_taxonomy() {
 		'hierarchical'      => true,
 		'show_tagcloud'     => false,
 		'public'            => true,
+		'show_in_rest'      => true,
 		'show_in_nav_menus' => false,
 		'show_admin_column' => true,
 		'rewrite'           => array( 'slug' => 'podcasts' ),
