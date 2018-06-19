@@ -29,7 +29,7 @@ export default registerBlockType(
     'podcasting/podcast',
     {
         title: __( 'Podcast' ),
-		description: __( 'Insert a podcast episode into a post and add to a podcast feed.' ),
+		description: __( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.' ),
         category: 'common',
         icon: 'microphone',
         useOnce: true,
