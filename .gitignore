@@ -1,0 +1,32 @@
+node_modules
+bower_components
+release
+vendor
+composer.lock
+phpunit.xml
+.idea
+package-lock.json
+
+# Project Files
+#dist
+
+# Editors
+*.esproj
+*.tmproj
+*.tmproject
+tmtags
+.*.sw[a-z]
+*.un~
+Session.vim
+*.swp
+*.csv
+
+# Mac OSX
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Desktop.ini

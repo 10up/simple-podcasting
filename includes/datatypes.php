@@ -1,6 +1,27 @@
 <?php
 namespace tenup_podcasting;
 
+function register_meta() {
+	\register_meta( 'post', 'podcast_episode', array(
+		'show_in_rest' => true,
+		'type'         => 'array',
+		'single'       => true,
+	) );
+
+	\register_meta( 'post', 'podcast_explicit', array(
+		'show_in_rest' => true,
+		'type'         => 'boolean',
+		'single'       => true,
+	) );
+
+	\register_meta( 'post', 'podcast_captioned', array(
+		'show_in_rest' => true,
+		'type'         => 'boolean',
+		'single'       => true,
+	) );
+}
+add_action( 'init', __NAMESPACE__ . '\register_meta' );
+
 /**
  * Add a custom podcasts taxonomy.
  */
@@ -22,6 +43,7 @@ function create_podcasts_taxonomy() {
 		'hierarchical'      => true,
 		'show_tagcloud'     => false,
 		'public'            => true,
+		'show_in_rest'      => true,
 		'show_in_nav_menus' => false,
 		'show_admin_column' => true,
 		'rewrite'           => array( 'slug' => 'podcasts' ),

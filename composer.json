@@ -1,0 +1,15 @@
+{
+  "name": "10up/podcasting",
+  "authors": [
+    {
+      "name": "10up",
+      "email": "email@10up.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "require-dev": {
+    "10up/wp_mock": "dev-dev"
+  }
+}

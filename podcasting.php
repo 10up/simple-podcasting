@@ -92,3 +92,54 @@ function setup_edit_screen() {
 	}
 }
 add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
+
+/**
+ * Registers all block assets so that they can be enqueued through Gutenberg in
+ * the corresponding context.
+ *
+ * @see https://wordpress.org/gutenberg/handbook/blocks/writing-your-first-block-type/#enqueuing-block-scripts
+ */
+function block_init() {
+	$dir = dirname( __FILE__ );
+
+	$block_js = 'dist/js/blocks.min.js';
+	wp_register_script(
+		'podcasting-block-editor',
+		plugins_url( $block_js, __FILE__ ),
+		array(
+			'wp-blocks',
+			'wp-i18n',
+			'wp-element',
+		),
+		filemtime( "$dir/$block_js" )
+	);
+
+	$editor_css = 'assets/css/block-editor.css';
+	wp_register_style(
+		'podcasting-block-editor',
+		plugins_url( $editor_css, __FILE__ ),
+		array(
+			'wp-blocks',
+		),
+		filemtime( "$dir/$editor_css" )
+	);
+
+/**
+	$style_css = 'assets/css/block-display.css';
+	wp_register_style(
+		'podcasting-block',
+		plugins_url( $style_css, __FILE__ ),
+		array(
+			'wp-blocks',
+		),
+		filemtime( "$dir/$style_css" )
+	);
+**/
+	register_block_type( 'podcasting/podcast', array(
+		'editor_script' => 'podcasting-block-editor',
+		'editor_style'  => 'podcasting-block-editor',
+		'style'         => 'podcasting-block',
+	) );
+}
+add_action( 'init', __NAMESPACE__ . '\block_init' );
+
