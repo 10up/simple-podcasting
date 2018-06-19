@@ -10,13 +10,16 @@ const {
     RichText,
     InspectorControls,
     BlockControls,
+    BlockAlignmentToolbar,
 } = wp.blocks;
 const {
     Button,
     FormToggle,
+    IconButton,
     PanelBody,
     PanelRow,
     Placeholder,
+    Toolbar,
 } = wp.components;
 
 /**
@@ -84,7 +87,14 @@ export default registerBlockType(
                 const { id, align, caption, podcastTerm, captioned, explicit, podcastEpisode } = this.props.attributes;
                 const { setAttributes, isSelected } = this.props;
                 const { editing, className, src } = this.state;
+
+                const switchToEditing = () => {
+                    this.setState( { editing: true } );
+                };
+
                 const onSelectAttachment = ( attachment ) => {
+                    this.setState( { src: null } );
+
                     setAttributes( {
                         id: attachment.id,
                         src: attachment.url,
@@ -93,29 +103,36 @@ export default registerBlockType(
 
                     this.setState( { editing: false } );
                 };
-                const onRemoveAttachment = () => {
-                    setAttributes({
-                        id: null,
-                        src: null,
-                        caption: null,
-                    });
-
-                    this.setState( { editing: true } );
-                }
                 const onSelectUrl = ( event ) => {
                     event.preventDefault();
                     if ( src ) {
-                        // set the block's src from the edit component's state, and switch off the editing UI
-                        setAttributes( { src } );
+                        setAttributes({
+                            src: src,
+                            id: null,
+                            caption: null,
+                        });
                         this.setState( { editing: false } );
                     }
                     return false;
                 };
-
                 const toggleExplicit  = () => setAttributes( { explicit: ! explicit } );
                 const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
+                const controls = isSelected && (
+                    <BlockControls key="controls">
+                        <Toolbar>
+                            <IconButton
+                                className="components-icon-button components-toolbar__control"
+                                label={ __( 'Edit podcast' ) }
+                                onClick={ switchToEditing }
+                                icon="edit"
+                            />
+                        </Toolbar>
+                    </BlockControls>
+                );
+
                 return [
+                    controls,
                     isSelected && (
                         <InspectorControls>
                             <PanelBody
