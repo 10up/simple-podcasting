@@ -17,7 +17,11 @@ function block_init() {
 		filemtime( PODCASTING_PATH . $block_js )
 	);
 
-	$editor_css = 'assets/css/block-editor.css';
+	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+		$editor_css = 'assets/css/block-editor.css';
+	} else {
+		$editor_css = 'dist/css/block-editor.min.css';
+	}
 	wp_register_style(
 		'podcasting-block-editor',
 		PODCASTING_URL . $editor_css,

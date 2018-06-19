@@ -9,9 +9,10 @@
  */
 namespace tenup_podcasting;
 
-define( 'TAXONOMY_NAME',   'podcasting_podcasts' );
-define( 'PODCASTING_PATH',  dirname( __FILE__ ) . '/' );
-define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
+define( 'PODCASTING_VERSION', '1.0.0' );
+define( 'PODCASTING_PATH',     dirname( __FILE__ ) . '/' );
+define( 'PODCASTING_URL',      plugin_dir_url( __FILE__ ) );
+define( 'TAXONOMY_NAME',      'podcasting_podcasts' );
 
 require_once PODCASTING_PATH . 'includes/datatypes.php';
 
@@ -55,16 +56,26 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		return;
 	}
 
+	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+		$css_file = 'assets/css/podcasting-edit-term.css';
+		$js_file = 'assets/js/podcasting-edit-term.js';
+	} else {
+		$css_file = 'dist/css/podcasting-edit-term.min.css';
+		$js_file = 'dist/js/podcasting-edit-term.min.js';
+	}
+
 	wp_enqueue_style(
 		'podcasting_edit_term_screen',
-		PODCASTING_URL . 'assets/css/podcasting-edit-term.css'
+		PODCASTING_URL . $css_file,
+		array(),
+		PODCASTING_VERSION
 	);
 
 	wp_enqueue_script(
 		'podcasting_edit_term_screen',
-		PODCASTING_URL . 'assets/js/podcasting-edit-term.js',
+		PODCASTING_URL . $js_file,
 		array( 'jquery' ),
-		true
+		PODCASTING_VERSION
 	);
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );

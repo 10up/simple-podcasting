@@ -186,11 +186,17 @@ function edit_post_enqueues( $hook_suffix ) {
 		return;
 	}
 
+	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+		$js_file = 'assets/js/podcasting-edit-post.js';
+	} else {
+		$js_file = 'assets/js/podcasting-edit-post.min.js';
+	}
+
 	wp_enqueue_script(
 		'podcasting_edit_post_screen',
-		PODCASTING_URL . 'assets/js/podcasting-edit-post.js',
+		PODCASTING_URL . $js_file,
 		array( 'jquery' ),
-		'20120911',
+		PODCASTING_VERSION,
 		true
 	);
 
