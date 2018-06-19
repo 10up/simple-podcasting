@@ -9,11 +9,18 @@
  */
 namespace tenup_podcasting;
 
-const TAXONOMY_NAME = 'podcasting_podcasts';
+define( 'TAXONOMY_NAME',   'podcasting_podcasts' );
+define( 'PODCASTING_PATH',  dirname( __FILE__ ) . '/' );
+define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 
-require_once plugin_dir_path( __FILE__ ) . 'includes/datatypes.php';
+require_once PODCASTING_PATH . 'includes/datatypes.php';
 
 register_activation_hook( __FILE__, 'flush_rewrite_rules' );
+
+// Gutenberg support
+if ( function_exists( 'register_block_type' ) ) {
+	require_once PODCASTING_PATH . 'includes/blocks.php';
+}
 
 /**
  * Is podcasting enabled?
@@ -50,12 +57,12 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 
 	wp_enqueue_style(
 		'podcasting_edit_term_screen',
-		plugin_dir_url( __FILE__ ) . 'assets/css/podcasting-edit-term.css'
+		PODCASTING_URL . 'assets/css/podcasting-edit-term.css'
 	);
 
 	wp_enqueue_script(
 		'podcasting_edit_term_screen',
-		plugin_dir_url( __FILE__ ) . 'assets/js/podcasting-edit-term.js',
+		PODCASTING_URL . 'assets/js/podcasting-edit-term.js',
 		array( 'jquery' ),
 		true
 	);
@@ -81,65 +88,14 @@ function custom_feed() {
 		add_filter( 'wp_feed_cache_transient_lifetime', function() {
 			return HOUR_IN_SECONDS;
 		} );
-		require_once plugin_dir_path( __FILE__ ) . 'includes/customize-feed.php';
+		require_once PODCASTING_PATH . 'includes/customize-feed.php';
 	}
 }
 add_action( 'wp', __NAMESPACE__ . '\custom_feed' );
 
 function setup_edit_screen() {
 	if ( podcasting_is_enabled() ) {
-		require_once plugin_dir_path( __FILE__ ) . 'includes/post-meta-box.php';
+		require_once PODCASTING_PATH . 'includes/post-meta-box.php';
 	}
 }
 add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
-
-/**
- * Registers all block assets so that they can be enqueued through Gutenberg in
- * the corresponding context.
- *
- * @see https://wordpress.org/gutenberg/handbook/blocks/writing-your-first-block-type/#enqueuing-block-scripts
- */
-function block_init() {
-	$dir = dirname( __FILE__ );
-
-	$block_js = 'dist/js/blocks.min.js';
-	wp_register_script(
-		'podcasting-block-editor',
-		plugins_url( $block_js, __FILE__ ),
-		array(
-			'wp-blocks',
-			'wp-i18n',
-			'wp-element',
-		),
-		filemtime( "$dir/$block_js" )
-	);
-
-	$editor_css = 'assets/css/block-editor.css';
-	wp_register_style(
-		'podcasting-block-editor',
-		plugins_url( $editor_css, __FILE__ ),
-		array(
-			'wp-blocks',
-		),
-		filemtime( "$dir/$editor_css" )
-	);
-
-/**
-	$style_css = 'assets/css/block-display.css';
-	wp_register_style(
-		'podcasting-block',
-		plugins_url( $style_css, __FILE__ ),
-		array(
-			'wp-blocks',
-		),
-		filemtime( "$dir/$style_css" )
-	);
-**/
-	register_block_type( 'podcasting/podcast', array(
-		'editor_script' => 'podcasting-block-editor',
-		'editor_style'  => 'podcasting-block-editor',
-		'style'         => 'podcasting-block',
-	) );
-}
-add_action( 'init', __NAMESPACE__ . '\block_init' );
-
