@@ -28,8 +28,8 @@ const {
 export default registerBlockType(
     'podcasting/podcast',
     {
-        title: __( 'Podcast' ),
-		description: __( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.' ),
+        title: __( 'Podcast', 'podcasting' ),
+		description: __( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.', 'podcasting' ),
         category: 'common',
         icon: 'microphone',
         useOnce: true,
@@ -123,7 +123,7 @@ export default registerBlockType(
                         <Toolbar>
                             <IconButton
                                 className="components-icon-button components-toolbar__control"
-                                label={ __( 'Edit podcast' ) }
+                                label={ __( 'Edit Podcast', 'podcasting' ) }
                                 onClick={ switchToEditing }
                                 icon="edit"
                             />
@@ -136,17 +136,17 @@ export default registerBlockType(
                     isSelected && (
                         <InspectorControls>
                             <PanelBody
-                              title={ __( 'Podcast Settings' ) }
+                              title={ __( 'Podcast Settings', 'podcasting' ) }
                             >
                                 <PanelRow>
                                     <label
                                         htmlFor="podcast-captioned-form-toggle"
                                     >
-                                        { __( 'Closed Captioned' ) }
+                                        { __( 'Closed Captioned', 'podcasting' ) }
                                     </label>
                                     <FormToggle
                                         id="podcast-captioned-form-toggle"
-                                        label={ __( 'Closed Captioned' ) }
+                                        label={ __( 'Closed Captioned', 'podcasting' ) }
                                         checked={ captioned }
                                         onChange={ toggleCaptioned }
                                     />
@@ -155,11 +155,11 @@ export default registerBlockType(
                                     <label
                                         htmlFor="podcast-explicit-form-toggle"
                                     >
-                                        { __( 'Explicit Content' ) }
+                                        { __( 'Explicit Content', 'podcasting' ) }
                                     </label>
                                     <FormToggle
                                         id="podcast-explicit-form-toggle"
-                                        label={ __( 'Explicit Content' ) }
+                                        label={ __( 'Explicit Content', 'podcasting' ) }
                                         checked={ explicit }
                                         onChange={ toggleExplicit }
                                     />
@@ -189,7 +189,7 @@ export default registerBlockType(
                             <Placeholder
                                 key="placeholder"
                                 icon="microphone"
-                                label={ __( 'Podcast' ) }
+                                label={ __( 'Podcast', 'podcasting' ) }
                                 instructions={ __( 'Select an audio file from your library, or upload a new one' ) }
                                 className={ className }>
                                 <form onSubmit={ onSelectUrl }>
