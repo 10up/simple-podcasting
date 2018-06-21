@@ -17,7 +17,7 @@ add_action( 'rss2_ns', __NAMESPACE__ . '\xmlns' );
  *
  * @return object WP_Term or false if not a term feed.
  */
-function get_the_term(){
+function get_the_term() {
 	$queried_object = get_queried_object();
 	if ( ! $queried_object || ! $queried_object->term_id ) {
 		return false;
@@ -88,7 +88,7 @@ function feed_head() {
 
 	$copyright = get_term_meta( $term->term_id, 'podcasting_copyright', true );
 
-	if ( !empty( $copyright ) ) {
+	if ( ! empty( $copyright ) ) {
 		echo '<copyright>' . esc_html( wp_strip_all_tags( $copyright ) ) . "</copyright>\n";
 	}
 
@@ -139,11 +139,11 @@ function feed_item() {
 		$author = get_the_author();
 	}
 
-	echo "<itunes:author>" . esc_html( $author ) . "</itunes:author>\n";
+	echo '<itunes:author>' . esc_html( $author ) . "</itunes:author>\n";
 
 	$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
 
-	echo "<itunes:explicit>";
+	echo '<itunes:explicit>';
 
 	if ( empty( $explicit ) ) {
 		echo 'no';
@@ -177,11 +177,11 @@ function feed_item() {
 	}
 	$excerpt = apply_filters( 'the_excerpt_rss', $excerpt );
 
-	echo "<itunes:summary>" . esc_html( wp_strip_all_tags( $excerpt ) ) . "</itunes:summary>\n";
+	echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $excerpt ) ) . "</itunes:summary>\n";
 
 	$subtitle = wp_trim_words( $excerpt, 10, '&#8230;' );
 
-	echo "<itunes:subtitle>" . esc_html( $subtitle ) . "</itunes:subtitle>\n";
+	echo '<itunes:subtitle>' . esc_html( $subtitle ) . "</itunes:subtitle>\n";
 
 	if ( ! empty( $post_meta['enclosure'] ) ) {
 		echo "<enclosure url='" .
@@ -254,11 +254,11 @@ function generate_category( $option ) {
 		$splits = explode( ',', $category );
 
 		if ( 2 === count( $splits ) ) {
-			echo "<itunes:category text=\"" . esc_attr( $splits[0] ) . "\">\n";
+			echo '<itunes:category text="' . esc_attr( $splits[0] ) . "\">\n";
 			echo "\t<itunes:category text=\"" . esc_attr( $splits[1] ) . "\" />\n";
 			echo "</itunes:category>\n";
 		} else {
-			echo "<itunes:category text=\"" . esc_attr( $category ) . "\" />\n";
+			echo '<itunes:category text="' . esc_attr( $category ) . "\" />\n";
 		}
 	}
 }

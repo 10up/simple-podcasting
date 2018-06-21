@@ -80,36 +80,39 @@ function save_meta_box( $post_id ) {
 		return;
 	}
 
-	if (
-		! wp_verify_nonce( ( isset( $_POST['podcasting'] ) ? sanitize_key( $_POST['podcasting'] ) : '' ), plugin_basename( __FILE__ ) ) ||
-		( isset( $_POST['post_type'] ) && 'post' !== sanitize_text_field( $_POST['post_type'] ) ) ||
-		! current_user_can( 'edit_post', $post_id )
+	$_post = wp_unslash( $_POST );
+
+	if ( ! wp_verify_nonce( ( isset( $_post['podcasting'] ) ? sanitize_key( $_post['podcasting'] ) : '' ), plugin_basename( __FILE__ ) )
+		|| ( isset( $_post['post_type'] ) && 'post' !== sanitize_text_field( $_post['post_type'] ) )
+		|| ! current_user_can( 'edit_post', $post_id )
 	) {
 		return;
 	}
 
-	$url = false;
+	$url             = false;
 	$podcast_options = array(
 		'closed_captioned'  => 'no',
 		'explicit_content'  => 'no',
 		'podcast_enclosure' => '',
 	);
 
-	if ( isset( $_POST['podcast_closed_captioned'] ) && 'on' === $_POST['podcast_closed_captioned'] )
+	if ( isset( $_post['podcast_closed_captioned'] ) && 'on' === $_post['podcast_closed_captioned'] ) {
 		$podcast_options['closed_captioned'] = 'yes';
+	}
 
-	if ( isset( $_POST['podcast_explicit_content'] ) && in_array( $_POST['podcast_explicit_content'], array( 'yes', 'no', 'clean' ), true ) )
-		$podcast_options['explicit_content'] = sanitize_text_field( $_POST['podcast_explicit_content'] );
+	if ( isset( $_post['podcast_explicit_content'] ) && in_array( $_post['podcast_explicit_content'], array( 'yes', 'no', 'clean' ), true ) ) {
+		$podcast_options['explicit_content'] = sanitize_text_field( $_post['podcast_explicit_content'] );
+	}
 
-	if ( isset( $_POST['podcast_enclosure_url'] ) && ! empty( $_POST['podcast_enclosure_url'] ) ) {
-		$url = sanitize_text_field( $_POST['podcast_enclosure_url'] );
+	if ( isset( $_post['podcast_enclosure_url'] ) && ! empty( $_post['podcast_enclosure_url'] ) ) {
+		$url = sanitize_text_field( $_post['podcast_enclosure_url'] );
 	} else {
 		// Search for an audio shortcode to determine the audio enclosure url.
 		$pattern = get_shortcode_regex();
 		$post = get_post( $post_id );
 
 		if (
-			preg_match_all( '/'. $pattern .'/s', $post->post_content, $matches )
+			preg_match_all( '/' . $pattern . '/s', $post->post_content, $matches )
 			&& array_key_exists( 2, $matches )
 			&& in_array( 'audio', $matches[2], true )
 		) {
@@ -179,7 +182,7 @@ add_action( 'save_post', __NAMESPACE__ . '\save_meta_box' );
 function edit_post_enqueues( $hook_suffix ) {
 	$screens = array(
 		'post.php',
-		'post-new.php'
+		'post-new.php',
 	);
 
 	if ( ! in_array( $hook_suffix, $screens, true ) ) {
@@ -201,8 +204,8 @@ function edit_post_enqueues( $hook_suffix ) {
 	);
 
 	wp_localize_script( 'podcasting_edit_post_screen', 'Podcasting', array(
-		'postID'     => get_the_ID(),
-		'modalUrl'   => get_media_modal_url(),
+		'postID'   => get_the_ID(),
+		'modalUrl' => get_media_modal_url(),
 	) );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\edit_post_enqueues' );

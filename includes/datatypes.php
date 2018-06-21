@@ -27,7 +27,7 @@ add_action( 'init', __NAMESPACE__ . '\register_meta' );
  */
 function create_podcasts_taxonomy() {
 	register_taxonomy( TAXONOMY_NAME, 'post', array(
-		'labels'        => array(
+		'labels'            => array(
 			'name'              => __( 'Podcasts', 'podcasting' ),
 			'singular_name'     => __( 'Podcast', 'podcasting' ),
 			'search_items'      => __( 'Search Podcasts', 'podcasting' ),
@@ -73,13 +73,13 @@ add_filter( 'parent_file', __NAMESPACE__ . '\filter_parent_file' );
 function register_term_meta() {
 	$podcasting_meta_fields = get_meta_fields();
 
-	foreach( $podcasting_meta_fields as $field ) {
+	foreach ( $podcasting_meta_fields as $field ) {
 		register_meta( 'term', $field['slug'], array(
 			'sanitize_callback' => 'sanitize_my_meta_key',
-			'type' => $field['type'],
-			'description' => $field['title'],
-			'single' => true,
-			'show_in_rest' => false,
+			'type'              => $field['type'],
+			'description'       => $field['title'],
+			'single'            => true,
+			'show_in_rest'      => false,
 		) );
 	}
 }
@@ -107,12 +107,11 @@ add_action( 'admin_menu', __NAMESPACE__ . '\add_top_level_menu' );
  */
 function add_podcasting_term_add_meta_fields( $term ) {
 	$podcasting_meta_fields = get_meta_fields();
-	foreach( $podcasting_meta_fields as $field ) {
+	foreach ( $podcasting_meta_fields as $field ) {
 		?>
-		<label
-			for="name"
-		><?php echo esc_html( $field['title'] ); ?></label>
-		<?php the_field( $field, '' );
+		<label for="name" ><?php echo esc_html( $field['title'] ); ?></label>
+		<?php
+		the_field( $field, '' );
 	}
 }
 
@@ -151,7 +150,7 @@ function the_field( $field, $value = '', $term_id = false ) {
 			>
 		<?php
 			$categories = $field['options'];
-			foreach( $categories as $category ) {
+			foreach ( $categories as $category ) {
 				$slug = sanitize_title( $category );
 				?>
 				<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug, $value ); ?>>
@@ -159,52 +158,50 @@ function the_field( $field, $value = '', $term_id = false ) {
 				</option>
 				<?php
 			}
-			?>
+		?>
 			</select>
-			<?php
+		<?php
 			break;
 		case 'image':
 			$image_url = get_term_meta( $term_id, $field['slug'] . '_url', true );
 		?>
-		<div class="media-wrapper">
-			<?php
-			$has_image = ( '' === $value );
-			?>
-			<div class="podasting-existing-image <?php echo ( $has_image ? 'hidden' : '' ); ?>">
-				<a href="#" >
-					<img
-					src="<?php echo esc_url( $image_url ); ?>"
-					alt=""
-					class="podcast-image-thumbnail"
-				>
-				</a>
-				<input
-					type="hidden"
-					id="<?php echo esc_attr( $field['slug'] ); ?>"
-					name="<?php echo esc_attr( $field['slug'] ); ?>"
-					value="<?php echo esc_attr( $value ); ?>"
-				>
-				<br />
-				<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
-					remove image
-				</a>
-			<?php
-			?>
+			<div class="media-wrapper">
+				<?php
+				$has_image = ( '' === $value );
+				?>
+				<div class="podasting-existing-image <?php echo ( $has_image ? 'hidden' : '' ); ?>">
+					<a href="#" >
+						<img
+						src="<?php echo esc_url( $image_url ); ?>"
+						alt=""
+						class="podcast-image-thumbnail"
+					>
+					</a>
+					<input
+						type="hidden"
+						id="<?php echo esc_attr( $field['slug'] ); ?>"
+						name="<?php echo esc_attr( $field['slug'] ); ?>"
+						value="<?php echo esc_attr( $value ); ?>"
+					>
+					<br />
+					<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
+						remove image
+					</a>
+				</div>
+				<div class="podcasting-upload-image <?php echo ( ! $has_image ? 'hidden' : '' ); ?>">
+					<input
+						type="button"
+						class="podcasting-media-button button-secondary"
+						id="image-<?php echo esc_attr( $field['slug'] ); ?>"
+						value="<?php esc_attr_e( 'Select Image', 'podcasting' ); ?>"
+						data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
+						data-choose="<?php esc_attr_e( 'Podcast Image', 'podcasting' ); ?>"
+						data-update="<?php esc_attr_e( 'Choose Selected Image', 'podcasting' ); ?>"
+						data-preview-size="thumbnail"
+						data-mime-type="image"
+					>
+				</div>
 			</div>
-			<div class="podcasting-upload-image <?php echo ( ! $has_image ? 'hidden' : '' ); ?>">
-				<input
-					type="button"
-					class="podcasting-media-button button-secondary"
-					id="image-<?php echo esc_attr( $field['slug'] ); ?>"
-					value="<?php esc_attr_e( 'Select Image', 'podcasting' ); ?>"
-					data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
-					data-choose="<?php esc_attr_e( 'Podcast Image', 'podcasting' ); ?>"
-					data-update="<?php esc_attr_e( 'Choose Selected Image', 'podcasting' ); ?>"
-					data-preview-size="thumbnail"
-					data-mime-type="image"
-				>
-			</div>
-		</div>
 		<?php
 			break;
 
@@ -225,7 +222,7 @@ function save_podcasting_term_meta( $term_id ) {
 		$slug = $field['slug'];
 
 		if ( isset( $_POST[ $slug ] ) ) {
-			$sanitized_value = sanitize_text_field( $_POST[ $slug ] );
+			$sanitized_value = sanitize_text_field( wp_unslash( $_POST[ $slug ] ) );
 
 			// If the field is an image field, store the image URL along with the slug.
 			if ( strpos( $slug, '_image' ) ) {
@@ -281,12 +278,8 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	wp_enqueue_media();
 	if ( $taxonomy ) {
 		$url = get_term_feed_link( $term->term_id, TAXONOMY_NAME );
-		printf(
-			/* translators: Linked podcast feed URL */
-			__( 'Your Podcast Feed: %s', 'ads-txt' ),
-			'<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a>'
-		);
-		echo '<br />';
+		__( 'Your Podcast Feed:', 'ads-txt' );
+		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		esc_html_e( 'This is the URL you submit to iTunes or podcasting service.', 'podcasting' );
 	}
 }
@@ -312,13 +305,13 @@ function add_podcasting_term_feed_link_column( $string, $column_name, $term_id )
 	}
 	return $string;
 }
-add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column',10,3);
+add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column', 10, 3 );
 
 /**
  * Add a custom column for the podcast feed link.
  * @param Array $columns An array of columns
  */
-function add_custom_term_columns( $columns ){
+function add_custom_term_columns( $columns ) {
 	$columns['feedurl'] = 'Feed URL';
 	unset( $columns['description'] );
 	unset( $columns['author'] );
@@ -359,12 +352,12 @@ function get_meta_fields() {
 				'No',
 				'Yes',
 				'Clean',
-			)
+			),
 		),
 		array(
-			'slug'  => 'podcasting_image',
-			'title' => __( 'Podcast image', 'podcasting' ),
-			'type'  => 'image',
+			'slug'        => 'podcasting_image',
+			'title'       => __( 'Podcast image', 'podcasting' ),
+			'type'        => 'image',
 			'description' => __( 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px', 'podcasting' ),
 		),
 		array(
@@ -397,7 +390,7 @@ function get_meta_fields() {
  * Get the podcasting categories.
  */
 function get_podcasting_categories() {
-	$to_return = array( __( 'None' ) );
+	$to_return  = array( __( 'None' ) );
 	$categories = array(
 		__( 'Arts', 'podcasting' ) => array(
 			__( 'Design', 'podcasting' ),
@@ -405,14 +398,14 @@ function get_podcasting_categories() {
 			__( 'Food', 'podcasting' ),
 			__( 'Literature', 'podcasting' ),
 			__( 'Performing Arts', 'podcasting' ),
-			__( 'Visual Arts', 'podcasting' )
+			__( 'Visual Arts', 'podcasting' ),
 		),
 		__( 'Business', 'podcasting' ) => array(
 			__( 'Business News', 'podcasting' ),
 			__( 'Careers', 'podcasting' ),
 			__( 'Investing', 'podcasting' ),
 			__( 'Management & Marketing', 'podcasting' ),
-			__( 'Shopping', 'podcasting' )
+			__( 'Shopping', 'podcasting' ),
 		),
 		__( 'Comedy', 'podcasting' ) => array(),
 		__( 'Education', 'podcasting' ) => array(
@@ -420,26 +413,26 @@ function get_podcasting_categories() {
 			__( 'Higher Education', 'podcasting' ),
 			__( 'K-12', 'podcasting' ),
 			__( 'Language Courses', 'podcasting' ),
-			__( 'Training', 'podcasting' )
+			__( 'Training', 'podcasting' ),
 		),
 		__( 'Games & Hobbies', 'podcasting' ) => array(
 			__( 'Automotive', 'podcasting' ),
 			__( 'Aviation', 'podcasting' ),
 			__( 'Hobbies', 'podcasting' ),
 			__( 'Other Games', 'podcasting' ),
-			__( 'Video Games', 'podcasting' )
+			__( 'Video Games', 'podcasting' ),
 		),
 		__( 'Government & Organizations', 'podcasting' ) => array(
 			__( 'Local', 'podcasting' ),
 			__( 'National', 'podcasting' ),
 			__( 'Non-Profit', 'podcasting' ),
-			__( 'Regional', 'podcasting' )
+			__( 'Regional', 'podcasting' ),
 		),
 		__( 'Health', 'podcasting' ) => array(
 			__( 'Alternative Health', 'podcasting' ),
 			__( 'Fitness & Nutrition', 'podcasting' ),
 			__( 'Self-Help', 'podcasting' ),
-			__( 'Sexuality', 'podcasting' )
+			__( 'Sexuality', 'podcasting' ),
 		),
 		__( 'Kids & Family', 'podcasting' ) => array(),
 		__( 'Music', 'podcasting' ) => array(),
@@ -456,13 +449,13 @@ function get_podcasting_categories() {
 		__( 'Science & Medicine', 'podcasting' ) => array(
 			__( 'Medicine', 'podcasting' ),
 			__( 'Natural Sciences', 'podcasting' ),
-			__( 'Social Sciences', 'podcasting' )
+			__( 'Social Sciences', 'podcasting' ),
 		),
 		__( 'Society & Culture', 'podcasting' ) => array(
 			__( 'History', 'podcasting' ),
 			__( 'Personal Journals', 'podcasting' ),
 			__( 'Philosophy', 'podcasting' ),
-			__( 'Places & Travel', 'podcasting' )
+			__( 'Places & Travel', 'podcasting' ),
 		),
 		__( 'Sports & Recreation', 'podcasting' ) => array(
 			__( 'Amateur', 'podcasting' ),
@@ -476,13 +469,13 @@ function get_podcasting_categories() {
 			__( 'Podcasting', 'podcasting' ),
 			__( 'Software How-To', 'podcasting' ),
 		),
-		__( 'TV & Film', 'podcasting' ) => array()
+		__( 'TV & Film', 'podcasting' ) => array(),
 	);
-	foreach( $categories as $key => $category ) {
+	foreach ( $categories as $key => $category ) {
 		$to_return[] = $key;
 
 		if ( ! empty( $category ) ) {
-			foreach( $category as $subcategory ) {
+			foreach ( $category as $subcategory ) {
 				$to_return[] = $key . ' » ' . $subcategory;
 			}
 		}

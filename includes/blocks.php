@@ -31,21 +31,9 @@ function init() {
 		filemtime( PODCASTING_PATH . $editor_css )
 	);
 
-/**
-	$style_css = 'assets/css/block-display.css';
-	wp_register_style(
-		'podcasting-block',
-		PODCASTING_URL . $style_css,
-		array(
-			'wp-blocks',
-		),
-		filemtime( "$dir/$style_css" )
-	);
-**/
 	register_block_type( 'podcasting/podcast', array(
 		'editor_script' => 'podcasting-block-editor',
 		'editor_style'  => 'podcasting-block-editor',
-		// 'style'         => 'podcasting-block',
 	) );
 }
 add_action( 'init', __NAMESPACE__ . '\init' );
@@ -72,10 +60,10 @@ add_action( 'init', __NAMESPACE__ . '\register_js_strings' );
  * @return void
  */
 function load_translations() {
-	$data = json_encode( gutenberg_get_jed_locale_data( 'podcasting' ) );
+	$data = wp_json_encode( gutenberg_get_jed_locale_data( 'podcasting' ) );
 	wp_add_inline_script(
-        'wp-i18n',
-        'wp.i18n.setLocaleData( ' . $data . ', "podcasting" );'
-    );
+		'wp-i18n',
+		'wp.i18n.setLocaleData( ' . $data . ', "podcasting" );'
+	);
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\load_translations' );
