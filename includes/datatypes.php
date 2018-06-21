@@ -217,6 +217,16 @@ function the_field( $field, $value = '', $term_id = false ) {
  * Save podcasting fields from the term screen to term meta.
  */
 function save_podcasting_term_meta( $term_id ) {
+	$tax = get_taxonomy( TAXONOMY_NAME );
+
+	if ( ! current_user_can( $tax->cap->edit_terms ) ) {
+		return;
+	}
+
+	if ( empty( $_POST['podcasting_nonce'] ) || ! wp_verify_nonce( $_POST['podcasting_nonce'], 'podcasting_edit' ) ) {
+		return;
+	}
+
 	$podcasting_meta_fields = get_meta_fields();
 	foreach ( $podcasting_meta_fields as $field ) {
 		$slug = $field['slug'];
@@ -275,7 +285,10 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	.term-description-wrap{
 		display: none;
 	} </style>';
+
+	wp_nonce_field( 'podcasting_edit', 'podcasting_nonce' );
 	wp_enqueue_media();
+
 	if ( $taxonomy ) {
 		$url = get_term_feed_link( $term->term_id, TAXONOMY_NAME );
 		__( 'Your Podcast Feed:', 'ads-txt' );
