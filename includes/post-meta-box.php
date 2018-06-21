@@ -80,14 +80,15 @@ function save_meta_box( $post_id ) {
 		return;
 	}
 
-	$_post = wp_unslash( $_POST );
-
-	if ( ! wp_verify_nonce( ( isset( $_post['podcasting'] ) ? sanitize_key( $_post['podcasting'] ) : '' ), plugin_basename( __FILE__ ) )
-		|| ( isset( $_post['post_type'] ) && 'post' !== sanitize_text_field( $_post['post_type'] ) )
-		|| ! current_user_can( 'edit_post', $post_id )
-	) {
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
+
+	if ( empty( $_POST['podcasting'] ) || ! wp_verify_nonce( $_POST['podcasting'], plugin_basename( __FILE__ ) ) ) {
+		return;
+	}
+
+	$_post = wp_unslash( $_POST );
 
 	$url             = false;
 	$podcast_options = array(
@@ -172,7 +173,7 @@ function save_meta_box( $post_id ) {
 
 	update_post_meta( $post_id, 'podcast_episode', $podcast_options );
 }
-add_action( 'save_post', __NAMESPACE__ . '\save_meta_box' );
+add_action( 'save_post_post', __NAMESPACE__ . '\save_meta_box' );
 
 /**
  * Enqueue helper script for the post edit and new post screens.
