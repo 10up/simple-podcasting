@@ -11,7 +11,7 @@ namespace tenup_podcasting;
 function add_podcasting_meta_box() {
 	add_meta_box(
 		'podcasting',
-		__( 'Podcasting' ),
+		__( 'Podcasting', 'podcasting' ),
 		__NAMESPACE__ . '\meta_box_html',
 		'post',
 		'advanced',
@@ -43,29 +43,29 @@ function meta_box_html( $post ) {
 	?>
 	<p>
 		<label for="podcast_closed_captioned">
-			<?php esc_html_e( 'Closed Captioned' ); ?>
+			<?php esc_html_e( 'Closed Captioned', 'podcasting' ); ?>
 			<input type="checkbox" id="podcast_closed_captioned" name="podcast_closed_captioned" <?php checked( $options['closed_captioned'], 'yes', false ); ?> />
 		</label>
 	</p>
 
 	<p>
 		<label for="podcast_explicit_content">
-			<?php esc_html_e( 'Explicit Content' ); ?>
+			<?php esc_html_e( 'Explicit Content', 'podcasting' ); ?>
 			<select id="podcast_explicit_content" name="podcast_explicit_content">
 				<option value="no"<?php selected( $options['explicit_content'], 'no', false ); ?>><?php esc_html_e( 'No' ); ?></option>
 				<option value="yes"<?php selected( $options['explicit_content'], 'yes', false ); ?>><?php esc_html_e( 'Yes' ); ?></option>
-				<option value="clean"<?php selected( $options['explicit_content'], 'clean', false ); ?>><?php esc_html_e( 'Clean' ); ?></option>
+				<option value="clean"<?php selected( $options['explicit_content'], 'clean', false ); ?>><?php esc_html_e( 'Clean', 'podcasting' ); ?></option>
 			</select>
 		</label>
 	</p>
 
 	<p>
-		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure' ); ?></label>
+		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'podcasting' ); ?></label>
 		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $enclosure_url ); ?>" size="35" />
-		<input type="button" id="podcasting-enclosure-button" value="<?php echo esc_attr__( 'Choose File' ); ?>" class="button">
+		<input type="button" id="podcasting-enclosure-button" value="<?php esc_attr_e( 'Choose File', 'podcasting' ); ?>" class="button">
 	</p>
 
-	<p class="howto"><?php esc_html_e( 'Optional: Use this field if you have more than one audio/video file in your post.' ); ?></p>
+	<p class="howto"><?php esc_html_e( 'Optional: Use this field if you have more than one audio/video file in your post.', 'podcasting' ); ?></p>
 
 	<?php
 }

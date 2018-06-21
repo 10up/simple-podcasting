@@ -28,17 +28,17 @@ add_action( 'init', __NAMESPACE__ . '\register_meta' );
 function create_podcasts_taxonomy() {
 	register_taxonomy( TAXONOMY_NAME, 'post', array(
 		'labels'        => array(
-			'name'              => 'Podcasts',
-			'singular_name'     => 'Podcast',
-			'search_items'      => 'Search Podcasts',
-			'all_items'         => 'All Podcasts',
-			'parent_item'       => 'Parent Podcast',
-			'parent_item_colon' => 'Parent Podcast:',
-			'edit_item'         => 'Edit Podcast',
-			'update_item'       => 'Update Podcast',
-			'add_new_item'      => 'Add New Podcast',
-			'new_item_name'     => 'New Podcast',
-			'menu_name'         => 'Podcasts'
+			'name'              => __( 'Podcasts', 'podcasting' ),
+			'singular_name'     => __( 'Podcast', 'podcasting' ),
+			'search_items'      => __( 'Search Podcasts', 'podcasting' ),
+			'all_items'         => __( 'All Podcasts', 'podcasting' ),
+			'parent_item'       => __( 'Parent Podcast', 'podcasting' ),
+			'parent_item_colon' => __( 'Parent Podcast:', 'podcasting' ),
+			'edit_item'         => __( 'Edit Podcast', 'podcasting' ),
+			'update_item'       => __( 'Update Podcast', 'podcasting' ),
+			'add_new_item'      => __( 'Add New Podcast', 'podcasting' ),
+			'new_item_name'     => __( 'New Podcast', 'podcasting' ),
+			'menu_name'         => __( 'Podcasts', 'podcasting' ),
 		),
 		'hierarchical'      => true,
 		'show_tagcloud'     => false,
@@ -91,8 +91,8 @@ add_action( 'init', __NAMESPACE__ . '\register_term_meta' );
 function add_top_level_menu() {
 	remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=podcasting_podcasts' );
 	add_menu_page(
-		'Podcasts',
-		'Podcasts',
+		__( 'Podcasts', 'podcasting' ),
+		__( 'Podcasts', 'podcasting' ),
 		'manage_options',
 		'edit-tags.php?taxonomy=podcasting_podcasts&amp;podcasts=true',
 		null,
@@ -196,10 +196,10 @@ function the_field( $field, $value = '', $term_id = false ) {
 					type="button"
 					class="podcasting-media-button button-secondary"
 					id="image-<?php echo esc_attr( $field['slug'] ); ?>"
-					value="Select Image"
+					value="<?php esc_attr_e( 'Select Image', 'podcasting' ); ?>"
 					data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
-					data-choose="Podcast Image"
-					data-update="Choose Selected Image"
+					data-choose="<?php esc_attr_e( 'Podcast Image', 'podcasting' ); ?>"
+					data-update="<?php esc_attr_e( 'Choose Selected Image', 'podcasting' ); ?>"
 					data-preview-size="thumbnail"
 					data-mime-type="image"
 				>
@@ -281,8 +281,13 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	wp_enqueue_media();
 	if ( $taxonomy ) {
 		$url = get_term_feed_link( $term->term_id, TAXONOMY_NAME );
-		echo '<strong>Your Podcast Feed: </strong> <a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
-		echo 'This is the URL you submit to iTunes or podcasting service.';
+		printf(
+			/* translators: Linked podcast feed URL */
+			__( 'Your Podcast Feed: %s', 'ads-txt' ),
+			'<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a>'
+		);
+		echo '<br />';
+		esc_html_e( 'This is the URL you submit to iTunes or podcasting service.', 'podcasting' );
 	}
 }
 add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
@@ -328,27 +333,27 @@ function get_meta_fields() {
 	return array(
 		array(
 			'slug'  => 'podcasting_subtitle',
-			'title' => 'Podcast subtitle',
+			'title' => __( 'Podcast subtitle', 'podcasting' ),
 			'type'  => 'textfield',
 		),
 		array(
 			'slug'  => 'podcasting_talent_name',
-			'title' => 'Podcast talent',
+			'title' => __( 'Podcast talent', 'podcasting' ),
 			'type'  => 'textfield',
 		),
 		array(
 			'slug'  => 'podcasting_summary',
-			'title' => 'Podcast summary',
+			'title' => __( 'Podcast summary', 'podcasting' ),
 			'type'  => 'textarea',
 		),
 		array(
 			'slug'  => 'podcasting_copyright',
-			'title' => 'Podcast copyright',
+			'title' => __( 'Podcast copyright', 'podcasting' ),
 			'type'  => 'textfield',
 		),
 		array(
 			'slug'    => 'podcasting_explicit',
-			'title'   => 'Mark as explicit',
+			'title'   => __( 'Mark as explicit', 'podcasting' ),
 			'type'    => 'select',
 			'options' => array(
 				'No',
@@ -358,30 +363,30 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'  => 'podcasting_image',
-			'title' => 'Podcast image',
+			'title' => __( 'Podcast image', 'podcasting' ),
 			'type'  => 'image',
-			'description' => 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px'
+			'description' => __( 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px', 'podcasting' ),
 		),
 		array(
 			'slug'  => 'podcasting_keywords',
-			'title' => 'Podcast keywords',
+			'title' => __( 'Podcast keywords', 'podcasting' ),
 			'type'  => 'textfield',
 		),
 		array(
 			'slug'    => 'podcasting_category_1',
-			'title'   => 'Podcast category 1',
+			'title'   => __( 'Podcast category 1', 'podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories(),
 		),
 		array(
 			'slug'    => 'podcasting_category_2',
-			'title'   => 'Podcast category 2',
+			'title'   => __( 'Podcast category 2', 'podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories(),
 		),
 		array(
 			'slug'    => 'podcasting_category_3',
-			'title'   => 'Podcast category 3',
+			'title'   => __( 'Podcast category 3', 'podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories(),
 		),
@@ -392,86 +397,86 @@ function get_meta_fields() {
  * Get the podcasting categories.
  */
 function get_podcasting_categories() {
-	$to_return = array( 'None' );
+	$to_return = array( __( 'None' ) );
 	$categories = array(
-		"Arts" => array(
-			"Design",
-			"Fashion & Beauty",
-			"Food",
-			"Literature",
-			"Performing Arts",
-			"Visual Arts"
+		__( 'Arts', 'podcasting' ) => array(
+			__( 'Design', 'podcasting' ),
+			__( 'Fashion & Beauty', 'podcasting' ),
+			__( 'Food', 'podcasting' ),
+			__( 'Literature', 'podcasting' ),
+			__( 'Performing Arts', 'podcasting' ),
+			__( 'Visual Arts', 'podcasting' )
 		),
-		"Business" => array(
-			"Business News",
-			"Careers",
-			"Investing",
-			"Management & Marketing",
-			"Shopping"
+		__( 'Business', 'podcasting' ) => array(
+			__( 'Business News', 'podcasting' ),
+			__( 'Careers', 'podcasting' ),
+			__( 'Investing', 'podcasting' ),
+			__( 'Management & Marketing', 'podcasting' ),
+			__( 'Shopping', 'podcasting' )
 		),
-		"Comedy" => array(),
-		"Education" => array(
-			"Educational Technology",
-			"Higher Education",
-			"K-12",
-			"Language Courses",
-			"Training"
+		__( 'Comedy', 'podcasting' ) => array(),
+		__( 'Education', 'podcasting' ) => array(
+			__( 'Educational Technology', 'podcasting' ),
+			__( 'Higher Education', 'podcasting' ),
+			__( 'K-12', 'podcasting' ),
+			__( 'Language Courses', 'podcasting' ),
+			__( 'Training', 'podcasting' )
 		),
-		"Games & Hobbies" => array(
-			"Automotive",
-			"Aviation",
-			"Hobbies",
-			"Other Games",
-			"Video Games"
+		__( 'Games & Hobbies', 'podcasting' ) => array(
+			__( 'Automotive', 'podcasting' ),
+			__( 'Aviation', 'podcasting' ),
+			__( 'Hobbies', 'podcasting' ),
+			__( 'Other Games', 'podcasting' ),
+			__( 'Video Games', 'podcasting' )
 		),
-		"Government & Organizations" => array(
-			"Local",
-			"National",
-			"Non-Profit",
-			"Regional"
+		__( 'Government & Organizations', 'podcasting' ) => array(
+			__( 'Local', 'podcasting' ),
+			__( 'National', 'podcasting' ),
+			__( 'Non-Profit', 'podcasting' ),
+			__( 'Regional', 'podcasting' )
 		),
-		"Health" => array(
-			"Alternative Health",
-			"Fitness & Nutrition",
-			"Self-Help",
-			"Sexuality"
+		__( 'Health', 'podcasting' ) => array(
+			__( 'Alternative Health', 'podcasting' ),
+			__( 'Fitness & Nutrition', 'podcasting' ),
+			__( 'Self-Help', 'podcasting' ),
+			__( 'Sexuality', 'podcasting' )
 		),
-		"Kids & Family" => array(),
-		"Music" => array(),
-		"News & Politics" => array(),
-		"Religion & Spirituality" => array(
-			"Buddhism",
-			"Christianity",
-			"Hinduism",
-			"Islam",
-			"Judaism",
-			"Other",
-			"Spirituality",
+		__( 'Kids & Family', 'podcasting' ) => array(),
+		__( 'Music', 'podcasting' ) => array(),
+		__( 'News & Politics', 'podcasting' ) => array(),
+		__( 'Religion & Spirituality', 'podcasting' ) => array(
+			__( 'Buddhism', 'podcasting' ),
+			__( 'Christianity', 'podcasting' ),
+			__( 'Hinduism', 'podcasting' ),
+			__( 'Islam', 'podcasting' ),
+			__( 'Judaism', 'podcasting' ),
+			__( 'Other', 'podcasting' ),
+			__( 'Spirituality', 'podcasting' ),
 		),
-		"Science & Medicine" => array(
-			"Medicine",
-			"Natural Sciences",
-			"Social Sciences"
+		__( 'Science & Medicine', 'podcasting' ) => array(
+			__( 'Medicine', 'podcasting' ),
+			__( 'Natural Sciences', 'podcasting' ),
+			__( 'Social Sciences', 'podcasting' )
 		),
-		"Society & Culture" => array(
-			"History",
-			"Personal Journals",
-			"Philosophy",
-			"Places & Travel"
+		__( 'Society & Culture', 'podcasting' ) => array(
+			__( 'History', 'podcasting' ),
+			__( 'Personal Journals', 'podcasting' ),
+			__( 'Philosophy', 'podcasting' ),
+			__( 'Places & Travel', 'podcasting' )
 		),
-		"Sports & Recreation" => array(
-			"Amateur",
-			"College & High School",
-			"Outdoor",
-			"Professional",
+		__( 'Sports & Recreation', 'podcasting' ) => array(
+			__( 'Amateur', 'podcasting' ),
+			__( 'College & High School', 'podcasting' ),
+			__( 'Outdoor', 'podcasting' ),
+			__( 'Professional', 'podcasting' ),
 		),
-		"Technology" => array(
-			"Gadgets",
-			"Tech News",
-			"Podcasting",
-			"Software How-To",
+		__( 'Technology', 'podcasting' ) => array(
+			__( 'Gadgets', 'podcasting' ),
+			__( 'Tech News', 'podcasting' ),
+			__( 'Podcasting', 'podcasting' ),
+			__( 'Software How-To', 'podcasting' ),
 		),
-		"TV & Film" => array()
+		__( 'TV & Film', 'podcasting' ) => array()
 	);
 	foreach( $categories as $key => $category ) {
 		$to_return[] = $key;
