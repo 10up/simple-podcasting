@@ -132,7 +132,6 @@ function the_field( $field, $value = '', $term_id = false ) {
 				type="text"
 				value="<?php echo esc_attr( $value ); ?>"
 				size="40"
-				aria-required="true"
 			>
 		<?php
 			break;
@@ -252,13 +251,13 @@ function add_podcasting_term_edit_meta_fields( $term ) {
 	$podcasting_meta_fields = get_meta_fields();
 	?>
 	<table class="form-table">
-		<tbody><tr class="form-field form-required term-name-wrap">
+		<tbody><tr class="form-field term-name-wrap">
 	<?php
 	foreach ( $podcasting_meta_fields as $field ) {
 		$value = get_term_meta( $term->term_id, $field['slug'], true );
 		$value = $value ? $value : '';
 		?>
-		<tr class="form-field form-required term-name-wrap">
+		<tr class="form-field term-name-wrap">
 			<th scope="row">
 				<label
 					for="name"
@@ -273,7 +272,7 @@ function add_podcasting_term_edit_meta_fields( $term ) {
 	?>
 	<tbody>
 	</table>
-		<tbody><tr class="form-field form-required term-name-wrap">
+		<tbody><tr class="form-field term-name-wrap">
 	<?php
 }
 
