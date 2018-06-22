@@ -6,12 +6,14 @@ const { Component } = wp.element;
 const {
     registerBlockType,
     Editable,
-    MediaUpload,
-    RichText,
-    InspectorControls,
-    BlockControls,
     BlockAlignmentToolbar,
 } = wp.blocks;
+const {
+    BlockControls,
+    InspectorControls,
+    MediaUpload,
+    RichText,
+} = wp.editor;
 const {
     Button,
     FormToggle,
@@ -19,6 +21,8 @@ const {
     PanelBody,
     PanelRow,
     Placeholder,
+    SelectControl,
+    TextControl,
     Toolbar,
 } = wp.components;
 
@@ -39,18 +43,35 @@ export default registerBlockType(
                 type: 'number',
             },
             src: {
-             type: 'string',
-             source: 'attribute',
-             selector: 'audio',
-             attribute: 'src',
+                type: 'string',
+                source: 'attribute',
+                selector: 'audio',
+                attribute: 'src',
+            },
+            url: {
+                type: 'string',
+                source: 'meta',
+                meta: 'podcast_url',
+            },
+            filesize: {
+                type: 'number',
+                source: 'meta',
+                meta: 'podcast_filesize',
+            },
+            duration: {
+                type: 'string',
+                source: 'meta',
+                meta: 'podcast_duration',
+            },
+            mime: {
+                type: 'string',
+                source: 'meta',
+                meta: 'podcast_mime',
             },
             caption: {
                 type: 'array',
                 source: 'children',
                 selector: 'figcaption',
-            },
-            podcastTerm: {
-                type: 'string',
             },
             captioned: {
                 type: 'boolean',
@@ -59,15 +80,10 @@ export default registerBlockType(
                 default: false,
             },
             explicit: {
-                type: 'boolean',
-                source: 'meta',
-                meta: 'podcast_explicit',
-                default: false,
-            },
-            podcastEpisode: {
                 type: 'string',
                 source: 'meta',
-                meta: 'podcast_episode'
+                meta: 'podcast_explicit',
+                default: 'no',
             }
         },
 
@@ -78,13 +94,13 @@ export default registerBlockType(
                 // without setting the actual value outside of the edit UI
                 this.state = {
                     editing: ! this.props.attributes.src,
-                    src: this.props.attributes.src,
+                    src: ! this.props.attributes.id ? this.props.attributes.src : null,
                     className,
                 };
             }
         
             render() {
-                const { id, align, caption, podcastTerm, captioned, explicit, podcastEpisode } = this.props.attributes;
+                const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
                 const { setAttributes, isSelected } = this.props;
                 const { editing, className, src } = this.state;
 
@@ -98,9 +114,12 @@ export default registerBlockType(
                     setAttributes( {
                         id: attachment.id,
                         src: attachment.url,
+                        url: attachment.url,
+                        mime: attachment.mime,
+                        filesize: attachment.filesizeInBytes,
+                        duration: attachment.fileLength,
                         caption: attachment.title,
                     } );
-
                     this.setState( { editing: false } );
                 };
                 const onSelectUrl = ( event ) => {
@@ -108,14 +127,18 @@ export default registerBlockType(
                     if ( src ) {
                         setAttributes({
                             src: src,
+                            url: src,
                             id: null,
+                            mime: '',
+                            filesize: 0,
+                            duration: 0,
                             caption: null,
+
                         });
                         this.setState( { editing: false } );
                     }
                     return false;
                 };
-                const toggleExplicit  = () => setAttributes( { explicit: ! explicit } );
                 const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
                 const controls = isSelected && (
@@ -152,16 +175,22 @@ export default registerBlockType(
                                     />
                                 </PanelRow>
                                 <PanelRow>
-                                    <label
-                                        htmlFor="podcast-explicit-form-toggle"
-                                    >
-                                        { __( 'Explicit Content', 'podcasting' ) }
-                                    </label>
-                                    <FormToggle
-                                        id="podcast-explicit-form-toggle"
+                                    <SelectControl
                                         label={ __( 'Explicit Content', 'podcasting' ) }
-                                        checked={ explicit }
-                                        onChange={ toggleExplicit }
+                                        value={ explicit }
+                                        options={ [
+                                            { value: 'no', label: __( 'No', 'podcasting' ) },
+                                            { value: 'yes', label: __( 'Yes', 'podcasting' ) },
+                                            { value: 'clean', label: __( 'Clean', 'podcasting' ) },
+                                        ] }
+                                        onChange={ explicit => setAttributes( { explicit } ) }
+                                    />
+                                </PanelRow>
+                                <PanelRow>
+                                    <TextControl
+                                        label={ __( 'Length (MM:SS)', 'podcasting' ) }
+                                        value={ duration }
+                                        onChange={ duration => setAttributes( { duration } ) }
                                     />
                                 </PanelRow>
                             </PanelBody>

@@ -132,7 +132,7 @@ function feed_item() {
 		return false;
 	}
 
-	$post_meta = get_post_meta( $post->ID, 'podcast_episode', true );
+	$podcast_duration = get_post_meta( $post->ID, 'podcast_duration', true );
 
 	$author = get_option( 'podcasting_talent_name' );
 	if ( empty( $author ) ) {
@@ -183,19 +183,9 @@ function feed_item() {
 
 	echo '<itunes:subtitle>' . esc_html( $subtitle ) . "</itunes:subtitle>\n";
 
-	if ( ! empty( $post_meta['enclosure'] ) ) {
-		echo "<enclosure url='" .
-		esc_url( str_replace( 'https://', 'http://', $post_meta['enclosure']['url'] ) ) .
-		"' length='" .
-		esc_attr( $post_meta['enclosure']['length'] ) .
-		"' type='" .
-		esc_attr( $post_meta['enclosure']['mime'] ) .
-		"' />\n";
-	}
-
 	// Add an enclosure duration if available.
-	if ( isset( $post_meta['enclosure']['duration'] ) && ! empty( $post_meta['enclosure']['duration'] ) ) {
-		echo '<itunes:duration>' . esc_html( $post_meta['enclosure']['duration'] ) . "</itunes:duration>\n";
+	if ( isset( $podcast_duration ) && ! empty( $podcast_duration ) ) {
+		echo '<itunes:duration>' . esc_html( $podcast_duration ) . "</itunes:duration>\n";
 	}
 }
 add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
@@ -210,13 +200,21 @@ add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
 function rss_enclosure( $enclosure ) {
 	global $post;
 
-	$post_meta = get_post_meta( $post->ID, 'podcast_episode', true );
+	$podcast_url = get_post_meta( $post->ID, 'podcast_url', true );
+	$podcast_length = get_post_meta( $post->ID, 'podcast_length', true );
+	$podcast_mime = get_post_meta( $post->ID, 'podcast_mime', true );
 
-	if ( empty( $post_meta['enclosure'] ) ) {
-		return $enclosure;
+	if ( ! empty( $podcast_url ) ) {
+		$enclosure = "<enclosure url='" .
+		esc_url( str_replace( 'https://', 'http://', $podcast_url ) ) .
+		"' length='" .
+		esc_attr( $podcast_length ) .
+		"' type='" .
+		esc_attr( $podcast_mime ) .
+		"' />\n";
 	}
 
-	return '';
+	return $enclosure;
 }
 add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
 

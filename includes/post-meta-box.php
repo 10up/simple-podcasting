@@ -28,23 +28,18 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );
  * @param  object WP_Post $post The current post.
  */
 function meta_box_html( $post ) {
-	$options = wp_parse_args(
-		get_post_meta( $post->ID, 'podcast_episode', true ),
-		array(
-			'closed_captioned'  => 'no',
-			'explicit_content'  => 'no',
-			'podcast_enclosure' => '',
-		)
-	);
+	$podcast_url = get_post_meta( $post->ID, 'podcast_url', true );
+	$podcast_duration = get_post_meta( $post->ID, 'podcast_duration', true );
+	$podcast_mime = get_post_meta( $post->ID, 'podcast_mime', true );
+	$podcast_explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
+	$podcast_captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
 
 	wp_nonce_field( plugin_basename( __FILE__ ), 'podcasting' );
-
-	$enclosure_url = ( isset( $options['enclosure']['url'] ) ) ? $options['enclosure']['url'] : '';
 	?>
 	<p>
 		<label for="podcast_closed_captioned">
 			<?php esc_html_e( 'Closed Captioned', 'podcasting' ); ?>
-			<input type="checkbox" id="podcast_closed_captioned" name="podcast_closed_captioned" <?php checked( $options['closed_captioned'], 'yes', false ); ?> />
+			<input type="checkbox" id="podcast_closed_captioned" name="podcast_closed_captioned" <?php checked( $podcast_captioned, 'yes' ); ?> />
 		</label>
 	</p>
 
@@ -52,16 +47,16 @@ function meta_box_html( $post ) {
 		<label for="podcast_explicit_content">
 			<?php esc_html_e( 'Explicit Content', 'podcasting' ); ?>
 			<select id="podcast_explicit_content" name="podcast_explicit_content">
-				<option value="no"<?php selected( $options['explicit_content'], 'no', false ); ?>><?php esc_html_e( 'No' ); ?></option>
-				<option value="yes"<?php selected( $options['explicit_content'], 'yes', false ); ?>><?php esc_html_e( 'Yes' ); ?></option>
-				<option value="clean"<?php selected( $options['explicit_content'], 'clean', false ); ?>><?php esc_html_e( 'Clean', 'podcasting' ); ?></option>
+				<option value="no"<?php selected( $podcast_explicit, 'no' ); ?>><?php esc_html_e( 'No' ); ?></option>
+				<option value="yes"<?php selected( $podcast_explicit, 'yes' ); ?>><?php esc_html_e( 'Yes' ); ?></option>
+				<option value="clean"<?php selected( $podcast_explicit, 'clean' ); ?>><?php esc_html_e( 'Clean', 'podcasting' ); ?></option>
 			</select>
 		</label>
 	</p>
 
 	<p>
 		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'podcasting' ); ?></label>
-		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $enclosure_url ); ?>" size="35" />
+		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $podcast_url ); ?>" size="35" />
 		<input type="button" id="podcasting-enclosure-button" value="<?php esc_attr_e( 'Choose File', 'podcasting' ); ?>" class="button">
 	</p>
 
@@ -90,19 +85,16 @@ function save_meta_box( $post_id ) {
 
 	$_post = wp_unslash( $_POST );
 
-	$url             = false;
-	$podcast_options = array(
-		'closed_captioned'  => 'no',
-		'explicit_content'  => 'no',
-		'podcast_enclosure' => '',
-	);
+	$url              = false;
+	$podcast_captioned = 0;
+	$podcast_explicit = 'no';
 
 	if ( isset( $_post['podcast_closed_captioned'] ) && 'on' === $_post['podcast_closed_captioned'] ) {
-		$podcast_options['closed_captioned'] = 'yes';
+		$podcast_captioned = 1;
 	}
 
 	if ( isset( $_post['podcast_explicit_content'] ) && in_array( $_post['podcast_explicit_content'], array( 'yes', 'no', 'clean' ), true ) ) {
-		$podcast_options['explicit_content'] = sanitize_text_field( $_post['podcast_explicit_content'] );
+		$podcast_explicit = sanitize_text_field( $_post['podcast_explicit_content'] );
 	}
 
 	if ( isset( $_post['podcast_enclosure_url'] ) && ! empty( $_post['podcast_enclosure_url'] ) ) {
@@ -140,7 +132,7 @@ function save_meta_box( $post_id ) {
 			// Grab a temporary copy of the file to determine the audio duration.
 			$temp_file = download_url( $url, 30 );
 			$meta_data = wp_read_audio_metadata( $temp_file );
-			$duration  = isset( $meta_data['length'] ) ? $meta_data['length'] : false;
+			$duration  = isset( $meta_data['length_formatted'] ) ? $meta_data['length_formatted'] : false;
 
 			$len           = isset( $headers['content-length'] ) ? (int) $headers['content-length'] : 0;
 			$type          = isset( $headers['content-type'] )   ? $headers['content-type']         : '';
@@ -161,17 +153,20 @@ function save_meta_box( $post_id ) {
 			}
 
 			if ( in_array( substr( $type, 0, strpos( $type, '/' ) ), $allowed_types, true ) ) {
-				$podcast_options['enclosure'] = array(
-					'url'      => esc_url_raw( $url ),
-					'length'   => $len,
-					'mime'     => $type,
-					'duration' => $duration,
-				);
+				$podcast_url      = esc_url_raw( $url );
+				$podcast_mime     = $type;
+				$podcast_duration = $duration;
+				$podcast_filesize = $len;
 			}
 		}
 	}
 
-	update_post_meta( $post_id, 'podcast_episode', $podcast_options );
+	update_post_meta( $post_id, 'podcast_url', $podcast_url );
+	update_post_meta( $post_id, 'podcast_filesize', $podcast_filesize );
+	update_post_meta( $post_id, 'podcast_duration', $podcast_duration );
+	update_post_meta( $post_id, 'podcast_mime', $podcast_mime );
+	update_post_meta( $post_id, 'podcast_explicit', $podcast_explicit );
+	update_post_meta( $post_id, 'podcast_captioned', $podcast_captioned );
 }
 add_action( 'save_post_post', __NAMESPACE__ . '\save_meta_box' );
 

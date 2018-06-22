@@ -2,21 +2,39 @@
 namespace tenup_podcasting;
 
 function register_meta() {
-	\register_meta( 'post', 'podcast_episode', array(
+	\register_meta( 'post', 'podcast_url', array(
 		'show_in_rest' => true,
-		'type'         => 'array',
+		'type'         => 'string',
 		'single'       => true,
 	) );
 
 	\register_meta( 'post', 'podcast_explicit', array(
 		'show_in_rest' => true,
-		'type'         => 'boolean',
+		'type'         => 'string',
 		'single'       => true,
 	) );
 
 	\register_meta( 'post', 'podcast_captioned', array(
 		'show_in_rest' => true,
 		'type'         => 'boolean',
+		'single'       => true,
+	) );
+
+	\register_meta( 'post', 'podcast_duration', array(
+		'show_in_rest' => true,
+		'type'         => 'string',
+		'single'       => true,
+	) );
+
+	\register_meta( 'post', 'podcast_filesize', array(
+		'show_in_rest' => true,
+		'type'         => 'number',
+		'single'       => true,
+	) );
+
+	\register_meta( 'post', 'podcast_mime', array(
+		'show_in_rest' => true,
+		'type'         => 'string',
 		'single'       => true,
 	) );
 }
