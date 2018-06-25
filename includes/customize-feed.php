@@ -132,8 +132,6 @@ function feed_item() {
 		return false;
 	}
 
-	$podcast_duration = get_post_meta( $post->ID, 'podcast_duration', true );
-
 	$author = get_option( 'podcasting_talent_name' );
 	if ( empty( $author ) ) {
 		$author = get_the_author();
@@ -189,8 +187,9 @@ function feed_item() {
 	echo '<itunes:subtitle>' . esc_html( $subtitle ) . "</itunes:subtitle>\n";
 
 	// Add an enclosure duration if available.
-	if ( isset( $podcast_duration ) && ! empty( $podcast_duration ) ) {
-		echo '<itunes:duration>' . esc_html( $podcast_duration ) . "</itunes:duration>\n";
+	$duration = get_post_meta( $post->ID, 'podcast_duration', true );
+	if ( ! empty( $duration ) ) {
+		echo '<itunes:duration>' . esc_html( $duration ) . "</itunes:duration>\n";
 	}
 }
 add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
@@ -206,14 +205,14 @@ function rss_enclosure( $enclosure ) {
 	global $post;
 
 	$podcast_url = get_post_meta( $post->ID, 'podcast_url', true );
-	$podcast_length = get_post_meta( $post->ID, 'podcast_length', true );
+	$podcast_filesize = get_post_meta( $post->ID, 'podcast_filesize', true );
 	$podcast_mime = get_post_meta( $post->ID, 'podcast_mime', true );
 
 	if ( ! empty( $podcast_url ) ) {
 		$enclosure = "<enclosure url='" .
 		esc_url( str_replace( 'https://', 'http://', $podcast_url ) ) .
 		"' length='" .
-		esc_attr( $podcast_length ) .
+		esc_attr( $podcast_filesize ) .
 		"' type='" .
 		esc_attr( $podcast_mime ) .
 		"' />\n";
