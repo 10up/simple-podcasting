@@ -141,7 +141,12 @@ function feed_item() {
 
 	echo '<itunes:author>' . esc_html( $author ) . "</itunes:author>\n";
 
-	$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
+	$explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
+
+	// fall back to the podcast setting
+	if ( empty( $explicit ) ) {
+		$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
+	}
 
 	echo '<itunes:explicit>';
 
