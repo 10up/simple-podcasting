@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Podcasting for WordPress
- * Plugin URI: http://wordpress.org/
- * Description: Podcasting, enhanced by 10up.
- * Author: 10up, original code from Automattic
+ * Plugin Name: Simple Podcasting
+ * Plugin URI: http://wordpress.org/plugins/simple-podcasting
+ * Description: Easily set up multiple podcast feeds using built-in WordPress posts. Includes beta Gutenberg support.
+ * Author: 10up, with original code from Automattic
  * Version: 1.0.0
  * Author URI: http://10up.com/
  */
