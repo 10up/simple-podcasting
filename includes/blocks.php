@@ -46,8 +46,8 @@ add_action( 'init', __NAMESPACE__ . '\init' );
  * @return void
  */
 function register_js_strings() {
-	__( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.', 'podcasting' );
-	__( 'Podcast Settings', 'podcasting' );
+	__( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.', 'simple-podcasting' );
+	__( 'Podcast Settings', 'simple-podcasting' );
 }
 add_action( 'init', __NAMESPACE__ . '\register_js_strings' );
 
@@ -60,10 +60,10 @@ add_action( 'init', __NAMESPACE__ . '\register_js_strings' );
  * @return void
  */
 function load_translations() {
-	$data = wp_json_encode( gutenberg_get_jed_locale_data( 'podcasting' ) );
+	$data = wp_json_encode( gutenberg_get_jed_locale_data( 'simple-podcasting' ) );
 	wp_add_inline_script(
 		'wp-i18n',
-		'wp.i18n.setLocaleData( ' . $data . ', "podcasting" );'
+		'wp.i18n.setLocaleData( ' . $data . ', "simple-podcasting" );'
 	);
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\load_translations' );

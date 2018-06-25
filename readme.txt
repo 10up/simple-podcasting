@@ -3,7 +3,7 @@ Contributors: 10up, helen, adamsilverstein, jakemgold
 Author URI: http://10up.com
 Plugin URI: https://github.com/10up/simple-podcasting
 Tags: podcasting, gutenberg, gutenberg-ready, gutenberg-blocks, blocks
-Requires at least: 4.0
+Requires at least: 4.6
 Tested up to: 4.9.6
 Requires PHP: 5.3
 Stable tag: trunk

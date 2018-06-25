@@ -11,7 +11,7 @@ namespace tenup_podcasting;
 function add_podcasting_meta_box() {
 	add_meta_box(
 		'podcasting',
-		__( 'Podcasting', 'podcasting' ),
+		__( 'Podcasting', 'simple-podcasting' ),
 		__NAMESPACE__ . '\meta_box_html',
 		'post',
 		'advanced',
@@ -34,33 +34,33 @@ function meta_box_html( $post ) {
 	$podcast_explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
 	$podcast_captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
 
-	wp_nonce_field( plugin_basename( __FILE__ ), 'podcasting' );
+	wp_nonce_field( plugin_basename( __FILE__ ), 'simple-podcasting' );
 	?>
 	<p>
 		<label for="podcast_closed_captioned">
-			<?php esc_html_e( 'Closed Captioned', 'podcasting' ); ?>
+			<?php esc_html_e( 'Closed Captioned', 'simple-podcasting' ); ?>
 			<input type="checkbox" id="podcast_closed_captioned" name="podcast_closed_captioned" <?php checked( $podcast_captioned, 'yes' ); ?> />
 		</label>
 	</p>
 
 	<p>
 		<label for="podcast_explicit_content">
-			<?php esc_html_e( 'Explicit Content', 'podcasting' ); ?>
+			<?php esc_html_e( 'Explicit Content', 'simple-podcasting' ); ?>
 			<select id="podcast_explicit_content" name="podcast_explicit_content">
 				<option value="no"<?php selected( $podcast_explicit, 'no' ); ?>><?php esc_html_e( 'No' ); ?></option>
 				<option value="yes"<?php selected( $podcast_explicit, 'yes' ); ?>><?php esc_html_e( 'Yes' ); ?></option>
-				<option value="clean"<?php selected( $podcast_explicit, 'clean' ); ?>><?php esc_html_e( 'Clean', 'podcasting' ); ?></option>
+				<option value="clean"<?php selected( $podcast_explicit, 'clean' ); ?>><?php esc_html_e( 'Clean', 'simple-podcasting' ); ?></option>
 			</select>
 		</label>
 	</p>
 
 	<p>
-		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'podcasting' ); ?></label>
+		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'simple-podcasting' ); ?></label>
 		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $podcast_url ); ?>" size="35" />
-		<input type="button" id="podcasting-enclosure-button" value="<?php esc_attr_e( 'Choose File', 'podcasting' ); ?>" class="button">
+		<input type="button" id="podcasting-enclosure-button" value="<?php esc_attr_e( 'Choose File', 'simple-podcasting' ); ?>" class="button">
 	</p>
 
-	<p class="howto"><?php esc_html_e( 'Optional: Use this field if you have more than one audio/video file in your post.', 'podcasting' ); ?></p>
+	<p class="howto"><?php esc_html_e( 'Optional: Use this field if you have more than one audio/video file in your post.', 'simple-podcasting' ); ?></p>
 
 	<?php
 }
@@ -79,7 +79,7 @@ function save_meta_box( $post_id ) {
 		return;
 	}
 
-	if ( empty( $_POST['podcasting'] ) || ! wp_verify_nonce( $_POST['podcasting'], plugin_basename( __FILE__ ) ) ) {
+	if ( empty( $_POST['simple-podcasting'] ) || ! wp_verify_nonce( $_POST['simple-podcasting'], plugin_basename( __FILE__ ) ) ) {
 		return;
 	}
 
