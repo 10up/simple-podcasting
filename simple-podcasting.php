@@ -16,7 +16,20 @@ define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
 
 require_once PODCASTING_PATH . 'includes/datatypes.php';
 
-register_activation_hook( __FILE__, 'flush_rewrite_rules' );
+/**
+ * Flush rewrite rules on plugin activation.
+ *
+ * `flush_rewrite_rules()` cannot just be hooked on directly
+ * because the taxonomy is not yet registered at that point.
+ * So we call the taxonomy registration function ourselves first.
+ *
+ * @return void
+ */
+function activate_plugin() {
+	create_podcasts_taxonomy();
+	\flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
 // Gutenberg support
 if ( function_exists( 'register_block_type' ) ) {
