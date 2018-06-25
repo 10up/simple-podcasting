@@ -156,6 +156,12 @@ function feed_item() {
 
 	echo "</itunes:explicit>\n";
 
+	$captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
+
+	if ( $captioned ) {
+		echo "<itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>\n";
+	}
+
 	// Add the featured image if available.
 	if ( has_post_thumbnail( $post->ID ) ) {
 		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' );

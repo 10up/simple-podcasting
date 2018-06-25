@@ -39,7 +39,7 @@ function meta_box_html( $post ) {
 	<p>
 		<label for="podcast_closed_captioned">
 			<?php esc_html_e( 'Closed Captioned', 'simple-podcasting' ); ?>
-			<input type="checkbox" id="podcast_closed_captioned" name="podcast_closed_captioned" <?php checked( $podcast_captioned, 'yes' ); ?> />
+			<input type="checkbox" id="podcast_closed_captioned" name="podcast_closed_captioned" <?php checked( $podcast_captioned ); ?> />
 		</label>
 	</p>
 
