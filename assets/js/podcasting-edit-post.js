@@ -3,9 +3,9 @@ jQuery( document ).ready( function( $ ) {
 	var isEnclosure = false;
 
 	$( '#podcasting-enclosure-button' ).click( function( e ) {
-		var postID = parseInt( Podcasting.postID );
+		var postID = parseInt( simplePodcasting.postID );
 		isEnclosure = true;
-		tb_show( '', Podcasting.modalUrl );
+		tb_show( '', simplePodcasting.modalUrl );
 		e.preventDefault();
 	} );
 

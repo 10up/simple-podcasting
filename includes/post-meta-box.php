@@ -199,7 +199,7 @@ function edit_post_enqueues( $hook_suffix ) {
 		true
 	);
 
-	wp_localize_script( 'podcasting_edit_post_screen', 'Podcasting', array(
+	wp_localize_script( 'podcasting_edit_post_screen', 'simplePodcasting', array(
 		'postID'   => get_the_ID(),
 		'modalUrl' => get_media_modal_url(),
 	) );
