@@ -141,7 +141,7 @@ export default registerBlockType(
                 };
                 const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
-                const controls = isSelected && (
+                const controls = (
                     <BlockControls key="controls">
                         <Toolbar>
                             <IconButton
@@ -156,7 +156,7 @@ export default registerBlockType(
 
                 return [
                     controls,
-                    isSelected && (
+                    (
                         <InspectorControls>
                             <PanelBody
                               title={ __( 'Podcast Settings', 'podcasting' ) }
