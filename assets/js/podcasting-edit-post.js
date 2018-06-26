@@ -1,36 +1,41 @@
 jQuery( document ).ready( function( $ ) {
-
-	var isEnclosure = false;
-
 	$( '#podcasting-enclosure-button' ).click( function( e ) {
-		var postID = parseInt( simplePodcasting.postID );
-		isEnclosure = true;
-		tb_show( '', simplePodcasting.modalUrl );
 		e.preventDefault();
-	} );
 
-	window.original_send_to_editor = window.send_to_editor;
+		var $this = $( this ),
+			$input = $( 'input#podcasting-enclosure-url' ),
+			mediaUploader;
 
-	window.send_to_editor = function( html ) {
-		if ( isEnclosure ) {
-			// Strip audio shortcode if present.
-			html = html.replace( /^\[audio\s/, '' );
-			html = html.replace( /(\s)*\]$/, '' );
-
-			var $html  = $( html ),
-				source = '';
-
-			// TODO This is a FAIL when the user selects link to attachment URL
-			if ( $html.is( 'a' ) )
-				source = $html.attr( 'href' );
-			else
-				source = html;
-
-			$( '#podcasting-enclosure-url' ).val( source );
-			tb_remove();
-		} else {
-			window.original_send_to_editor( html );
+		console.log( $this );
+		
+		// If the uploader object has already been created, reopen the dialog.
+		if ( mediaUploader ) {
+			mediaUploader.open();
+			return;
 		}
-	}
+		// Extend the wp.media object.
+		mediaUploader = wp.media.frames.file_frame = wp.media( {
+			title: $this.data( 'modalTitle' ),
+			button: {
+				text: $this.data( 'modalButton' )
+			},
+			library: {
+				type: 'audio'
+			},
+			multiple: false
+		});
 
+		// When a file is selected, grab the URL and set it as the text field's value.
+		mediaUploader.off( 'select' );
+		mediaUploader.on( 'select', function() {
+			var attachment = mediaUploader.state().get('selection').first(),
+				attachmentUrl = attachment.get('url');
+
+			$input.val( attachmentUrl );
+
+		});
+
+		// Open the uploader dialog
+		mediaUploader.open();
+	} );
 } );

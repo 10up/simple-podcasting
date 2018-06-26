@@ -57,7 +57,7 @@ function meta_box_html( $post ) {
 	<p>
 		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'simple-podcasting' ); ?></label>
 		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $podcast_url ); ?>" size="35" />
-		<input type="button" id="podcasting-enclosure-button" value="<?php esc_attr_e( 'Choose File', 'simple-podcasting' ); ?>" class="button">
+		<input type="button" id="podcasting-enclosure-button" value="<?php esc_attr_e( 'Choose File', 'simple-podcasting' ); ?>" class="button"data-modal-title="<?php esc_attr_e( 'Podcast Enclosure', 'simple-podcasting' ); ?>" data-modal-button="<?php esc_attr_e( 'Select this file' ); ?>" />
 	</p>
 
 	<p class="howto"><?php esc_html_e( 'Optional: Use this field if you have more than one audio/video file in your post.', 'simple-podcasting' ); ?></p>
@@ -198,31 +198,5 @@ function edit_post_enqueues( $hook_suffix ) {
 		PODCASTING_VERSION,
 		true
 	);
-
-	wp_localize_script( 'podcasting_edit_post_screen', 'simplePodcasting', array(
-		'postID'   => get_the_ID(),
-		'modalUrl' => get_media_modal_url(),
-	) );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\edit_post_enqueues' );
-
-/**
- * Helper function to retrieve the media URL to use in the post meta box.
- * @return string The constructed media url.
- */
-function get_media_modal_url() {
-	$post_id = get_the_ID();
-
-	$url = 'media-upload.php';
-
-	$query = array(
-		'type'      => 'audio',
-		'post_id'   => $post_id,
-		'tab'       => 'library',
-		'TB_iframe' => 'true',
-	);
-
-	$url = add_query_arg( $query, $url );
-
-	return esc_url( $url );
-}
