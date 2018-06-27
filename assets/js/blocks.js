@@ -127,10 +127,10 @@ export default registerBlockType(
 						setAttributes({
 							src: newSrc,
 							url: newSrc,
-							id: undefined,
-							mime: '',
-							filesize: undefined,
-							duration: '',
+							id: null,
+							mime: null,
+							filesize: null,
+							duration: null,
 							caption: '',
 
 						});
