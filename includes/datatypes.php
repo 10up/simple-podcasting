@@ -261,6 +261,7 @@ function save_podcasting_term_meta( $term_id ) {
 	}
 }
 add_action( 'edited_' . TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
+add_action( 'created_' . TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
 
 /**
  * Add podcasting fields to the term screen.
