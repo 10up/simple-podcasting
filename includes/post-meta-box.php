@@ -188,7 +188,7 @@ function edit_post_enqueues( $hook_suffix ) {
 	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 		$js_file = 'assets/js/podcasting-edit-post.js';
 	} else {
-		$js_file = 'assets/js/podcasting-edit-post.min.js';
+		$js_file = 'dist/js/podcasting-edit-post.min.js';
 	}
 
 	wp_enqueue_script(
