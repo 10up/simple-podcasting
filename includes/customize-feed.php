@@ -1,16 +1,23 @@
 <?php
 /**
- * Add an itunes podcasting header.
+ * Customize the feed for a specific podcast. Insert the podcast data stored in term meta.
  */
-function ninetofive_podcasting_xmlns() {
-	echo "\n\t" . 'xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"' . "\n";
-}
-add_action( 'rss2_ns', 'ninetofive_podcasting_xmlns' );
+namespace tenup_podcasting;
 
 /**
- * Get the current term_id.
+ * Add an itunes podcasting header.
  */
-function ninetofive_podcasting_get_the_term(){
+function xmlns() {
+	echo "\n\t" . 'xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"' . "\n";
+}
+add_action( 'rss2_ns', __NAMESPACE__ . '\xmlns' );
+
+/**
+ * Get the current term, verifying that is has a term_id.
+ *
+ * @return object WP_Term or false if not a term feed.
+ */
+function get_the_term() {
 	$queried_object = get_queried_object();
 	if ( ! $queried_object || ! $queried_object->term_id ) {
 		return false;
@@ -20,11 +27,13 @@ function ninetofive_podcasting_get_the_term(){
 
 /**
  * Adjust the title for podcasting feeds.
+ *
  * @param  string $output The feed title.
+ *
  * @return string         The adjusted feed title.
  */
-function ninetofive_podcasting_bloginfo_rss_name( $output ) {
-	$term = ninetofive_podcasting_get_the_term();
+function bloginfo_rss_name( $output ) {
+	$term = get_the_term();
 	if ( ! $term ) {
 		return $output;
 	}
@@ -38,29 +47,18 @@ function ninetofive_podcasting_bloginfo_rss_name( $output ) {
 
 	return $output;
 }
-add_filter( 'wp_title_rss', 'ninetofive_podcasting_bloginfo_rss_name' );
+add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
 
 // Don't show audio widgets in the feed.
 add_filter( 'wp_audio_shortcode', '__return_empty_string', 999 );
 
 /**
- * Adjust the excerpt, use the content instead.
+ * Add podcasting details to the feed header.
  */
-add_filter( 'the_excerpt_rss', function() {
-	global $post;
-
-	return $post ? apply_filters( 'the_content', $post->post_content ) : '';
-} );
-
-/**
- * Adjust the podcasting feed header.
- * @return [type] [description]
- */
-function ninetofive_podcasting_feed_head() {
-
-	$term = ninetofive_podcasting_get_the_term();
+function feed_head() {
+	$term = get_the_term();
 	if ( ! $term ) {
-		return $output;
+		return;
 	}
 	$subtitle = get_term_meta( $term->term_id, 'podcasting_subtitle', true );
 
@@ -90,7 +88,7 @@ function ninetofive_podcasting_feed_head() {
 
 	$copyright = get_term_meta( $term->term_id, 'podcasting_copyright', true );
 
-	if ( !empty( $copyright ) ) {
+	if ( ! empty( $copyright ) ) {
 		echo '<copyright>' . esc_html( wp_strip_all_tags( $copyright ) ) . "</copyright>\n";
 	}
 
@@ -118,45 +116,37 @@ function ninetofive_podcasting_feed_head() {
 		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
 	}
 
-	$category_1 = ninetofive_podcasting_generate_category( 'podcasting_category_1' );
-
-	if ( ! empty( $category_1 ) ) {
-		echo wp_kses_post( $category_1 );
-	}
-
-	$category_2 = ninetofive_podcasting_generate_category( 'podcasting_category_2' );
-
-	if ( ! empty( $category_2 ) ) {
-		echo wp_kses_post( $category_2 );
-	}
-
-	$category_3 = ninetofive_podcasting_generate_category( 'podcasting_category_3' );
-
-	if ( ! empty( $category_3 ) ) {
-		echo wp_kses_post( $category_3 );
-	}
+	generate_category( 'podcasting_category_1' );
+	generate_category( 'podcasting_category_2' );
+	generate_category( 'podcasting_category_3' );
 }
-add_action( 'rss2_head', 'ninetofive_podcasting_feed_head' );
+add_action( 'rss2_head', __NAMESPACE__ . '\feed_head' );
 
-function ninetofive_podcasting_feed_item() {
+/**
+ * Output the feed for a single podcast.
+ */
+function feed_item() {
 	global $post;
-	$term = ninetofive_podcasting_get_the_term();
+	$term = get_the_term();
 	if ( ! $term ) {
 		return false;
 	}
-
-	$post_meta = get_post_meta( $post->ID, 'podcast_episode', true );
 
 	$author = get_option( 'podcasting_talent_name' );
 	if ( empty( $author ) ) {
 		$author = get_the_author();
 	}
 
-	echo "<itunes:author>" . esc_html( $author ) . "</itunes:author>\n";
+	echo '<itunes:author>' . esc_html( $author ) . "</itunes:author>\n";
 
-	$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
+	$explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
 
-	echo "<itunes:explicit>";
+	// fall back to the podcast setting
+	if ( empty( $explicit ) ) {
+		$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
+	}
+
+	echo '<itunes:explicit>';
 
 	if ( empty( $explicit ) ) {
 		echo 'no';
@@ -166,18 +156,24 @@ function ninetofive_podcasting_feed_item() {
 
 	echo "</itunes:explicit>\n";
 
+	$captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
+
+	if ( $captioned ) {
+		echo "<itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>\n";
+	}
+
+	// Add the featured image if available.
 	if ( has_post_thumbnail( $post->ID ) ) {
 		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' );
 		if ( ! empty( $image ) ) {
 			if ( is_array( $image ) ) {
 				$image = $image[0];
 			}
-			// iTunes barfs on https images, so force http here.
-			$image = str_replace( 'https://', 'http://', $image );
 			echo "<itunes:image href='" . esc_url( $image ) . "' />\n";
 		}
 	}
 
+	// @todo add a filter here
 	$keywords = '';
 	if ( ! empty( $keywords ) ) {
 		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
@@ -190,61 +186,60 @@ function ninetofive_podcasting_feed_item() {
 	}
 	$excerpt = apply_filters( 'the_excerpt_rss', $excerpt );
 
-	echo "<itunes:summary>" . esc_html( wp_strip_all_tags( $excerpt ) ) . "</itunes:summary>\n";
+	echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $excerpt ) ) . "</itunes:summary>\n";
 
 	$subtitle = wp_trim_words( $excerpt, 10, '&#8230;' );
 
-	echo "<itunes:subtitle>" . esc_html( $subtitle ) . "</itunes:subtitle>\n";
-
-	if ( ! empty( $post_meta['enclosure'] ) ) {
-		echo "<enclosure url='" .
-		esc_url( str_replace( 'https://', 'http://', $post_meta['enclosure']['url'] ) ) .
-		"' length='" .
-		esc_attr( $post_meta['enclosure']['length'] ) .
-		"' type='" .
-		esc_attr( $post_meta['enclosure']['mime'] ) .
-		"' />\n";
-	}
+	echo '<itunes:subtitle>' . esc_html( $subtitle ) . "</itunes:subtitle>\n";
 
 	// Add an enclosure duration if available.
-	if ( isset( $post_meta['enclosure']['duration'] ) && ! empty( $post_meta['enclosure']['duration'] ) ) {
-		echo '<itunes:duration>' . esc_html( $post_meta['enclosure']['duration'] ) . "</itunes:duration>\n";
+	$duration = get_post_meta( $post->ID, 'podcast_duration', true );
+	if ( ! empty( $duration ) ) {
+		echo '<itunes:duration>' . esc_html( $duration ) . "</itunes:duration>\n";
 	}
 }
-add_action( 'rss2_item', 'ninetofive_podcasting_feed_item' );
+add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
 
 /**
  * Adjust the enclosure feed for podcasts.
+ *
  * @param  string $enclosure The enclosure (media url).
+ *
  * @return string            The adjusted enclosure.
  */
-function ninetofive_podcasting_rss_enclosure( $enclosure ) {
+function rss_enclosure( $enclosure ) {
 	global $post;
 
-	$post_meta = get_post_meta( $post->ID, 'podcast_episode', true );
+	$podcast_url = get_post_meta( $post->ID, 'podcast_url', true );
+	$podcast_filesize = get_post_meta( $post->ID, 'podcast_filesize', true );
+	$podcast_mime = get_post_meta( $post->ID, 'podcast_mime', true );
 
-	if ( empty( $post_meta['enclosure'] ) ) {
-		return $enclosure;
+	if ( ! empty( $podcast_url ) ) {
+		$enclosure = "<enclosure url='" .
+		esc_url( str_replace( 'https://', 'http://', $podcast_url ) ) .
+		"' length='" .
+		esc_attr( $podcast_filesize ) .
+		"' type='" .
+		esc_attr( $podcast_mime ) .
+		"' />\n";
 	}
 
-	return '';
+	return $enclosure;
 }
-add_filter( 'rss_enclosure', 'ninetofive_podcasting_rss_enclosure' );
+add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
 
 /**
- * Generate the category elements from the given option (e.g. podcasting_category_1)
+ * Generate the category elements from the given option (e.g. podcasting_category_1).
  *
  * @param  string $option option to retrieve via get_term_meta
- * @return string The category tag that can be echoed into the feed
  */
-function ninetofive_podcasting_generate_category( $option ) {
-	$term = ninetofive_podcasting_get_the_term();
+function generate_category( $option ) {
+	$term = get_the_term();
 	if ( ! $term ) {
 		return false;
 	}
 
 	$category = get_term_meta( $term->term_id, $option, true );
-	$strcat = '';
 	switch ( $category ) {
 		case 'Education,Education':
 			$category = 'Education';
@@ -265,16 +260,15 @@ function ninetofive_podcasting_generate_category( $option ) {
 
 	if ( ! empty( $category ) ) {
 		$splits = explode( ',', $category );
+
 		if ( 2 === count( $splits ) ) {
-			$strcat .= "<itunes:category text='" . esc_attr( $splits[0] ) . "'>\n";
-			$strcat .= "\t<itunes:category text='" . esc_attr( $splits[1] ) . "' />\n";
-			$strcat .= "</itunes:category>\n";
+			echo '<itunes:category text="' . esc_attr( $splits[0] ) . "\">\n";
+			echo "\t<itunes:category text=\"" . esc_attr( $splits[1] ) . "\" />\n";
+			echo "</itunes:category>\n";
 		} else {
-			$strcat .= "<itunes:category text='" . esc_attr( $category ) . "' />\n";
+			echo '<itunes:category text="' . esc_attr( $category ) . "\" />\n";
 		}
 	}
-
-	return $strcat;
 }
 
 /**
@@ -284,7 +278,7 @@ function ninetofive_podcasting_generate_category( $option ) {
  *
  * @return string         The filtered excerpt.
  */
-function ninetofive_podcasting_empty_rss_excerpt( $output ) {
+function empty_rss_excerpt( $output ) {
 	$excerpt = get_the_excerpt();
 
 	if ( empty( $excerpt ) ) {
@@ -293,5 +287,5 @@ function ninetofive_podcasting_empty_rss_excerpt( $output ) {
 
 	return $output;
 }
-// Run it super late after any other filters may have inserted something
-add_filter( 'the_excerpt_rss', 'ninetofive_podcasting_empty_rss_excerpt', 1000 );
+// Run it super late after any other filters may have inserted something.
+add_filter( 'the_excerpt_rss', __NAMESPACE__ . '\empty_rss_excerpt', 1000 );
