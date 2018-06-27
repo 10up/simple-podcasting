@@ -32,8 +32,8 @@ const {
 export default registerBlockType(
 	'podcasting/podcast',
 	{
-		title: __( 'Podcast', 'podcasting' ),
-		description: __( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.', 'podcasting' ),
+		title: __( 'Podcast', 'simple-podcasting' ),
+		description: __( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.', 'simple-podcasting' ),
 		category: 'common',
 		icon: 'microphone',
 		useOnce: true,
@@ -146,7 +146,7 @@ export default registerBlockType(
 						<Toolbar>
 							<IconButton
 								className="components-icon-button components-toolbar__control"
-								label={ __( 'Edit Podcast', 'podcasting' ) }
+								label={ __( 'Edit Podcast', 'simple-podcasting' ) }
 								onClick={ switchToEditing }
 								icon="edit"
 							/>
@@ -159,36 +159,36 @@ export default registerBlockType(
 					(
 						<InspectorControls>
 							<PanelBody
-							  title={ __( 'Podcast Settings', 'podcasting' ) }
+							  title={ __( 'Podcast Settings', 'simple-podcasting' ) }
 							>
 								<PanelRow>
 									<label
 										htmlFor="podcast-captioned-form-toggle"
 									>
-										{ __( 'Closed Captioned', 'podcasting' ) }
+										{ __( 'Closed Captioned', 'simple-podcasting' ) }
 									</label>
 									<FormToggle
 										id="podcast-captioned-form-toggle"
-										label={ __( 'Closed Captioned', 'podcasting' ) }
+										label={ __( 'Closed Captioned', 'simple-podcasting' ) }
 										checked={ captioned }
 										onChange={ toggleCaptioned }
 									/>
 								</PanelRow>
 								<PanelRow>
 									<SelectControl
-										label={ __( 'Explicit Content', 'podcasting' ) }
+										label={ __( 'Explicit Content', 'simple-podcasting' ) }
 										value={ explicit }
 										options={ [
-											{ value: 'no', label: __( 'No', 'podcasting' ) },
-											{ value: 'yes', label: __( 'Yes', 'podcasting' ) },
-											{ value: 'clean', label: __( 'Clean', 'podcasting' ) },
+											{ value: 'no', label: __( 'No', 'simple-podcasting' ) },
+											{ value: 'yes', label: __( 'Yes', 'simple-podcasting' ) },
+											{ value: 'clean', label: __( 'Clean', 'simple-podcasting' ) },
 										] }
 										onChange={ explicit => setAttributes( { explicit } ) }
 									/>
 								</PanelRow>
 								<PanelRow>
 									<TextControl
-										label={ __( 'Length (MM:SS)', 'podcasting' ) }
+										label={ __( 'Length (MM:SS)', 'simple-podcasting' ) }
 										value={ duration }
 										onChange={ duration => setAttributes( { duration } ) }
 									/>
@@ -218,7 +218,7 @@ export default registerBlockType(
 							<Placeholder
 								key="placeholder"
 								icon="microphone"
-								label={ __( 'Podcast', 'podcasting' ) }
+								label={ __( 'Podcast', 'simple-podcasting' ) }
 								instructions={ __( 'Select an audio file from your library, or upload a new one' ) }
 								className={ className }>
 								<form onSubmit={ onSelectUrl }>
