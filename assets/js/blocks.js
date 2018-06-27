@@ -11,6 +11,7 @@ const {
 const {
 	BlockControls,
 	InspectorControls,
+	MediaPlaceholder,
 	MediaUpload,
 	RichText,
 } = wp.editor;
@@ -20,7 +21,6 @@ const {
 	IconButton,
 	PanelBody,
 	PanelRow,
-	Placeholder,
 	SelectControl,
 	TextControl,
 	Toolbar,
@@ -109,7 +109,7 @@ export default registerBlockType(
 				};
 
 				const onSelectAttachment = ( attachment ) => {
-					this.setState( { src: null } );
+					this.setState( { src: undefined } );
 
 					setAttributes( {
 						id: attachment.id,
@@ -122,22 +122,20 @@ export default registerBlockType(
 					} );
 					this.setState( { editing: false } );
 				};
-				const onSelectUrl = ( event ) => {
-					event.preventDefault();
-					if ( src ) {
+				const onSelectUrl = ( newSrc ) => {
+					if ( newSrc !== src ) {
 						setAttributes({
-							src: src,
-							url: src,
-							id: null,
+							src: newSrc,
+							url: newSrc,
+							id: undefined,
 							mime: '',
-							filesize: 0,
-							duration: 0,
-							caption: null,
+							filesize: undefined,
+							duration: '',
+							caption: '',
 
 						});
-						this.setState( { editing: false } );
 					}
-					return false;
+					this.setState( { editing: false } );
 				};
 				const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
@@ -215,36 +213,20 @@ export default registerBlockType(
 
 						) : (
 
-							<Placeholder
-								key="placeholder"
+							<MediaPlaceholder
 								icon="microphone"
-								label={ __( 'Podcast', 'simple-podcasting' ) }
-								instructions={ __( 'Select an audio file from your library, or upload a new one' ) }
-								className={ className }>
-								<form onSubmit={ onSelectUrl }>
-									<input
-										type="url"
-										className="components-placeholder__input"
-										placeholder={ __( 'Enter URL of audio file here…' ) }
-										onChange={ event => this.setState( { src: event.target.value } ) }
-										value={ src || '' } />
-									<Button
-										isLarge
-										type="submit">
-										{ __( 'Use URL' ) }
-									</Button>
-								</form>
-								<MediaUpload
-									onSelect={ onSelectAttachment }
-									type="audio"
-									value={ id }
-									render={ ( { open } ) => (
-										<Button isLarge onClick={ open }>
-											{ __( 'Add from Media Library' ) }
-										</Button>
-									) }
-								/>
-							</Placeholder>
+								labels={ {
+									title: __( 'Podcast', 'simple-podcasting' ),
+									name: __( 'a podcast episode', 'simple-podcasting' ),
+								} }
+								className={ className }
+								onSelect={ onSelectAttachment }
+								onSelectUrl={ onSelectUrl }
+								accept="audio/*"
+								type="audio"
+								value={ this.props.attributes }
+							/>
+
 						)}
 
 					</div>
