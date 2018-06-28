@@ -34,6 +34,7 @@ function register_js_strings() {
 	__( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.', 'simple-podcasting' );
 	__( 'Podcast Settings', 'simple-podcasting' );
 	__( 'Length (MM:SS)', 'simple-podcasting' );
+	__( 'a podcast episode', 'simple-podcasting' );
 }
 add_action( 'init', __NAMESPACE__ . '\register_js_strings' );
 
