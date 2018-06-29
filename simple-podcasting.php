@@ -3,7 +3,7 @@
  * Plugin Name: Simple Podcasting
  * Plugin URI: http://wordpress.org/plugins/simple-podcasting
  * Description: Easily set up multiple podcast feeds using built-in WordPress posts. Includes beta Gutenberg support.
- * Author: 10up, with original code from Automattic
+ * Author: 10up
  * Version: 1.0.0
  * Author URI: http://10up.com/
  */
