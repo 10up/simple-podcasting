@@ -36,7 +36,7 @@ Repeat for each podcast you would like to create.
 
 Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
-[[[/assets/dotorg/screenshot-3.png]]](assets/dotorg/screenshot-3.png) | [[[/assets/dotorg/screenshot-1.png]]](assets/dotorg/screenshot-1.png) | [[[/assets/dotorg/screenshot-4.png]]](assets/dotorg/screenshot-4.png)
+[![Podcast setup](assets/dotorg/screenshot-3.png)](assets/dotorg/screenshot-3.png) | [![Podcast in editor](assets/dotorg/screenshot-1.png)](assets/dotorg/screenshot-1.png) | [![Podcast feed](assets/dotorg/screenshot-4.png)](assets/dotorg/screenshot-4.png)
 
 ### Technical Notes
 
