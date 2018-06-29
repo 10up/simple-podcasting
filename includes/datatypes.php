@@ -133,9 +133,11 @@ function add_podcasting_term_add_meta_fields( $term ) {
 	$podcasting_meta_fields = get_meta_fields();
 	foreach ( $podcasting_meta_fields as $field ) {
 		?>
-		<label for="name" ><?php echo esc_html( $field['title'] ); ?></label>
+		<div class="form-field">
+			<label for="name" ><?php echo esc_html( $field['title'] ); ?></label>
+			<?php the_field( $field, '' ); ?>
+		</div>
 		<?php
-		the_field( $field, '' );
 	}
 }
 
