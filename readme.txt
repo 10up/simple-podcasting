@@ -24,6 +24,7 @@ Podcasting is a method to distribute audio and video episodes through a feed to 
 
 From wp-admin, go to Posts → Podcasts.
 To create a podcast, complete all of the "Add New Podcast" fields and click 'Add New Podcast'.
+
  * Podcast title: this title appears in Apple Podcasts and any other podcast apps.
  * Podcast subtitle: the subtitle also appears in Apple Podcasts and any other podcast apps.
  * Podcast talent name: the artist or producer of the work.
