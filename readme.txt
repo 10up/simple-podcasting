@@ -55,7 +55,10 @@ Repeat for each podcast you would like to create.
 
 == Screenshots ==
 
-1. Coming
+1. Podcast in classic editor
+2. Podcast block in Gutenberg
+3. Creating a podcast
+4. Podcast feed
 
 == Installation ==
 1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.

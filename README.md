@@ -2,7 +2,7 @@
 
 Easily set up multiple podcast feeds using built-in WordPress posts. Includes beta Gutenberg support.
 
-![Screenshot of podcast block](assets/screenshot-1.png "Example of a podcast block in the new editor")
+![Screenshot of podcast block](assets/screenshot-2.png "Example of a podcast block in Gutenberg")
 
 Podcasting is a method to distribute audio messages through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
@@ -33,6 +33,10 @@ Repeat for each podcast you would like to create.
 * Each podcast has a unique feed URL you can find on the Podcasts page. This is the URL you will submit to Apple.
 * Ensure you test feeds before submitting them, see https://help.apple.com/itc/podcasts_connect/#/itcac471c970.
 * Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9
+
+Podcast setup | Podcast in editor | Podcast feed
+------------- | ----------------- | ------------
+[[[assets/screenshot-3.png]]](assets/screenshot-3.png) | [[[assets/screenshot-1.png]]](assets/screenshot-1.png) | [[[assets/screenshot-4.png]]](assets/screenshot-4.png)
 
 ### Technical Notes
 
