@@ -45,15 +45,15 @@ jQuery( document ).ready( function( $ ) {
 		// When a file is selected, grab the URL and set it as the text field's value.
 		mediaUploader.off( 'select' );
 		mediaUploader.on( 'select', function() {
-			attachment = mediaUploader.state().get('selection').first().toJSON();
+			var attachment = mediaUploader.state().get('selection').first();
 
 			// Set the hidden field value.
-			$hidden.val( attachment.id );
+			$hidden.val( attachment.get('id') );
 
 			// Update the display.
 			$upload.addClass('hidden');
 			$existing.removeClass('hidden');
-			$image.attr( 'src', attachment.url );
+			$image.attr( 'src', attachment.get('url') );
 
 		});
 
