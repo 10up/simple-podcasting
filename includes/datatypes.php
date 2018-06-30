@@ -515,7 +515,7 @@ function get_podcasting_categories() {
 		__( 'Technology', 'simple-podcasting' ) => array(
 			__( 'Gadgets', 'simple-podcasting' ),
 			__( 'Tech News', 'simple-podcasting' ),
-			__( 'simple-podcasting', 'simple-podcasting' ),
+			__( 'Podcasting', 'simple-podcasting' ),
 			__( 'Software How-To', 'simple-podcasting' ),
 		),
 		__( 'TV & Film', 'simple-podcasting' ) => array(),
