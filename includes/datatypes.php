@@ -173,7 +173,7 @@ function the_field( $field, $value = '', $term_id = false ) {
 			break;
 		case 'textarea':
 		?>
-			<textarea name="<?php echo esc_attr( $field['slug'] ); ?>" id="<?php echo esc_attr( $field['slug'] ); ?>" rows="5" cols="40"></textarea>
+			<textarea name="<?php echo esc_attr( $field['slug'] ); ?>" id="<?php echo esc_attr( $field['slug'] ); ?>" rows="5" cols="40"><?php echo esc_textarea( $value ); ?></textarea>
 		<?php
 			break;
 		case 'select':
