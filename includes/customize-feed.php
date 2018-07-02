@@ -116,9 +116,7 @@ function feed_head() {
 		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
 	}
 
-	generate_category( 'podcasting_category_1' );
-	generate_category( 'podcasting_category_2' );
-	generate_category( 'podcasting_category_3' );
+	generate_categories();
 }
 add_action( 'rss2_head', __NAMESPACE__ . '\feed_head' );
 
@@ -233,40 +231,53 @@ add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
  *
  * @param  string $option option to retrieve via get_term_meta
  */
-function generate_category( $option ) {
+function generate_categories() {
 	$term = get_the_term();
 	if ( ! $term ) {
 		return false;
 	}
 
-	$category = get_term_meta( $term->term_id, $option, true );
-	switch ( $category ) {
-		case 'Education,Education':
-			$category = 'Education';
-			break;
-		case 'Education,Education Technology':
-			$category = 'Education, Educational Technology';
-			break;
-		case 'Tech News':
-			$category = 'Technology,Tech News';
-			break;
-		case 'Sports &amp; Recreation,Technology':
-			$category = 'Technology';
-			break;
-		case 'Sports &amp; Recreation,Gadgets':
-			$category = 'Technology,Gadgets';
-			break;
+	$categories[] = get_term_meta( $term->term_id, 'podcasting_category_1', true );
+	$categories[] = get_term_meta( $term->term_id, 'podcasting_category_2', true );
+	$categories[] = get_term_meta( $term->term_id, 'podcasting_category_3', true );
+
+	$categories = array_filter( $categories );
+
+	$reduced_categories = array();
+
+	foreach( $categories as $category ) {
+		$category = explode( ':', $category );
+
+		if ( ! isset( $reduced_categories[ $category[0] ] ) ) {
+			$reduced_categories[ $category[0] ] = array();
+		}
+
+		if ( ! empty( $category[1] ) ) {
+			$reduced_categories[ $category[0] ][] = $category[1];
+		}
 	}
 
-	if ( ! empty( $category ) ) {
-		$splits = explode( ',', $category );
+	$categories = get_podcasting_categories();
 
-		if ( 2 === count( $splits ) ) {
-			echo '<itunes:category text="' . esc_attr( $splits[0] ) . "\">\n";
-			echo "\t<itunes:category text=\"" . esc_attr( $splits[1] ) . "\" />\n";
-			echo "</itunes:category>\n";
+	foreach( $reduced_categories as $parent => $subs ) {
+		if ( ! isset( $categories[ $parent ] ) ) {
+			continue;
+		}
+
+		if ( empty( $subs ) ) {
+			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\" />\n";
 		} else {
-			echo '<itunes:category text="' . esc_attr( $category ) . "\" />\n";
+			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\">\n";
+
+			foreach( $subs as $sub ) {
+				if ( ! isset( $categories[ $parent ]['subcategories'][ $sub ] ) ) {
+					continue;
+				}
+
+				echo "\t<itunes:category text=\"" . esc_html( $categories[ $parent ]['subcategories'][ $sub ] ) . "\" />\n";
+			}
+
+			echo "</itunes:category>\n";
 		}
 	}
 }

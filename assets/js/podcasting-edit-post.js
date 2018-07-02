@@ -5,15 +5,13 @@ jQuery( document ).ready( function( $ ) {
 		var $this = $( this ),
 			$input = $( 'input#podcasting-enclosure-url' ),
 			mediaUploader;
-
-		console.log( $this );
 		
 		// If the uploader object has already been created, reopen the dialog.
 		if ( mediaUploader ) {
 			mediaUploader.open();
 			return;
 		}
-		// Extend the wp.media object.
+
 		mediaUploader = wp.media.frames.file_frame = wp.media( {
 			title: $this.data( 'modalTitle' ),
 			button: {
@@ -25,17 +23,13 @@ jQuery( document ).ready( function( $ ) {
 			multiple: false
 		});
 
-		// When a file is selected, grab the URL and set it as the text field's value.
 		mediaUploader.off( 'select' );
 		mediaUploader.on( 'select', function() {
-			var attachment = mediaUploader.state().get('selection').first(),
-				attachmentUrl = attachment.get('url');
+			var attachment = mediaUploader.state().get('selection').first();
 
-			$input.val( attachmentUrl );
-
+			$input.val( attachment.get('url') );
 		});
 
-		// Open the uploader dialog
 		mediaUploader.open();
 	} );
 } );

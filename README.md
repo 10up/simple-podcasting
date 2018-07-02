@@ -59,5 +59,10 @@ Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get st
 
 ## Changelog
 
+### 1.0.1
+* Bug fix: Properly output podcast categories and subcategories in the feed.
+* Bug fix: Avoid a minified JS error when selecting a podcast image.
+* Bug fix: Display podcast summary on edit form.
+
 ### 1.0
 * Initial plugin release
