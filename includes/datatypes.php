@@ -184,12 +184,11 @@ function the_field( $field, $value = '', $term_id = false ) {
 				class="postform"
 			>
 		<?php
-			$categories = $field['options'];
-			foreach ( $categories as $category ) {
-				$slug = sanitize_title( $category );
+			$options = $field['options'];
+			foreach ( $options as $key => $label ) {
 				?>
-				<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug, $value ); ?>>
-					<?php echo esc_html( $category ); ?>
+				<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $value ); ?>>
+					<?php echo esc_html( $label ); ?>
 				</option>
 				<?php
 			}
@@ -418,116 +417,172 @@ function get_meta_fields() {
 			'slug'    => 'podcasting_category_1',
 			'title'   => __( 'Podcast category 1', 'simple-podcasting' ),
 			'type'    => 'select',
-			'options' => get_podcasting_categories(),
+			'options' => get_podcasting_categories_options(),
 		),
 		array(
 			'slug'    => 'podcasting_category_2',
 			'title'   => __( 'Podcast category 2', 'simple-podcasting' ),
 			'type'    => 'select',
-			'options' => get_podcasting_categories(),
+			'options' => get_podcasting_categories_options(),
 		),
 		array(
 			'slug'    => 'podcasting_category_3',
 			'title'   => __( 'Podcast category 3', 'simple-podcasting' ),
 			'type'    => 'select',
-			'options' => get_podcasting_categories(),
+			'options' => get_podcasting_categories_options(),
 		),
 	);
 }
 
 /**
- * Get the podcasting categories.
+ * Get array of podcasting categories.
+ *
+ * Podcasting category names are not translated because they need to be provided in English.
+ *
+ * @return array Array of podcasting categories.
  */
 function get_podcasting_categories() {
-	$to_return  = array( __( 'None' ) );
-	$categories = array(
-		__( 'Arts', 'simple-podcasting' ) => array(
-			__( 'Design', 'simple-podcasting' ),
-			__( 'Fashion & Beauty', 'simple-podcasting' ),
-			__( 'Food', 'simple-podcasting' ),
-			__( 'Literature', 'simple-podcasting' ),
-			__( 'Performing Arts', 'simple-podcasting' ),
-			__( 'Visual Arts', 'simple-podcasting' ),
+	return array(
+		'arts' => array(
+			'name' => 'Arts',
+			'subcategories' => array(
+				'design'          => 'Design',
+				'fashion-beauty'  => 'Fashion & Beauty',
+				'food'            => 'Food',
+				'literature'      => 'Literature',
+				'performing-arts' => 'Performing Arts',
+				'visual-arts'     => 'Visual Arts',
+			),
 		),
-		__( 'Business', 'simple-podcasting' ) => array(
-			__( 'Business News', 'simple-podcasting' ),
-			__( 'Careers', 'simple-podcasting' ),
-			__( 'Investing', 'simple-podcasting' ),
-			__( 'Management & Marketing', 'simple-podcasting' ),
-			__( 'Shopping', 'simple-podcasting' ),
+		'business' => array(
+			'name' => 'Business',
+			'subcategories' => array(
+				'business-news'        => 'Business News',
+				'careers'              => 'Careers',
+				'investing'            => 'Investing',
+				'management-marketing' => 'Management & Marketing',
+				'shopping'             => 'Shopping',
+			),
 		),
-		__( 'Comedy', 'simple-podcasting' ) => array(),
-		__( 'Education', 'simple-podcasting' ) => array(
-			__( 'Educational Technology', 'simple-podcasting' ),
-			__( 'Higher Education', 'simple-podcasting' ),
-			__( 'K-12', 'simple-podcasting' ),
-			__( 'Language Courses', 'simple-podcasting' ),
-			__( 'Training', 'simple-podcasting' ),
+		'comedy' => array(
+			'name' => 'Comedy',
 		),
-		__( 'Games & Hobbies', 'simple-podcasting' ) => array(
-			__( 'Automotive', 'simple-podcasting' ),
-			__( 'Aviation', 'simple-podcasting' ),
-			__( 'Hobbies', 'simple-podcasting' ),
-			__( 'Other Games', 'simple-podcasting' ),
-			__( 'Video Games', 'simple-podcasting' ),
+		'education' => array(
+			'name' => 'Education',
+			'subcategories' => array(
+				'educational-technology' => 'Educational Technology',
+				'higher-education'       => 'Higher Education',
+				'k-12'                   => 'K-12',
+				'language-courses'       => 'Language Courses',
+				'training'               => 'Training',
+			),
 		),
-		__( 'Government & Organizations', 'simple-podcasting' ) => array(
-			__( 'Local', 'simple-podcasting' ),
-			__( 'National', 'simple-podcasting' ),
-			__( 'Non-Profit', 'simple-podcasting' ),
-			__( 'Regional', 'simple-podcasting' ),
+		'games-hobbies' => array(
+			'name' => 'Games & Hobbies',
+			'subcategories' => array(
+				'automotive'  => 'Automotive',
+				'aviation'    => 'Aviation',
+				'hobbies'     => 'Hobbies',
+				'other-games' => 'Other Games',
+				'video-games' => 'Video Games',
+			),
 		),
-		__( 'Health', 'simple-podcasting' ) => array(
-			__( 'Alternative Health', 'simple-podcasting' ),
-			__( 'Fitness & Nutrition', 'simple-podcasting' ),
-			__( 'Self-Help', 'simple-podcasting' ),
-			__( 'Sexuality', 'simple-podcasting' ),
+		'government-organizations' => array(
+			'name' => 'Government & Organizations',
+			'subcategories' => array(
+				'local'      => 'Local',
+				'national'   => 'National',
+				'non-profit' => 'Non-Profit',
+				'regional'   => 'Regional',
+			),
 		),
-		__( 'Kids & Family', 'simple-podcasting' ) => array(),
-		__( 'Music', 'simple-podcasting' ) => array(),
-		__( 'News & Politics', 'simple-podcasting' ) => array(),
-		__( 'Religion & Spirituality', 'simple-podcasting' ) => array(
-			__( 'Buddhism', 'simple-podcasting' ),
-			__( 'Christianity', 'simple-podcasting' ),
-			__( 'Hinduism', 'simple-podcasting' ),
-			__( 'Islam', 'simple-podcasting' ),
-			__( 'Judaism', 'simple-podcasting' ),
-			__( 'Other', 'simple-podcasting' ),
-			__( 'Spirituality', 'simple-podcasting' ),
+		'health' => array(
+			'name' => 'Health',
+			'subcategories' => array(
+				'alternative-health' => 'Alternative Health',
+				'fitness-nutrition'  => 'Fitness & Nutrition',
+				'self-help'          => 'Self-Help',
+				'sexuality'          => 'Sexuality',
+			),
 		),
-		__( 'Science & Medicine', 'simple-podcasting' ) => array(
-			__( 'Medicine', 'simple-podcasting' ),
-			__( 'Natural Sciences', 'simple-podcasting' ),
-			__( 'Social Sciences', 'simple-podcasting' ),
+		'kids-family' => array(
+			'name' => 'Kids & Family',
 		),
-		__( 'Society & Culture', 'simple-podcasting' ) => array(
-			__( 'History', 'simple-podcasting' ),
-			__( 'Personal Journals', 'simple-podcasting' ),
-			__( 'Philosophy', 'simple-podcasting' ),
-			__( 'Places & Travel', 'simple-podcasting' ),
+		'music' => array(
+			'name' => 'Music',
 		),
-		__( 'Sports & Recreation', 'simple-podcasting' ) => array(
-			__( 'Amateur', 'simple-podcasting' ),
-			__( 'College & High School', 'simple-podcasting' ),
-			__( 'Outdoor', 'simple-podcasting' ),
-			__( 'Professional', 'simple-podcasting' ),
+		'news-politics' => array(
+			'name' => 'News & Politics',
 		),
-		__( 'Technology', 'simple-podcasting' ) => array(
-			__( 'Gadgets', 'simple-podcasting' ),
-			__( 'Tech News', 'simple-podcasting' ),
-			__( 'simple-podcasting', 'simple-podcasting' ),
-			__( 'Software How-To', 'simple-podcasting' ),
+		'religion-spirituality' => array(
+			'name' => 'Religion & Spirituality',
+			'subcategories' => array(
+				'buddhism'     => 'Buddhism',
+				'christianity' => 'Christianity',
+				'hinduism'     => 'Hinduism',
+				'islam'        => 'Islam',
+				'judaism'      => 'Judaism',
+				'other'        => 'Other',
+				'spirituality' => 'Spirituality',
+			),
 		),
-		__( 'TV & Film', 'simple-podcasting' ) => array(),
+		'science-medicine' => array(
+			'name' => 'Science & Medicine',
+			'subcategories' => array(
+				'medicine'         => 'Medicine',
+				'natural-sciences' => 'Natural Sciences',
+				'social-sciences'  => 'Social Sciences',
+			),
+		),
+		'society-culture' => array(
+			'name' => 'Society & Culture',
+			'subcategories' => array(
+				'history'           => 'History',
+				'personal-journals' => 'Personal Journals',
+				'philosophy'        => 'Philosophy',
+				'places-travel'     => 'Places & Travel',
+			),
+		),
+		'sports-recreation' => array(
+			'name' => 'Sports & Recreation',
+			'subcategories' => array(
+				'amateur'             => 'Amateur',
+				'college-high-school' => 'College & High School',
+				'outdoor'             => 'Outdoor',
+				'professional'        => 'Professional',
+			),
+		),
+		'technology' => array(
+			'name' => 'Technology',
+			'subcategories' => array(
+				'gadgets'         => 'Gadgets',
+				'tech-news'       => 'Tech News',
+				'podcasting'      => 'Podcasting',
+				'software-how-to' => 'Software How-To',
+			),
+		),
+		'tv-film' => array(
+			'name' => 'TV & Film',
+		),
 	);
-	foreach ( $categories as $key => $category ) {
-		$to_return[] = $key;
+}
 
-		if ( ! empty( $category ) ) {
-			foreach ( $category as $subcategory ) {
-				$to_return[] = $key . ' » ' . $subcategory;
+/**
+ * Transform podcasting categories into dropdown options
+ */
+function get_podcasting_categories_options() {
+	$to_return  = array( '' => __( 'None' ) );
+	$categories = get_podcasting_categories();
+
+	foreach ( $categories as $key => $category ) {
+		$to_return[ $key ] = $category['name'];
+
+		if ( ! empty( $category['subcategories'] ) ) {
+			foreach ( $category['subcategories'] as $subkey => $subcategory ) {
+				$to_return[ "$key:$subkey" ] = '&mdash; ' . $subcategory;
 			}
 		}
 	}
+
 	return $to_return;
 }
