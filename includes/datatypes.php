@@ -571,7 +571,7 @@ function get_podcasting_categories() {
  * Transform podcasting categories into dropdown options
  */
 function get_podcasting_categories_options() {
-	$to_return  = array( 'none' => __( 'None' ) );
+	$to_return  = array( '' => __( 'None' ) );
 	$categories = get_podcasting_categories();
 
 	foreach ( $categories as $key => $category ) {
