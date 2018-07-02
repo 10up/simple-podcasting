@@ -579,7 +579,7 @@ function get_podcasting_categories_options() {
 
 		if ( ! empty( $category['subcategories'] ) ) {
 			foreach ( $category['subcategories'] as $subkey => $subcategory ) {
-				$to_return[ "$key:$subkey" ] = '&mdash; ' . esc_html( $subcategory );
+				$to_return[ "$key:$subkey" ] = '&mdash; ' . $subcategory;
 			}
 		}
 	}
