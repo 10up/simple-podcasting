@@ -221,7 +221,7 @@ export default registerBlockType(
 								} }
 								className={ className }
 								onSelect={ onSelectAttachment }
-								onSelectUrl={ onSelectUrl }
+								onSelectURL={ onSelectUrl }
 								accept="audio/*"
 								type="audio"
 								value={ this.props.attributes }
