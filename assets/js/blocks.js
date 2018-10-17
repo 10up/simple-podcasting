@@ -122,7 +122,7 @@ export default registerBlockType(
 					} );
 					this.setState( { editing: false } );
 				};
-				const onSelectUrl = ( newSrc ) => {
+				const onSelectURL = ( newSrc ) => {
 					if ( newSrc !== src ) {
 						setAttributes({
 							src: newSrc,
@@ -221,7 +221,7 @@ export default registerBlockType(
 								} }
 								className={ className }
 								onSelect={ onSelectAttachment }
-								onSelectURL={ onSelectUrl }
+								onSelectURL={ onSelectURL }
 								accept="audio/*"
 								type="audio"
 								value={ this.props.attributes }
