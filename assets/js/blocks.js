@@ -36,8 +36,9 @@ export default registerBlockType(
 		description: __( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.', 'simple-podcasting' ),
 		category: 'common',
 		icon: 'microphone',
-		useOnce: true,
- 
+		supports: {
+			multiple: false,
+		},
 		attributes: {
 			id: {
 				type: 'number',
@@ -98,7 +99,7 @@ export default registerBlockType(
 					className,
 				};
 			}
-		
+
 			render() {
 				const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
 				const { setAttributes, isSelected } = this.props;
