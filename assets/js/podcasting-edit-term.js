@@ -1,3 +1,4 @@
+/*global jQuery, validateForm*/
 jQuery( document ).ready( function( $ ) {
 
 	// When the term add button is clicked, reset the dropdown fields.
@@ -34,6 +35,7 @@ jQuery( document ).ready( function( $ ) {
 			return;
 		}
 		// Extend the wp.media object.
+		// eslint-disable-next-line camelcase
 		mediaUploader = wp.media.frames.file_frame = wp.media( {
 			title: $button.data( 'choose' ),
 			button: {
@@ -73,9 +75,9 @@ jQuery( document ).ready( function( $ ) {
 			$upload   = $wrapper.find( '.podcasting-upload-image' );
 
 			// Update the display.
-			$upload.removeClass('hidden');
-			$existing.addClass('hidden');
-			$hidden.val( '' );
+		$upload.removeClass('hidden');
+		$existing.addClass('hidden');
+		$hidden.val( '' );
 
 	} );
 } );

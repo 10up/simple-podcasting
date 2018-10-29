@@ -37,7 +37,7 @@ export default registerBlockType(
 		category: 'common',
 		icon: 'microphone',
 		useOnce: true,
- 
+
 		attributes: {
 			id: {
 				type: 'number',
@@ -98,7 +98,7 @@ export default registerBlockType(
 					className,
 				};
 			}
-		
+
 			render() {
 				const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
 				const { setAttributes, isSelected } = this.props;
@@ -157,7 +157,7 @@ export default registerBlockType(
 					(
 						<InspectorControls>
 							<PanelBody
-							  title={ __( 'Podcast Settings', 'simple-podcasting' ) }
+								title={ __( 'Podcast Settings', 'simple-podcasting' ) }
 							>
 								<PanelRow>
 									<label
