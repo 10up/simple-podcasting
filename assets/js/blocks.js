@@ -37,7 +37,7 @@ export default registerBlockType(
 		category: 'common',
 		icon: 'microphone',
 		useOnce: true,
- 
+
 		attributes: {
 			id: {
 				type: 'number',
@@ -98,7 +98,7 @@ export default registerBlockType(
 					className,
 				};
 			}
-		
+
 			render() {
 				const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
 				const { setAttributes, isSelected } = this.props;
@@ -109,8 +109,6 @@ export default registerBlockType(
 				};
 
 				const onSelectAttachment = ( attachment ) => {
-					this.setState( { src: undefined } );
-
 					setAttributes( {
 						id: attachment.id,
 						src: attachment.url,
@@ -120,7 +118,7 @@ export default registerBlockType(
 						duration: attachment.fileLength,
 						caption: attachment.title,
 					} );
-					this.setState( { editing: false } );
+					this.setState( {editing: false, src: attachment.url } );
 				};
 				const onSelectURL = ( newSrc ) => {
 					if ( newSrc !== src ) {
@@ -134,6 +132,7 @@ export default registerBlockType(
 							caption: '',
 
 						});
+						this.setState( { src: newSrc } );
 					}
 					this.setState( { editing: false } );
 				};
