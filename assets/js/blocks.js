@@ -37,7 +37,7 @@ export default registerBlockType(
 		category: 'common',
 		icon: 'microphone',
 		useOnce: true,
- 
+
 		attributes: {
 			id: {
 				type: 'number',
@@ -98,7 +98,23 @@ export default registerBlockType(
 					className,
 				};
 			}
-		
+
+			/**
+			 * When the component is removed, we'll set the the post meta to null so it is deleted on save.
+			 */
+			componentWillUnmount() {
+				const { setAttributes } = this.props;
+				setAttributes( {
+					id: null,
+					src: null,
+					url: null,
+					mime: null,
+					filesize: null,
+					duration: null,
+					caption: null,
+				} );
+			}
+
 			render() {
 				const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
 				const { setAttributes, isSelected } = this.props;
