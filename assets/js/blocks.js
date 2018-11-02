@@ -113,6 +113,9 @@ export default registerBlockType(
 					duration: null,
 					caption: null,
 				} );
+
+				// Let's also remove any assigned Podcast taxonomies.
+				wp.data.dispatch( 'core/editor' ).editPost( { [ 'podcasting_podcasts' ]:[] } );
 			}
 
 			render() {
