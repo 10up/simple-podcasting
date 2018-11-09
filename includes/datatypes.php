@@ -383,6 +383,11 @@ function get_meta_fields() {
 			'type'  => 'textfield',
 		),
 		array(
+			'slug'  => 'podcasting_email',
+			'title' => __( 'Podcast email', 'simple-podcasting' ),
+			'type'  => 'textfield',
+		),
+		array(
 			'slug'  => 'podcasting_summary',
 			'title' => __( 'Podcast summary', 'simple-podcasting' ),
 			'type'  => 'textarea',
