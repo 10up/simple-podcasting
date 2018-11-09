@@ -129,8 +129,6 @@ export default registerBlockType(
 				};
 
 				const onSelectAttachment = ( attachment ) => {
-					this.setState( { src: undefined } );
-
 					setAttributes( {
 						id: attachment.id,
 						src: attachment.url,
@@ -140,7 +138,7 @@ export default registerBlockType(
 						duration: attachment.fileLength,
 						caption: attachment.title,
 					} );
-					this.setState( { editing: false } );
+					this.setState( { editing: false, src: attachment.url } );
 				};
 				const onSelectURL = ( newSrc ) => {
 					if ( newSrc !== src ) {
@@ -154,6 +152,7 @@ export default registerBlockType(
 							caption: '',
 
 						});
+						this.setState( { src: newSrc } );
 					}
 					this.setState( { editing: false } );
 				};
