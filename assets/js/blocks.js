@@ -100,6 +100,25 @@ export default registerBlockType(
 				};
 			}
 
+			/**
+			 * When the component is removed, we'll set the the post meta to null so it is deleted on save.
+			 */
+			componentWillUnmount() {
+				const { setAttributes } = this.props;
+				setAttributes( {
+					id: null,
+					src: null,
+					url: null,
+					mime: null,
+					filesize: null,
+					duration: null,
+					caption: null,
+				} );
+
+				// Let's also remove any assigned Podcast taxonomies.
+				wp.data.dispatch( 'core/editor' ).editPost( { [ 'podcasting_podcasts' ]:[] } );
+			}
+
 			render() {
 				const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
 				const { setAttributes, isSelected } = this.props;
