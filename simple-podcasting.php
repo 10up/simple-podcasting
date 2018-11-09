@@ -102,7 +102,6 @@ function custom_feed() {
 	if ( is_admin() || ! podcasting_is_enabled() ) {
 		return;
 	}
-
 	// Is this a feed for a term in the podcasting taxonomy?
 	if ( is_feed() && is_tax( TAXONOMY_NAME ) ) {
 		remove_action( 'rss2_head', 'rss2_blavatar' );

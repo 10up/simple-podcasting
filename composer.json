@@ -7,9 +7,10 @@
     }
   ],
   "require": {
-    "php": ">=7.0"
+    "php": ">=5.3"
   },
   "require-dev": {
+    "phpunit/phpunit": "^6.0",
     "10up/wp_mock": "dev-dev"
   }
 }

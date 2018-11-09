@@ -17,7 +17,8 @@
     "start": "npm install && gulp",
     "watch": "gulp watch",
     "build": "gulp",
-    "deploy": "npm install && gulp"
+    "deploy": "npm install && gulp",
+    "phpunit": "./vendor/bin/phpunit"
   },
   "license": "MIT",
   "devDependencies": {
