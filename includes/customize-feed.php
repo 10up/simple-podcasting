@@ -80,10 +80,13 @@ function feed_head() {
 		echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $summary ) ) . "</itunes:summary>\n";
 	}
 
+	$author = get_term_meta( $term->term_id, 'podcasting_talent_name', true );
+	if ( ! empty( $author ) ) {
+		echo '<itunes:author>' . esc_html( wp_strip_all_tags( $author ) ) . "</itunes:author>\n";
+	}
 
 	echo '<itunes:owner>';
 
-	$author = get_term_meta( $term->term_id, 'podcasting_talent_name', true );
 	if ( ! empty( $author ) ) {
 		echo '<itunes:name>' . esc_html( wp_strip_all_tags( $author ) ) . "</itunes:name>\n";
 	}
