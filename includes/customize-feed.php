@@ -85,7 +85,7 @@ function feed_head() {
 
 	$author = get_term_meta( $term->term_id, 'podcasting_talent_name', true );
 	if ( ! empty( $author ) ) {
-		echo '<itunes:author>' . esc_html( wp_strip_all_tags( $author ) ) . "</itunes:author>\n";
+		echo '<itunes:name>' . esc_html( wp_strip_all_tags( $author ) ) . "</itunes:name>\n";
 	}
 
 	$podcasting_email = get_term_meta( $term->term_id, 'podcasting_email', true );
