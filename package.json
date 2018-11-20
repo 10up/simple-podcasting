@@ -14,7 +14,7 @@
     "role": "developer"
   },
   "scripts": {
-    "start": "npm install && gulp",
+    "start": "npm install && composer install && gulp",
     "watch": "gulp watch",
     "build": "gulp",
     "deploy": "npm install && gulp"
