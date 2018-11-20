@@ -19,6 +19,16 @@
     "build": "gulp",
     "deploy": "npm install && gulp"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.php": [
+      "./vendor/bin/phpcs --extensions=php --warning-severity=8 -s --runtime-set testVersion 7.0"
+    ]
+  },
   "license": "MIT",
   "devDependencies": {
     "@wordpress/babel-preset-default": "^1.1.2",
@@ -44,6 +54,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
+    "husky": "^1.0.0-rc.7",
+    "lint-staged": "^7.1.2",
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^10.0.0",
     "postcss-reporter": "^5.0.0",
