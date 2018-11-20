@@ -6,7 +6,10 @@
  * Author: 10up
  * Version: 1.0.1
  * Author URI: http://10up.com/
+ *
+ * @package tenup_podcasting
  */
+
 namespace tenup_podcasting;
 
 define( 'PODCASTING_VERSION', '1.0.1' );
@@ -44,12 +47,14 @@ if ( function_exists( 'register_block_type' ) ) {
  * @return bool
  */
 function podcasting_is_enabled() {
-	$podcasting_terms = get_terms( array(
-		'taxonomy'      => TAXONOMY_NAME,
-		'hide_empty'    => false,
-		'fields'        => 'ids',
-		'no_found_rows' => true,
-	) );
+	$podcasting_terms = get_terms(
+		array(
+			'taxonomy'      => TAXONOMY_NAME,
+			'hide_empty'    => false,
+			'fields'        => 'ids',
+			'no_found_rows' => true,
+		)
+	);
 
 	return ! empty( $podcasting_terms );
 }
@@ -109,14 +114,21 @@ function custom_feed() {
 		remove_action( 'rss2_head', 'rss2_site_icon' );
 		remove_filter( 'the_excerpt_rss', 'add_bug_to_feed', 100 );
 		remove_action( 'rss2_head', 'rsscloud_add_rss_cloud_element' );
-		add_filter( 'wp_feed_cache_transient_lifetime', function() {
-			return HOUR_IN_SECONDS;
-		} );
+		add_filter(
+			'wp_feed_cache_transient_lifetime',
+			function () {
+				return HOUR_IN_SECONDS;
+			}
+		);
 		require_once PODCASTING_PATH . 'includes/customize-feed.php';
 	}
 }
 add_action( 'wp', __NAMESPACE__ . '\custom_feed' );
 
+
+/**
+ * Initialize the edit screen if podcasting is enabled.
+ */
 function setup_edit_screen() {
 	if ( podcasting_is_enabled() ) {
 		require_once PODCASTING_PATH . 'includes/post-meta-box.php';

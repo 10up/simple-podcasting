@@ -119,6 +119,7 @@ export default registerBlockType(
 				wp.data.dispatch( 'core/editor' ).editPost( { [ 'podcasting_podcasts' ]:[] } );
 			}
 
+
 			render() {
 				const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
 				const { setAttributes, isSelected } = this.props;
@@ -176,7 +177,7 @@ export default registerBlockType(
 					(
 						<InspectorControls>
 							<PanelBody
-							  title={ __( 'Podcast Settings', 'simple-podcasting' ) }
+								title={ __( 'Podcast Settings', 'simple-podcasting' ) }
 							>
 								<PanelRow>
 									<label
