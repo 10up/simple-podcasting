@@ -7,6 +7,8 @@
 
 namespace tenup_podcasting\Tests;
 
+use function tenup_podcasting\get_podcasting_categories;
+
 /**
  * Class Feed_Tests
  *
@@ -14,11 +16,46 @@ namespace tenup_podcasting\Tests;
  */
 class Feed_Tests extends \WP_UnitTestCase {
 
-	static $podcast_term;
-	static $post;
-	
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$podcast_term = self::factory()->term->create_and_get(
+	/**
+	 * Podcast term for testing
+	 *
+	 * @var \WP_Term $podcast_term The term
+	 */
+	protected $podcast_term;
+
+	/**
+	 * Post for testing
+	 *
+	 * @var \WP_Post $post The testing post
+	 */
+	protected $post;
+
+	/**
+	 * Known term meta with default values.
+	 *
+	 * @var array known term meta
+	 */
+	protected $podcast_term_meta = array(
+		'podcasting_title'       => 'Podcast Title',
+		'podcasting_subtitle'    => 'Podcast Subtitle',
+		'podcasting_summary'     => 'Podcast Summary',
+		'podcasting_talent_name' => 'Jake Goldman',
+		'podcasting_email'       => 'test@email.come',
+		'podcasting_copyright'   => 'Copyright Data',
+		'podcasting_explicit'    => 'yes',
+		'podcasting_image'       => 'yes',
+		'podcasting_keywords'    => 'Comma, Separated, Keywords',
+		'podcasting_category_1'  => 'sports-recreation:amateur',
+		'podcasting_category_2'  => 'society-culture:history',
+		'podcasting_category_3'  => 'technology:podcasting',
+	);
+
+	/**
+	 * Setup function.
+	 */
+	public function setUp() {
+		parent::setUp();
+		$this->podcast_term = $this->factory()->term->create_and_get(
 			array(
 				'taxonomy' => 'podcasting_podcasts',
 				'name'     => 'My Podcast',
@@ -26,22 +63,19 @@ class Feed_Tests extends \WP_UnitTestCase {
 			)
 		);
 
-		add_term_meta( self::$podcast_term->term_id, 'podcasting_subtitle', 'Subtitle' );
+		// Add the term meta.
+		foreach ( $this->podcast_term_meta as $key => $value ) {
+			update_term_meta( $this->podcast_term->term_id, $key, $value );
+		}
 
-		self::$post = self::factory()->post->create_and_get(
+		$this->post = $this->factory()->post->create_and_get(
 			array(
 				'post_title'   => 'Episode One',
 				'post_content' => 'Content for Episode One',
 			)
 		);
 		// Add the podcast to the post.
-		wp_set_object_terms( self::$post->ID, self::$podcast_term->slug, 'podcasting_podcasts' );
-	}
-	/**
-	 * Setup function.
-	 */
-	public function setUp() {
-		parent::setUp();
+		wp_set_object_terms( $this->post->ID, $this->podcast_term->slug, 'podcasting_podcasts' );
 	}
 
 	/**
@@ -50,12 +84,12 @@ class Feed_Tests extends \WP_UnitTestCase {
 	 * @return false|string
 	 * @throws \Exception Throws an exception when there is an issue loading the template.
 	 */
-	function do_rss2() {
+	public function do_rss2() {
 		ob_start();
 		// Nasty hack! In the future it would better to leverage do_feed( 'rss2' ).
 		global $post;
 		try {
-			@require( ABSPATH . WPINC . '/feed-rss2.php' );
+			@require( ABSPATH . WPINC . '/feed-rss2.php' );// @codingStandardsIgnoreLine.
 			$out = ob_get_clean();
 		} catch ( Exception $e ) {
 			$out = ob_get_clean();
@@ -67,11 +101,11 @@ class Feed_Tests extends \WP_UnitTestCase {
 	/**
 	 * Generates the feed as xml.
 	 *
-	 * @return array
+	 * @return \SimpleXMLElement
 	 * @throws \Exception Throws an exception when there is an issue loading the template.
 	 */
 	protected function feed_setup() {
-		$this->go_to( '/?feed=rss2&podcasting_podcasts=my-podcast' );
+		$this->go_to( '/?feed=rss2&podcasting_podcasts=my-podcast&refresh=' . rand_str( 12 ) );
 		$feed = $this->do_rss2();
 		$xml  = new \SimpleXMLElement( $feed );
 		return $xml;
@@ -79,14 +113,41 @@ class Feed_Tests extends \WP_UnitTestCase {
 
 
 	/**
-	 * Tests the feed meta data
+	 * Test the channel meta
 	 */
-	public function test_feed_meta() {
-		$xml    = $this->feed_setup();
-		$itunes = $xml->xPath( '//item' );
-		var_dump($itunes);
-		
-		//var_dump( $xml->channel );
-		
+	public function test_feed_channel_basic_meta() {
+		$xml        = $this->feed_setup();
+		$channel    = $xml->channel;
+		$namespaces = $channel->getNameSpaces( true );
+		$itunes     = $channel->children( $namespaces['itunes'] );
+
+		// Tests for the non-itunes items in the channel.
+		$this->assertSame( $this->podcast_term_meta['podcasting_title'], $channel->title->__toString() );
+		// Test the copyright.
+		$this->assertSame( $this->podcast_term_meta['podcasting_copyright'], $channel->copyright->__toString() );
+		// Tests for the itunes namespace items.
+		$this->assertSame( $this->podcast_term_meta['podcasting_subtitle'], $itunes->subtitle->__toString() );
+		$this->assertSame( $this->podcast_term_meta['podcasting_summary'], $itunes->summary->__toString() );
+		$this->assertSame( $this->podcast_term_meta['podcasting_talent_name'], $itunes->author->__toString() );
+		$this->assertSame( $this->podcast_term_meta['podcasting_talent_name'], $itunes->owner->name->__toString() );
+		$this->assertSame( $this->podcast_term_meta['podcasting_email'], $itunes->owner->email->__toString() );
+		$this->assertSame( $this->podcast_term_meta['podcasting_explicit'], $itunes->explicit->__toString() );
+		$this->assertSame( $this->podcast_term_meta['podcasting_keywords'], $itunes->keywords->__toString() );
+
+		$counter    = 1;
+		$categories = get_podcasting_categories();
+		foreach ( $itunes->category as $category ) {
+			$meta        = get_term_meta( $this->podcast_term->term_id, "podcasting_category_{$counter}", true );
+			$split       = explode( ':', $meta );
+			$parent_cat  = $split[0];
+			$child_cat   = $split[1];
+			$parent_atts = $category->attributes();
+			$this->assertSame( $categories[ $parent_cat ]['name'], $parent_atts[0]->__toString() );
+			foreach ( $category as $sub_cat ) {
+				$sub_cat_atts = $sub_cat->attributes();
+				$this->assertSame( $categories[ $parent_cat ]['subcategories'][ $child_cat ], $sub_cat_atts[0]->__toString() );
+			}
+			$counter++;
+		}
 	}
 }
