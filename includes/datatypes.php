@@ -160,6 +160,9 @@ function add_podcasting_term_add_meta_fields( $term ) {
  */
 function the_field( $field, $value = '', $term_id = false ) {
 	switch ( $field['type'] ) {
+		case 'language':
+			echo $field['data'];
+		break;
 		case 'textfield':
 		?>
 			<input
@@ -408,6 +411,12 @@ function get_meta_fields() {
 			),
 		),
 		array(
+			'slug'  => 'podcasting_language',
+			'title' => __( 'Language', 'simple-podcasting' ),
+			'type'  => 'language',
+			'data'  => get_podcasting_language_options(),
+		),
+		array(
 			'slug'        => 'podcasting_image',
 			'title'       => __( 'Podcast image', 'simple-podcasting' ),
 			'type'        => 'image',
@@ -590,4 +599,30 @@ function get_podcasting_categories_options() {
 	}
 
 	return $to_return;
+}
+
+/**
+ * Return the list of available languages.
+ *
+ * @see wp_dropdown_languages()
+ *
+ * @return string
+ */
+function get_podcasting_language_options() {
+	$lang = '';
+	if ( is_admin() ) {
+		global $tag_ID;
+		// Are we on the term edit screen?
+		$term_id = $tag_ID;
+		if ( $term_id ) {
+			$lang = get_term_meta( $term_id, 'podcasting_language', true );
+		}
+	}
+	return \wp_dropdown_languages(
+		array(
+			'echo'     => false,
+			'name'     => 'podcasting_language',
+			'selected' => $lang,
+		)
+	);
 }

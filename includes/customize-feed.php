@@ -52,6 +52,31 @@ add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
 // Don't show audio widgets in the feed.
 add_filter( 'wp_audio_shortcode', '__return_empty_string', 999 );
 
+
+/**
+ * Sets the podcast language in the feed to the one selected in the term edit screen.
+ *
+ * @param string $output    The value being displayed
+ * @param string $requested The item that was requested
+ *
+ * @return mixed
+ */
+function bloginfo_rss_lang( $output, $requested ) {
+	$term = get_the_term();
+	if ( ! $term ) {
+		return $output;
+	}
+	// Ch
+	if ( 'language' === $requested ) {
+		$lang = get_term_meta( $term->term_id, 'podcasting_language', true );
+		if ( $lang ) {
+			$output = $lang;
+		}
+	}
+	return $output;
+}
+add_filter( 'bloginfo_rss', __NAMESPACE__ . '\bloginfo_rss_lang', 10, 2 );
+
 /**
  * Add podcasting details to the feed header.
  */
