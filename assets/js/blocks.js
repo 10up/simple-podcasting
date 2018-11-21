@@ -36,8 +36,9 @@ export default registerBlockType(
 		description: __( 'Insert a podcast episode into a post. To add it to a podcast feed, select a podcast in document settings.', 'simple-podcasting' ),
 		category: 'common',
 		icon: 'microphone',
-		useOnce: true,
- 
+		supports: {
+			multiple: false,
+		},
 		attributes: {
 			id: {
 				type: 'number',
@@ -98,7 +99,27 @@ export default registerBlockType(
 					className,
 				};
 			}
-		
+
+			/**
+			 * When the component is removed, we'll set the the post meta to null so it is deleted on save.
+			 */
+			componentWillUnmount() {
+				const { setAttributes } = this.props;
+				setAttributes( {
+					id: null,
+					src: null,
+					url: null,
+					mime: null,
+					filesize: null,
+					duration: null,
+					caption: null,
+				} );
+
+				// Let's also remove any assigned Podcast taxonomies.
+				wp.data.dispatch( 'core/editor' ).editPost( { [ 'podcasting_podcasts' ]:[] } );
+			}
+
+
 			render() {
 				const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
 				const { setAttributes, isSelected } = this.props;
@@ -109,8 +130,6 @@ export default registerBlockType(
 				};
 
 				const onSelectAttachment = ( attachment ) => {
-					this.setState( { src: undefined } );
-
 					setAttributes( {
 						id: attachment.id,
 						src: attachment.url,
@@ -120,9 +139,9 @@ export default registerBlockType(
 						duration: attachment.fileLength,
 						caption: attachment.title,
 					} );
-					this.setState( { editing: false } );
+					this.setState( { editing: false, src: attachment.url } );
 				};
-				const onSelectUrl = ( newSrc ) => {
+				const onSelectURL = ( newSrc ) => {
 					if ( newSrc !== src ) {
 						setAttributes({
 							src: newSrc,
@@ -134,6 +153,7 @@ export default registerBlockType(
 							caption: '',
 
 						});
+						this.setState( { src: newSrc } );
 					}
 					this.setState( { editing: false } );
 				};
@@ -157,7 +177,7 @@ export default registerBlockType(
 					(
 						<InspectorControls>
 							<PanelBody
-							  title={ __( 'Podcast Settings', 'simple-podcasting' ) }
+								title={ __( 'Podcast Settings', 'simple-podcasting' ) }
 							>
 								<PanelRow>
 									<label
@@ -221,7 +241,7 @@ export default registerBlockType(
 								} }
 								className={ className }
 								onSelect={ onSelectAttachment }
-								onSelectUrl={ onSelectUrl }
+								onSelectURL={ onSelectURL }
 								accept="audio/*"
 								type="audio"
 								value={ this.props.attributes }

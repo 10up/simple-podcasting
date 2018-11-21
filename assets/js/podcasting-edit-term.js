@@ -1,3 +1,4 @@
+/*global jQuery, validateForm*/
 jQuery( document ).ready( function( $ ) {
 
 	// Clear Image Field.
@@ -51,6 +52,7 @@ jQuery( document ).ready( function( $ ) {
 			return;
 		}
 		// Extend the wp.media object.
+		// eslint-disable-next-line camelcase
 		mediaUploader = wp.media.frames.file_frame = wp.media( {
 			title: $button.data( 'choose' ),
 			button: {
