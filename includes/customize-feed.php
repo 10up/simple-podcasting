@@ -1,7 +1,10 @@
 <?php
 /**
  * Customize the feed for a specific podcast. Insert the podcast data stored in term meta.
+ *
+ * @package tenup_podcasting
  */
+
 namespace tenup_podcasting;
 
 /**
@@ -266,8 +269,6 @@ add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
 
 /**
  * Generate the category elements from the given option (e.g. podcasting_category_1).
- *
- * @param  string $option option to retrieve via get_term_meta
  */
 function generate_categories() {
 	$term = get_the_term();
@@ -283,7 +284,7 @@ function generate_categories() {
 
 	$reduced_categories = array();
 
-	foreach( $categories as $category ) {
+	foreach ( $categories as $category ) {
 		$category = explode( ':', $category );
 
 		if ( ! isset( $reduced_categories[ $category[0] ] ) ) {
@@ -297,7 +298,7 @@ function generate_categories() {
 
 	$categories = get_podcasting_categories();
 
-	foreach( $reduced_categories as $parent => $subs ) {
+	foreach ( $reduced_categories as $parent => $subs ) {
 		if ( ! isset( $categories[ $parent ] ) ) {
 			continue;
 		}
@@ -307,7 +308,7 @@ function generate_categories() {
 		} else {
 			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\">\n";
 
-			foreach( $subs as $sub ) {
+			foreach ( $subs as $sub ) {
 				if ( ! isset( $categories[ $parent ]['subcategories'][ $sub ] ) ) {
 					continue;
 				}
