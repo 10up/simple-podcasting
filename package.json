@@ -14,10 +14,20 @@
     "role": "developer"
   },
   "scripts": {
-    "start": "npm install && gulp",
+    "start": "npm install && composer install && gulp",
     "watch": "gulp watch",
     "build": "gulp",
     "deploy": "npm install && gulp"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.php": [
+      "./vendor/bin/phpcs --extensions=php --warning-severity=8 -s --runtime-set testVersion 5.3"
+    ]
   },
   "license": "MIT",
   "devDependencies": {
@@ -32,6 +42,7 @@
     "del": "^3.0.0",
     "eslint": "^4.18.2",
     "eslint-loader": "^2.0.0",
+    "eslint-plugin-react": "^7.11.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-concat": "^2.6.1",
@@ -43,6 +54,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
+    "husky": "^1.0.0-rc.7",
+    "lint-staged": "^7.1.2",
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^10.0.0",
     "postcss-reporter": "^5.0.0",
