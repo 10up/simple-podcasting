@@ -161,8 +161,25 @@ function add_podcasting_term_add_meta_fields( $term ) {
 function the_field( $field, $value = '', $term_id = false ) {
 	switch ( $field['type'] ) {
 		case 'language':
-			echo $field['data'];
-		break;
+			echo wp_kses(
+				$field['data'],
+				array(
+					'select'   => array(
+						'name' => array(),
+						'id'   => array(),
+					),
+					'optgroup' => array(
+						'label' => array(),
+					),
+					'option'   => array(
+						'value'          => array(),
+						'lang'           => array(),
+						'data-installed' => array(),
+						'selected'       => array(),
+					),
+				)
+			);
+			break;
 		case 'textfield':
 		?>
 			<input
