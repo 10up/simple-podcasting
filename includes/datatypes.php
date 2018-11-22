@@ -452,14 +452,14 @@ add_filter( 'manage_edit-' . TAXONOMY_NAME . '_columns', __NAMESPACE__ . '\add_c
 function get_meta_fields() {
 	return array(
 		array(
-			'slug'  => 'podcasting_subtitle',
-			'title' => __( 'Podcast subtitle', 'simple-podcasting' ),
-			'type'  => 'textfield',
+			'slug'        => 'podcasting_subtitle',
+			'title'       => __( 'Subtitle', 'simple-podcasting' ),
+			'type'        => 'textfield',
 		),
 		array(
-			'slug'  => 'podcasting_talent_name',
-			'title' => __( 'Podcast talent', 'simple-podcasting' ),
-			'type'  => 'textfield',
+			'slug'        => 'podcasting_talent_name',
+			'title'       => __( 'Artist / Author name', 'simple-podcasting' ),
+			'type'        => 'textfield',
 		),
 		array(
 			'slug'  => 'podcasting_email',
@@ -467,20 +467,20 @@ function get_meta_fields() {
 			'type'  => 'textfield',
 		),
 		array(
-			'slug'  => 'podcasting_summary',
-			'title' => __( 'Podcast summary', 'simple-podcasting' ),
-			'type'  => 'textarea',
+			'slug'        => 'podcasting_summary',
+			'title'       => __( 'Summary', 'simple-podcasting' ),
+			'type'        => 'textarea',
 		),
 		array(
-			'slug'  => 'podcasting_copyright',
-			'title' => __( 'Podcast copyright', 'simple-podcasting' ),
-			'type'  => 'textfield',
+			'slug'        => 'podcasting_copyright',
+			'title'       => __( 'Copyright / License information', 'simple-podcasting' ),
+			'type'        => 'textfield',
 		),
 		array(
-			'slug'    => 'podcasting_explicit',
-			'title'   => __( 'Mark as explicit', 'simple-podcasting' ),
-			'type'    => 'select',
-			'options' => array(
+			'slug'        => 'podcasting_explicit',
+			'title'       => __( 'Mark as explicit', 'simple-podcasting' ),
+			'type'        => 'select',
+			'options'     => array(
 				'No',
 				'Yes',
 				'Clean',
@@ -494,30 +494,31 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'        => 'podcasting_image',
-			'title'       => __( 'Podcast image', 'simple-podcasting' ),
+			'title'       => __( 'Cover image', 'simple-podcasting' ),
 			'type'        => 'image',
 			'description' => __( 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px', 'simple-podcasting' ),
 		),
 		array(
-			'slug'  => 'podcasting_keywords',
-			'title' => __( 'Podcast keywords', 'simple-podcasting' ),
-			'type'  => 'textfield',
+			'slug'        => 'podcasting_keywords',
+			'title'       => __( 'Keywords', 'simple-podcasting' ),
+			'type'        => 'textfield',
+			'description' => __( 'Comma-separated keywords to help people find your podcast.', 'simple-podcasting' ),
 		),
 		array(
 			'slug'    => 'podcasting_category_1',
-			'title'   => __( 'Podcast category 1', 'simple-podcasting' ),
+			'title'   => __( 'Category 1', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories_options(),
 		),
 		array(
 			'slug'    => 'podcasting_category_2',
-			'title'   => __( 'Podcast category 2', 'simple-podcasting' ),
+			'title'   => __( 'Category 2', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories_options(),
 		),
 		array(
 			'slug'    => 'podcasting_category_3',
-			'title'   => __( 'Podcast category 3', 'simple-podcasting' ),
+			'title'   => __( 'Category 3', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories_options(),
 		),
