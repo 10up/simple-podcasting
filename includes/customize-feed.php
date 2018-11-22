@@ -69,7 +69,7 @@ function bloginfo_rss_lang( $output, $requested ) {
 	if ( ! $term ) {
 		return $output;
 	}
-	// Ch
+
 	if ( 'language' === $requested ) {
 		$lang = get_term_meta( $term->term_id, 'podcasting_language', true );
 		if ( $lang ) {
