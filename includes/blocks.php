@@ -11,6 +11,7 @@ function init() {
 		PODCASTING_URL . $block_js,
 		array(
 			'wp-blocks',
+			'wp-editor',
 			'wp-i18n',
 			'wp-element',
 		),
