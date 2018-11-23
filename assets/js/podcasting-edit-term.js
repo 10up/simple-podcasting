@@ -10,10 +10,10 @@ jQuery( document ).ready( function( $ ) {
 			$existing = $wrapper.find( '.podasting-existing-image' ),
 			$upload   = $wrapper.find( '.podcasting-upload-image' );
 
-			// Update the display.
-			$upload.removeClass('hidden');
-			$existing.addClass('hidden');
-			$hidden.val( '' );
+		// Update the display.
+		$upload.removeClass('hidden');
+		$existing.addClass('hidden');
+		$hidden.val( '' );
 	}
 
 	// When the term add button is clicked, reset the dropdown fields.
