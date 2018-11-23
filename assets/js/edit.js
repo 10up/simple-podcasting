@@ -16,6 +16,8 @@ const {
 	Toolbar,
 } = wp.components;
 
+const { apiFetch } = wp;
+
 class Edit extends Component {
 	constructor( { className } ) {
 		super( ...arguments );
@@ -69,18 +71,28 @@ class Edit extends Component {
 			} );
 			this.setState( { editing: false, src: attachment.url } );
 		};
+
 		const onSelectURL = ( newSrc ) => {
 			if ( newSrc !== src ) {
-				setAttributes({
-					src: newSrc,
-					url: newSrc,
-					id: null,
-					mime: null,
-					filesize: null,
-					duration: null,
-					caption: '',
-
+				apiFetch({
+					path: 'simple-podcasting/v1/external-url/?url=' + newSrc,
+				}).then( res => {
+					if ( res.success ) {
+						const {mime, filesize, duration,} = res.data;
+						setAttributes({
+							src: newSrc,
+							url: newSrc,
+							id: null,
+							mime: mime,
+							filesize: filesize,
+							duration: duration,
+							caption: '',
+						});
+					}
+				}).catch( err => {
+					console.log( err );
 				});
+
 				this.setState( { src: newSrc } );
 			}
 			this.setState( { editing: false } );
