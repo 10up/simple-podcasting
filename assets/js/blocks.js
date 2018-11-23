@@ -74,7 +74,7 @@ export default registerBlockType(
 		edit: Edit,
 
 		save: props => {
-			const { id, src, align, caption, podcastTerm, captioned, explicit, podcastEpisode } = props.attributes;
+			const { id, src, caption } = props.attributes;
 			return (
 				<figure className={ id ? `podcast-${ id }` : null }>
 					<audio controls="controls" src={ src } />

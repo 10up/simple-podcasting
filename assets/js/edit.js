@@ -51,7 +51,7 @@ class Edit extends Component {
 
 
 	render() {
-		const { id, align, caption, podcastTerm, captioned, explicit, url, mime, duration } = this.props.attributes;
+		const { caption, captioned, explicit, duration } = this.props.attributes;
 		const { setAttributes, isSelected } = this.props;
 		const { editing, className, src } = this.state;
 
@@ -78,7 +78,7 @@ class Edit extends Component {
 					path: 'simple-podcasting/v1/external-url/?url=' + newSrc,
 				}).then( res => {
 					if ( res.success ) {
-						const {mime, filesize, duration,} = res.data;
+						const { mime, filesize, duration } = res.data;
 						setAttributes({
 							src: newSrc,
 							url: newSrc,
