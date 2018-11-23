@@ -53,10 +53,10 @@ function get_podcast_meta_from_url( $url ) {
 		}
 
 		if ( in_array( substr( $type, 0, strpos( $type, '/' ) ), $allowed_types, true ) ) {
-			$podcast_meta['url']          = esc_url_raw( $url );
-			$podcast_meta['podcast_mime'] = $type;
-			$podcast_meta['duration']     = $duration;
-			$podcast_meta['filesize']     = $len;
+			$podcast_meta['url']      = esc_url_raw( $url );
+			$podcast_meta['mime']     = $type;
+			$podcast_meta['duration'] = $duration;
+			$podcast_meta['filesize'] = $len;
 		}
 
 		return $podcast_meta;
