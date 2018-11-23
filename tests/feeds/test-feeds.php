@@ -105,7 +105,7 @@ class Feed_Tests extends \WP_UnitTestCase {
 	 * @throws \Exception Throws an exception when there is an issue loading the template.
 	 */
 	protected function feed_setup() {
-		$this->go_to( '/?feed=rss2&podcasting_podcasts=my-podcast&refresh=' . rand_str( 12 ) );
+		$this->go_to( '/?feed=rss2&podcasting_podcasts=my-podcast' );
 		$feed = $this->do_rss2();
 		$xml  = new \SimpleXMLElement( $feed );
 		return $xml;
@@ -115,7 +115,7 @@ class Feed_Tests extends \WP_UnitTestCase {
 	/**
 	 * Test the channel meta
 	 */
-	public function test_feed_channel_basic_meta() {
+	public function test_feed_channel_meta() {
 		$xml        = $this->feed_setup();
 		$channel    = $xml->channel;
 		$namespaces = $channel->getNameSpaces( true );
@@ -134,6 +134,7 @@ class Feed_Tests extends \WP_UnitTestCase {
 		$this->assertSame( $this->podcast_term_meta['podcasting_explicit'], $itunes->explicit->__toString() );
 		$this->assertSame( $this->podcast_term_meta['podcasting_keywords'], $itunes->keywords->__toString() );
 
+		// Test the categories.
 		$counter    = 1;
 		$categories = get_podcasting_categories();
 		foreach ( $itunes->category as $category ) {
@@ -147,7 +148,10 @@ class Feed_Tests extends \WP_UnitTestCase {
 				$sub_cat_atts = $sub_cat->attributes();
 				$this->assertSame( $categories[ $parent_cat ]['subcategories'][ $child_cat ], $sub_cat_atts[0]->__toString() );
 			}
-			$counter++;
+			$counter ++;
 		}
+
+		// Test that there is a single item.
+		$this->assertSame( 1, $channel->item->count() );
 	}
 }
