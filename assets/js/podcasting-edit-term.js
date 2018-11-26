@@ -30,6 +30,7 @@ jQuery( document ).ready( function( $ ) {
 			$( '.fm-select select' ).val( 'None' );
 			clearImageField( '.podcast-media-remove' );
 			$( '#podcasting_category_1,#podcasting_category_2,#podcasting_category_3' ).val( '' );
+			window.scrollTo(0,0);
 		}, 500 );
 	} );
 
