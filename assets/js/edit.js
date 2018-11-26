@@ -75,7 +75,7 @@ class Edit extends Component {
 		const onSelectURL = ( newSrc ) => {
 			if ( newSrc !== src ) {
 				apiFetch({
-					path: 'simple-podcasting/v1/external-url/?url=' + newSrc,
+					path: `simple-podcasting/v1/external-url/?url=${newSrc}`,
 				}).then( res => {
 					if ( res.success ) {
 						const { mime, filesize, duration } = res.data;

@@ -38,7 +38,7 @@ function get_podcast_meta_from_url( $url ) {
 		$type          = isset( $headers['content-type'] ) ? $headers['content-type'] : '';
 		$allowed_types = array( 'video', 'audio' );
 
-		// Check to see if we can figure out the mime type from the extension
+		// Check to see if we can figure out the mime type from the extension.
 		$url_parts = \wp_parse_url( $url );
 		if ( false !== $url_parts ) {
 			$extension = \pathinfo( $url_parts['path'], PATHINFO_EXTENSION );
