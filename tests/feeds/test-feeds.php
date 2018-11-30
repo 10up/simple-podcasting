@@ -8,6 +8,7 @@
 namespace tenup_podcasting\Tests;
 
 use function tenup_podcasting\get_podcasting_categories;
+use function tenup_podcasting\podcasting_is_enabled;
 
 /**
  * Class Feed_Tests
@@ -17,6 +18,13 @@ use function tenup_podcasting\get_podcasting_categories;
 class Feed_Tests extends \WP_UnitTestCase {
 
 	/**
+	 * Let's keep the feed for all tests.
+	 *
+	 * @var \SimpleXMLElement $feed The RSS feed.
+	 */
+	protected static $feed = null;
+
+	/**
 	 * Podcast term for testing
 	 *
 	 * @var \WP_Term $podcast_term The term
@@ -24,11 +32,18 @@ class Feed_Tests extends \WP_UnitTestCase {
 	protected $podcast_term;
 
 	/**
-	 * Post for testing
+	 * Post for testing - no post meta assigned
 	 *
-	 * @var \WP_Post $post The testing post
+	 * @var \WP_Post $post_one The testing post
 	 */
-	protected $post;
+	protected $post_one;
+
+	/**
+	 * Post for testing assigned post meta.
+	 *
+	 * @var \WP_Post $post_one The testing post
+	 */
+	protected $post_two;
 
 	/**
 	 * Known term meta with default values.
@@ -51,6 +66,22 @@ class Feed_Tests extends \WP_UnitTestCase {
 	);
 
 	/**
+	 * Known podcast mete key, value pairs
+	 *
+	 * @var array known podcast meta
+	 */
+	protected $podcast_episode_meta = array(
+		'default' => array(
+			'podcast_explicit'  => 'yes',
+		),
+		'custom'  => array(
+			'podcast_explicit'  => 'no',
+			'podcast_captioned' => '1',
+			'podcast_duration'  => '2:30',
+		),
+	);
+
+	/**
 	 * Setup function.
 	 */
 	public function setUp() {
@@ -68,14 +99,33 @@ class Feed_Tests extends \WP_UnitTestCase {
 			update_term_meta( $this->podcast_term->term_id, $key, $value );
 		}
 
-		$this->post = $this->factory()->post->create_and_get(
+		$this->post_one = $this->factory()->post->create_and_get(
 			array(
 				'post_title'   => 'Episode One',
 				'post_content' => 'Content for Episode One',
 			)
 		);
-		// Add the podcast to the post.
-		wp_set_object_terms( $this->post->ID, $this->podcast_term->slug, 'podcasting_podcasts' );
+
+		$this->post_two = $this->factory()->post->create_and_get(
+			array(
+				'post_title'   => 'Episode Two',
+				'post_content' => 'Content for Episode Two',
+			)
+		);
+
+		// Assign the post meta to Post Two.
+		foreach ( $this->podcast_episode_meta['custom'] as $key => $value ) {
+			add_post_meta( $this->post_two->ID, $key, $value );
+		}
+
+		// Add the podcast to the posts.
+		wp_set_object_terms( $this->post_one->ID, $this->podcast_term->slug, 'podcasting_podcasts' );
+		wp_set_object_terms( $this->post_two->ID, $this->podcast_term->slug, 'podcasting_podcasts' );
+
+		// Get the feed once.
+		if ( ! self::$feed ) {
+			self::$feed = $this->feed_setup();
+		}
 	}
 
 	/**
@@ -113,11 +163,17 @@ class Feed_Tests extends \WP_UnitTestCase {
 
 
 	/**
+	 * Testing the podcasting is enabled
+	 */
+	public function test_podcasting_is_enabled() {
+		$this->assertTrue( podcasting_is_enabled() );
+	}
+
+	/**
 	 * Test the channel meta
 	 */
 	public function test_feed_channel_meta() {
-		$xml        = $this->feed_setup();
-		$channel    = $xml->channel;
+		$channel    = self::$feed->channel;
 		$namespaces = $channel->getNameSpaces( true );
 		$itunes     = $channel->children( $namespaces['itunes'] );
 
@@ -152,6 +208,30 @@ class Feed_Tests extends \WP_UnitTestCase {
 		}
 
 		// Test that there is a single item.
-		$this->assertSame( 1, $channel->item->count() );
+		$this->assertSame( 2, $channel->item->count() );
 	}
+
+	/**
+	 * Testing item output.
+	 */
+	public function test_single_item() {
+		$channel    = self::$feed->channel;
+		$namespaces = $channel->getNameSpaces( true );
+
+		foreach ( $channel->item as $item ) {
+			$itunes = $item->children( $namespaces['itunes'] );
+
+			if ( 'Episode One' === $item->title->__toString() ) {
+				// This is set by the term meta.
+				$this->assertSame( $this->podcast_episode_meta['default']['podcast_explicit'], $itunes->explicit->__toString() );
+			} else {
+				// These override the term meta.
+				$this->assertSame( $this->podcast_episode_meta['custom']['podcast_explicit'], $itunes->explicit->__toString() );
+
+				$this->assertSame( 'Yes', $itunes->isClosedCaptioned->__toString() ); //@codingStandardsIgnoreLine We can't control the name here.
+				$this->assertSame( $this->podcast_episode_meta['custom']['podcast_duration'], $itunes->duration->__toString() );
+			}
+		}
+	}
+
 }
