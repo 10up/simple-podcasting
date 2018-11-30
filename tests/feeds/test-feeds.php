@@ -141,7 +141,7 @@ class Feed_Tests extends \WP_UnitTestCase {
 		try {
 			@require( ABSPATH . WPINC . '/feed-rss2.php' );// @codingStandardsIgnoreLine.
 			$out = ob_get_clean();
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			$out = ob_get_clean();
 			throw($e);
 		}
