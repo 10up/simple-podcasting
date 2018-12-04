@@ -5,6 +5,9 @@
     "es6": true
   },
   "extends": "eslint:recommended",
+  "plugins": [
+	"react"
+  ],
   "rules": {
     "yoda": [ 0 ],
     "indent": [ 2, "tab", { "SwitchCase": 2 } ],
@@ -15,7 +18,9 @@
     "no-unused-vars": [ 1 ],
     "no-console": [ 1 ],
     "no-alert": [ 1 ],
-    "camelcase": [ 2 ]
+    "camelcase": [ 2 ],
+	"react/jsx-uses-react": 2,
+	"react/jsx-uses-vars": 2
   },
   globals: {
   	"wp"

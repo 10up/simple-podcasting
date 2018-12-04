@@ -1,3 +1,4 @@
+/*global jQuery */
 jQuery( document ).ready( function( $ ) {
 	$( '#podcasting-enclosure-button' ).click( function( e ) {
 		e.preventDefault();
@@ -5,13 +6,14 @@ jQuery( document ).ready( function( $ ) {
 		var $this = $( this ),
 			$input = $( 'input#podcasting-enclosure-url' ),
 			mediaUploader;
-		
+
 		// If the uploader object has already been created, reopen the dialog.
 		if ( mediaUploader ) {
 			mediaUploader.open();
 			return;
 		}
 
+		// eslint-disable-next-line camelcase
 		mediaUploader = wp.media.frames.file_frame = wp.media( {
 			title: $this.data( 'modalTitle' ),
 			button: {

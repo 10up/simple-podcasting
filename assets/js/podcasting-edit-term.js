@@ -1,4 +1,20 @@
+/*global jQuery, validateForm*/
 jQuery( document ).ready( function( $ ) {
+
+	// Clear Image Field.
+	function clearImageField( el ) {
+		var $link   = $( el ),
+			$wrapper  = $link.parents( '.media-wrapper' ),
+			$button   = $wrapper.find( '.podcasting-media-button' ),
+			$hidden   = $( document.getElementById( $button.data( 'slug' ) ) ),
+			$existing = $wrapper.find( '.podasting-existing-image' ),
+			$upload   = $wrapper.find( '.podcasting-upload-image' );
+
+		// Update the display.
+		$upload.removeClass('hidden');
+		$existing.addClass('hidden');
+		$hidden.val( '' );
+	}
 
 	// When the term add button is clicked, reset the dropdown fields.
 	$( '#submit' ).click( function() {
@@ -12,6 +28,9 @@ jQuery( document ).ready( function( $ ) {
 		// Add a brief delay to allow the form to submit.
 		setTimeout( function() {
 			$( '.fm-select select' ).val( 'None' );
+			clearImageField( '.podcast-media-remove' );
+			$( '#podcasting_category_1,#podcasting_category_2,#podcasting_category_3' ).val( '' );
+			window.scrollTo(0,0);
 		}, 500 );
 	} );
 
@@ -34,6 +53,7 @@ jQuery( document ).ready( function( $ ) {
 			return;
 		}
 		// Extend the wp.media object.
+		// eslint-disable-next-line camelcase
 		mediaUploader = wp.media.frames.file_frame = wp.media( {
 			title: $button.data( 'choose' ),
 			button: {
@@ -64,18 +84,6 @@ jQuery( document ).ready( function( $ ) {
 	// Handle media remove buttons.
 	$( '.podcast-media-remove' ).on( 'click', function( e ) {
 		e.preventDefault();
-
-		var $link   = $( e.currentTarget ),
-			$wrapper  = $link.parents( '.media-wrapper' ),
-			$button   = $wrapper.find( '.podcasting-media-button' ),
-			$hidden   = $( document.getElementById( $button.data( 'slug' ) ) ),
-			$existing = $wrapper.find( '.podasting-existing-image' ),
-			$upload   = $wrapper.find( '.podcasting-upload-image' );
-
-			// Update the display.
-			$upload.removeClass('hidden');
-			$existing.addClass('hidden');
-			$hidden.val( '' );
-
+		clearImageField( e.currentTarget );
 	} );
 } );
