@@ -1,4 +1,10 @@
 <?php
+/**
+ * Register and enqueue all things block-related.
+ *
+ * @package tenup_podcasting
+ */
+
 namespace tenup_podcasting\block;
 
 /**
@@ -18,9 +24,12 @@ function init() {
 		filemtime( PODCASTING_PATH . $block_js )
 	);
 
-	register_block_type( 'podcasting/podcast', array(
-		'editor_script' => 'podcasting-block-editor',
-	) );
+	register_block_type(
+		'podcasting/podcast',
+		array(
+			'editor_script' => 'podcasting-block-editor',
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\init' );
 
