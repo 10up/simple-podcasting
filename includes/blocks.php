@@ -34,7 +34,7 @@ function init() {
 add_action( 'init', __NAMESPACE__ . '\init' );
 
 /**
- * Register Gutenberg-specific strings.
+ * Register JS block-specific strings.
  *
  * These need to be available in PHP for .pot creation but don't need to do anything.
  *
@@ -49,7 +49,7 @@ function register_js_strings() {
 add_action( 'init', __NAMESPACE__ . '\register_js_strings' );
 
 /**
- * Register and load translations for use in Gutenberg.
+ * Register and load block editor translations.
  *
  * In an ideal world, this would only load the translations absolutely necessary in a JS context.
  * Since this is a small plugin it's still okay for now.

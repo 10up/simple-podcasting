@@ -1,8 +1,8 @@
 # Simple Podcasting for WordPress
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for Gutenberg support.
+Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
 
-![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in Gutenberg")
+![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in the new WordPress editor")
 
 Podcasting is a method to distribute audio messages through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
@@ -25,8 +25,8 @@ Repeat for each podcast you would like to create.
 ## Add content to your podcast
 
  * Create a new post and assign it to one or more Podcasts using the panel labeled Podcasts.
- * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
- * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available and to optionally specify one media item if the post if you have more than one in your post. In Gutenberg, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (sometimes referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
+ * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available and to optionally specify one media item if the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
 
 ## Submit your podcast feed to Apple Podcasts
 
@@ -55,7 +55,7 @@ Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get st
 1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
 2. Activate the plugin.
 3. Head to Posts → Podcasts and add at least one podcast.
-4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
+4. Create a post and insert an audio embed (or a podcast block in the new WordPress editor) and select a Podcast feed to include it in.
 
 ## Changelog
 
@@ -66,7 +66,7 @@ Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get st
 * Added: Set language for a given podcast.
 * Tweaked: Clearer language on the add new podcast form.
 * Bug fix: Delete all associated meta when block is removed from a post.
-* Bug fix: Restore all block editor functionality to align with Gutenberg changes.
+* Bug fix: Restore all block editor functionality to align with Gutenberg/block changes.
 * Bug fix: Fully clear add new form after creating a new podcast.
 * Developers: Add linting for coding standards.
 
