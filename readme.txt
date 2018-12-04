@@ -11,18 +11,18 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: podcasting
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes beta Gutenberg support.
+Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for Gutenberg support.
 
 == Description ==
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes beta Gutenberg support.
+Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for Gutenberg support.
 
 Podcasting is a method to distribute audio and video episodes through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
 
 === Create your podcast ===
 
-From wp-admin, go to Posts → Podcasts.
+From wp-admin, go to Podcasts.
 To create a podcast, complete all of the "Add New Podcast" fields and click 'Add New Podcast'.
 
  * Podcast title: this title appears in Apple Podcasts and any other podcast apps.
@@ -68,6 +68,16 @@ Repeat for each podcast you would like to create.
 4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added: Retrieve metadata for externally hosted audio files in the block editor.
+* Added: Specify email address for a given podcast.
+* Added: Set language for a given podcast.
+* Tweaked: Clearer language on the add new podcast form.
+* Bug fix: Delete all associated meta when block is removed from a post.
+* Bug fix: Restore all block editor functionality to align with Gutenberg changes.
+* Bug fix: Fully clear add new form after creating a new podcast.
+* Developers: Add linting for coding standards.
 
 = 1.0.1 =
 * Bug fix: Properly output podcast categories and subcategories in the feed.
