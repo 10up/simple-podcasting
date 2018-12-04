@@ -43,7 +43,7 @@ There are two other labels that are GitHub defaults with more global meaning we'
 
 ### Review against WordPress updates
 
-During weekly triage, the tested up to version should be compared against the latest versions of WordPress and Gutenberg. If there's a newer version of either, the plugin should be re-tested using any automated tests as well as any manual tests indicated below, and the tested up to version bumped and committed to both GitHub and the WordPress.org repository.
+During weekly triage, the tested up to version should be compared against the latest versions of WordPress, both the new and classic editors, and the standalone Gutenberg plugin. If there's a newer version of either, the plugin should be re-tested using any automated tests as well as any manual tests indicated below, and the tested up to version bumped and committed to both GitHub and the WordPress.org repository.
 
 ### Release cycle
 
