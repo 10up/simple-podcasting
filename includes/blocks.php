@@ -21,7 +21,7 @@ function init() {
 			'wp-i18n',
 			'wp-element',
 		),
-		filemtime( PODCASTING_PATH . $block_js )
+		PODCASTING_VERSION
 	);
 
 	register_block_type(
