@@ -1,4 +1,10 @@
 <?php
+/**
+ * Register and enqueue all things block-related.
+ *
+ * @package tenup_podcasting
+ */
+
 namespace tenup_podcasting\block;
 
 /**
@@ -18,9 +24,12 @@ function init() {
 		filemtime( PODCASTING_PATH . $block_js )
 	);
 
-	register_block_type( 'podcasting/podcast', array(
-		'editor_script' => 'podcasting-block-editor',
-	) );
+	register_block_type(
+		'podcasting/podcast',
+		array(
+			'editor_script' => 'podcasting-block-editor',
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\init' );
 
@@ -48,10 +57,14 @@ add_action( 'init', __NAMESPACE__ . '\register_js_strings' );
  * @return void
  */
 function load_translations() {
-	$data = wp_json_encode( gutenberg_get_jed_locale_data( 'simple-podcasting' ) );
-	wp_add_inline_script(
-		'wp-i18n',
-		'wp.i18n.setLocaleData( ' . $data . ', "simple-podcasting" );'
-	);
+	if ( function_exists( 'wp_set_script_translations' ) ) {
+		wp_set_script_translations( 'podcasting-block-editor', 'simple-podcasting' );
+	} elseif ( function_exists( 'gutenberg_get_jed_locale_data' ) ) {
+		$data = wp_json_encode( gutenberg_get_jed_locale_data( 'simple-podcasting' ) );
+		wp_add_inline_script(
+			'wp-i18n',
+			'wp.i18n.setLocaleData( ' . $data . ', "simple-podcasting" );'
+		);
+	}
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\load_translations' );
