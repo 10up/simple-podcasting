@@ -21,14 +21,14 @@ const config = {
 	devtool: 'source-map',
 	module: {
 		rules: [
-			// {
-			// 	test: /\.js$/,
-			// 	enforce: 'pre',
-			// 	loader: 'eslint-loader',
-			// 	query: {
-			// 		configFile: './.eslintrc'
-			// 	}
-			// },
+			{
+				test: /\.js$/,
+				enforce: 'pre',
+				loader: 'eslint-loader',
+				query: {
+					configFile: './.eslintrc'
+				}
+			},
 			{
 				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,
@@ -56,7 +56,7 @@ const config = {
 	stats: {
 		colors: true
 	}
-	
+
 };
 
 module.exports = config;

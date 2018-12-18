@@ -1,6 +1,8 @@
 <?php
 /**
  * Add a meta box to the post edit screen, plus handlers for saving.
+ *
+ * @package tenup_podcasting;
  */
 
 namespace tenup_podcasting;
@@ -25,6 +27,7 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );
 
 /**
  * Output the Podcasting meta box.
+ *
  * @param  object WP_Post $post The current post.
  */
 function meta_box_html( $post ) {
@@ -67,6 +70,7 @@ function meta_box_html( $post ) {
 
 /**
  * Handle the post save event, saving any data from the meta box.
+ *
  * @param  [type] $post_id [description]
  * @return [type]          [description]
  */
@@ -122,51 +126,19 @@ function save_meta_box( $post_id ) {
 	 * @todo only retrieve enclosure metadata when a podcasting term id is selected and the url has changed.
 	 */
 	if ( $url ) {
-		// Modeled after WordPress do_enclose()
-		$headers = wp_get_http_headers( $url );
-		if ( $headers ) {
-			if ( ! empty( $headers['location'] ) ) {
-				$headers = wp_get_http_headers( $headers['location'] );
-			}
+		$podcast_meta = \tenup_podcasting\helpers\get_podcast_meta_from_url( $url );
 
-			// Grab a temporary copy of the file to determine the audio duration.
-			$temp_file = download_url( $url, 30 );
-			$meta_data = wp_read_audio_metadata( $temp_file );
-			$duration  = isset( $meta_data['length_formatted'] ) ? $meta_data['length_formatted'] : false;
-
-			$len           = isset( $headers['content-length'] ) ? (int) $headers['content-length'] : 0;
-			$type          = isset( $headers['content-type'] )   ? $headers['content-type']         : '';
-			$allowed_types = array( 'video', 'audio' );
-
-			// Check to see if we can figure out the mime type from the extension
-			$url_parts = wp_parse_url( $url );
-			if ( false !== $url_parts ) {
-				$extension = pathinfo( $url_parts['path'], PATHINFO_EXTENSION );
-				if ( ! empty( $extension ) ) {
-					foreach ( wp_get_mime_types() as $exts => $mime ) {
-						if ( preg_match( '!^(' . $exts . ')$!i', $extension ) ) {
-							$type = $mime;
-							break;
-						}
-					}
-				}
-			}
-
-			if ( in_array( substr( $type, 0, strpos( $type, '/' ) ), $allowed_types, true ) ) {
-				$podcast_url      = esc_url_raw( $url );
-				$podcast_mime     = $type;
-				$podcast_duration = $duration;
-				$podcast_filesize = $len;
-			}
+		if ( ! empty( $podcast_meta ) ) {
+			update_post_meta( $post_id, 'podcast_url', $podcast_meta['url'] );
+			update_post_meta( $post_id, 'podcast_filesize', $podcast_meta['filesize'] );
+			update_post_meta( $post_id, 'podcast_duration', $podcast_meta['duration'] );
+			update_post_meta( $post_id, 'podcast_mime', $podcast_meta['podcast_mime'] );
 		}
 	}
 
-	update_post_meta( $post_id, 'podcast_url', $podcast_url );
-	update_post_meta( $post_id, 'podcast_filesize', $podcast_filesize );
-	update_post_meta( $post_id, 'podcast_duration', $podcast_duration );
-	update_post_meta( $post_id, 'podcast_mime', $podcast_mime );
 	update_post_meta( $post_id, 'podcast_explicit', $podcast_explicit );
 	update_post_meta( $post_id, 'podcast_captioned', $podcast_captioned );
+
 }
 add_action( 'save_post_post', __NAMESPACE__ . '\save_meta_box' );
 
@@ -188,7 +160,7 @@ function edit_post_enqueues( $hook_suffix ) {
 	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 		$js_file = 'assets/js/podcasting-edit-post.js';
 	} else {
-		$js_file = 'assets/js/podcasting-edit-post.min.js';
+		$js_file = 'dist/js/podcasting-edit-post.min.js';
 	}
 
 	wp_enqueue_script(

@@ -6,7 +6,7 @@ The following is a set of guidelines for contributors as well as information and
 
 ## Ways to contribute
 
-Contributing isn't just writing code - it's anything that improves the project. All contributions for Ads.txt Manager are managed right here on GitHub. Here are some ways you can help:
+Contributing isn't just writing code - it's anything that improves the project. All contributions for Simple Podcasting are managed right here on GitHub. Here are some ways you can help:
 
 ### Reporting bugs
 
@@ -14,7 +14,7 @@ If you're running into an issue with the plugin, please take a look through [exi
 
 ### Suggesting enhancements
 
-New features and enhancements are also managed via [issues](https://github.com/10up/simple-podcasting/issues). As project owners, 10up sets the [direction and roadmap](#roadmap) and may not prioritize or decide to implement if outside of the main goals of the plugin.
+New features and enhancements are also managed via [issues](https://github.com/10up/simple-podcasting/issues). As project owners, 10up sets the direction and roadmap and may not prioritize or decide to implement if outside of the main goals of the plugin.
 
 ### Pull requests
 
@@ -43,7 +43,7 @@ There are two other labels that are GitHub defaults with more global meaning we'
 
 ### Review against WordPress updates
 
-During weekly triage, the tested up to version should be compared against the latest version of WordPress. If there's a newer version of WordPress, the plugin should be re-tested using any automated tests as well as any manual tests indicated below, and the tested up to version bumped and committed to both GitHub and the WordPress.org repository.
+During weekly triage, the tested up to version should be compared against the latest versions of WordPress, both the new and classic editors, and the standalone Gutenberg plugin. If there's a newer version of either, the plugin should be re-tested using any automated tests as well as any manual tests indicated below, and the tested up to version bumped and committed to both GitHub and the WordPress.org repository.
 
 ### Release cycle
 
