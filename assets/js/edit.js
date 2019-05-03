@@ -51,8 +51,11 @@ class Edit extends Component {
 
 
 	render() {
-		const { caption, captioned, explicit, duration } = this.props.attributes;
-		const { setAttributes, isSelected } = this.props;
+
+		const { setAttributes, isSelected, attributes } = this.props;
+		const { caption, explicit } = attributes;
+		const duration = attributes.duration || '';
+		const captioned = attributes.captioned || '';
 		const { editing, className, src } = this.state;
 
 		const switchToEditing = () => {
