@@ -25,7 +25,7 @@ class Edit extends Component {
 		// without setting the actual value outside of the edit UI
 		this.state = {
 			editing: ! this.props.attributes.src,
-			src: ! this.props.attributes.id ? this.props.attributes.src : null,
+			src: this.props.attributes.src ? this.props.attributes.src : null,
 			className,
 		};
 	}
