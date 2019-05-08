@@ -1,6 +1,7 @@
 # Simple Podcasting for WordPress
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
+> Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
+![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg)
 
 ![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in the new WordPress editor")
 
