@@ -2,7 +2,7 @@
 
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
 
 ![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in the new WordPress editor")
 
