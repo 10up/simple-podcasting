@@ -1,6 +1,8 @@
 # Simple Podcasting for WordPress
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
+> Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
+
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level)
 
 ![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in the new WordPress editor")
 
@@ -56,6 +58,10 @@ Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get st
 2. Activate the plugin.
 3. Head to Posts → Podcasts and add at least one podcast.
 4. Create a post and insert an audio embed (or a podcast block in the new WordPress editor) and select a Podcast feed to include it in.
+
+## Support Level
+
+**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
 ## Changelog
 
