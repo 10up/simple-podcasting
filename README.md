@@ -1,6 +1,8 @@
 # Simple Podcasting for WordPress
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
+> Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
+
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
 
 ![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in the new WordPress editor")
 
@@ -38,18 +40,11 @@ Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](assets/dotorg/screenshot-3.png)](assets/dotorg/screenshot-3.png) | [![Podcast in editor](assets/dotorg/screenshot-1.png)](assets/dotorg/screenshot-1.png) | [![Podcast feed](assets/dotorg/screenshot-4.png)](assets/dotorg/screenshot-4.png)
 
-### Technical Notes
+## Requirements
 
-* Requires PHP 5.3+.
-* RSS feeds must not be disabled.
-
-## Contributing
-
-Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get started.
-
-<p align="center">
-<a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
-</p>
+* PHP 5.3+
+* [WordPress](http://wordpress.org) 4.6+
+* RSS feeds must not be disabled
 
 ## Installation
 1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
@@ -57,23 +52,16 @@ Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get st
 3. Head to Posts → Podcasts and add at least one podcast.
 4. Create a post and insert an audio embed (or a podcast block in the new WordPress editor) and select a Podcast feed to include it in.
 
-## Changelog
+## Support Level
 
-### 1.1.0
+**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
-* Added: Retrieve metadata for externally hosted audio files in the block editor.
-* Added: Specify email address for a given podcast.
-* Added: Set language for a given podcast.
-* Tweaked: Clearer language on the add new podcast form.
-* Bug fix: Delete all associated meta when block is removed from a post.
-* Bug fix: Restore all block editor functionality to align with Gutenberg/block changes.
-* Bug fix: Fully clear add new form after creating a new podcast.
-* Developers: Add linting for coding standards.
+## Contributing
 
-### 1.0.1
-* Bug fix: Properly output podcast categories and subcategories in the feed.
-* Bug fix: Avoid a minified JS error when selecting a podcast image.
-* Bug fix: Display podcast summary on edit form.
+Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get started.
 
-### 1.0
-* Initial plugin release
+## Like what you see?
+
+<p align="center">
+<a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
+</p>
