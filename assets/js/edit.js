@@ -25,7 +25,7 @@ class Edit extends Component {
 		// without setting the actual value outside of the edit UI
 		this.state = {
 			editing: ! this.props.attributes.src,
-			src: ! this.props.attributes.id ? this.props.attributes.src : null,
+			src: this.props.attributes.src ? this.props.attributes.src : null,
 			className,
 		};
 	}
@@ -51,8 +51,11 @@ class Edit extends Component {
 
 
 	render() {
-		const { caption, captioned, explicit, duration } = this.props.attributes;
-		const { setAttributes, isSelected } = this.props;
+
+		const { setAttributes, isSelected, attributes } = this.props;
+		const { caption, explicit } = attributes;
+		const duration = attributes.duration || '';
+		const captioned = attributes.captioned || '';
 		const { editing, className, src } = this.state;
 
 		const switchToEditing = () => {
