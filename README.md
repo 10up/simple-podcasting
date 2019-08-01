@@ -2,11 +2,35 @@
 
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
 
-![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg) [![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+
+## Table of Contents  
+* [Overview](#overview)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Create Podcast](#create-your-podcast)
+* [Add Content to Podcast](#add-content-to-your-podcast)
+* [Submit Podcast Feed to Apple Podcasts](#submit-your-podcast-feed-to-apple-podcasts)
+* [Contributing](#contributing)
+
+## Overview
+
+Podcasting is a method to distribute audio messages through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
 ![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in the new WordPress editor")
 
-Podcasting is a method to distribute audio messages through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
+## Requirements
+
+* PHP 5.3+
+* [WordPress](http://wordpress.org) 4.6+
+* RSS feeds must not be disabled
+
+## Installation
+
+1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
+2. Activate the plugin.
+3. Head to Posts → Podcasts and add at least one podcast.
+4. Create a post and insert an audio embed (or a podcast block in the new WordPress editor) and select a Podcast feed to include it in.
 
 ## Create your podcast
 
@@ -40,41 +64,16 @@ Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](assets/dotorg/screenshot-3.png)](assets/dotorg/screenshot-3.png) | [![Podcast in editor](assets/dotorg/screenshot-1.png)](assets/dotorg/screenshot-1.png) | [![Podcast feed](assets/dotorg/screenshot-4.png)](assets/dotorg/screenshot-4.png)
 
-### Technical Notes
-
-* Requires PHP 5.3+.
-* RSS feeds must not be disabled.
-
-## Requirements
-
-Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get started.
-
-* PHP 5.3+
-* [WordPress](http://wordpress.org) 4.6+
-* RSS feeds must not be disabled
-
-## Installation
-1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
-2. Activate the plugin.
-3. Head to Posts → Podcasts and add at least one podcast.
-4. Create a post and insert an audio embed (or a podcast block in the new WordPress editor) and select a Podcast feed to include it in.
-
 ## Support Level
 
 **Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
-* Added: Retrieve metadata for externally hosted audio files in the block editor.
-* Added: Specify email address for a given podcast.
-* Added: Set language for a given podcast.
-* Tweaked: Clearer language on the add new podcast form.
-* Bug fix: Delete all associated meta when block is removed from a post.
-* Bug fix: Restore all block editor functionality to align with Gutenberg/block changes.
-* Bug fix: Fully clear add new form after creating a new podcast.
 ## Contributing
 
 Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get started.
 
 ## Like what you see?
+
 <p align="center">
 <a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
 </p>
