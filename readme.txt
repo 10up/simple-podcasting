@@ -6,7 +6,7 @@ Tags: podcasting, gutenberg, gutenberg-ready, gutenberg-blocks, blocks
 Requires at least: 4.6
 Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: podcasting
@@ -68,6 +68,9 @@ Repeat for each podcast you would like to create.
 4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed: Compatibility with WordPress 5.2.
 
 = 1.1.0 =
 * Added: Retrieve metadata for externally hosted audio files in the block editor.
