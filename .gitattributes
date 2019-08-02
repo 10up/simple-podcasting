@@ -1,0 +1,19 @@
+/.wordpress-org export-ignore
+/.github export-ignore
+/gulp-tasks export-ignore
+
+/.babelrc export-ignore
+/.editorconfig export-ignore
+/.eslintignore export-ignore
+/.eslintrc export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.prettierrc export-ignore
+/CHANGELOG.md export-ignore
+/composer.lock export-ignore
+/gulpfile.babel.js export-ignore
+/LICENSE.md export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/README.md export-ignore
+/webpack.config.babel.js export-ignore
