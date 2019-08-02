@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
+## [1.1.1] - 2019-08-02
+### Fixed
+- Compatibility with WordPress 5.2.
+
 ## [1.1.0] - 2018-12-04
 ### Added
 - Retrieve metadata for externally hosted audio files in the block editor.

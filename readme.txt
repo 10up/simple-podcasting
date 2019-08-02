@@ -69,6 +69,9 @@ Repeat for each podcast you would like to create.
 
 == Changelog ==
 
+= 1.1.1 =
+* Fixed: Compatibility with WordPress 5.2.
+
 = 1.1.0 =
 * Added: Retrieve metadata for externally hosted audio files in the block editor.
 * Added: Specify email address for a given podcast.
