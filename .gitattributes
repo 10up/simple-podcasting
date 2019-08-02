@@ -10,6 +10,7 @@
 /.gitignore export-ignore
 /.prettierrc export-ignore
 /CHANGELOG.md export-ignore
+/CONTRIBUTING.md export-ignore
 /composer.lock export-ignore
 /gulpfile.babel.js export-ignore
 /LICENSE.md export-ignore
