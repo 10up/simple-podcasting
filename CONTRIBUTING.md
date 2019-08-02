@@ -51,14 +51,14 @@ New releases are targeted based on number and severity of changes along with hum
 
 ### Release instructions
 
-1. Version bump: Bump the version number in `simple-podcasting.php`.
+1. Version bump: Bump the version number in `simple-podcasting.php`, `package.json`, and `readme.txt`.
 2. Changelog: Add/update the changelog in both `readme.txt` and `README.md`
 3. Readme updates: Make any other readme changes as necessary. `README.md` is geared toward GitHub and `readme.txt` contains WordPress.org-specific content. The two are slightly different.
 4. Merge: Make a non-fast-forward merge from `develop` to `master`.
-5. SVN update: Copy files over to the `trunk` folder of an SVN checkout of the plugin. If the plugin banner, icon, or screenshots have changed, copy those from `assets/dotorg` to the top-level `assets` folder. Commit those changes.
-6. SVN tag: Make a folder inside `tags` with the current version number, copy the contents of `trunk` into it, and commit with the message `Tagging X.Y.Z`. There is also an SVN command for tagging; however, note that it runs on the remote and requires care because the entire WordPress.org plugins repo is actually single SVN repo.
-7. Check WordPress.org: Ensure that the changes are live on https://wordpress.org/plugins/simple-podcasting/. This may take a few minutes.
-8. Git tag: Tag the release in Git and push the tag to GitHub. It should now appear under [releases](https://github.com/10up/simple-podcasting/releases) there as well.
+5. Test: Run through common tasks while on `master` to be sure it functions correctly.
+6. Tag: [Create a new release on GitHub](https://github.com/10up/simple-podcasting/releases/new) with the version number, contents of the changelog entry, and a link to closed issues on the milestone (e.g. https://github.com/10up/simple-podcasting/milestone/6?closed=1).
+7. Deploy: Wait for the [GitHub Action](https://github.com/10up/simple-podcasting/actions) to complete its run. An email should be sent to each committer with the change diff.
+8. Check WordPress.org: Ensure that the changes are live on https://wordpress.org/plugins/simple-podcasting/. This may take a few minutes.
 
 <p align="center">
 <a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
