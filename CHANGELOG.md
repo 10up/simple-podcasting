@@ -2,9 +2,15 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
+## [Unreleased]
+
 ## [1.1.1] - 2019-08-02
+### Added
+- GitHub Actions for WordPress.org plugin deploy (props @helen via #75)
+
 ### Fixed
-- Compatibility with WordPress 5.2.
+- Compatibility with WordPress 5.2 (props @adamsilverstein via #68, #70)
+- Corrected `10up/wp_mock` reference for Composer (props @oscarssanchez via #69)
 
 ## [1.1.0] - 2018-12-04
 ### Added
@@ -30,6 +36,8 @@ All notable changes to this project will be documented in this file, per [the Ke
 ## [1.0.0] - 2018-06-29
 - Initial plugin release
 
-[1.1.0]: https://plugins.trac.wordpress.org/changeset/1985355/simple-podcasting
+[Unreleased]: https://github.com/10up/simple-podcasting/compare/1.1.1...develop
+[1.1.1]: https://github.com/10up/simple-podcasting/compare/f8a958c...1.1.1
+[1.1.0]: https://github.com/10up/simple-podcasting/compare/1.0.1...f8a958c
 [1.0.1]: https://github.com/10up/simple-podcasting/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/10up/simple-podcasting/releases/tag/1.0.0
