@@ -186,7 +186,7 @@ class Edit extends Component {
 						onSelect={ onSelectAttachment }
 						onSelectURL={ onSelectURL }
 						accept="audio/*"
-						type="audio"
+						allowedTypes={ [ 'audio' ] }
 						value={ this.props.attributes }
 					/>
 
