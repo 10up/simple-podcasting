@@ -5,7 +5,7 @@ const {
 	InspectorControls,
 	MediaPlaceholder,
 	RichText,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	FormToggle,
 	IconButton,
@@ -63,13 +63,35 @@ class Edit extends Component {
 		};
 
 		const onSelectAttachment = ( attachment ) => {
+			// Upload and Media Library return different attachment objects.
+			// Therefore, we need to check the existence of some entries.
+			let mime, filesize, duration;
+
+			if ( attachment.mime ) {
+				mime = attachment.mime;
+			} else if ( attachment.mime_type ) {
+				mime = attachment.mime_type;
+			}
+
+			if ( attachment.filesizeInBytes ) {
+				filesize = attachment.filesizeInBytes;
+			} else if ( attachment.media_details && attachment.media_details.filesize ) {
+				filesize = attachment.media_details.filesize;
+			}
+
+			if ( attachment.fileLength ) {
+				duration = attachment.fileLength;
+			} else if ( attachment.media_details && attachment.media_details.length_formatted ) {
+				duration = attachment.media_details.length_formatted;
+			}
+
 			setAttributes( {
 				id: attachment.id,
 				src: attachment.url,
 				url: attachment.url,
-				mime: attachment.mime,
-				filesize: attachment.filesizeInBytes,
-				duration: attachment.fileLength,
+				mime,
+				filesize,
+				duration,
 				caption: attachment.title,
 			} );
 			this.setState( { editing: false, src: attachment.url } );
@@ -93,7 +115,8 @@ class Edit extends Component {
 						});
 					}
 				}).catch( err => {
-					console.log( err );
+					// eslint-disable-next-line no-console
+					console.error( err );
 				});
 
 				this.setState( { src: newSrc } );
