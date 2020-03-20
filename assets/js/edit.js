@@ -15,6 +15,7 @@ const {
 	TextControl,
 	Toolbar,
 } = wp.components;
+const { Fragment } = wp.element;
 
 const { apiFetch } = wp;
 
@@ -125,22 +126,19 @@ class Edit extends Component {
 		};
 		const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
-		const controls = (
-			<BlockControls key="controls">
-				<Toolbar>
-					<IconButton
-						className="components-icon-button components-toolbar__control"
-						label={ __( 'Edit Podcast', 'simple-podcasting' ) }
-						onClick={ switchToEditing }
-						icon="edit"
-					/>
-				</Toolbar>
-			</BlockControls>
-		);
+		return (
+			<Fragment>
+				<BlockControls key="controls">
+					<Toolbar>
+						<IconButton
+							className="components-icon-button components-toolbar__control"
+							label={ __( 'Edit Podcast', 'simple-podcasting' ) }
+							onClick={ switchToEditing }
+							icon="edit"
+						/>
+					</Toolbar>
+				</BlockControls>
 
-		return [
-			controls,
-			(
 				<InspectorControls>
 					<PanelBody
 						title={ __( 'Podcast Settings', 'simple-podcasting' ) }
@@ -179,44 +177,43 @@ class Edit extends Component {
 						</PanelRow>
 					</PanelBody>
 				</InspectorControls>
-			),
-			<div className={ className }>
+				<div className={ className }>
+					{ ! editing ? (
 
-				{ ! editing ? (
+						<figure key="audio" className={ className }>
+							<audio controls="controls" src={ src } />
+							{ ( ( caption && caption.length ) || !! isSelected ) && (
+								<RichText
+									tagName="figcaption"
+									placeholder={ __( 'Write caption…' ) }
+									value={ caption }
+									onChange={ ( value ) => setAttributes( { caption: value } ) }
+									isSelected={ isSelected }
+								/>
+							) }
+						</figure>
 
-					<figure key="audio" className={ className }>
-						<audio controls="controls" src={ src } />
-						{ ( ( caption && caption.length ) || !! isSelected ) && (
-							<RichText
-								tagName="figcaption"
-								placeholder={ __( 'Write caption…' ) }
-								value={ caption }
-								onChange={ ( value ) => setAttributes( { caption: value } ) }
-								isSelected={ isSelected }
-							/>
-						) }
-					</figure>
+					) : (
 
-				) : (
+						<MediaPlaceholder
+							icon="microphone"
+							labels={ {
+								title: __( 'Podcast', 'simple-podcasting' ),
+								name: __( 'a podcast episode', 'simple-podcasting' ),
+							} }
+							className={ className }
+							onSelect={ onSelectAttachment }
+							onSelectURL={ onSelectURL }
+							accept="audio/*"
+							allowedTypes={ [ 'audio' ] }
+							value={ this.props.attributes }
+						/>
 
-					<MediaPlaceholder
-						icon="microphone"
-						labels={ {
-							title: __( 'Podcast', 'simple-podcasting' ),
-							name: __( 'a podcast episode', 'simple-podcasting' ),
-						} }
-						className={ className }
-						onSelect={ onSelectAttachment }
-						onSelectURL={ onSelectURL }
-						accept="audio/*"
-						allowedTypes={ [ 'audio' ] }
-						value={ this.props.attributes }
-					/>
+					)}
 
-				)}
-
-			</div>
-		];
+				</div>
+			</Fragment>
+		);
 	}
 }
 
