@@ -12,29 +12,21 @@ const transforms = {
 			type: 'block',
 			blocks: [ 'core/audio' ],
 			transform: ( attributes ) => {
-				const { id, src } = attributes;
-				console.debug( 'from', attributes );
 				return createBlock( 'podcasting/podcast', {
-					id,
-					src
+					id: attributes.id,
+					src: attributes.src
 				} );
 			},
-		}
+		},
 	],
 	to: [
 		{
 			type: 'block',
 			blocks: [ 'core/audio' ],
 			transform: ( attributes ) => {
-				const { id, src } = attributes;
-				console.debug( 'to', attributes );
 				return createBlock( 'core/audio', {
-					id,
-					src,
-					caption: '',
-					loop: false,
-					autoplay: false,
-					preload: 'auto'
+					id: attributes.id,
+					src: attributes.src
 				} );
 			},
 		},
