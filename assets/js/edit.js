@@ -14,7 +14,11 @@ const {
 	SelectControl,
 	TextControl,
 	Toolbar,
+	Button,
 } = wp.components;
+const {
+	Fragment
+} = wp.element;
 
 const { apiFetch } = wp;
 
@@ -58,8 +62,8 @@ class Edit extends Component {
 		const captioned = attributes.captioned || '';
 		const { editing, className, src } = this.state;
 
-		const switchToEditing = () => {
-			this.setState( { editing: true } );
+		const switchMode = () => {
+			this.setState( { editing: ! editing } );
 		};
 
 		const onSelectAttachment = ( attachment ) => {
@@ -128,15 +132,33 @@ class Edit extends Component {
 		const controls = (
 			<BlockControls key="controls">
 				<Toolbar>
-					<IconButton
-						className="components-icon-button components-toolbar__control"
-						label={ __( 'Edit Podcast', 'simple-podcasting' ) }
-						onClick={ switchToEditing }
-						icon="edit"
-					/>
+					{ ! editing ? (
+						<IconButton
+							className="components-icon-button components-toolbar__control"
+							label={ __( 'Edit Podcast', 'simple-podcasting' ) }
+							onClick={ switchMode }
+							icon="edit"
+						/>
+					) : (
+						<IconButton
+							className="components-icon-button components-toolbar__control"
+							label={ __( 'Cancel Editing Podcast', 'simple-podcasting' ) }
+							onClick={ switchMode }
+							icon="no-alt"
+						/>
+					)}
 				</Toolbar>
 			</BlockControls>
 		);
+
+		const containerStyles = {
+			border: '1px solid #ccc',
+			borderRadius: '0.5rem',
+			padding: '1rem',
+			margin: '0.5rem 0',
+			fontSize: '13px',
+			fontFamily: 'sans-serif',
+		};
 
 		return [
 			controls,
@@ -198,20 +220,33 @@ class Edit extends Component {
 					</figure>
 
 				) : (
-
-					<MediaPlaceholder
-						icon="microphone"
-						labels={ {
-							title: __( 'Podcast', 'simple-podcasting' ),
-							name: __( 'a podcast episode', 'simple-podcasting' ),
-						} }
-						className={ className }
-						onSelect={ onSelectAttachment }
-						onSelectURL={ onSelectURL }
-						accept="audio/*"
-						allowedTypes={ [ 'audio' ] }
-						value={ this.props.attributes }
-					/>
+					<Fragment>
+						{ src ? (
+							<div style={containerStyles}>
+								<Button
+									isSecondary
+									onClick={ switchMode }
+								>
+									{ __( 'Cancel', 'simple-podcasting' ) }
+								</Button>
+								&nbsp;
+								<span>{ __( 'This will retain your current podcast audio and settings.', 'simple-podcasting' ) }</span>
+							</div>
+						) : null }
+						<MediaPlaceholder
+							icon="microphone"
+							labels={ {
+								title: __( 'Podcast', 'simple-podcasting' ),
+								name: __( 'a podcast episode', 'simple-podcasting' ),
+							} }
+							className={ className }
+							onSelect={ onSelectAttachment }
+							onSelectURL={ onSelectURL }
+							accept="audio/*"
+							allowedTypes={ [ 'audio' ] }
+							value={ this.props.attributes }
+						/>
+					</Fragment>
 
 				)}
 
