@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+const { select } = wp.data;
 const { createBlock } = wp.blocks;
 
 /**
@@ -23,14 +24,23 @@ const transforms = {
 		{
 			type: 'block',
 			blocks: [ 'core/audio' ],
+			isMatch: ( { id } ) => {
+				if ( ! id ) {
+					return false;
+				}
+				const { getMedia } = select( 'core' );
+				const media = getMedia( id );
+				return !! media && media.mime_type.includes( 'audio' );
+			},
 			transform: ( attributes ) => {
 				return createBlock( 'core/audio', {
-					id: attributes.id,
-					src: attributes.src
+					src: attributes.src,
+					id: attributes.id
 				} );
 			},
 		},
 	],
+
 };
 
 export default transforms;
