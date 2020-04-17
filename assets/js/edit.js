@@ -9,13 +9,10 @@ const {
 } = wp.blockEditor;
 const {
 	FormToggle,
-	IconButton,
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
-	Toolbar,
-	Button,
 } = wp.components;
 const {
 	Fragment
@@ -30,7 +27,6 @@ class Edit extends Component {
 		// edit component has its own src in the state so it can be edited
 		// without setting the actual value outside of the edit UI
 		this.state = {
-			editing: ! this.props.attributes.src,
 			src: this.props.attributes.src ? this.props.attributes.src : null,
 			className,
 		};
@@ -40,21 +36,9 @@ class Edit extends Component {
 	 * When the component is removed, we'll set the the post meta to null so it is deleted on save.
 	 */
 	componentWillUnmount() {
-		const { setAttributes } = this.props;
-		setAttributes( {
-			id: null,
-			src: null,
-			url: null,
-			mime: null,
-			filesize: null,
-			duration: null,
-			caption: null,
-		} );
-
 		// Let's also remove any assigned Podcast taxonomies.
 		wp.data.dispatch( 'core/editor' ).editPost( { [ 'podcasting_podcasts' ]:[] } );
 	}
-
 
 	render() {
 
@@ -62,11 +46,7 @@ class Edit extends Component {
 		const { caption, explicit } = attributes;
 		const duration = attributes.duration || '';
 		const captioned = attributes.captioned || '';
-		const { editing, className, src } = this.state;
-
-		const switchMode = () => {
-			this.setState( { editing: ! editing } );
-		};
+		const { className, src } = this.state;
 
 		const onSelectAttachment = ( attachment ) => {
 			// Upload and Media Library return different attachment objects.
@@ -100,7 +80,7 @@ class Edit extends Component {
 				duration,
 				caption: attachment.title,
 			} );
-			this.setState( { editing: false, src: attachment.url } );
+			this.setState( { src: attachment.url } );
 		};
 
 		const onSelectURL = ( newSrc ) => {
@@ -127,7 +107,6 @@ class Edit extends Component {
 
 				this.setState( { src: newSrc } );
 			}
-			this.setState( { editing: false } );
 		};
 		const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
@@ -144,15 +123,6 @@ class Edit extends Component {
 				) : null }
 			</BlockControls>
 		);
-
-		const containerStyles = {
-			border: '1px solid #ccc',
-			borderRadius: '0.5rem',
-			padding: '1rem',
-			margin: '0.5rem 0',
-			fontSize: '13px',
-			fontFamily: 'sans-serif',
-		};
 
 		return (
 			<Fragment>
@@ -196,7 +166,7 @@ class Edit extends Component {
 					</PanelBody>
 				</InspectorControls>
 				<div className={ className }>
-					{ ! editing ? (
+					{ src ? (
 						<figure key="audio" className={ className }>
 							<audio controls="controls" src={ src } />
 							{ ( ( caption && caption.length ) || !! isSelected ) && (
@@ -209,35 +179,20 @@ class Edit extends Component {
 								/>
 							) }
 						</figure>
-
 					) : (
-						<Fragment>
-							{ src ? (
-								<div style={containerStyles}>
-									<Button
-										isSecondary
-										onClick={ switchMode }
-									>
-										{ __( 'Cancel', 'simple-podcasting' ) }
-									</Button>
-									&nbsp;
-									<span>{ __( 'This will retain your current podcast audio and settings.', 'simple-podcasting' ) }</span>
-								</div>
-							) : null }
-							<MediaPlaceholder
-								icon="microphone"
-								labels={ {
-									title: __( 'Podcast', 'simple-podcasting' ),
-									name: __( 'a podcast episode', 'simple-podcasting' ),
-								} }
-								className={ className }
-								onSelect={ onSelectAttachment }
-								onSelectURL={ onSelectURL }
-								accept="audio/*"
-								allowedTypes={ ALLOWED_MEDIA_TYPES }
-								value={ this.props.attributes }
-							/>
-						</Fragment>
+						<MediaPlaceholder
+							icon="microphone"
+							labels={ {
+								title: __( 'Podcast', 'simple-podcasting' ),
+								name: __( 'a podcast episode', 'simple-podcasting' ),
+							} }
+							className={ className }
+							onSelect={ onSelectAttachment }
+							onSelectURL={ onSelectURL }
+							accept="audio/*"
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							value={ this.props.attributes }
+						/>
 					)}
 				</div>
 			</Fragment>
