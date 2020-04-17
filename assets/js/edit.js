@@ -4,6 +4,7 @@ const {
 	BlockControls,
 	InspectorControls,
 	MediaPlaceholder,
+	MediaReplaceFlow,
 	RichText,
 } = wp.blockEditor;
 const {
@@ -21,6 +22,7 @@ const {
 } = wp.element;
 
 const { apiFetch } = wp;
+const ALLOWED_MEDIA_TYPES = [ 'audio' ];
 
 class Edit extends Component {
 	constructor( { className } ) {
@@ -131,23 +133,15 @@ class Edit extends Component {
 
 		const controls = (
 			<BlockControls key="controls">
-				<Toolbar>
-					{ ! editing ? (
-						<IconButton
-							className="components-icon-button components-toolbar__control"
-							label={ __( 'Edit Podcast', 'simple-podcasting' ) }
-							onClick={ switchMode }
-							icon="edit"
-						/>
-					) : (
-						<IconButton
-							className="components-icon-button components-toolbar__control"
-							label={ __( 'Cancel Editing Podcast', 'simple-podcasting' ) }
-							onClick={ switchMode }
-							icon="no-alt"
-						/>
-					)}
-				</Toolbar>
+				{ src ? (
+					<MediaReplaceFlow
+						mediaURL={ attributes.src }
+						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						accept="audio/*"
+						onSelect={ onSelectAttachment }
+						onSelectURL={ onSelectURL }
+					/>
+				) : null }
 			</BlockControls>
 		);
 
@@ -160,9 +154,9 @@ class Edit extends Component {
 			fontFamily: 'sans-serif',
 		};
 
-		return [
-			controls,
-			(
+		return (
+			<Fragment>
+				{controls}
 				<InspectorControls>
 					<PanelBody
 						title={ __( 'Podcast Settings', 'simple-podcasting' ) }
@@ -201,57 +195,53 @@ class Edit extends Component {
 						</PanelRow>
 					</PanelBody>
 				</InspectorControls>
-			),
-			<div className={ className }>
+				<div className={ className }>
+					{ ! editing ? (
+						<figure key="audio" className={ className }>
+							<audio controls="controls" src={ src } />
+							{ ( ( caption && caption.length ) || !! isSelected ) && (
+								<RichText
+									tagName="figcaption"
+									placeholder={ __( 'Write caption…' ) }
+									value={ caption }
+									onChange={ ( value ) => setAttributes( { caption: value } ) }
+									isSelected={ isSelected }
+								/>
+							) }
+						</figure>
 
-				{ ! editing ? (
-
-					<figure key="audio" className={ className }>
-						<audio controls="controls" src={ src } />
-						{ ( ( caption && caption.length ) || !! isSelected ) && (
-							<RichText
-								tagName="figcaption"
-								placeholder={ __( 'Write caption…' ) }
-								value={ caption }
-								onChange={ ( value ) => setAttributes( { caption: value } ) }
-								isSelected={ isSelected }
+					) : (
+						<Fragment>
+							{ src ? (
+								<div style={containerStyles}>
+									<Button
+										isSecondary
+										onClick={ switchMode }
+									>
+										{ __( 'Cancel', 'simple-podcasting' ) }
+									</Button>
+									&nbsp;
+									<span>{ __( 'This will retain your current podcast audio and settings.', 'simple-podcasting' ) }</span>
+								</div>
+							) : null }
+							<MediaPlaceholder
+								icon="microphone"
+								labels={ {
+									title: __( 'Podcast', 'simple-podcasting' ),
+									name: __( 'a podcast episode', 'simple-podcasting' ),
+								} }
+								className={ className }
+								onSelect={ onSelectAttachment }
+								onSelectURL={ onSelectURL }
+								accept="audio/*"
+								allowedTypes={ ALLOWED_MEDIA_TYPES }
+								value={ this.props.attributes }
 							/>
-						) }
-					</figure>
-
-				) : (
-					<Fragment>
-						{ src ? (
-							<div style={containerStyles}>
-								<Button
-									isSecondary
-									onClick={ switchMode }
-								>
-									{ __( 'Cancel', 'simple-podcasting' ) }
-								</Button>
-								&nbsp;
-								<span>{ __( 'This will retain your current podcast audio and settings.', 'simple-podcasting' ) }</span>
-							</div>
-						) : null }
-						<MediaPlaceholder
-							icon="microphone"
-							labels={ {
-								title: __( 'Podcast', 'simple-podcasting' ),
-								name: __( 'a podcast episode', 'simple-podcasting' ),
-							} }
-							className={ className }
-							onSelect={ onSelectAttachment }
-							onSelectURL={ onSelectURL }
-							accept="audio/*"
-							allowedTypes={ [ 'audio' ] }
-							value={ this.props.attributes }
-						/>
-					</Fragment>
-
-				)}
-
-			</div>
-		];
+						</Fragment>
+					)}
+				</div>
+			</Fragment>
+		);
 	}
 }
 
