@@ -411,7 +411,6 @@ add_action( TAXONOMY_NAME . '_edit_form_fields', __NAMESPACE__ . '\add_podcastin
 add_action( TAXONOMY_NAME . '_edit_form', __NAMESPACE__ . '\add_podcasting_term_edit_meta_fields' );
 add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_add_meta_fields' );
 
-
 /**
  * Add a feed link to the podcasting term table.
  *
@@ -432,6 +431,26 @@ function add_podcasting_term_feed_link_column( $string, $column_name, $term_id )
 add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column', 10, 3 );
 
 /**
+ * Add a podcasting image to the podcasting term table.
+ *
+ * @param string $string      Blank string.
+ * @param string $column_name Name of the column.
+ * @param int    $term_id     Term ID.
+ *
+ * @return string
+ */
+function add_podcasting_term_podcasting_image_column( $string, $column_name, $term_id ) {
+
+	if ( 'podcasting_image' === $column_name ) {
+		$image = get_term_meta( $term_id, 'podcasting_image', true );
+		echo wp_get_attachment_image( $image, 'thumbnail' );
+	}
+	return $string;
+}
+add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_podcasting_image_column', 10, 3 );
+
+
+/**
  * Add a custom column for the podcast feed link.
  *
  * @param array $columns An array of columns
@@ -439,7 +458,15 @@ add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_
  * @return array
  */
 function add_custom_term_columns( $columns ) {
-	$columns['feedurl'] = 'Feed URL';
+	$columns = array_merge(
+		[
+			'podcasting_image' => __( 'Podcast Cover', 'simple-podcasting' ),
+		],
+		$columns,
+		[
+			'feedurl' => __( 'Feed URL', 'simple-podcasting' ),
+		]
+	);
 	unset( $columns['description'] );
 	unset( $columns['author'] );
 	return $columns;
