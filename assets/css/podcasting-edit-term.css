@@ -5,3 +5,9 @@
 	max-width: 300px;
 	max-height: 200px;
 }
+
+.column-podcasting_image img {
+	height: auto;
+	max-width: 100%;
+	width: 75px;
+}
