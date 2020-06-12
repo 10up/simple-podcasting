@@ -14,9 +14,7 @@ const {
 	SelectControl,
 	TextControl,
 } = wp.components;
-const {
-	Fragment
-} = wp.element;
+const { Fragment } = wp.element;
 
 const { apiFetch } = wp;
 const ALLOWED_MEDIA_TYPES = [ 'audio' ];
@@ -36,7 +34,7 @@ class Edit extends Component {
 	 * When the component is removed, we'll set the the post meta to null so it is deleted on save.
 	 */
 	componentWillUnmount() {
-		// Let's also remove any assigned Podcast taxonomies.
+		// Remove any assigned Podcast taxonomies.
 		wp.data.dispatch( 'core/editor' ).editPost( { [ 'podcasting_podcasts' ]:[] } );
 	}
 
@@ -179,7 +177,9 @@ class Edit extends Component {
 								/>
 							) }
 						</figure>
+
 					) : (
+
 						<MediaPlaceholder
 							icon="microphone"
 							labels={ {
