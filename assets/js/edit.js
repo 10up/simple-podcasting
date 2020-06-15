@@ -4,20 +4,20 @@ const {
 	BlockControls,
 	InspectorControls,
 	MediaPlaceholder,
+	MediaReplaceFlow,
 	RichText,
 } = wp.blockEditor;
 const {
 	FormToggle,
-	IconButton,
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
-	Toolbar,
 } = wp.components;
 const { Fragment } = wp.element;
 
 const { apiFetch } = wp;
+const ALLOWED_MEDIA_TYPES = [ 'audio' ];
 
 class Edit extends Component {
 	constructor( { className } ) {
@@ -25,7 +25,6 @@ class Edit extends Component {
 		// edit component has its own src in the state so it can be edited
 		// without setting the actual value outside of the edit UI
 		this.state = {
-			editing: ! this.props.attributes.src,
 			src: this.props.attributes.src ? this.props.attributes.src : null,
 			className,
 		};
@@ -45,11 +44,7 @@ class Edit extends Component {
 		const { caption, explicit } = attributes;
 		const duration = attributes.duration || '';
 		const captioned = attributes.captioned || '';
-		const { editing, className, src } = this.state;
-
-		const switchToEditing = () => {
-			this.setState( { editing: true } );
-		};
+		const { className, src } = this.state;
 
 		const onSelectAttachment = ( attachment ) => {
 			// Upload and Media Library return different attachment objects.
@@ -83,7 +78,7 @@ class Edit extends Component {
 				duration,
 				caption: attachment.title,
 			} );
-			this.setState( { editing: false, src: attachment.url } );
+			this.setState( { src: attachment.url } );
 		};
 
 		const onSelectURL = ( newSrc ) => {
@@ -110,23 +105,26 @@ class Edit extends Component {
 
 				this.setState( { src: newSrc } );
 			}
-			this.setState( { editing: false } );
 		};
 		const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
+		const controls = (
+			<BlockControls key="controls">
+				{ src ? (
+					<MediaReplaceFlow
+						mediaURL={ attributes.src }
+						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						accept="audio/*"
+						onSelect={ onSelectAttachment }
+						onSelectURL={ onSelectURL }
+					/>
+				) : null }
+			</BlockControls>
+		);
+
 		return (
 			<Fragment>
-				<BlockControls key="controls">
-					<Toolbar>
-						<IconButton
-							className="components-icon-button components-toolbar__control"
-							label={ __( 'Edit Podcast', 'simple-podcasting' ) }
-							onClick={ switchToEditing }
-							icon="edit"
-						/>
-					</Toolbar>
-				</BlockControls>
-
+				{controls}
 				<InspectorControls>
 					<PanelBody
 						title={ __( 'Podcast Settings', 'simple-podcasting' ) }
@@ -166,8 +164,7 @@ class Edit extends Component {
 					</PanelBody>
 				</InspectorControls>
 				<div className={ className }>
-					{ ! editing ? (
-
+					{ src ? (
 						<figure key="audio" className={ className }>
 							<audio controls="controls" src={ src } />
 							{ ( ( caption && caption.length ) || !! isSelected ) && (
@@ -193,12 +190,10 @@ class Edit extends Component {
 							onSelect={ onSelectAttachment }
 							onSelectURL={ onSelectURL }
 							accept="audio/*"
-							allowedTypes={ [ 'audio' ] }
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
 							value={ this.props.attributes }
 						/>
-
 					)}
-
 				</div>
 			</Fragment>
 		);
