@@ -1,7 +1,5 @@
 === Simple Podcasting ===
 Contributors: 10up, helen, adamsilverstein, jakemgold
-Author URI: https://10up.com
-Plugin URI: https://github.com/10up/simple-podcasting
 Tags: podcasting, gutenberg, gutenberg-ready, gutenberg-blocks, blocks
 Requires at least: 4.6
 Tested up to: 5.2
@@ -9,7 +7,6 @@ Requires PHP: 5.3
 Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: podcasting
 
 Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
 
