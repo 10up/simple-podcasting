@@ -1,6 +1,6 @@
 === Simple Podcasting ===
 Contributors: 10up, helen, adamsilverstein, jakemgold
-Author URI: http://10up.com
+Author URI: https://10up.com
 Plugin URI: https://github.com/10up/simple-podcasting
 Tags: podcasting, gutenberg, gutenberg-ready, gutenberg-blocks, blocks
 Requires at least: 4.6
@@ -18,7 +18,6 @@ Easily set up multiple podcast feeds using built-in WordPress posts. Includes a 
 Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
 
 Podcasting is a method to distribute audio and video episodes through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
-
 
 === Create your podcast ===
 
@@ -69,8 +68,19 @@ Repeat for each podcast you would like to create.
 
 == Changelog ==
 
+= 1.2.0 =
+* **Added:** Podcast image in the taxonomy list table view (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
+* **Added:** Ability for user to transform to/from the podcast and audio blocks (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+* **Added:** Core `MediaReplaceFlow` to edit the podcast media (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+* **Changed:** GitHub Actions from HCL to YAML workflow syntax (props [@helen](https://profiles.wordpress.org/helen))
+* **Changed:** Documentation updates (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@nhalstead](https://profiles.wordpress.org/nhalstead))
+* **Removed:** Editing mode (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+* **Fixed:** Using the upload or drag and drop instead of media library populates duration and mimetype (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+* **Fixed:** Issue where it is possible to add non-audio files to the Podcast block (props [@mattheu](https://profiles.wordpress.org/mattheu))
+* **Fixed:** Issue where React would throw an error relating to keys for list items (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+
 = 1.1.1 =
-* Fixed: Compatibility with WordPress 5.2.
+* Fixed: Compatibility with WordPress 5.2 (props [@adamsilverstein](https://profiles.wordpress.org/adamsilverstein)).
 
 = 1.1.0 =
 * Added: Retrieve metadata for externally hosted audio files in the block editor.
