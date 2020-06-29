@@ -27,6 +27,7 @@ cd /var/www/html/wp-content/plugins/simple-podcasting
 source ~/.nvm/nvm.sh
 nvm install 10
 nvm use 10
+nvm alias default 10
 npm install
 npm run build
 
