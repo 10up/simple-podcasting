@@ -23,8 +23,11 @@ wp plugin activate simple-podcasting
 echo "Install plugin dependencies"
 
 cd /var/www/html/wp-content/plugins/simple-podcasting
-composer install
-npm install 10
+
+source ~/.nvm/nvm.sh
+nvm install 10
 nvm use 10
 npm install
 npm run build
+
+composer install

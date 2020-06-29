@@ -13,6 +13,6 @@
 		"mtxr.sqltools"
 	],
 	"workspaceFolder": "/var/www/html/",
-	"postCreateCommand": "/var/www/html/wp-content/plugins/simple-podcasting/.devcontainer/setup.sh",
+	"postCreateCommand": "/var/www/html/wp-content/plugins/simple-podcasting/.devcontainer/setup.sh &> log.txt",
 	"remoteUser": "www-data",
 }
