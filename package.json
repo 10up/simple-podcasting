@@ -1,17 +1,21 @@
 {
-  "name": "podcasting",
+  "name": "@10up/simple-podcasting",
   "version": "1.1.1",
-  "description": "Simple podcasting for WordPress",
-  "homepage": "https://github.com/10up/podcasting",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/10up/podcasting"
+  "description": "A simple podcasting solution for WordPress. ",
+  "homepage": "https://github.com/10up/simple-podcasting",
+  "bugs": {
+    "url" : "https://github.com/10up/simple-podcasting/issues"
   },
+  "license": "GPL-2.0-or-later",
   "author": {
     "name": "10up",
-    "email": "info@10up.com",
+    "email": "opensource@10up.com",
     "url": "https://10up.com",
     "role": "developer"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/10up/simple-podcasting"
   },
   "scripts": {
     "start": "npm install && composer install && gulp",
@@ -29,7 +33,6 @@
       "./vendor/bin/phpcs --extensions=php --warning-severity=8 -s --runtime-set testVersion 5.3"
     ]
   },
-  "license": "MIT",
   "devDependencies": {
     "@wordpress/babel-preset-default": "^1.1.2",
     "babel-core": "^6.26.0",
