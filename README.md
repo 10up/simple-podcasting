@@ -1,14 +1,40 @@
 # Simple Podcasting for WordPress
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes beta Gutenberg support.
+> Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
 
-![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in Gutenberg")
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+
+## Table of Contents  
+* [Overview](#overview)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Create Podcast](#create-your-podcast)
+* [Add Content to Podcast](#add-content-to-your-podcast)
+* [Submit Podcast Feed to Apple Podcasts](#submit-your-podcast-feed-to-apple-podcasts)
+* [Contributing](#contributing)
+
+## Overview
 
 Podcasting is a method to distribute audio messages through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
+![Screenshot of podcast block](.wordpress-org/screenshot-2.png "Example of a podcast block in the new WordPress editor")
+
+## Requirements
+
+* PHP 5.3+
+* [WordPress](http://wordpress.org) 4.6+
+* RSS feeds must not be disabled
+
+## Installation
+
+1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
+2. Activate the plugin.
+3. Head to Posts → Podcasts and add at least one podcast.
+4. Create a post and insert an audio embed (or a podcast block in the new WordPress editor) and select a Podcast feed to include it in.
+
 ## Create your podcast
 
-From wp-admin, go to Posts → Podcasts.
+From wp-admin, go to Podcasts.
 To create a podcast, complete all of the "Add New Podcast" fields and click 'Add New Podcast'.
  * Podcast title: this title appears in Apple Podcasts and any other podcast apps.
  * Podcast subtitle: the subtitle also appears in Apple Podcasts and any other podcast apps.
@@ -25,8 +51,8 @@ Repeat for each podcast you would like to create.
 ## Add content to your podcast
 
  * Create a new post and assign it to one or more Podcasts using the panel labeled Podcasts.
- * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
- * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available and to optionally specify one media item if the post if you have more than one in your post. In Gutenberg, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (sometimes referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
+ * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available and to optionally specify one media item if the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
 
 ## Submit your podcast feed to Apple Podcasts
 
@@ -36,33 +62,18 @@ Repeat for each podcast you would like to create.
 
 Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
-[![Podcast setup](assets/dotorg/screenshot-3.png)](assets/dotorg/screenshot-3.png) | [![Podcast in editor](assets/dotorg/screenshot-1.png)](assets/dotorg/screenshot-1.png) | [![Podcast feed](assets/dotorg/screenshot-4.png)](assets/dotorg/screenshot-4.png)
+[![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
 
-### Technical Notes
+## Support Level
 
-* Requires PHP 5.3+.
-* RSS feeds must not be disabled.
+**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
 ## Contributing
 
 Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get started.
 
+## Like what you see?
+
 <p align="center">
 <a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
 </p>
-
-## Installation
-1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
-2. Activate the plugin.
-3. Head to Posts → Podcasts and add at least one podcast.
-4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
-
-## Changelog
-
-### 1.0.1
-* Bug fix: Properly output podcast categories and subcategories in the feed.
-* Bug fix: Avoid a minified JS error when selecting a podcast image.
-* Bug fix: Display podcast summary on edit form.
-
-### 1.0
-* Initial plugin release
