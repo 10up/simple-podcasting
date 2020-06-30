@@ -54,7 +54,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 ## [1.0.0] - 2018-06-29
 - Initial plugin release
 
-[Unreleased]: https://github.com/10up/simple-podcasting/compare/master...develop
+[Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
 [1.2.0]: https://github.com/10up/simple-podcasting/compare/1.1.1...1.2.0
 [1.1.1]: https://github.com/10up/simple-podcasting/compare/f8a958c...1.1.1
 [1.1.0]: https://github.com/10up/simple-podcasting/compare/1.0.1...f8a958c
