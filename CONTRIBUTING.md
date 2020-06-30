@@ -57,7 +57,7 @@ New releases are targeted based on number and severity of changes along with hum
 1. Props: update `CREDITS.md` with any new contributors, confirm maintainers are accurate.
 1. New files: Check to be sure any new files/paths that are unnecessary in the production version are included in `.gitattributes`.
 1. Readme updates: Make any other readme changes as necessary. `README.md` is geared toward GitHub and `readme.txt` contains WordPress.org-specific content. The two are slightly different.
-1. Merge: Make a non-fast-forward merge from your release branch to `develop` (or merge the pull request), then do the same for `develop` into `trunk` (`git checkout master && git merge --no-ff develop`). `trunk` contains the latest stable release.
+1. Merge: Make a non-fast-forward merge from your release branch to `develop` (or merge the pull request), then do the same for `develop` into `trunk` (`git checkout trunk && git merge --no-ff develop`). `trunk` contains the latest stable release.
 1. Test: Run through common tasks while on `trunk` to be sure it functions correctly.
 1. Push: Push your `trunk` branch to GitHub (e.g. `git push origin trunk`).
 1. Release: Create a [new release](https://github.com/10up/simple-podcasting/releases/new), naming the tag and the release with the new version number, and targeting the `trunk` branch.  Paste the changelog from `CHANGELOG.md` into the body of the release and include a link to the [closed issues on the milestone](https://github.com/10up/simple-podcasting/milestone/#?closed=1).
