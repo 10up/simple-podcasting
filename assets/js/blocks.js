@@ -8,6 +8,7 @@ const {
 
 // Split the Edit component out.
 import Edit from './edit';
+import transforms from './transforms';
 
 /**
  * Register example block
@@ -70,6 +71,7 @@ export default registerBlockType(
 				default: 'no',
 			}
 		},
+		transforms,
 
 		edit: Edit,
 

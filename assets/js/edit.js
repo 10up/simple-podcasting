@@ -4,19 +4,20 @@ const {
 	BlockControls,
 	InspectorControls,
 	MediaPlaceholder,
+	MediaReplaceFlow,
 	RichText,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	FormToggle,
-	IconButton,
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
-	Toolbar,
 } = wp.components;
+const { Fragment } = wp.element;
 
 const { apiFetch } = wp;
+const ALLOWED_MEDIA_TYPES = [ 'audio' ];
 
 class Edit extends Component {
 	constructor( { className } ) {
@@ -24,31 +25,17 @@ class Edit extends Component {
 		// edit component has its own src in the state so it can be edited
 		// without setting the actual value outside of the edit UI
 		this.state = {
-			editing: ! this.props.attributes.src,
 			src: this.props.attributes.src ? this.props.attributes.src : null,
 			className,
 		};
 	}
 
 	/**
-	 * When the component is removed, we'll set the the post meta to null so it is deleted on save.
+	 * When the component is removed, we'll remove any assigned Podcast taxonomies.
 	 */
 	componentWillUnmount() {
-		const { setAttributes } = this.props;
-		setAttributes( {
-			id: null,
-			src: null,
-			url: null,
-			mime: null,
-			filesize: null,
-			duration: null,
-			caption: null,
-		} );
-
-		// Let's also remove any assigned Podcast taxonomies.
 		wp.data.dispatch( 'core/editor' ).editPost( { [ 'podcasting_podcasts' ]:[] } );
 	}
-
 
 	render() {
 
@@ -56,23 +43,41 @@ class Edit extends Component {
 		const { caption, explicit } = attributes;
 		const duration = attributes.duration || '';
 		const captioned = attributes.captioned || '';
-		const { editing, className, src } = this.state;
-
-		const switchToEditing = () => {
-			this.setState( { editing: true } );
-		};
+		const { className, src } = this.state;
 
 		const onSelectAttachment = ( attachment ) => {
+			// Upload and Media Library return different attachment objects.
+			// Therefore, we need to check the existence of some entries.
+			let mime, filesize, duration;
+
+			if ( attachment.mime ) {
+				mime = attachment.mime;
+			} else if ( attachment.mime_type ) {
+				mime = attachment.mime_type;
+			}
+
+			if ( attachment.filesizeInBytes ) {
+				filesize = attachment.filesizeInBytes;
+			} else if ( attachment.media_details && attachment.media_details.filesize ) {
+				filesize = attachment.media_details.filesize;
+			}
+
+			if ( attachment.fileLength ) {
+				duration = attachment.fileLength;
+			} else if ( attachment.media_details && attachment.media_details.length_formatted ) {
+				duration = attachment.media_details.length_formatted;
+			}
+
 			setAttributes( {
 				id: attachment.id,
 				src: attachment.url,
 				url: attachment.url,
-				mime: attachment.mime,
-				filesize: attachment.filesizeInBytes,
-				duration: attachment.fileLength,
+				mime,
+				filesize,
+				duration,
 				caption: attachment.title,
 			} );
-			this.setState( { editing: false, src: attachment.url } );
+			this.setState( { src: attachment.url } );
 		};
 
 		const onSelectURL = ( newSrc ) => {
@@ -93,31 +98,32 @@ class Edit extends Component {
 						});
 					}
 				}).catch( err => {
-					console.log( err );
+					// eslint-disable-next-line no-console
+					console.error( err );
 				});
 
 				this.setState( { src: newSrc } );
 			}
-			this.setState( { editing: false } );
 		};
 		const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
 		const controls = (
 			<BlockControls key="controls">
-				<Toolbar>
-					<IconButton
-						className="components-icon-button components-toolbar__control"
-						label={ __( 'Edit Podcast', 'simple-podcasting' ) }
-						onClick={ switchToEditing }
-						icon="edit"
+				{ src ? (
+					<MediaReplaceFlow
+						mediaURL={ attributes.src }
+						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						accept="audio/*"
+						onSelect={ onSelectAttachment }
+						onSelectURL={ onSelectURL }
 					/>
-				</Toolbar>
+				) : null }
 			</BlockControls>
 		);
 
-		return [
-			controls,
-			(
+		return (
+			<Fragment>
+				{controls}
 				<InspectorControls>
 					<PanelBody
 						title={ __( 'Podcast Settings', 'simple-podcasting' ) }
@@ -156,44 +162,40 @@ class Edit extends Component {
 						</PanelRow>
 					</PanelBody>
 				</InspectorControls>
-			),
-			<div className={ className }>
+				<div className={ className }>
+					{ src ? (
+						<figure key="audio" className={ className }>
+							<audio controls="controls" src={ src } />
+							{ ( ( caption && caption.length ) || !! isSelected ) && (
+								<RichText
+									tagName="figcaption"
+									placeholder={ __( 'Write caption…' ) }
+									value={ caption }
+									onChange={ ( value ) => setAttributes( { caption: value } ) }
+									isSelected={ isSelected }
+								/>
+							) }
+						</figure>
 
-				{ ! editing ? (
+					) : (
 
-					<figure key="audio" className={ className }>
-						<audio controls="controls" src={ src } />
-						{ ( ( caption && caption.length ) || !! isSelected ) && (
-							<RichText
-								tagName="figcaption"
-								placeholder={ __( 'Write caption…' ) }
-								value={ caption }
-								onChange={ ( value ) => setAttributes( { caption: value } ) }
-								isSelected={ isSelected }
-							/>
-						) }
-					</figure>
-
-				) : (
-
-					<MediaPlaceholder
-						icon="microphone"
-						labels={ {
-							title: __( 'Podcast', 'simple-podcasting' ),
-							name: __( 'a podcast episode', 'simple-podcasting' ),
-						} }
-						className={ className }
-						onSelect={ onSelectAttachment }
-						onSelectURL={ onSelectURL }
-						accept="audio/*"
-						type="audio"
-						value={ this.props.attributes }
-					/>
-
-				)}
-
-			</div>
-		];
+						<MediaPlaceholder
+							icon="microphone"
+							labels={ {
+								title: __( 'Podcast', 'simple-podcasting' ),
+								name: __( 'a podcast episode', 'simple-podcasting' ),
+							} }
+							className={ className }
+							onSelect={ onSelectAttachment }
+							onSelectURL={ onSelectURL }
+							accept="audio/*"
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							value={ this.props.attributes }
+						/>
+					)}
+				</div>
+			</Fragment>
+		);
 	}
 }
 

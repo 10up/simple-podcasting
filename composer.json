@@ -1,11 +1,18 @@
 {
-  "name": "10up/podcasting",
+  "name": "10up/simple-podcasting",
+  "description": "A simple podcasting solution for WordPress. ",
+  "homepage": "https://github.com/10up/simple-podcasting",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "10up",
-      "email": "email@10up.com"
+      "email": "opensource@10up.com",
+      "homepage": "https://10up.com"
     }
   ],
+  "support": {
+    "issues": "https://github.com/10up/simple-podcasting/issues"
+  },
   "require": {
     "php": ">=7.0"
   },

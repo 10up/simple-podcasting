@@ -1,18 +1,21 @@
 <?php
 /**
- * Plugin Name: Simple Podcasting
- * Plugin URI: http://wordpress.org/plugins/simple-podcasting
- * Description: Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
- * Author: 10up
- * Version: 1.1.1
- * Author URI: http://10up.com/
+ * Plugin Name:       Simple Podcasting
+ * Plugin URI:        https://github.com/10up/simple-podcasting
+ * Description:       Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
+ * Version:           1.2.0
+ * Author:            10up
+ * Author URI:        http://10up.com/
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       podcasting
  *
  * @package tenup_podcasting
  */
 
 namespace tenup_podcasting;
 
-define( 'PODCASTING_VERSION', '1.1.1' );
+define( 'PODCASTING_VERSION', '1.2.0' );
 define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
 define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'TAXONOMY_NAME', 'podcasting_podcasts' );

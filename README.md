@@ -2,9 +2,9 @@
 
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.4%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
 
-## Table of Contents  
+## Table of Contents
 * [Overview](#overview)
 * [Requirements](#requirements)
 * [Installation](#installation)
@@ -17,7 +17,7 @@
 
 Podcasting is a method to distribute audio messages through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
-![Screenshot of podcast block](assets/dotorg/screenshot-2.png "Example of a podcast block in the new WordPress editor")
+![Screenshot of podcast block](.wordpress-org/screenshot-2.png "Example of a podcast block in the new WordPress editor")
 
 ## Requirements
 
@@ -62,7 +62,7 @@ Repeat for each podcast you would like to create.
 
 Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
-[![Podcast setup](assets/dotorg/screenshot-3.png)](assets/dotorg/screenshot-3.png) | [![Podcast in editor](assets/dotorg/screenshot-1.png)](assets/dotorg/screenshot-1.png) | [![Podcast feed](assets/dotorg/screenshot-4.png)](assets/dotorg/screenshot-4.png)
+[![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
 
 ## Support Level
 
@@ -75,5 +75,5 @@ Want to help? Check out our [contributing guidelines](CONTRIBUTING.md) to get st
 ## Like what you see?
 
 <p align="center">
-<a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
+<a href="http://10up.com/contact/"><img src="https://10up.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
 </p>
