@@ -68,3 +68,19 @@ function load_translations() {
 	}
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\load_translations' );
+
+/**
+ * Delete left over post meta after deleting podcast block.
+ */
+function block_editor_meta_cleanup( $post, $request, $creating ) {
+	if ( $creating ) {
+		return;
+	}
+
+	if ( has_block( 'podcasting/podcast', $post->ID ) ) {
+		return;
+	}
+
+	\tenup_podcasting\helpers\delete_all_podcast_meta( $post->ID );
+}
+add_action( 'rest_after_insert_post', __NAMESPACE__ . '\block_editor_meta_cleanup', 10, 3 );

@@ -31,10 +31,9 @@ class Edit extends Component {
 	}
 
 	/**
-	 * When the component is removed, we'll set the the post meta to null so it is deleted on save.
+	 * When the component is removed, we'll remove any assigned Podcast taxonomies.
 	 */
 	componentWillUnmount() {
-		// Remove any assigned Podcast taxonomies.
 		wp.data.dispatch( 'core/editor' ).editPost( { [ 'podcasting_podcasts' ]:[] } );
 	}
 
