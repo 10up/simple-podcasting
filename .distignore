@@ -1,19 +1,21 @@
-/.wordpress-org
 /.git
 /.github
+/.wordpress-org
 /gulp-tasks
+/node_modules
 
 /.babelrc
-//distignore
+/.distignore
 /.editorconfig
 /.eslintignore
 /.eslintrc
-/.gitattributes
 /.gitignore
 /.prettierrc
 /CHANGELOG.md
+/CODE_OF_CONDUCT.md
 /composer.lock
 /CONTRIBUTING.md
+/CREDITS.md
 /gulpfile.babel.js
 /LICENSE.md
 /package.json
