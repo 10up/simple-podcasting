@@ -70,11 +70,12 @@ Repeat for each podcast you would like to create.
 * **Added:** Ability for user to transform to/from the podcast and audio blocks (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
 * **Added:** Core `MediaReplaceFlow` to edit the podcast media (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
 * **Changed:** GitHub Actions from HCL to YAML workflow syntax (props [@helen](https://profiles.wordpress.org/helen))
+* **Changed:** Stop committing built files to Git (props [@helen](https://profiles.wordpress.org/helen))
 * **Changed:** Documentation updates (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@nhalstead](https://profiles.wordpress.org/nhalstead))
-* **Removed:** Editing mode (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
 * **Fixed:** Using the upload or drag and drop instead of media library populates duration and mimetype (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
 * **Fixed:** Issue where it is possible to add non-audio files to the Podcast block (props [@mattheu](https://profiles.wordpress.org/mattheu))
 * **Fixed:** Issue where React would throw an error relating to keys for list items (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+* **Fixed:** Ensure podcast-related meta is deleted after block is removed. (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
 
 = 1.1.1 =
 * Fixed: Compatibility with WordPress 5.2 (props [@adamsilverstein](https://profiles.wordpress.org/adamsilverstein)).
