@@ -55,7 +55,7 @@ New releases are targeted based on number and severity of changes along with hum
 1. Version bump: Bump the version number in `simple-podcasting.php`, `package.json`, and `readme.txt` if it does not already reflect the version being released.  Update both the plugin "Version:" property and the plugin `PODCASTING_VERSION` constant in `simple-podcasting.php`.
 1. Changelog: Add/update the changelog in both `CHANGELOG.md` and `readme.txt`.
 1. Props: update `CREDITS.md` with any new contributors, confirm maintainers are accurate.
-1. New files: Check to be sure any new files/paths that are unnecessary in the production version are included in `.gitattributes`.
+1. New files: Check to be sure any new files/paths that are unnecessary in the production version are included in `.distignore`.
 1. Readme updates: Make any other readme changes as necessary. `README.md` is geared toward GitHub and `readme.txt` contains WordPress.org-specific content. The two are slightly different.
 1. Merge: Make a non-fast-forward merge from your release branch to `develop` (or merge the pull request), then do the same for `develop` into `trunk` (`git checkout trunk && git merge --no-ff develop`). `trunk` contains the latest stable release.
 1. Test: Run through common tasks while on `trunk` to be sure it functions correctly. Don't forget to build.
