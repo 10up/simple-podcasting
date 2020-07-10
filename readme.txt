@@ -2,7 +2,7 @@
 Contributors: 10up, helen, adamsilverstein, jakemgold
 Tags: podcasting, gutenberg, gutenberg-ready, gutenberg-blocks, blocks
 Requires at least: 4.6
-Tested up to: 5.2
+Tested up to: 5.4.2
 Requires PHP: 5.3
 Stable tag: 1.2.0
 License: GPLv2 or later
