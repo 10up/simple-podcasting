@@ -1,6 +1,6 @@
 === Simple Podcasting ===
 Contributors: 10up, helen, adamsilverstein, jakemgold
-Tags: podcasting, gutenberg, gutenberg-ready, gutenberg-blocks, blocks
+Tags: simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
 Requires at least: 4.6
 Tested up to: 5.4.2
 Requires PHP: 5.3
@@ -18,18 +18,21 @@ Podcasting is a method to distribute audio and video episodes through a feed to 
 
 === Create your podcast ===
 
-From wp-admin, go to Podcasts.
-To create a podcast, complete all of the "Add New Podcast" fields and click 'Add New Podcast'.
+From the WordPress Admin, go to Podcasts.
+To create a podcast, complete all of the "Add New Podcast" fields and click "Add New Podcast".
 
- * Podcast title: this title appears in Apple Podcasts and any other podcast apps.
- * Podcast subtitle: the subtitle also appears in Apple Podcasts and any other podcast apps.
- * Podcast talent name: the artist or producer of the work.
- * Podcast summary: Apple Podcasts displays this summary when browsing through podcasts.
- * Podcast copyright: copyright information viewable in Apple Podcasts or other podcast apps.
- * Mark as explicit: mark yes if podcast contains adult language or adult themes.
- * Podcast image: add the URL for the cover art to appear in Apple Podcasts and other podcast apps. Click "Select Image" and choose an image from the Media Library. Note that podcast cover images must be between 1400 x 1400 and 3000 x 3000 pixels in JPG or PNG formats to work on Apple Podcasts.
- * Podcast keywords: add terms to help your podcast show up in search results on Apple Podcasts and other podcast apps.
- * Podcast categories: these allow your podcast to show up for those browsing Apple Podcasts or other podcast apps by category.
+ * Name: this title appears in Apple Podcasts and any other podcast apps.
+ * Slug: this is the URL-friendly version of the Name field.
+ * Subtitle: the subtitle also appears in Apple Podcasts and any other podcast apps.
+ * Artist / Author name: the artist or producer of the work.
+ * Podcast email: a contact email address for your podcast.
+ * Summary: Apple Podcasts displays this summary when browsing through podcasts.
+ * Copyright / License information: copyright information viewable in Apple Podcasts or other podcast apps.
+ * Mark as explicit: mark Yes if podcast contains adult language or adult themes.
+ * Language: the main language spoken in the podcast.
+ * Cover image: add the URL for the cover art to appear in Apple Podcasts and other podcast apps. Click "Select Image" and choose an image from the Media Library. Note that podcast cover images must be between 1400 x 1400 and 3000 x 3000 pixels in JPG or PNG formats to work on Apple Podcasts.
+ * Keywords: add terms to help your podcast show up in search results on Apple Podcasts and other podcast apps.
+ * Categories: these allow your podcast to show up for those browsing Apple Podcasts or other podcast apps by category.
 
 Repeat for each podcast you would like to create.
 
@@ -42,8 +45,8 @@ Repeat for each podcast you would like to create.
 === Submit your podcast feed to Apple Podcasts ===
 
 * Each podcast has a unique feed URL you can find on the Podcasts page. This is the URL you will submit to Apple.
-* Ensure you test feeds before submitting them, see https://help.apple.com/itc/podcasts_connect/#/itcac471c970.
-* Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9
+* Ensure you test feeds before submitting them, see [Apple's "Test a Podcast page"](https://help.apple.com/itc/podcasts_connect/#/itcac471c970) for more information.
+* Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see [Apple's "Submit a podcast" page](https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9) for more information.
 
 === Technical Notes ===
 
@@ -67,14 +70,14 @@ Repeat for each podcast you would like to create.
 
 = 1.2.0 =
 * **Added:** Podcast image in the taxonomy list table view (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
-* **Added:** Ability for user to transform to/from the podcast and audio blocks (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
-* **Added:** Core `MediaReplaceFlow` to edit the podcast media (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+* **Added:** Ability for user to transform to/from the podcast and audio blocks (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
+* **Added:** Core `MediaReplaceFlow` to edit the podcast media (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
 * **Changed:** GitHub Actions from HCL to YAML workflow syntax (props [@helen](https://profiles.wordpress.org/helen))
 * **Changed:** Stop committing built files to Git (props [@helen](https://profiles.wordpress.org/helen))
 * **Changed:** Documentation updates (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@nhalstead](https://profiles.wordpress.org/nhalstead))
-* **Fixed:** Using the upload or drag and drop instead of media library populates duration and mimetype (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+* **Fixed:** Using the upload or drag and drop instead of media library populates duration and mimetype (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
 * **Fixed:** Issue where it is possible to add non-audio files to the Podcast block (props [@mattheu](https://profiles.wordpress.org/mattheu))
-* **Fixed:** Issue where React would throw an error relating to keys for list items (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen, [@helen](https://profiles.wordpress.org/helen))
+* **Fixed:** Issue where React would throw an error relating to keys for list items (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
 * **Fixed:** Ensure podcast-related meta is deleted after block is removed. (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
 
 = 1.1.1 =
