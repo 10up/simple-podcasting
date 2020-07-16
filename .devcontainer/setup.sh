@@ -9,8 +9,8 @@ exec 1>setup.log 2>&1
 # Prepare a nice name from project name for the site title.
 function getTitleFromSlug()
 {
-    local _slug=${SLUG/-/ }
-    local __slug=${_slug/_/ }
+    local _slug=${SLUG//-/ }
+    local __slug=${_slug//_/ }
     local ___slug=( $__slug )
     echo "${___slug[@]^}"
 }
@@ -29,7 +29,7 @@ wp core install --url="$SITE_HOST:8080" --title="$(getTitleFromSlug) Development
 echo "Install project dependencies"
 
 # Install required node version
-if [[ "$NODE_VERSION" != "12" ]]
+if [[ ! -z "$NODE_VERSION" ]] && [[ "$NODE_VERSION" != "12" ]]
 then
     source ~/.nvm/nvm.sh
     nvm install $NODE_VERSION
