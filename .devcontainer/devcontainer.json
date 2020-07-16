@@ -1,8 +1,10 @@
 {
-	"name": "WordPress",
+	"name": "${localWorkspaceFolderBasename}",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "phpfpm",
-	"forwardPorts": [ 8080 ],
+	"forwardPorts": [
+    8080
+	],
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
@@ -10,12 +12,11 @@
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"felixfbecker.php-debug",
-		"bmewburn.vscode-intelephense-client",
 		"mtxr.sqltools",
 		"mtxr.sqltools-driver-mysql"
 	],
 	"workspaceFolder": "/var/www/html/",
-	"postCreateCommand": "/var/www/html/wp-content/plugins/simple-podcasting/.devcontainer/setup.sh &> log.txt",
-	"remoteUser": "www-data",
+	"postCreateCommand": "/var/www/html/wp-content/${PROJECT_TYPE}s/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
+	"initializeCommand": "bash .devcontainer/createEnv.sh ${localWorkspaceFolderBasename}",
+	"remoteUser": "www-data"
 }

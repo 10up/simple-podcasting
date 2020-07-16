@@ -1,34 +1,56 @@
 #!  /bin/bash
 
-#Site configuration options
-SITE_TITLE="Simple Podcasting Development Site"
-ADMIN_USER=admin
-ADMIN_PASS=password
-ADMIN_EMAIL="admin@example.com"
+sudo chown www-data: -R /var/www/html
+
+exec 3>&1 4>&2
+trap 'exec 2>&4 1>&3' 0 1 2 3
+exec 1>setup.log 2>&1
+
+# Prepare a nice name from project name for the site title.
+function getTitleFromSlug()
+{
+    local _slug=${SLUG/-/ }
+    local __slug=${_slug/_/ }
+    local ___slug=( $__slug )
+    echo "${___slug[@]^}"
+}
 
 echo "Setting up WordPress"
-
-sudo chown www-data: -R /var/www/html
 
 cd /var/www/html
 
 rm -f wp-config.php
 
 wp core download --force
-wp config create --dbhost="db" --dbname="wordpress" --dbuser="admin" --dbpass="password" --skip-check
+wp config create --dbhost="db" --dbname="$MYSQL_DATABASE" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --skip-check
 wp db reset --yes
-wp core install --url="http://localhost:8080" --title="$SITE_TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_PASS" --skip-email
-wp plugin activate simple-podcasting
+wp core install --url="$SITE_HOST:8080" --title="$(getTitleFromSlug) Development" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_PASS" --skip-email
 
-echo "Install plugin dependencies"
+echo "Install project dependencies"
 
-cd /var/www/html/wp-content/plugins/simple-podcasting
+# Install required node version
+if [[ "$NODE_VERSION" != "12" ]]
+then
+    source ~/.nvm/nvm.sh
+    nvm install $NODE_VERSION
+    nvm use $NODE_VERSION
+    nvm alias default $NODE_VERSION
+fi
 
-source ~/.nvm/nvm.sh
-nvm install 10
-nvm use 10
-nvm alias default 10
-npm install
-npm run build
+cd /var/www/html/wp-content/${PROJECT_TYPE}s/$SLUG
 
-composer install
+echo "Changed directory to $(pwd)"
+
+if [[ "$USE_NODE" == "true" ]]
+then
+    npm install
+fi
+
+if [[ "$USE_COMPOSER" == "true" ]]
+then
+    composer install
+fi
+
+echo "Activating theme/plugin"
+
+wp $PROJECT_TYPE activate $SLUG
