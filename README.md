@@ -74,7 +74,7 @@ Podcast setup | Podcast in editor | Podcast feed
 
 ## Changelog
 
-A complete listing of all notable changes to Apple Maps for WordPress are documented in [CHANGELOG.md](https://github.com/10up/simple-podcasting/blob/develop/CHANGELOG.md).
+A complete listing of all notable changes to Simple Podcasting for WordPress are documented in [CHANGELOG.md](https://github.com/10up/simple-podcasting/blob/develop/CHANGELOG.md).
 
 ## Contributing
 
