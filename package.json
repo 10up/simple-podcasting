@@ -21,7 +21,8 @@
     "start": "npm install && composer install && gulp",
     "watch": "gulp watch",
     "build": "gulp",
-    "deploy": "npm install && gulp"
+    "deploy": "npm install && gulp",
+    "tests": "./vendor/bin/phpunit"
   },
   "husky": {
     "hooks": {

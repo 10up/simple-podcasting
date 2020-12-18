@@ -14,9 +14,10 @@
     "issues": "https://github.com/10up/simple-podcasting/issues"
   },
   "require": {
-    "php": ">=7.0"
+    "php": ">=5.3"
   },
   "require-dev": {
+    "phpunit/phpunit": "^7.0",
     "10up/wp_mock": "dev-master",
     "10up/phpcs-composer": "dev-master"
   }
