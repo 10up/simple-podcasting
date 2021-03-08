@@ -13,6 +13,8 @@ const {
 	PanelRow,
 	SelectControl,
 	TextControl,
+	ToolbarButton,
+	ToolbarGroup
 } = wp.components;
 const { Fragment } = wp.element;
 
@@ -105,18 +107,42 @@ class Edit extends Component {
 				this.setState( { src: newSrc } );
 			}
 		};
+
+		const onClickRemoveButton = () => {
+			setAttributes( {
+				id: 0,
+				src: '',
+				url: '',
+				mime: '',
+				filesize: 0,
+				duration: '',
+				caption: [],
+			} );
+
+			this.setState( { src: '' } );
+		};
+
 		const toggleCaptioned = () => setAttributes( { captioned: ! captioned } );
 
 		const controls = (
 			<BlockControls key="controls">
 				{ src ? (
-					<MediaReplaceFlow
-						mediaURL={ attributes.src }
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
-						accept="audio/*"
-						onSelect={ onSelectAttachment }
-						onSelectURL={ onSelectURL }
-					/>
+					<Fragment>
+						<MediaReplaceFlow
+							mediaURL={ attributes.src }
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							accept="audio/*"
+							onSelect={ onSelectAttachment }
+							onSelectURL={ onSelectURL }
+						/>
+						<ToolbarGroup>
+							<ToolbarButton
+								icon="trash"
+								label={ __( 'Remove media', 'simple-podcasting' ) }
+								onClick={ onClickRemoveButton }
+							/>
+						</ToolbarGroup>
+					</Fragment>
 				) : null }
 			</BlockControls>
 		);
