@@ -103,6 +103,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		PODCASTING_URL . $js_file,
 		array( 'jquery' ),
 		PODCASTING_VERSION,
+		true
 	);
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
