@@ -16,6 +16,7 @@ function init() {
 		'podcasting-block-editor',
 		PODCASTING_URL . $block_js,
 		array(
+			'wp-block-editor',
 			'wp-blocks',
 			'wp-editor',
 			'wp-i18n',

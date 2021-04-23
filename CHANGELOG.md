@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased]
 
+## [1.2.1] - 2021-04-23
+### Added
+ - Filter `10up_podcasting_episodes_per_page`
+### Changed
+- Default items on plugin's feeds to 250
+### Fixed
+- 'podcast' block core dependency
+
 ## [1.2.0] - 2020-07-10
 ### Added
 - Podcast image in the taxonomy list table view (props [@Firestorm980](https://github.com/Firestorm980), [@helen](https://github.com/helen) via [#87](https://github.com/10up/simple-podcasting/pull/87))
