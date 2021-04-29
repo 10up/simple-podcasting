@@ -348,12 +348,11 @@ add_filter( 'the_excerpt_rss', __NAMESPACE__ . '\empty_rss_excerpt', 1000 );
  * @return void
  */
 function pre_get_posts( $query ) {
-	// do nothing if not the main query.
-	if ( ! $query->is_main_query() ) {
+	// do nothing if not the feed query.
+	if ( ! $query->is_feed() ) {
 		return;
 	}
 
-	// Checks run before include current file so is safe to assume we are on the feed query.
 	$query->set( 'posts_per_rss', \tenup_podcasting\helpers\get_default_items_in_feed() );
 }
 
