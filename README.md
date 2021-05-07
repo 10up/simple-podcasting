@@ -73,7 +73,7 @@ Podcast setup | Podcast in editor | Podcast feed
 ```
 <?php
 
-add_filter( '10up_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
+add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
 
 /**
  * Filter how many items are displayed on the feed

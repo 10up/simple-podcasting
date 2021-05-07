@@ -353,7 +353,9 @@ function pre_get_posts( $query ) {
 		return;
 	}
 
-	$query->set( 'posts_per_rss', \tenup_podcasting\helpers\get_default_items_in_feed() );
+	$per_page = apply_filters( 'simple_podcasting_episodes_per_page', PODCASTING_ITEMS_PER_PAGE );
+
+	$query->set( 'posts_per_rss', $per_page );
 }
 
 // Filter the feed query.

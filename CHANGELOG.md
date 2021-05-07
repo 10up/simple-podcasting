@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [1.2.1] - 2021-04-23
 ### Added
- - Filter `10up_podcasting_episodes_per_page`
+ - Filter `simple_podcasting_episodes_per_page`
 ### Changed
 - Default items on plugin's feeds to 250
 ### Fixed

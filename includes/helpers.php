@@ -78,12 +78,3 @@ function delete_all_podcast_meta( $post_id ) {
 		delete_post_meta( $post_id, 'podcast_explicit' );
 	}
 }
-
-/**
- * Get the default items for the feed
- *
- * @return int The numbers of items a feed should include.
- */
-function get_default_items_in_feed() {
-	return apply_filters( '10up_podcasting_episodes_per_page', PODCASTING_ITEMS_PER_PAGE );
-}
