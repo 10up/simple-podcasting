@@ -68,6 +68,26 @@ Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
 
+## Control how many episodes are listed on the feed
+
+```
+<?php
+
+add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
+
+/**
+ * Filter how many items are displayed on the feed
+ * Default is 250
+ *
+ * @param int $qty Items count.
+ * @return string
+ */
+function podcasting_feed_episodes_per_page( $qty ) {
+	return 300;
+}
+
+```
+
 ## Support Level
 
 **Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
