@@ -1,10 +1,8 @@
 /**
  * Internal block libraries
  */
-const { __ } = wp.i18n;
-const {
-	registerBlockType,
-} = wp.blocks;
+import { __ } from '@wordpress/i18n';
+import { registerBlockType } from '@wordpress/blocks';
 
 // Split the Edit component out.
 import Edit from './edit';

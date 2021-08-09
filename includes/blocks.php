@@ -11,18 +11,12 @@ namespace tenup_podcasting\block;
  * Register block and its assets.
  */
 function init() {
-	$block_js = 'dist/js/blocks.min.js';
+	$block_asset = require PODCASTING_PATH . 'dist/blocks.asset.php';
 	wp_register_script(
 		'podcasting-block-editor',
-		PODCASTING_URL . $block_js,
-		array(
-			'wp-block-editor',
-			'wp-blocks',
-			'wp-editor',
-			'wp-i18n',
-			'wp-element',
-		),
-		PODCASTING_VERSION,
+		PODCASTING_URL . 'dist/blocks.js',
+		$block_asset['dependencies'],
+		$block_asset['version'],
 		true
 	);
 

@@ -83,24 +83,16 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		return;
 	}
 
-	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-		$css_file = 'assets/css/podcasting-edit-term.css';
-		$js_file  = 'assets/js/podcasting-edit-term.js';
-	} else {
-		$css_file = 'dist/css/podcasting-edit-term.min.css';
-		$js_file  = 'dist/js/podcasting-edit-term.min.js';
-	}
-
 	wp_enqueue_style(
 		'podcasting_edit_term_screen',
-		PODCASTING_URL . $css_file,
+		PODCASTING_URL . 'dist/podcasting-edit-term.css',
 		array(),
 		PODCASTING_VERSION
 	);
 
 	wp_enqueue_script(
 		'podcasting_edit_term_screen',
-		PODCASTING_URL . $js_file,
+		PODCASTING_URL . 'dist/podcasting-edit-term.js',
 		array( 'jquery' ),
 		PODCASTING_VERSION,
 		true
