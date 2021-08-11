@@ -21,7 +21,11 @@
     "start": "wp-scripts start",
     "build": "wp-scripts build",
     "deploy": "npm install && npm run build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "env": "wp-env",
+    "test:e2e": "wp-scripts test-e2e --config=tests/e2e/jest.config.js",
+    "test:e2e:watch": "npm run test:e2e -- --puppeteer-interactive",
+    "test:e2e:dev": "npm run test:e2e -- --puppeteer-interactive --puppeteer-devtools"
   },
   "lint-staged": {
     "*.php": [
@@ -29,9 +33,16 @@
     ]
   },
   "devDependencies": {
-    "@wordpress/eslint-plugin": "^9.1.0",
+    "@wordpress/e2e-test-utils": "^5.4.1",
+    "@wordpress/env": "^4.1.0",
     "@wordpress/scripts": "^17.1.0",
     "husky": "^7.0.1",
-    "lint-staged": "^11.1.1"
+    "lint-staged": "^11.1.1",
+    "puppeteer-testing-library": "^0.5.0"
+  },
+  "wp-env": {
+    "plugins": [
+      "."
+    ]
   }
 }
