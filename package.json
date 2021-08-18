@@ -24,12 +24,16 @@
     "prepare": "husky install",
     "env": "wp-env",
     "test:e2e": "wp-scripts test-e2e --config=tests/e2e/jest.config.js",
-    "test:e2e:watch": "npm run test:e2e -- --puppeteer-interactive",
+    "test:e2e:watch": "npm run test:e2e -- --watch",
     "test:e2e:dev": "npm run test:e2e -- --puppeteer-interactive --puppeteer-devtools"
   },
   "lint-staged": {
     "*.php": [
       "./vendor/bin/phpcs --standard=10up-Default --extensions=php --warning-severity=8 -s --runtime-set testVersion 5.3"
+    ],
+    "./tests/e2e/**/*.js": [
+      "./node_modules/.bin/wp-scripts format",
+      "git add"
     ]
   },
   "devDependencies": {
