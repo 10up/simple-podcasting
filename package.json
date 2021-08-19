@@ -25,7 +25,7 @@
     "env": "wp-env",
     "test:e2e": "wp-scripts test-e2e --config=tests/e2e/jest.config.js",
     "test:e2e:watch": "npm run test:e2e -- --watch",
-    "test:e2e:dev": "npm run test:e2e -- --puppeteer-interactive --puppeteer-devtools"
+    "test:e2e:dev": "npm run test:e2e -- --puppeteer-interactive"
   },
   "lint-staged": {
     "*.php": [

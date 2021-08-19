@@ -3,17 +3,13 @@
  */
 import { switchUserToAdmin, visitAdminPage } from '@wordpress/e2e-test-utils';
 
-describe('The podcast taxonomy is working as expected', () => {
+import { deleteAllTaxonomies } from '../../utils/delete-all-taxonomies';
+
+describe('Taxonomy', () => {
 	beforeAll(async () => {
 		await switchUserToAdmin();
 
-		await visitAdminPage(
-			'edit-tags.php',
-			'taxonomy=podcasting_podcasts&podcasts=true'
-		);
-		await expect(page).toClick('#cb-select-all-1');
-		await expect(page).toSelect('#bulk-action-selector-top', 'Delete');
-		await expect(page).toClick('#doaction');
+		await deleteAllTaxonomies();
 	});
 
 	it('Admin can see taxonomy menu', async () => {
