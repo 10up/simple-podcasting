@@ -5,7 +5,6 @@ vendor
 composer.lock
 phpunit.xml
 .idea
-package-lock.json
 
 # Project Files
 dist
