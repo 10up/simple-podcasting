@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import { switchUserToAdmin, visitAdminPage } from '@wordpress/e2e-test-utils';
 
 export async function deleteAllTaxonomies() {
 	await switchUserToAdmin();
