@@ -8,6 +8,4 @@ export async function deleteAllTaxonomies() {
 	await expect(page).toClick('#cb-select-all-1');
 	await expect(page).toSelect('#bulk-action-selector-top', 'Delete');
 	await expect(page).toClick('#doaction');
-
-	return page.waitForSelector('.wp-list-table.tags');
 }
