@@ -1,12 +1,13 @@
 /**
  * WordPress dependencies
  */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import { switchUserToAdmin, visitAdminPage } from '@wordpress/e2e-test-utils';
 
 import { deleteAllTaxonomies } from '../../utils/delete-all-taxonomies';
 
 describe('Taxonomy', () => {
 	beforeAll(async () => {
+		await switchUserToAdmin();
 		await deleteAllTaxonomies();
 	});
 

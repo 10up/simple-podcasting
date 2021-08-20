@@ -41,8 +41,8 @@ async function waitForPodcast(filename) {
 describe('Blocks Editor', () => {
 	beforeAll(async () => {
 		await switchUserToAdmin();
-		await trashAllPosts();
 		await deleteAllTaxonomies();
+		await trashAllPosts();
 		await visitAdminPage(
 			'edit-tags.php',
 			'taxonomy=podcasting_podcasts&podcasts=true'
