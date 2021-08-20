@@ -16,7 +16,7 @@ import {
 	insertBlock,
 	visitAdminPage,
 	createNewPost,
-	openPublishPanel,
+	trashAllPosts,
 } from '@wordpress/e2e-test-utils';
 
 import { deleteAllTaxonomies } from '../../utils/delete-all-taxonomies';
@@ -41,6 +41,7 @@ async function waitForPodcast(filename) {
 describe('Blocks Editor', () => {
 	beforeAll(async () => {
 		await switchUserToAdmin();
+		await trashAllPosts();
 		await deleteAllTaxonomies();
 		await visitAdminPage(
 			'edit-tags.php',
@@ -52,7 +53,8 @@ describe('Blocks Editor', () => {
 	});
 
 	it('Admin can add new podcast block.', async () => {
-		await createNewPost({ title: 'Test Episode' });
+		await createNewPost();
+		await expect(page).toFill('#post-title-0', 'Test episode');
 		await insertBlock('Podcast');
 		const filename = await upload('.wp-block-podcasting-podcast input[type="file"]');
 		await waitForPodcast(filename);
@@ -65,15 +67,16 @@ describe('Blocks Editor', () => {
 			});
 		} catch {}
 		await expect(page).toClick('.components-panel__body', { text: 'Podcasts' });
-
 		await expect(page).toClick('.components-checkbox-control__label', {
 			text: 'Remote work',
 		});
+		await page.click('.editor-post-save-draft');
+		await page.waitForSelector('.editor-post-saved-state.is-saved');
+		await page.reload();
+		await page.waitForSelector('.block-editor');
 		await publishPost();
-		await visitAdminPage(
-			'edit-tags.php',
-			'taxonomy=podcasting_podcasts&podcasts=true'
-		);
-		await expect(page).toMatchElement('.posts.column-posts', { text: '1' });
+		await page.waitForSelector('.post-publish-panel__postpublish-buttons');
+		await expect(page).toClick('a', { text: 'View Post' });
+		await page.waitForSelector(`.wp-block-podcasting-podcast audio`);
 	});
 });
