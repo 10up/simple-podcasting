@@ -10,9 +10,13 @@ describe('Admin can publish posts with podcast block', () => {
 		cy.get('.wp-block-podcasting-podcast input[type="file"]').attachFile(
 			'example.mp3'
 		);
+		cy.get('.wp-block-podcasting-podcast audio')
+			.should('have.attr', 'src')
+			.and('include', 'example');
 		cy.get('.editor-post-publish-panel__toggle').click();
 		cy.get('.editor-post-publish-button').click();
-		cy.get('.post-publish-panel__postpublish-buttons a').click();
+		cy.get('.components-snackbar', { timeout: 10000 }).should('be.visible');
+		cy.get('a.components-button.components-snackbar__action').click();
 		cy.get('.wp-block-podcasting-podcast audio')
 			.should('have.attr', 'src')
 			.and('include', 'example');
