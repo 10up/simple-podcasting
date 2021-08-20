@@ -8,7 +8,6 @@ import { deleteAllTaxonomies } from '../../utils/delete-all-taxonomies';
 describe('Taxonomy', () => {
 	beforeAll(async () => {
 		await switchUserToAdmin();
-
 		await deleteAllTaxonomies();
 	});
 
