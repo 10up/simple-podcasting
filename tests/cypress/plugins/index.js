@@ -12,11 +12,22 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const { readConfig } = require( '@wordpress/env/lib/config' );
+
 /**
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-module.exports = (on, config) => {
-	// `on` is used to hook into various events Cypress emits
-	// `config` is the resolved Cypress config
+module.exports = async ( on, config ) => {
+	wpEnvConfig = await readConfig( 'wp-env' );
+
+	if ( wpEnvConfig ) {
+		const port = wpEnvConfig.env.tests.port || null;
+
+		if ( port ) {
+			config.baseUrl = wpEnvConfig.env.tests.config.WP_TESTS_DOMAIN;
+		}
+	}
+
+	return config;
 };
