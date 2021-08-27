@@ -37,15 +37,12 @@
   },
   "devDependencies": {
     "@wordpress/env": "^4.1.0",
+    "@wordpress/prettier-config": "^1.1.0",
     "@wordpress/scripts": "^17.1.0",
     "cypress": "^8.3.0",
     "cypress-file-upload": "^5.0.8",
     "husky": "^7.0.1",
     "lint-staged": "^11.1.1"
   },
-  "wp-env": {
-    "plugins": [
-      "."
-    ]
-  }
+  "prettier": "@wordpress/prettier-config"
 }

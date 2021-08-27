@@ -26,18 +26,21 @@
 
 import 'cypress-file-upload';
 
-Cypress.Commands.add('login', (username = 'admin', password = 'password') => {
-	cy.visit(`/wp-admin/`);
-	cy.get('input#user_login').clear();
-	cy.get('input#user_login').click().type(username);
-	cy.get('input#user_pass').type(`${password}{enter}`);
-});
-
-Cypress.Commands.add('visitAdminPage', (page = 'index.php') => {
-	cy.login();
-	if (page.includes('http')) {
-		cy.visit(page);
-	} else {
-		cy.visit(`/wp-admin/${page.replace(/^\/|\/$/g, '')}`);
+Cypress.Commands.add(
+	'login',
+	( username = 'admin', password = 'password' ) => {
+		cy.visit( `/wp-admin/` );
+		cy.get( 'input#user_login' ).clear();
+		cy.get( 'input#user_login' ).click().type( username );
+		cy.get( 'input#user_pass' ).type( `${ password }{enter}` );
 	}
-});
+);
+
+Cypress.Commands.add( 'visitAdminPage', ( page = 'index.php' ) => {
+	cy.login();
+	if ( page.includes( 'http' ) ) {
+		cy.visit( page );
+	} else {
+		cy.visit( `/wp-admin/${ page.replace( /^\/|\/$/g, '' ) }` );
+	}
+} );
