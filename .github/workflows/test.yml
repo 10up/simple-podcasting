@@ -30,7 +30,7 @@ jobs:
       run: npm run build
 
     - name: Set the core version
-      run: ./tests/bin/set-core-version.js ${{ matrix.core }}
+      run: ./tests/bin/set-core-version.js ${{ matrix.core.version }}
 
     - name: Set up WP environment
       run: npm run env start
