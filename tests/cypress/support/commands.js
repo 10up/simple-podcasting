@@ -48,3 +48,36 @@ Cypress.Commands.add( 'visitAdminPage', ( page = 'index.php' ) => {
 		cy.visit( `/wp-admin/${ page.replace( /^\/|\/$/g, '' ) }` );
 	}
 } );
+
+Cypress.Commands.add(
+	'createTaxonomy',
+	( name = 'Test taxonomy', taxonomy = 'category' ) => {
+		cy.visitAdminPage( `edit-tags.php?taxonomy=${ taxonomy }` );
+		cy.get( '#tag-name' ).click().type( `${ name }{enter}` );
+	}
+);
+
+Cypress.Commands.add( 'openDocumentSettingsSidebar', () => {
+	const button =
+		'.edit-post-header__settings button[aria-label="Settings"][aria-expanded="false"]';
+	cy.get( 'body' ).then( ( $body ) => {
+		if ( $body.find( button ).length > 0 ) {
+			cy.get( button ).click();
+		}
+	} );
+	cy.get( '.edit-post-sidebar__panel-tab' ).contains( 'Post' ).click();
+} );
+
+Cypress.Commands.add( 'openDocumentSettingsPanel', ( name ) => {
+	cy.openDocumentSettingsSidebar();
+	cy.get( '.components-panel__body .components-panel__body-title button' )
+		.contains( name )
+		.then( ( panel ) => {
+			if ( ! panel.hasClass( '.is-opened' ) ) {
+				cy.get( panel ).click();
+				cy.get( panel )
+					.parents( '.components-panel__body' )
+					.should( 'have.class', 'is-opened' );
+			}
+		} );
+} );
