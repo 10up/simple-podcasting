@@ -38,7 +38,6 @@ describe( 'Admin can create and update podcast taxonomy', () => {
 	it( 'Can add a new taxonomy', () => {
 		cy.createTaxonomy( 'Remote work', 'podcasting_podcasts' );
 		cy.get( '.row-title' ).should( 'have.text', 'Remote work' );
-		cy.reload();
 	} );
 
 	it( 'Can edit taxonomy', () => {
