@@ -13,6 +13,10 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        core: ['latest', 'WordPress/WordPress#master']
+
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -23,7 +27,10 @@ jobs:
     - name: Build asset
       run: npm run build
 
-    - name: Setup WP environment
+    - name: Set the core version
+      run: ./tests/bin/set-core-version ${{ matrix.core }}
+
+    - name: Set up WP environment
       run: npm run env start
 
     - name: Test
