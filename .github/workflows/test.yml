@@ -16,8 +16,8 @@ jobs:
     strategy:
       matrix:
         core:
-          - {name: 'Latest production WordPress', version: 'latest'}
-          - {name: 'Latest development WordPress', version: 'WordPress/WordPress#master'}
+          - {name: 'WP latest', version: 'latest'}
+          - {name: 'WP trunk', version: 'WordPress/WordPress#master'}
 
     steps:
     - name: Checkout
