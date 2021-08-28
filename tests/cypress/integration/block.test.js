@@ -1,7 +1,7 @@
 describe( 'Admin can publish posts with podcast block', () => {
 	const taxonomy = 'Remote work';
 	before( () => {
-		cy.createTaxonomy( taxonomy );
+		cy.createTaxonomy( taxonomy, 'podcasting_podcasts' );
 	} );
 	it( 'Can insert the block and publish the post', () => {
 		cy.visitAdminPage( 'post-new.php' );
