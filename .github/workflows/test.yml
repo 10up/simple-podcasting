@@ -15,7 +15,9 @@ jobs:
 
     strategy:
       matrix:
-        core: ['latest', 'WordPress/WordPress#master']
+        core:
+          - {name: 'Latest production WordPress', version: 'latest'}
+          - {name: 'Latest development WordPress', version: 'WordPress/WordPress#master'}
 
     steps:
     - name: Checkout
@@ -28,7 +30,7 @@ jobs:
       run: npm run build
 
     - name: Set the core version
-      run: ./tests/bin/set-core-version ${{ matrix.core }}
+      run: ./tests/bin/set-core-version.js ${{ matrix.core }}
 
     - name: Set up WP environment
       run: npm run env start
