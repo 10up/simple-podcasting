@@ -1,12 +1,9 @@
-name: Test
+name: Test Branch
 
 on:
   push:
     branches:
       - trunk
-      - develop
-  pull_request:
-    branches:
       - develop
 
 jobs:
