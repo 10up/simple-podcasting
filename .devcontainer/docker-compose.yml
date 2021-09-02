@@ -9,18 +9,22 @@ services:
       - phpfpm
     volumes:
       - wordpress:/var/www/html
-      - "../:/var/www/html/wp-content/${PROJECT_TYPE}s/${SLUG}"
+      # - "../:/var/www/html/wp-content/${PROJECT_TYPE}s/${SLUG}"
+      - "../:/var/www/html/wp-content/plugins/simple-podcasting"
       - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf:cached"
     networks:
       - default
     restart: unless-stopped
   phpfpm:
-    image: "10up/wp-php-fpm-dev:${PHP_VERSION}"
+    # image: "10up/wp-php-fpm-dev:${PHP_VERSION}"
+    image: "10up/wp-php-fpm-dev:7.4"
     environment:
-      ENABLE_XDEBUG: "${ENABLE_XDEBUG}"
+      #ENABLE_XDEBUG: "${ENABLE_XDEBUG}"
+      ENABLE_XDEBUG: false
     volumes:
       - wordpress:/var/www/html
-      - "../:/var/www/html/wp-content/${PROJECT_TYPE}s/${SLUG}"
+      #- "../:/var/www/html/wp-content/${PROJECT_TYPE}s/${SLUG}"
+      - "../:/var/www/html/wp-content/plugins/simple-podcasting"
       - "./config/php-fpm/docker-php-ext-xdebug.ini:/etc/php.d/docker-php-ext-xdebug.ini:cached"
     depends_on:
       - db
@@ -35,10 +39,14 @@ services:
       - "3306"
     tty: true
     environment:
-      MYSQL_DATABASE: "${MYSQL_DATABASE}"
-      MYSQL_USER: "${MYSQL_USER}"
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      # MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      # MYSQL_USER: "${MYSQL_USER}"
+      # MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      # MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "wordpress"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
     volumes:
       - data:/var/lib/mysql
     networks:
