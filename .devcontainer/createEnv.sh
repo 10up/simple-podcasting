@@ -24,7 +24,8 @@ PROJECT_TYPE=$PROJECT_TYPE
 USE_COMPOSER=$USE_COMPOSER
 USE_NODE=$USE_NODE
 
-SITE_HOST=http://localhost:8080
+# SITE_HOST=http://localhost:8080
+SITE_HOST=https://${CODESPACE_NAME}-8080.githubpreview.dev
 
 ADMIN_USER=admin
 ADMIN_PASS=password
