@@ -18,7 +18,7 @@
 		// "mtxr.sqltools-driver-mysql"
 	],
 	"workspaceFolder": "/var/www/html/",
-	"postCreateCommand": "/var/www/html/wp-content/${PROJECT_TYPE}s/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
+	"postCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
 	"initializeCommand": "bash .devcontainer/createEnv.sh ${localWorkspaceFolderBasename}",
 	"remoteUser": "www-data"
 }
