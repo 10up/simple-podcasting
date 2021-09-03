@@ -6,6 +6,38 @@ exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>setup.log 2>&1
 
+# DEBUG STUFF
+if [[ -z "$SLUG" ]]; then
+    echo "SLUG not set"
+else
+    echo "SLUG is set to $SLUG"
+fi
+
+if [[ -z "$NODE_VERSION" ]]; then
+    echo "NODE_VERSION not set"
+else
+    echo "NODE_VERSION is set to $NODE_VERSION"
+fi
+
+if [[ -z "$PROJECT_TYPE" ]]; then
+    echo "PROJECT_TYPE not set"
+else
+    echo "PROJECT_TYPE is set to $PROJECT_TYPE"
+fi
+
+if [[ -z "$SITE_HOST" ]]; then
+    echo "SITE_HOST not set"
+else
+    echo "SITE_HOST is set to $SITE_HOST"
+fi
+
+if [[ -z "$CODESPACE_NAME" ]]; then
+    echo "CODESPACE_NAME not set"
+else
+    echo "CODESPACE_NAME is set to $CODESPACE_NAME"
+fi
+# END DEBUG STUFF
+
 # Prepare a nice name from project name for the site title.
 function getTitleFromSlug()
 {
