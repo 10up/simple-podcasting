@@ -20,7 +20,7 @@ services:
     image: "10up/wp-php-fpm-dev:7.4"
     environment:
       #ENABLE_XDEBUG: "${ENABLE_XDEBUG}"
-      ENABLE_XDEBUG: "false"
+      ENABLE_XDEBUG: "true"
     volumes:
       - wordpress:/var/www/html
       #- "../:/var/www/html/wp-content/${PROJECT_TYPE}s/${SLUG}"
