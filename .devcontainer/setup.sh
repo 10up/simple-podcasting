@@ -1,4 +1,4 @@
-#!  /bin/bash
+#! /bin/bash
 
 SLUG=simple-podcasting
 PROJECT_TYPE=plugin
@@ -23,6 +23,8 @@ function getTitleFromSlug()
     echo "${___slug[@]^}"
 }
 
+source ~/.bashrc
+
 # Install node
 nvm install 10
 nvm alias default 10
@@ -37,4 +39,6 @@ cd /var/www/html/
 echo "Setting up WordPress at $SITE_HOST"
 wp db reset --yes
 wp core install --url="$SITE_HOST" --title="$(getTitleFromSlug) Development" --admin_user="admin" --admin_email="admin@example.com" --admin_password="password" --skip-email
+
+echo "Activate $SLUG"
 wp $PROJECT_TYPE activate $SLUG
