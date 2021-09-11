@@ -23,6 +23,9 @@ function getTitleFromSlug()
     echo "${___slug[@]^}"
 }
 
+# Install git
+apt install git -y
+
 # Install WP CLI
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
