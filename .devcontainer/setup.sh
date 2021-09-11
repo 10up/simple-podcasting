@@ -23,8 +23,11 @@ function getTitleFromSlug()
     echo "${___slug[@]^}"
 }
 
-# Install git
-apt install git -y
+# Install basic dev tools
+apt update
+apt upgrade -y
+apt install -y git
+apt install -y zip
 
 # Install WP CLI
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -41,15 +44,15 @@ nvm install 10
 # Install Composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install dependencies
 cd /var/www/html/wp-content/${PROJECT_TYPE}s/${SLUG}/
-
 npm i && npm run build
 composer i
 
-wp --allow-root $PROJECT_TYPE activate $SLUG
-
+# Install WordPress and activate the plugin/theme.
 cd /var/www/html/
 echo "Setting up WordPress at $SITE_HOST"
 ls
 wp --allow-root db reset --yes
 wp --allow-root core install --url="$SITE_HOST" --title="$(getTitleFromSlug) Development" --admin_user="admin" --admin_email="admin@example.com" --admin_password="password" --skip-email
+wp --allow-root $PROJECT_TYPE activate $SLUG
