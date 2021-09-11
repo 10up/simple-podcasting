@@ -13,4 +13,5 @@
 	"extensions": [],
 	"workspaceFolder": "/var/www/html/",
 	"postCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
+	"remoteUser": "www-data"
 }
