@@ -17,7 +17,7 @@ services:
       - "../:/var/www/html/wp-content/plugins/simple-podcasting"
 
   db:
-    image: mysql:5.7
+    image: mariadb
     restart: always
     environment:
       MYSQL_DATABASE: exampledb
@@ -30,4 +30,3 @@ services:
 volumes:
   wordpress:
   db:
-version: "3"

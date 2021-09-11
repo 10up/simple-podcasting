@@ -12,6 +12,5 @@
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [],
 	"workspaceFolder": "/var/www/html/",
-	// "postCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
-	"remoteUser": "www-data"
+	"postCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
 }
