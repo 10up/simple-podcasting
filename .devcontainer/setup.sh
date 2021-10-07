@@ -1,4 +1,4 @@
-#!  /bin/bash
+#! /bin/bash
 
 SLUG=simple-podcasting
 PROJECT_TYPE=plugin
@@ -23,26 +23,7 @@ function getTitleFromSlug()
     echo "${___slug[@]^}"
 }
 
-# Install basic dev tools
-apt update
-apt upgrade -y
-apt install -y git
-apt install -y zip
-
-# Install WP CLI
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x wp-cli.phar
-mv wp-cli.phar /usr/local/bin/wp
-
-# Install node
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm install 10
-
-# Install Composer
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+source ~/.bashrc
 
 # Install dependencies
 cd /var/www/html/wp-content/${PROJECT_TYPE}s/${SLUG}/
@@ -52,7 +33,8 @@ composer i
 # Install WordPress and activate the plugin/theme.
 cd /var/www/html/
 echo "Setting up WordPress at $SITE_HOST"
-ls
-wp --allow-root db reset --yes
-wp --allow-root core install --url="$SITE_HOST" --title="$(getTitleFromSlug) Development" --admin_user="admin" --admin_email="admin@example.com" --admin_password="password" --skip-email
-wp --allow-root $PROJECT_TYPE activate $SLUG
+wp db reset --yes
+wp core install --url="$SITE_HOST" --title="$(getTitleFromSlug) Development" --admin_user="admin" --admin_email="admin@example.com" --admin_password="password" --skip-email
+
+echo "Activate $SLUG"
+wp $PROJECT_TYPE activate $SLUG

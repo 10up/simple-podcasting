@@ -5,12 +5,9 @@
 	"forwardPorts": [
     8080
 	],
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"php.suggest.basic": false
-	},
 	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [],
+	"extensions": [ "felixfbecker.php-debug" ],
 	"workspaceFolder": "/var/www/html/",
 	"postCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
+  "remoteUser": "www-data"
 }
