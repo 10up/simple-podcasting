@@ -5,7 +5,6 @@ vendor
 composer.lock
 phpunit.xml
 .idea
-package-lock.json
 
 # Project Files
 dist
@@ -37,3 +36,6 @@ setup.log
 
 # E2E testing
 artifacts
+tests/cypress/downloads
+tests/cypress/screenshots
+tests/cypress/videos
