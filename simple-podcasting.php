@@ -1,27 +1,31 @@
 <?php
 /**
- * Plugin Name: Simple Podcasting
- * Plugin URI: http://wordpress.org/plugins/simple-podcasting
- * Description: Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
- * Author: 10up
- * Version: 1.1.1
- * Author URI: http://10up.com/
+ * Plugin Name:       Simple Podcasting
+ * Plugin URI:        https://github.com/10up/simple-podcasting
+ * Description:       Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
+ * Version:           1.2.0
+ * Author:            10up
+ * Author URI:        http://10up.com/
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       podcasting
  *
  * @package tenup_podcasting
  */
 
 namespace tenup_podcasting;
 
-define( 'PODCASTING_VERSION', '1.1.1' );
+define( 'PODCASTING_VERSION', '1.2.0' );
 define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
 define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
+define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
 
 require_once PODCASTING_PATH . 'includes/datatypes.php';
 require_once PODCASTING_PATH . 'includes/helpers.php';
 require_once PODCASTING_PATH . 'includes/rest-external-url.php';
 
-// Init the endpoint
+// Init the endpoint.
 endpoints\externalurl\setup();
 
 /**
@@ -39,7 +43,7 @@ function activate_plugin() {
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
-// Block editor support
+// Block editor support.
 if ( function_exists( 'register_block_type' ) ) {
 	require_once PODCASTING_PATH . 'includes/blocks.php';
 }
@@ -79,26 +83,19 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		return;
 	}
 
-	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-		$css_file = 'assets/css/podcasting-edit-term.css';
-		$js_file  = 'assets/js/podcasting-edit-term.js';
-	} else {
-		$css_file = 'dist/css/podcasting-edit-term.min.css';
-		$js_file  = 'dist/js/podcasting-edit-term.min.js';
-	}
-
 	wp_enqueue_style(
 		'podcasting_edit_term_screen',
-		PODCASTING_URL . $css_file,
+		PODCASTING_URL . 'dist/podcasting-edit-term.css',
 		array(),
 		PODCASTING_VERSION
 	);
 
 	wp_enqueue_script(
 		'podcasting_edit_term_screen',
-		PODCASTING_URL . $js_file,
+		PODCASTING_URL . 'dist/podcasting-edit-term.js',
 		array( 'jquery' ),
-		PODCASTING_VERSION
+		PODCASTING_VERSION,
+		true
 	);
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
@@ -128,7 +125,7 @@ function custom_feed() {
 		require_once PODCASTING_PATH . 'includes/customize-feed.php';
 	}
 }
-add_action( 'wp', __NAMESPACE__ . '\custom_feed' );
+add_action( 'parse_query', __NAMESPACE__ . '\custom_feed' );
 
 
 /**

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ruleset name="Simple Podcasting">
+	<rule ref="10up-Default" />
+</ruleset>

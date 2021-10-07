@@ -8,7 +8,7 @@ phpunit.xml
 package-lock.json
 
 # Project Files
-#dist
+dist
 ruleset.xml
 
 # Editors
@@ -34,3 +34,6 @@ Desktop.ini
 
 .env
 setup.log
+
+# E2E testing
+artifacts

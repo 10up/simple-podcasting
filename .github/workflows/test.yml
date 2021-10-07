@@ -1,0 +1,30 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - trunk
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm i
+
+    - name: Build asset
+      run: npm run build
+
+    - name: Setup WP environment
+      run: npm run env start
+
+    - name: Test
+      run: npm run test:e2e
