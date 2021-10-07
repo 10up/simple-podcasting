@@ -157,15 +157,9 @@ function edit_post_enqueues( $hook_suffix ) {
 		return;
 	}
 
-	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-		$js_file = 'assets/js/podcasting-edit-post.js';
-	} else {
-		$js_file = 'dist/js/podcasting-edit-post.min.js';
-	}
-
 	wp_enqueue_script(
 		'podcasting_edit_post_screen',
-		PODCASTING_URL . $js_file,
+		PODCASTING_URL . 'dist/podcasting-edit-post.js',
 		array( 'jquery' ),
 		PODCASTING_VERSION,
 		true

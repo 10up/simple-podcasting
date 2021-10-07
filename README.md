@@ -2,7 +2,7 @@
 
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.6%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.7%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
 
 ## Table of Contents
 * [Overview](#overview)
@@ -67,6 +67,26 @@ Repeat for each podcast you would like to create.
 Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
+
+## Control how many episodes are listed on the feed
+
+```
+<?php
+
+add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
+
+/**
+ * Filter how many items are displayed on the feed
+ * Default is 250
+ *
+ * @param int $qty Items count.
+ * @return string
+ */
+function podcasting_feed_episodes_per_page( $qty ) {
+	return 300;
+}
+
+```
 
 ## Support Level
 

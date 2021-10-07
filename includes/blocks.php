@@ -11,17 +11,13 @@ namespace tenup_podcasting\block;
  * Register block and its assets.
  */
 function init() {
-	$block_js = 'dist/js/blocks.min.js';
+	$block_asset = require PODCASTING_PATH . 'dist/blocks.asset.php';
 	wp_register_script(
 		'podcasting-block-editor',
-		PODCASTING_URL . $block_js,
-		array(
-			'wp-blocks',
-			'wp-editor',
-			'wp-i18n',
-			'wp-element',
-		),
-		PODCASTING_VERSION
+		PODCASTING_URL . 'dist/blocks.js',
+		$block_asset['dependencies'],
+		$block_asset['version'],
+		true
 	);
 
 	register_block_type(
@@ -71,6 +67,11 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\load_translations' 
 
 /**
  * Delete left over post meta after deleting podcast block.
+ *
+ * @param WP_Post         $post     Inserted or updated post object.
+ * @param WP_REST_Request $request  Request object.
+ * @param bool            $creating True when creating a post, false when updating.
+ * @return void
  */
 function block_editor_meta_cleanup( $post, $request, $creating ) {
 	if ( $creating ) {

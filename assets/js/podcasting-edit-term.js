@@ -1,4 +1,6 @@
 /*global jQuery, validateForm*/
+import '../css/podcasting-edit-term.css';
+
 jQuery( document ).ready( function( $ ) {
 
 	// Clear Image Field.
