@@ -1,5 +1,5 @@
 name: "\U0001F41B Bug report"
-description: Report a bug with this project
+description: "Report a bug with this project."
 labels: "type:bug"
 body:
     - type: markdown
@@ -62,7 +62,7 @@ body:
       id: terms
       attributes:
         label: Code of Conduct
-        description: By submitting this issue, you agree to follow our [Code of Conduct](/CODE_OF_CONDUCT.md).
+        description: By submitting this issue, you agree to follow our `Code of Conduct` (see the `CODE_OF_CONDUCT.md` file in the repo).
         options:
           - label: I agree to follow this project's Code of Conduct
             required: true
