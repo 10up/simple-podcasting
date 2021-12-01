@@ -37,18 +37,6 @@ body:
               Please ensure the shared code can be used by a developer to reproduce the issue—ideally it can be copied into a local development environment or executed in a browser console to help debug the issue
       validations:
           required: false
-
-    - type: textarea
-      attributes:
-          label: Environment information
-          description: |
-              Please list what software versions you are using.
-          placeholder: |
-             - Device: <!-- [e.g. MacBook] -->
-             - OS: <!-- [e.g. MacOS 10.14.3] -->
-             - Browser and version: <!-- [e.g. Firefox 65.0.1, Chrome 73.0.3683.75, Safari 12.0.3] -->
-      validations:
-          required: false
           
     - type: textarea
       attributes:
