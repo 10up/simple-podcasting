@@ -1,22 +1,21 @@
 <!--
 ### Requirements
 
-Filling out the template is required. Any pull request that does not include enough information to be reviewed in a timely manner may be closed at the maintainers' discretion.  All new code requires documentation and tests to ensure against regressions.
+Filling out the template is required.  Any pull request that does not include enough information to be reviewed in a timely manner may be closed at the maintainers' discretion.  All new code requires documentation and tests to ensure against regressions.
 -->
 
 ### Description of the Change
 
 <!--
-We must be able to understand the design of your change from this description. If we can't get a good idea of what the code will be doing from the description here, the pull request may be closed at the maintainers' discretion. Keep in mind that the maintainer reviewing this PR may not be familiar with or have worked with the code here recently, so please walk us through the concepts.  Please include screenshots (if appropriate).
+We must be able to understand the design of your change from this description.  If we can't get a good idea of what the code will be doing from the description here, the pull request may be closed at the maintainers' discretion.  Also including any benefits that will be realized by the code change will be helpful.  Keep in mind that the maintainer reviewing this PR may not be familiar with or have worked with the code here recently, so please walk us through the concepts.  Please include screenshots (if appropriate).
 -->
+
+<!-- Enter any applicable Issues here. Example: -->
+Closes #
 
 ### Alternate Designs
 
 <!-- Explain what other alternates were considered and why the proposed version was selected. -->
-
-### Benefits
-
-<!-- What benefits will be realized by the code change? -->
 
 ### Possible Drawbacks
 
@@ -47,15 +46,6 @@ Describe the actions you performed (e.g., commands you ran, text you typed, butt
 
 <!-- _NOTE: these things are not required to open a PR and can be done afterwards / while the PR is open._ -->
 
-### Applicable Issues
-
-<!--
-Enter any applicable Issues here.
-Example:
-Closes #123
-Relates to #234
--->
-
 ### Changelog Entry
 
 <!--
@@ -72,3 +62,4 @@ Example:
 ### Credits
 
 <!-- Please list any and all contributors on this PR and any linked issue so that they can be added to this projects CREDITS.md file. -->
+Props @
