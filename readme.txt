@@ -87,28 +87,28 @@ function podcasting_feed_episodes_per_page( $qty ) {
 == Changelog ==
 
 = 1.2.1 =
-* **Added:** Filter 'simple_podcasting_episodes_per_page' (props [@pabamato](https://profiles.wordpress.org/pabamato))
-* **Added:** E2E testing using Cypress and WordPress Env (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
-* **Added:** Issue management automation via GitHub Actions (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul))
-* **Added:** Pull request template (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul))
-* **Changed:** Default items on plugin's feeds to 250 (props [@pabamato](https://profiles.wordpress.org/pabamato))
-* **Changed:** Documentation updates (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
-* **Changed:** Use @wordpress/scripts as the build tool (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
-* **Changed:** Bump WordPress version “tested up to” 5.8.1 (props [@pabamato](https://profiles.wordpress.org/pabamato), [@jeffpaul](https://profiles.wordpress.org/jeffpaul))
-* **Fixed:** 'podcast' block core dependency  (props [@pabamato](https://profiles.wordpress.org/pabamato))
-* **Fixed:** Minimum WordPress version used by wp-env (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
+* **Added:** Filter 'simple_podcasting_episodes_per_page' to override default of 250 episodes per podcast feed (props [@pabamato](https://profiles.wordpress.org/pabamato), [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu), [@monomo111](https://github.com/monomo111), [@jeffpaul](https://profiles.wordpress.org/jeffpaul/), [@jakemgold](https://profiles.wordpress.org/jakemgold/)).
+* **Added:** End-to-end testing using Cypress and `wp-env` (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu), [@markjaquith](https://profiles.wordpress.org/markjaquith/), [@youknowriad](https://profiles.wordpress.org/youknowriad/), [@helen](https://profiles.wordpress.org/helen/)).
+* **Added:** Issue management automation via GitHub Actions (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Added:** Pull request template (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu)).
+* **Changed:** Default number of episodes in RSS feeds increased from 10 to 250 (props [@pabamato](https://profiles.wordpress.org/pabamato), [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu), [@monomo111](https://github.com/monomo111), [@jeffpaul](https://profiles.wordpress.org/jeffpaul/), [@jakemgold](https://profiles.wordpress.org/jakemgold/)).
+* **Changed:** Use `@wordpress/scripts` as the build tool (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu)).
+* **Changed:** Bump WordPress version “tested up to” 5.8.1 (props [David Chabbi](https://www.linkedin.com/in/david-chabbi-985719b4/), [@jeffpaul](https://profiles.wordpress.org/jeffpaul/),[@pabamato](https://profiles.wordpress.org/pabamato)).
+* **Changed:** Documentation updates (props [@meszarosrob](https://profiles.wordpress.org/meszarosrob/), [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu)).
+* **Fixed:** 'podcast' block core dependency  (props [@pabamato](https://profiles.wordpress.org/pabamato), [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu), [@monomo111](https://github.com/monomo111), [@jeffpaul](https://profiles.wordpress.org/jeffpaul/), [@jakemgold](https://profiles.wordpress.org/jakemgold/)).
+* **Fixed:** Minimum WordPress version used by `wp-env` (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu)).
 
 = 1.2.0 =
-* **Added:** Podcast image in the taxonomy list table view (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
-* **Added:** Ability for user to transform to/from the podcast and audio blocks (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
-* **Added:** Core `MediaReplaceFlow` to edit the podcast media (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
-* **Changed:** GitHub Actions from HCL to YAML workflow syntax (props [@helen](https://profiles.wordpress.org/helen))
-* **Changed:** Stop committing built files to Git (props [@helen](https://profiles.wordpress.org/helen))
-* **Changed:** Documentation updates (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@nhalstead](https://profiles.wordpress.org/nhalstead))
-* **Fixed:** Using the upload or drag and drop instead of media library populates duration and mimetype (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
-* **Fixed:** Issue where it is possible to add non-audio files to the Podcast block (props [@mattheu](https://profiles.wordpress.org/mattheu))
-* **Fixed:** Issue where React would throw an error relating to keys for list items (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
-* **Fixed:** Ensure podcast-related meta is deleted after block is removed. (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
+* **Added:** Podcast image in the taxonomy list table view (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen)).
+* **Added:** Ability for user to transform to/from the podcast and audio blocks (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen)).
+* **Added:** Core `MediaReplaceFlow` to edit the podcast media (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen)).
+* **Changed:** GitHub Actions from HCL to YAML workflow syntax (props [@helen](https://profiles.wordpress.org/helen)).
+* **Changed:** Stop committing built files to Git (props [@helen](https://profiles.wordpress.org/helen)).
+* **Changed:** Documentation updates (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@nhalstead](https://profiles.wordpress.org/nhalstead)).
+* **Fixed:** Using the upload or drag and drop instead of media library populates duration and mimetype (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen)).
+* **Fixed:** Issue where it is possible to add non-audio files to the Podcast block (props [@mattheu](https://profiles.wordpress.org/mattheu)).
+* **Fixed:** Issue where React would throw an error relating to keys for list items (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen)).
+* **Fixed:** Ensure podcast-related meta is deleted after block is removed. (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu)).
 
 = 1.1.1 =
 * Fixed: Compatibility with WordPress 5.2 (props [@adamsilverstein](https://profiles.wordpress.org/adamsilverstein)).
@@ -129,4 +129,4 @@ function podcasting_feed_episodes_per_page( $qty ) {
 * Bug fix: Display podcast summary on edit form.
 
 = 1.0 =
-* Initial plugin release
+* Initial plugin release.
