@@ -50,6 +50,8 @@ Repeat for each podcast you would like to create.
 
 === Control how many episodes are listed on the feed ===
 
+If you want to adjust the default number of episodes included in a podcast RSS feed, then utilize the following to do so...
+
 `<?php
 
 add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
