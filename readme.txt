@@ -68,6 +68,15 @@ Repeat for each podcast you would like to create.
 
 == Changelog ==
 
+= 1.2.1 =
+* **Added:** Filter 'simple_podcasting_episodes_per_page' (props [@pabamato](https://profiles.wordpress.org/pabamato/))
+* **Added:** E2E testing using Cypress and WordPress Env (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
+* **Added:** Issue management automation via GitHub Actions (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul))
+* **Changed:** Default items on plugin's feeds to 250 (props [@pabamato](https://profiles.wordpress.org/pabamato/))
+* **Changed:** Documentation updates (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
+* **Changed:** Use @wordpress/scripts as the build tool (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
+* **Fixed:** 'podcast' block core dependency  (props [@pabamato](https://profiles.wordpress.org/pabamato/))
+
 = 1.2.0 =
 * **Added:** Podcast image in the taxonomy list table view (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
 * **Added:** Ability for user to transform to/from the podcast and audio blocks (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))
