@@ -4,13 +4,17 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased]
 
-## [1.2.1] - 2021-04-23
+## [1.2.1] - 2021-12-16
 ### Added
- - Filter `simple_podcasting_episodes_per_page`
+ - Filter `simple_podcasting_episodes_per_page` (props [@pabamato](https://github.com/pabamato) via [#109](https://github.com/10up/simple-podcasting/pull/109))
+ - E2E testing using Cypress and WordPress Env (props [@dinhtungdu](https://github.com/dinhtungdu) via [#115](https://github.com/10up/simple-podcasting/pull/115) and [#117](https://github.com/10up/simple-podcasting/pull/117))
+ - Issue management automation via GitHub Actions (props [@jeffpaul](https://github.com/jeffpaul) via [#119](https://github.com/10up/simple-podcasting/pull/119))
 ### Changed
-- Default items on plugin's feeds to 250
+- Default items on plugin's feeds to 250 (props [@pabamato](https://github.com/pabamato) via [#109](https://github.com/10up/simple-podcasting/pull/109))
+- Documentation updates (props [@dinhtungdu](https://github.com/dinhtungdu) via [#101](https://github.com/10up/simple-podcasting/pull/101))
+- Use `@wordpress/scripts` as the build tool (props [@dinhtungdu](https://github.com/dinhtungdu) via [#114](https://github.com/10up/simple-podcasting/pull/114))
 ### Fixed
-- 'podcast' block core dependency
+- 'podcast' block core dependency  (props [@pabamato](https://github.com/pabamato) via [#109](https://github.com/10up/simple-podcasting/pull/109))
 
 ## [1.2.0] - 2020-07-10
 ### Added
