@@ -48,6 +48,24 @@ Repeat for each podcast you would like to create.
 * Ensure you test feeds before submitting them, see [Apple's "Test a Podcast page"](https://help.apple.com/itc/podcasts_connect/#/itcac471c970) for more information.
 * Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see [Apple's "Submit a podcast" page](https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9) for more information.
 
+=== Control how many episodes are listed on the feed ===
+
+`<?php
+
+add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
+
+/**
+ * Filter how many items are displayed on the feed
+ * Default is 250
+ *
+ * @param int $qty Items count.
+ * @return string
+ */
+function podcasting_feed_episodes_per_page( $qty ) {
+	return 300;
+}
+`
+
 === Technical Notes ===
 
 * Requires PHP 5.3+.
@@ -69,13 +87,16 @@ Repeat for each podcast you would like to create.
 == Changelog ==
 
 = 1.2.1 =
-* **Added:** Filter 'simple_podcasting_episodes_per_page' (props [@pabamato](https://profiles.wordpress.org/pabamato/))
+* **Added:** Filter 'simple_podcasting_episodes_per_page' (props [@pabamato](https://profiles.wordpress.org/pabamato))
 * **Added:** E2E testing using Cypress and WordPress Env (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
 * **Added:** Issue management automation via GitHub Actions (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul))
-* **Changed:** Default items on plugin's feeds to 250 (props [@pabamato](https://profiles.wordpress.org/pabamato/))
+* **Added:** Pull request template (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul))
+* **Changed:** Default items on plugin's feeds to 250 (props [@pabamato](https://profiles.wordpress.org/pabamato))
 * **Changed:** Documentation updates (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
 * **Changed:** Use @wordpress/scripts as the build tool (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
-* **Fixed:** 'podcast' block core dependency  (props [@pabamato](https://profiles.wordpress.org/pabamato/))
+* **Changed:** Bump WordPress version “tested up to” 5.8.1 (props [@pabamato](https://profiles.wordpress.org/pabamato), [@jeffpaul](https://profiles.wordpress.org/jeffpaul))
+* **Fixed:** 'podcast' block core dependency  (props [@pabamato](https://profiles.wordpress.org/pabamato))
+* **Fixed:** Minimum WordPress version used by wp-env (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu))
 
 = 1.2.0 =
 * **Added:** Podcast image in the taxonomy list table view (props [@jonmchristensen](https://profiles.wordpress.org/jonmchristensen), [@helen](https://profiles.wordpress.org/helen))

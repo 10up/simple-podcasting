@@ -9,12 +9,15 @@ All notable changes to this project will be documented in this file, per [the Ke
  - Filter `simple_podcasting_episodes_per_page` (props [@pabamato](https://github.com/pabamato) via [#109](https://github.com/10up/simple-podcasting/pull/109))
  - E2E testing using Cypress and WordPress Env (props [@dinhtungdu](https://github.com/dinhtungdu) via [#115](https://github.com/10up/simple-podcasting/pull/115) and [#117](https://github.com/10up/simple-podcasting/pull/117))
  - Issue management automation via GitHub Actions (props [@jeffpaul](https://github.com/jeffpaul) via [#119](https://github.com/10up/simple-podcasting/pull/119))
+ - Pull request template (props [@jeffpaul](https://github.com/jeffpaul) via [#125](https://github.com/10up/simple-podcasting/pull/125))
 ### Changed
 - Default items on plugin's feeds to 250 (props [@pabamato](https://github.com/pabamato) via [#109](https://github.com/10up/simple-podcasting/pull/109))
 - Documentation updates (props [@dinhtungdu](https://github.com/dinhtungdu) via [#101](https://github.com/10up/simple-podcasting/pull/101))
 - Use `@wordpress/scripts` as the build tool (props [@dinhtungdu](https://github.com/dinhtungdu) via [#114](https://github.com/10up/simple-podcasting/pull/114))
+- Bump WordPress version “tested up to” 5.8.1 (props [@pabamato](https://github.com/pabamato) via [#124](https://github.com/10up/simple-podcasting/pull/124), [@jeffpaul](https://github.com/jeffpaul) via [#106](https://github.com/10up/simple-podcasting/pull/106) and [#110](https://github.com/10up/simple-podcasting/pull/110))
 ### Fixed
 - 'podcast' block core dependency  (props [@pabamato](https://github.com/pabamato) via [#109](https://github.com/10up/simple-podcasting/pull/109))
+- Minimum WordPress version used by `wp-env` (props [@dinhtungdu](https://github.com/dinhtungdu) via [#122](https://github.com/10up/simple-podcasting/pull/122))
 
 ## [1.2.0] - 2020-07-10
 ### Added
