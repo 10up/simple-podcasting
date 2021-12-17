@@ -2,6 +2,7 @@
 /.github
 /.husky
 /.wordpress-org
+/assets
 /gulp-tasks
 /node_modules
 /tests
