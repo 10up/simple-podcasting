@@ -6,10 +6,10 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [1.2.1] - 2021-12-16
 ### Added
- - Filter `simple_podcasting_episodes_per_page` to override default of 250 episodes per podcast feed (props [@pabamato](https://github.com/pabamato), [@dinhtungdu](https://github.com/dinhtungdu), [@monomo111](https://github.com/monomo111), [@jeffpaul](https://github.com/jeffpaul), [@jakemgold](https://github.com/jakemgold) via [#109](https://github.com/10up/simple-podcasting/pull/109)).
- - End-to-end testing using Cypress and `wp-env` (props [@dinhtungdu](https://github.com/dinhtungdu), [@markjaquith](https://github.com/markjaquith), [@youknowriad](https://github.com/youknowriad), [@helen](https://github.com/helen) via [#115](https://github.com/10up/simple-podcasting/pull/115), [#117](https://github.com/10up/simple-podcasting/pull/117)).
- - Issue management automation via GitHub Actions (props [@jeffpaul](https://github.com/jeffpaul) via [#119](https://github.com/10up/simple-podcasting/pull/119)).
- - Pull request template (props [@jeffpaul](https://github.com/jeffpaul), [@dinhtungdu](https://github.com/dinhtungdu) via [#125](https://github.com/10up/simple-podcasting/pull/125)).
+- Filter `simple_podcasting_episodes_per_page` to override default of 250 episodes per podcast feed (props [@pabamato](https://github.com/pabamato), [@dinhtungdu](https://github.com/dinhtungdu), [@monomo111](https://github.com/monomo111), [@jeffpaul](https://github.com/jeffpaul), [@jakemgold](https://github.com/jakemgold) via [#109](https://github.com/10up/simple-podcasting/pull/109)).
+- End-to-end testing using Cypress and `wp-env` (props [@dinhtungdu](https://github.com/dinhtungdu), [@markjaquith](https://github.com/markjaquith), [@youknowriad](https://github.com/youknowriad), [@helen](https://github.com/helen) via [#115](https://github.com/10up/simple-podcasting/pull/115), [#117](https://github.com/10up/simple-podcasting/pull/117)).
+- Issue management automation via GitHub Actions (props [@jeffpaul](https://github.com/jeffpaul) via [#119](https://github.com/10up/simple-podcasting/pull/119)).
+- Pull request template (props [@jeffpaul](https://github.com/jeffpaul), [@dinhtungdu](https://github.com/dinhtungdu) via [#125](https://github.com/10up/simple-podcasting/pull/125)).
 
 ### Changed
 - Default number of episodes in RSS feeds increased from 10 to 250 (props [@pabamato](https://github.com/pabamato), [@dinhtungdu](https://github.com/dinhtungdu), [@monomo111](https://github.com/monomo111), [@jeffpaul](https://github.com/jeffpaul), [@jakemgold](https://github.com/jakemgold) via [#109](https://github.com/10up/simple-podcasting/pull/109)).
