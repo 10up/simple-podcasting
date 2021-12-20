@@ -1,10 +1,10 @@
 {
   "name": "@10up/simple-podcasting",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A simple podcasting solution for WordPress. ",
   "homepage": "https://github.com/10up/simple-podcasting",
   "bugs": {
-    "url" : "https://github.com/10up/simple-podcasting/issues"
+    "url": "https://github.com/10up/simple-podcasting/issues"
   },
   "license": "GPL-2.0-or-later",
   "author": {
@@ -18,55 +18,31 @@
     "url": "https://github.com/10up/simple-podcasting"
   },
   "scripts": {
-    "start": "npm install && composer install && gulp",
-    "watch": "gulp watch",
-    "build": "gulp",
-    "deploy": "npm install && gulp"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "deploy": "npm install && npm run build",
+    "prepare": "husky install",
+    "wp-env": "wp-env",
+    "cypress:open": "cypress open --config-file tests/cypress/config.json",
+    "cypress:run": "cypress run --config-file tests/cypress/config.json"
   },
   "lint-staged": {
     "*.php": [
-      "./vendor/bin/phpcs --extensions=php --warning-severity=8 -s --runtime-set testVersion 5.3"
+      "./vendor/bin/phpcs --standard=10up-Default --extensions=php --warning-severity=8 -s --runtime-set testVersion 5.3"
+    ],
+    "tests/**/*.js": [
+      "./node_modules/.bin/wp-scripts format",
+      "git add"
     ]
   },
   "devDependencies": {
-    "@wordpress/babel-preset-default": "^1.1.2",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.1.3",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "caniuse-db": "^1.0.30000798",
-    "del": "^3.0.0",
-    "eslint": "^4.18.2",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-react": "^7.11.1",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-cssnano": "^2.1.2",
-    "gulp-filter": "^5.1.0",
-    "gulp-livereload": "^3.8.1",
-    "gulp-postcss": "^7.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.0",
-    "husky": "^1.0.0-rc.7",
-    "lint-staged": "^7.1.2",
-    "postcss-cssnext": "^3.0.2",
-    "postcss-import": "^10.0.0",
-    "postcss-reporter": "^5.0.0",
-    "pump": "^1.0.3",
-    "require-dir": "^0.3.2",
-    "run-sequence": "^1.2.2",
-    "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.10",
-    "webpack-stream": "^3.2.0"
-  }
+    "@wordpress/env": "^4.1.0",
+    "@wordpress/prettier-config": "^1.1.0",
+    "@wordpress/scripts": "^17.1.0",
+    "cypress": "^8.3.0",
+    "cypress-file-upload": "^5.0.8",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.1"
+  },
+  "prettier": "@wordpress/prettier-config"
 }

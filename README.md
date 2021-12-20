@@ -2,7 +2,7 @@
 
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.5.1%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Test PRs](https://github.com/10up/simple-podcasting/actions/workflows/test-pr.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-pr.yml) [![Test Branches](https://github.com/10up/simple-podcasting/actions/workflows/test-branch.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-branch.yml) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.8.1%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
 
 ## Table of Contents
 * [Overview](#overview)
@@ -68,13 +68,35 @@ Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
 
+## Control how many episodes are listed on the feed
+
+If you want to adjust the default number of episodes included in a podcast RSS feed, then utilize the following to do so...
+
+```
+<?php
+
+add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
+
+/**
+ * Filter how many items are displayed on the feed
+ * Default is 250
+ *
+ * @param int $qty Items count.
+ * @return string
+ */
+function podcasting_feed_episodes_per_page( $qty ) {
+	return 300;
+}
+
+```
+
 ## Support Level
 
 **Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
 ## Changelog
 
-A complete listing of all notable changes to Apple Maps for WordPress are documented in [CHANGELOG.md](https://github.com/10up/simple-podcasting/blob/develop/CHANGELOG.md).
+A complete listing of all notable changes to Simple Podcasting for WordPress are documented in [CHANGELOG.md](https://github.com/10up/simple-podcasting/blob/develop/CHANGELOG.md).
 
 ## Contributing
 

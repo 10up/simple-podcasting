@@ -10,7 +10,7 @@ namespace tenup_podcasting\helpers;
 /**
  * Retrieve the enclosure and return the meta
  *
- * @param string $url The podcast url
+ * @param string $url The podcast url.
  *
  * @return array
  */
@@ -21,7 +21,7 @@ function get_podcast_meta_from_url( $url ) {
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 		require_once ABSPATH . 'wp-admin/includes/media.php';
 	}
-	// Modeled after WordPress do_enclose()
+	// Modeled after WordPress do_enclose().
 	$podcast_meta = array();
 	$headers      = \wp_get_http_headers( $url );
 	if ( $headers ) {

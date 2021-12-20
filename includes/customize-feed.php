@@ -59,8 +59,8 @@ add_filter( 'wp_audio_shortcode', '__return_empty_string', 999 );
 /**
  * Sets the podcast language in the feed to the one selected in the term edit screen.
  *
- * @param string $output    The value being displayed
- * @param string $requested The item that was requested
+ * @param string $output    The value being displayed.
+ * @param string $requested The item that was requested.
  *
  * @return mixed
  */
@@ -180,7 +180,7 @@ function feed_item() {
 
 	$explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
 
-	// fall back to the podcast setting
+	// fall back to the podcast setting.
 	if ( empty( $explicit ) ) {
 		$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
 	}
@@ -249,9 +249,9 @@ add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
 function rss_enclosure( $enclosure ) {
 	global $post;
 
-	$podcast_url = get_post_meta( $post->ID, 'podcast_url', true );
+	$podcast_url      = get_post_meta( $post->ID, 'podcast_url', true );
 	$podcast_filesize = get_post_meta( $post->ID, 'podcast_filesize', true );
-	$podcast_mime = get_post_meta( $post->ID, 'podcast_mime', true );
+	$podcast_mime     = get_post_meta( $post->ID, 'podcast_mime', true );
 
 	if ( ! empty( $podcast_url ) ) {
 		$enclosure = "<enclosure url='" .
@@ -339,3 +339,25 @@ function empty_rss_excerpt( $output ) {
 }
 // Run it super late after any other filters may have inserted something.
 add_filter( 'the_excerpt_rss', __NAMESPACE__ . '\empty_rss_excerpt', 1000 );
+
+/**
+ * Filter the feed query.
+ * - Default items listed on the feed to 250.
+ *
+ * @param WP_Query $query The WP_Query instance.
+ * @return void
+ */
+function pre_get_posts( $query ) {
+	// do nothing if not the feed query.
+	if ( ! $query->is_feed() ) {
+		return;
+	}
+
+	$per_page = apply_filters( 'simple_podcasting_episodes_per_page', PODCASTING_ITEMS_PER_PAGE );
+
+	$query->set( 'posts_per_rss', $per_page );
+}
+
+// Filter the feed query.
+add_action( 'pre_get_posts', __NAMESPACE__ . '\pre_get_posts', 10, 1 );
+
