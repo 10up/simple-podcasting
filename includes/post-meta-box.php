@@ -32,8 +32,6 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );
  */
 function meta_box_html( $post ) {
 	$podcast_url = get_post_meta( $post->ID, 'podcast_url', true );
-	$podcast_duration = get_post_meta( $post->ID, 'podcast_duration', true );
-	$podcast_mime = get_post_meta( $post->ID, 'podcast_mime', true );
 	$podcast_explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
 	$podcast_captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
 
