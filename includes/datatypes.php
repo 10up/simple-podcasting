@@ -400,7 +400,7 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 
 	if ( $taxonomy ) {
 		$url = get_term_feed_link( $term->term_id, TAXONOMY_NAME );
-		__( 'Your Podcast Feed:', 'ads-txt' );
+		__( 'Your Podcast Feed:', 'simple-podcasting' );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		esc_html_e( 'This is the URL you submit to iTunes or podcasting service.', 'simple-podcasting' );
 	}
