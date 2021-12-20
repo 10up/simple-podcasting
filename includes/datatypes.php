@@ -176,7 +176,7 @@ add_action( 'admin_menu', __NAMESPACE__ . '\add_top_level_menu' );
  */
 function add_podcasting_taxonomy_help_text() {
 	echo '<div class="notice notice-info"><p>';
-	esc_html_e( 'Once at least one podcast exists, you can add episodes by creating a post, assigning it to the appropriate podcast, and inserting an audio player or podcast block into the content of the post. You can then submit the feed URL to podcast directories.', 'podcasting' );
+	esc_html_e( 'Once at least one podcast exists, you can add episodes by creating a post, assigning it to the appropriate podcast, and inserting an audio player or podcast block into the content of the post. You can then submit the feed URL to podcast directories.', 'simple-podcasting' );
 	echo '</p></div>';
 }
 add_action( 'after-podcasting_podcasts-table', __NAMESPACE__ . '\add_podcasting_taxonomy_help_text' );
