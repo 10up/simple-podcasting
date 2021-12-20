@@ -50,8 +50,8 @@ function meta_box_html( $post ) {
 		<label for="podcast_explicit_content">
 			<?php esc_html_e( 'Explicit Content', 'simple-podcasting' ); ?>
 			<select id="podcast_explicit_content" name="podcast_explicit_content">
-				<option value="no"<?php selected( $podcast_explicit, 'no' ); ?>><?php esc_html_e( 'No' ); ?></option>
-				<option value="yes"<?php selected( $podcast_explicit, 'yes' ); ?>><?php esc_html_e( 'Yes' ); ?></option>
+				<option value="no"<?php selected( $podcast_explicit, 'no' ); ?>><?php esc_html_e( 'No', 'simple-podcasting' ); ?></option>
+				<option value="yes"<?php selected( $podcast_explicit, 'yes' ); ?>><?php esc_html_e( 'Yes', 'simple-podcasting' ); ?></option>
 				<option value="clean"<?php selected( $podcast_explicit, 'clean' ); ?>><?php esc_html_e( 'Clean', 'simple-podcasting' ); ?></option>
 			</select>
 		</label>
