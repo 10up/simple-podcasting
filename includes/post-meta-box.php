@@ -31,8 +31,8 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );
  * @param  object WP_Post $post The current post.
  */
 function meta_box_html( $post ) {
-	$podcast_url = get_post_meta( $post->ID, 'podcast_url', true );
-	$podcast_explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
+	$podcast_url       = get_post_meta( $post->ID, 'podcast_url', true );
+	$podcast_explicit  = get_post_meta( $post->ID, 'podcast_explicit', true );
 	$podcast_captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
 
 	wp_nonce_field( plugin_basename( __FILE__ ), 'simple-podcasting' );
@@ -87,9 +87,9 @@ function save_meta_box( $post_id ) {
 
 	$_post = wp_unslash( $_POST );
 
-	$url              = false;
+	$url               = false;
 	$podcast_captioned = 0;
-	$podcast_explicit = 'no';
+	$podcast_explicit  = 'no';
 
 	if ( isset( $_post['podcast_closed_captioned'] ) && 'on' === $_post['podcast_closed_captioned'] ) {
 		$podcast_captioned = 1;
@@ -104,7 +104,7 @@ function save_meta_box( $post_id ) {
 	} else {
 		// Search for an audio shortcode to determine the audio enclosure url.
 		$pattern = get_shortcode_regex();
-		$post = get_post( $post_id );
+		$post    = get_post( $post_id );
 
 		if (
 			preg_match_all( '/' . $pattern . '/s', $post->post_content, $matches )
