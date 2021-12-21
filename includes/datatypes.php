@@ -459,13 +459,13 @@ add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_
  */
 function add_custom_term_columns( $columns ) {
 	$columns = array_merge(
-		[
+		array(
 			'podcasting_image' => __( 'Podcast Cover', 'simple-podcasting' ),
-		],
+		),
 		$columns,
-		[
+		array(
 			'feedurl' => __( 'Feed URL', 'simple-podcasting' ),
-		]
+		)
 	);
 	unset( $columns['description'] );
 	unset( $columns['author'] );
@@ -479,14 +479,14 @@ add_filter( 'manage_edit-' . TAXONOMY_NAME . '_columns', __NAMESPACE__ . '\add_c
 function get_meta_fields() {
 	return array(
 		array(
-			'slug'        => 'podcasting_subtitle',
-			'title'       => __( 'Subtitle', 'simple-podcasting' ),
-			'type'        => 'textfield',
+			'slug'  => 'podcasting_subtitle',
+			'title' => __( 'Subtitle', 'simple-podcasting' ),
+			'type'  => 'textfield',
 		),
 		array(
-			'slug'        => 'podcasting_talent_name',
-			'title'       => __( 'Artist / Author name', 'simple-podcasting' ),
-			'type'        => 'textfield',
+			'slug'  => 'podcasting_talent_name',
+			'title' => __( 'Artist / Author name', 'simple-podcasting' ),
+			'type'  => 'textfield',
 		),
 		array(
 			'slug'  => 'podcasting_email',
@@ -494,20 +494,20 @@ function get_meta_fields() {
 			'type'  => 'textfield',
 		),
 		array(
-			'slug'        => 'podcasting_summary',
-			'title'       => __( 'Summary', 'simple-podcasting' ),
-			'type'        => 'textarea',
+			'slug'  => 'podcasting_summary',
+			'title' => __( 'Summary', 'simple-podcasting' ),
+			'type'  => 'textarea',
 		),
 		array(
-			'slug'        => 'podcasting_copyright',
-			'title'       => __( 'Copyright / License information', 'simple-podcasting' ),
-			'type'        => 'textfield',
+			'slug'  => 'podcasting_copyright',
+			'title' => __( 'Copyright / License information', 'simple-podcasting' ),
+			'type'  => 'textfield',
 		),
 		array(
-			'slug'        => 'podcasting_explicit',
-			'title'       => __( 'Mark as explicit', 'simple-podcasting' ),
-			'type'        => 'select',
-			'options'     => array(
+			'slug'    => 'podcasting_explicit',
+			'title'   => __( 'Mark as explicit', 'simple-podcasting' ),
+			'type'    => 'select',
+			'options' => array(
 				'No',
 				'Yes',
 				'Clean',
@@ -560,6 +560,7 @@ function get_meta_fields() {
  * @return array Array of podcasting categories.
  */
 function get_podcasting_categories() {
+	// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned -- keep nested array readable
 	return array(
 		'arts' => array(
 			'name' => 'Arts',
@@ -683,6 +684,7 @@ function get_podcasting_categories() {
 			'name' => 'TV & Film',
 		),
 	);
+	// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 }
 
 /**
