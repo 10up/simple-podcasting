@@ -8,7 +8,7 @@
  * Author URI:        http://10up.com/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       podcasting
+ * Text Domain:       simple-podcasting
  *
  * @package tenup_podcasting
  */
