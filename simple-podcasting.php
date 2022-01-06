@@ -103,7 +103,7 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqu
 /**
  * Load the file containing iTunes specific feed hooks.
  *
- * @param  WP_Query $query The query being parsed.
+ * @param \WP_Query $query The query being parsed.
  *
  * @uses includes/customize-feed.php
  */
