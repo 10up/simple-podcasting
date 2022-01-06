@@ -103,15 +103,17 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqu
 /**
  * Load the file containing iTunes specific feed hooks.
  *
+ * @param  WP_Query $query The query being parsed.
+ *
  * @uses includes/customize-feed.php
  */
-function custom_feed() {
+function custom_feed( \WP_Query $query ) {
 	if ( is_admin() || ! podcasting_is_enabled() ) {
 		return;
 	}
 
 	// Is this a feed for a term in the podcasting taxonomy?
-	if ( is_feed() && is_tax( TAXONOMY_NAME ) ) {
+	if ( $query->is_feed() && $query->is_tax( TAXONOMY_NAME ) ) {
 		remove_action( 'rss2_head', 'rss2_blavatar' );
 		remove_action( 'rss2_head', 'rss2_site_icon' );
 		remove_filter( 'the_excerpt_rss', 'add_bug_to_feed', 100 );
@@ -125,11 +127,13 @@ function custom_feed() {
 		require_once PODCASTING_PATH . 'includes/customize-feed.php';
 	}
 }
-add_action( 'parse_query', __NAMESPACE__ . '\custom_feed' );
+add_action( 'parse_query', __NAMESPACE__ . '\custom_feed', 10, 1 );
 
 
 /**
  * Initialize the edit screen if podcasting is enabled.
+ *
+ * @uses includes/post-meta-box.php
  */
 function setup_edit_screen() {
 	if ( podcasting_is_enabled() ) {
