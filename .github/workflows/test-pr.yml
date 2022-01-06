@@ -44,4 +44,4 @@ jobs:
       run: composer install
 
     - name: Test
-      run: ./vendor/bin/phpcs
+      run: ./vendor/bin/phpcs -v
