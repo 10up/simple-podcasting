@@ -65,25 +65,57 @@ class BlockTests extends TestCase {
 		$this->assertNull( $result );
 	}
 
-	public function test_block_editor_meta_cleanup() {
-		// $post     = new stdClass();
-		// $post->ID = 42;
+	/**
+	 * @dataProvider data_provider_for_test_block_editor_meta_cleanup
+	 */
+	public function test_block_editor_meta_cleanup( $creating, $has_block, $metadata_exists, $expected ) {
+		$post = new stdClass;
+		$post->ID = 42;
 
-		// $request = null;
+		\WP_Mock::userFunction( 'has_block' )
+			->with( 'podcasting/podcast', $post->ID )
+			->andReturn( $has_block );
 
-		// WP_Mock::userFunction(
-		// 	'has_block',
-		// 	array(
-		// 		'times'           => 2,
-		// 		'args'            => array( 'podcasting/podcast', $post->ID ),
-		// 		'return_in_order' => array( true, false ),
-		// 	)
-		// );
+		\WP_Mock::userFunction( 'metadata_exists' )
+			->with( 'post', $post->ID, 'podcast_url' )
+			->andReturn( $metadata_exists );
 
-		// tenup_podcasting\block\block_editor_meta_cleanup( $post, $request, true );
-		// tenup_podcasting\block\block_editor_meta_cleanup( $post, $request, false );
-		// tenup_podcasting\block\block_editor_meta_cleanup( $post, $request, false );
+		if ( is_array( $expected ) ) {
+			foreach ( $expected as $meta_key ) {
+				\WP_Mock::userFunction( 'delete_post_meta' )->once()->with( 42, $meta_key );
+			}
+		}
 
-		$this->assertNull( null );
+		$this->assertNull( tenup_podcasting\block\block_editor_meta_cleanup( $post, null, $creating ) );
+	}
+
+	public function data_provider_for_test_block_editor_meta_cleanup()
+	{
+		return array(
+			'Don\'t delete meta if creating post' => array(
+				'creating' => true,
+				'has_block' => false,
+				'metadata_exists' => false,
+				'expected' => null,
+			),
+			'Don\'t delete meta if has block' => array(
+				'creating' => false,
+				'has_block' => true,
+				'metadata_exists' => false,
+				'expected' => null,
+			),
+			'Don\'t delete meta if no metadata' => array(
+				'creating' => false,
+				'has_block' => false,
+				'metadata_exists' => false,
+				'expected' => null,
+			),
+			'Delete 6 metas' => array(
+				'creating' => false,
+				'has_block' => false,
+				'metadata_exists' => true,
+				'expected' => array('podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit'),
+			),
+		);
 	}
 }
