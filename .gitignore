@@ -3,6 +3,7 @@ bower_components
 languages
 release
 vendor
+composer.lock
 phpunit.xml
 .idea
 
