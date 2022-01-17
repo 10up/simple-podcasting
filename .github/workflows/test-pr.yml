@@ -68,9 +68,7 @@ jobs:
         tools: composer:v2
 
     - name: Install dependencies
-      run: 
-      - composer install
-      - npm install
+      run: composer install && npm install
     
     - name: Build
       run: npm run build
