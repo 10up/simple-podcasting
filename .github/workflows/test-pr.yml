@@ -40,8 +40,38 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Set PHP version
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.2'
+        coverage: none
+        tools: composer:v2
+
     - name: Install dependencies
       run: composer install
 
     - name: Test
       run: ./vendor/bin/phpcs -v
+
+  phpunit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set PHP version
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.2'
+        coverage: none
+        tools: composer:v2
+
+    - name: Install dependencies
+      run: composer install && npm install
+    
+    - name: Build
+      run: npm run build
+
+    - name: Test
+      run: ./vendor/bin/phpunit -v
