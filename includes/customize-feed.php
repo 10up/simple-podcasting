@@ -178,7 +178,7 @@ function feed_item() {
 		'keywords'  => '',
 		'image'     => '',
 		'summary'   => '',
-		'subtitle'  => wp_trim_words( $excerpt, 10, '&#8230;' ),
+		'subtitle'  => '',
 		'duration'  => get_post_meta( $post->ID, 'podcast_duration', true ),
 	);
 
