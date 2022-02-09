@@ -68,6 +68,20 @@ function podcasting_feed_episodes_per_page( $qty ) {
 }
 `
 
+=== Customize RSS feed ===
+
+If you want to modify RSS feed items output, there is a filter for that:
+
+`<?php
+function podcasting_feed_item_filter( $feed_item = array(), $post_id = null, $term_id = null ) {
+	if ( 42 === $post_id ) {
+		$feed_item['keywords'] = 'one,two,three';
+	}
+	return $feed_item;
+}
+add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 );
+`
+
 === Technical Notes ===
 
 * Requires PHP 5.3+.

@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
 ## [Unreleased]
+- Filter `simple_podcasting_feed_item` to modify RSS feed item data before output (pros [@cadic](https://github.com/cadic)).
 
 ## [1.2.1] - 2021-12-16
 ### Added

@@ -11,6 +11,8 @@
 * [Create Podcast](#create-your-podcast)
 * [Add Content to Podcast](#add-content-to-your-podcast)
 * [Submit Podcast Feed to Apple Podcasts](#submit-your-podcast-feed-to-apple-podcasts)
+* [Control how many episodes are listed on the feed](#control-how-many-episodes-are-listed-on-the-feed)
+* [Customize RSS feed](#customize-rss-feed)
 * [Contributing](#contributing)
 
 ## Overview
@@ -88,6 +90,20 @@ function podcasting_feed_episodes_per_page( $qty ) {
 	return 300;
 }
 
+```
+
+## Customize RSS feed
+
+If you want to modify RSS feed items output, there is a filter for that:
+
+```
+function podcasting_feed_item_filter( $feed_item = array(), $post_id = null, $term_id = null ) {
+	if ( 42 === $post_id ) {
+		$feed_item['keywords'] = 'one,two,three';
+	}
+	return $feed_item;
+}
+add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 );
 ```
 
 ## Support Level
