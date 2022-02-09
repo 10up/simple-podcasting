@@ -6,9 +6,31 @@ describe( 'Admin can publish posts with podcast block', () => {
 	it( 'Can insert the block and publish the post', () => {
 		cy.visitAdminPage( 'post-new.php' );
 		cy.get( 'button[aria-label="Close dialog"]' ).click();
-		cy.get( '#post-title-0' ).click().type( 'Test episode' );
-		cy.get( '.edit-post-header-toolbar__inserter-toggle' ).click();
-		cy.get( '#block-editor-inserter__search-0' ).type( 'Podcast' );
+
+		cy.get('body')
+			.then(
+				($body) =>
+					$body.find('h1.editor-post-title__input').length
+						? 'h1.editor-post-title__input' // WordPress 5.9
+						: '#post-title-0' // 5.8.1 and below
+			)
+			.then((selector) => {
+				cy.get(selector).click().type('Test episode');
+			});
+
+		cy.get('.edit-post-header-toolbar__inserter-toggle').click();
+
+		cy.get('body')
+			.then(
+				($body) =>
+					$body.find('#components-search-control-0').length
+						? '#components-search-control-0' // WordPress 5.9
+						: '#block-editor-inserter__search-0' // 5.8.1 and below
+			)
+			.then((selector) => {
+				cy.get(selector).type('Podcast');
+			});
+
 		cy.get( '.editor-block-list-item-podcasting-podcast' ).click();
 		cy.get( '.edit-post-header-toolbar__inserter-toggle' ).click();
 		cy.get( '.wp-block-podcasting-podcast input[type="file"]' ).attachFile(
