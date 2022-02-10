@@ -6,9 +6,15 @@ describe( 'Admin can publish posts with podcast block', () => {
 	it( 'Can insert the block and publish the post', () => {
 		cy.visitAdminPage( 'post-new.php' );
 		cy.get( 'button[aria-label="Close dialog"]' ).click();
-		cy.get( '#post-title-0' ).click().type( 'Test episode' );
+		cy.get( 'h1.editor-post-title__input, #post-title-0' )
+			.first()
+			.as( 'title-input' );
+		cy.get( '@title-input').click().type('Test episode' );
 		cy.get( '.edit-post-header-toolbar__inserter-toggle' ).click();
-		cy.get( '#block-editor-inserter__search-0' ).type( 'Podcast' );
+		cy.get( '#components-search-control-0, #block-editor-inserter__search-0' )
+			.first()
+			.as( 'block-search' );
+		cy.get( '@block-search' ).click().type( 'Podcast' );
 		cy.get( '.editor-block-list-item-podcasting-podcast' ).click();
 		cy.get( '.edit-post-header-toolbar__inserter-toggle' ).click();
 		cy.get( '.wp-block-podcasting-podcast input[type="file"]' ).attachFile(
