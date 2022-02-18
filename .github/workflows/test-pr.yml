@@ -43,7 +43,7 @@ jobs:
     - name: Set PHP version
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.2'
+        php-version: '7.3'
         coverage: none
         tools: composer:v2
 
@@ -59,9 +59,6 @@ jobs:
     strategy:
       matrix:
         php:
-          - {name: 'PHP 7.0', version: '7.0'}
-          - {name: 'PHP 7.1', version: '7.1'}
-          - {name: 'PHP 7.2', version: '7.2'}
           - {name: 'PHP 7.3', version: '7.3'}
           - {name: 'PHP 7.4', version: '7.4'}
           - {name: 'PHP 8.0', version: '8.0'}
