@@ -14,7 +14,7 @@
     "issues": "https://github.com/10up/simple-podcasting/issues"
   },
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.3"
   },
   "require-dev": {
     "10up/phpcs-composer": "dev-master",
