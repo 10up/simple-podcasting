@@ -170,7 +170,7 @@ class CustomizeFeedTests extends TestCase {
 			$this->assertSame( $expected, $result );
 		} elseif ( is_array( $expected ) ) {
 			foreach ( $expected as $message => $regex_string ) {
-				$this->assertRegExp( $regex_string, $output, $message );
+				$this->assertMatchesRegularExpression( $regex_string, $output, $message );
 			}
 		}
 	}
