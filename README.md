@@ -74,7 +74,7 @@ Podcast setup | Podcast in editor | Podcast feed
 
 If you want to adjust the default number of episodes included in a podcast RSS feed, then utilize the following to do so...
 
-```
+```php
 <?php
 
 add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
@@ -96,7 +96,9 @@ function podcasting_feed_episodes_per_page( $qty ) {
 
 If you want to modify RSS feed items output, there is a filter for that:
 
-```
+```php
+<?php
+
 function podcasting_feed_item_filter( $feed_item = array(), $post_id = null, $term_id = null ) {
 	if ( 42 === $post_id ) {
 		$feed_item['keywords'] = 'one,two,three';
