@@ -43,7 +43,7 @@ jobs:
       with:
         php-version: '7.4'
         coverage: none
-        tools: prestissimo, composer:v1
+        tools: prestissimo, composer:v2
 
     - name: Install dependencies
       run: composer install
