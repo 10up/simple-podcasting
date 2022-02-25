@@ -1,0 +1,27 @@
+name: PHPCS
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set PHP version
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.3'
+        coverage: none
+        tools: composer:v2
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: Test
+      run: ./vendor/bin/phpcs -v
