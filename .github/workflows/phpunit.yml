@@ -1,4 +1,4 @@
-name: PHP Compatibility
+name: Unit Tests
 
 env:
   COMPOSER_VERSION: "2"
@@ -14,13 +14,17 @@ on:
       - develop
 
 jobs:
-  php_compatibility:
-    name: PHP ${{ matrix.php }}
+  phpunit:
+    name: ${{ matrix.name }}
     runs-on: ubuntu-latest
+
     strategy:
-      fail-fast: false
       matrix:
-        php: [ '7.3', '7.4', '8.0', '8.1' ]
+        php:
+          - {name: 'PHP 7.3', version: '7.3'}
+          - {name: 'PHP 7.4', version: '7.4'}
+          - {name: 'PHP 8.0', version: '8.0'}
+          - {name: 'PHP 8.1', version: '8.1'}
 
     steps:
     - name: Checkout
@@ -41,12 +45,15 @@ jobs:
     - name: Set PHP version
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.4'
+        php-version: '${{ matrix.php.version }}'
         coverage: none
-        tools: prestissimo, composer:v2
+        tools: composer:v2
 
     - name: Install dependencies
-      run: composer install
+      run: composer install && npm install
+    
+    - name: Build
+      run: npm run build
 
-    - name: Check PHP Compatibility
-      run: ./vendor/bin/phpcs -p simple-podcasting.php includes --standard=PHPCompatibilityWP --extensions=php --runtime-set testVersion ${{ matrix.php }}
+    - name: Test
+      run: ./vendor/bin/phpunit -v
