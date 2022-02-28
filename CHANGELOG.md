@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
-## [1.2.2] - 2022-02-22
+## [1.2.2] - 2028-02-22
 ### Added
 - Filter `simple_podcasting_feed_item` to modify RSS feed item data before output (props (props [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#144](https://github.com/10up/simple-podcasting/pull/144)).
 - Unit tests (props [@cadic](https://github.com/cadic) via [#142](https://github.com/10up/simple-podcasting/pull/142), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul)).
