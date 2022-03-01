@@ -169,7 +169,7 @@ class Edit extends Component {
 							{ ( ( caption && caption.length ) || !! isSelected ) && (
 								<RichText
 									tagName="figcaption"
-									placeholder={ __( 'Write caption…' ) }
+									placeholder={ __( 'Write caption…', 'simple-podcasting' ) }
 									value={ caption }
 									onChange={ ( value ) => setAttributes( { caption: value } ) }
 									isSelected={ isSelected }

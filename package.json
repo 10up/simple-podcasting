@@ -1,6 +1,6 @@
 {
   "name": "@10up/simple-podcasting",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A simple podcasting solution for WordPress. ",
   "homepage": "https://github.com/10up/simple-podcasting",
   "bugs": {
@@ -21,6 +21,8 @@
     "start": "wp-scripts start",
     "build": "wp-scripts build",
     "deploy": "npm install && npm run build",
+    "makepot": "wpi18n makepot --domain-path languages --pot-file simple-podcasting.pot --type plugin --main-file simple-podcasting.php --exclude node_modules,tests,docs,vendor",
+    "prebuild": "npm run makepot",
     "prepare": "husky install",
     "wp-env": "wp-env",
     "cypress:open": "cypress open --config-file tests/cypress/config.json",
@@ -45,6 +47,7 @@
     "husky": "^7.0.1",
     "json-schema": ">=0.4.0",
     "lint-staged": "^11.1.1",
+    "node-wp-i18n": "^1.2.6",
     "nth-check": ">=2.0.1",
     "tmpl": ">=1.0.5"
   },

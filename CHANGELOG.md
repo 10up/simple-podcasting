@@ -2,7 +2,24 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
-## [Unreleased]
+## [1.2.2] - 2022-03-01
+### Added
+- Filter `simple_podcasting_feed_item` to modify RSS feed item data before output (props (props [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#144](https://github.com/10up/simple-podcasting/pull/144)).
+- Unit tests (props [@cadic](https://github.com/cadic) via [#142](https://github.com/10up/simple-podcasting/pull/142), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul)).
+- GitHub action job to run PHPCS (props [@cadic](https://github.com/cadic), [@dkotter](https://github.com/dkotter) via [#136](https://github.com/10up/simple-podcasting/pull/136)).
+- Auto-create pot file in languages folder during the build process (props [@dkotter](https://github.com/dkotter), [@cadic](https://github.com/cadic) via [#131](https://github.com/10up/simple-podcasting/pull/131)).
+
+### Changed
+- Bump WordPress "tested up to" version 5.9 (props [@sudip-10up](https://github.com/sudip-10up), [@cadic](https://github.com/cadic), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#140](https://github.com/10up/simple-podcasting/pull/140)).
+
+### Fixed
+- End-to-end tests with WordPress 5.9 element IDs (props[@cadic](https://github.com/cadic), [@felipeelia](https://github.com/felipeelia), [@dinhtungdu](https://github.com/dinhtungdu) via [#146](https://github.com/10up/simple-podcasting/pull/146)).
+- Podcast feed link output on Edit Podcast screen (props [@mehidi258](https://github.com/mehidi258), [@jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic) via [#139](https://github.com/10up/simple-podcasting/pull/139)).
+- Bug fix for `is_feed` being called too early (props [@tomjn](https://github.com/tomjn), [@jeffpaul](https://github.com/jeffpaul) via [#135](https://github.com/10up/simple-podcasting/pull/135)).
+- Missing and incorrect text-domain (props [@dkotter](https://github.com/dkotter), [@cadic](https://github.com/cadic) via [#131](https://github.com/10up/simple-podcasting/pull/131)).
+
+### Security
+- Bump `nanoid` from 3.1.25 to 3.2.0 (props [@dependabot](https://github.com/apps/dependabot) via [#143](https://github.com/10up/simple-podcasting/pull/143)).
 
 ## [1.2.1] - 2021-12-16
 ### Added
@@ -71,6 +88,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.2.2]: https://github.com/10up/simple-podcasting/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/10up/simple-podcasting/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/10up/simple-podcasting/compare/1.1.1...1.2.0
 [1.1.1]: https://github.com/10up/simple-podcasting/compare/f8a958c...1.1.1
