@@ -18,6 +18,9 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Bug fix for `is_feed` being called too early (props [@tomjn](https://github.com/tomjn), [@jeffpaul](https://github.com/jeffpaul) via [#135](https://github.com/10up/simple-podcasting/pull/135)).
 - Missing and incorrect text-domain (props [@dkotter](https://github.com/dkotter), [@cadic](https://github.com/cadic) via [#131](https://github.com/10up/simple-podcasting/pull/131)).
 
+### Security
+- Bump `nanoid` from 3.1.25 to 3.2.0 (props [@dependabot](https://github.com/apps/dependabot) via [#143](https://github.com/10up/simple-podcasting/pull/143)).
+
 ## [1.2.1] - 2021-12-16
 ### Added
 - Filter `simple_podcasting_episodes_per_page` to override default of 250 episodes per podcast feed (props [@pabamato](https://github.com/pabamato), [@dinhtungdu](https://github.com/dinhtungdu), [@monomo111](https://github.com/monomo111), [@jeffpaul](https://github.com/jeffpaul), [@jakemgold](https://github.com/jakemgold) via [#109](https://github.com/10up/simple-podcasting/pull/109)).
