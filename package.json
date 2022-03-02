@@ -26,7 +26,11 @@
     "prepare": "husky install",
     "wp-env": "wp-env",
     "cypress:open": "cypress open --config-file tests/cypress/config.json",
-    "cypress:run": "cypress run --config-file tests/cypress/config.json"
+    "cypress:run": "cypress run --config-file tests/cypress/config.json",
+    "env": "wp-env",
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "postenv:start": "./tests/bin/initialize.sh"
   },
   "lint-staged": {
     "*.php": [
@@ -38,11 +42,11 @@
     ]
   },
   "devDependencies": {
-    "@wordpress/env": "^4.1.0",
+    "@wordpress/env": "^4.2.2",
     "@wordpress/prettier-config": "^1.1.0",
     "@wordpress/scripts": "^17.1.0",
     "ansi-regex": ">=5.0.1",
-    "cypress": "^8.3.0",
+    "cypress": "^8.7.0",
     "cypress-file-upload": "^5.0.8",
     "husky": "^7.0.1",
     "json-schema": ">=0.4.0",
