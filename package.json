@@ -46,7 +46,7 @@
     "@wordpress/prettier-config": "^1.1.0",
     "@wordpress/scripts": "^17.1.0",
     "ansi-regex": ">=5.0.1",
-    "cypress": "^8.7.0",
+    "cypress": "^9.5.1",
     "cypress-file-upload": "^5.0.8",
     "husky": "^7.0.1",
     "json-schema": ">=0.4.0",
