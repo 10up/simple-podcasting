@@ -23,7 +23,7 @@ Podcasting is a method to distribute audio messages through a feed to which list
 
 ## Requirements
 
-* PHP 5.3+
+* PHP 7.0+
 * [WordPress](http://wordpress.org) 4.6+
 * RSS feeds must not be disabled
 
