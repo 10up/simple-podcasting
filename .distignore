@@ -6,6 +6,7 @@
 /gulp-tasks
 /node_modules
 /tests
+/vendor
 
 /.babelrc
 /.distignore
@@ -25,5 +26,6 @@
 /LICENSE.md
 /package.json
 /package-lock.json
+/phpunit.xml.dist
 /README.md
 /webpack.config.js

@@ -3,8 +3,8 @@ Contributors: 10up, helen, adamsilverstein, jakemgold
 Tags: simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
 Requires at least: 4.6
 Tested up to: 5.9
-Requires PHP: 7.3
-Stable tag: 1.2.1
+Requires PHP: 7.0
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,18 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
+
+= 1.2.2 - 2022-03-01 =
+* **Added:** Filter 'simple_podcasting_feed_item' to modify RSS feed item data before output (props [@cadic](https://profiles.wordpress.org/cadic), [@iamdharmesh](https://profiles.wordpress.org/dharm1025), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Added:** Unit tests (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Added:** GitHub action job to run PHPCS (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter)).
+* **Added:** Auto-create pot file in languages folder during the build process (props [@dkotter](https://profiles.wordpress.org/dkotter), [@cadic](https://profiles.wordpress.org/cadic)).
+* **Changed:** Bump WordPress "tested up to" version 5.9 (props [@sudip-10up](https://github.com/sudip-10up), [@cadic](https://profiles.wordpress.org/cadic), [@peterwilsoncc](https://profiles.wordpress.org/peterwilsoncc)).
+* **Fixed:** End-to-end tests with WordPress 5.9 element IDs (props[@cadic](https://profiles.wordpress.org/cadic), [@felipeelia](https://profiles.wordpress.org/felipeelia), [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu)).
+* **Fixed:** Podcast feed link output on Edit Podcast screen (props [@mehidi258](https://profiles.wordpress.org/mehidi258), [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@cadic](https://profiles.wordpress.org/cadic)).
+* **Fixed:** Bug fix for `is_feed` being called too early (props [@tomjn](https://profiles.wordpress.org/tomjn), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Fixed:** Missing and incorrect text-domain (props [@dkotter](https://profiles.wordpress.org/dkotter), [@cadic](https://profiles.wordpress.org/cadic)).
+* **Security:** Bump `nanoid` from 3.1.25 to 3.2.0 (props [@dependabot](https://github.com/apps/dependabot)).
 
 = 1.2.1 =
 * **Added:** Filter 'simple_podcasting_episodes_per_page' to override default of 250 episodes per podcast feed (props [@pabamato](https://profiles.wordpress.org/pabamato), [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu), [@monomo111](https://github.com/monomo111), [@jeffpaul](https://profiles.wordpress.org/jeffpaul/), [@jakemgold](https://profiles.wordpress.org/jakemgold/)).
