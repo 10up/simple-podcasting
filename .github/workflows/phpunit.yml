@@ -15,7 +15,7 @@ on:
 
 jobs:
   phpunit:
-    name: ${{ matrix.name }}
+    name: ${{ matrix.php.name }}
     runs-on: ubuntu-latest
 
     strategy:
