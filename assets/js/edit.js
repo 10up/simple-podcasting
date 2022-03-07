@@ -76,6 +76,7 @@ class Edit extends Component {
 				filesize,
 				duration,
 				caption: attachment.title,
+				enclosure: attachment.url + "\n" + filesize + "\n" + mime
 			} );
 			this.setState( { src: attachment.url } );
 		};
