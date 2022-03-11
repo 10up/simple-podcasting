@@ -9,9 +9,11 @@ describe( 'Admin can publish posts with podcast block', () => {
 		cy.get( 'h1.editor-post-title__input, #post-title-0' )
 			.first()
 			.as( 'title-input' );
-		cy.get( '@title-input').click().type('Test episode' );
+		cy.get( '@title-input' ).click().type( 'Test episode' );
 		cy.get( '.edit-post-header-toolbar__inserter-toggle' ).click();
-		cy.get( '#components-search-control-0, #block-editor-inserter__search-0' )
+		cy.get(
+			'#components-search-control-0, #block-editor-inserter__search-0'
+		)
 			.first()
 			.as( 'block-search' );
 		cy.get( '@block-search' ).click().type( 'Podcast' );
