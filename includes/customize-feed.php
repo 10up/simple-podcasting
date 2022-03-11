@@ -264,7 +264,7 @@ add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
 /**
  * Displays the enclosure feed for podcasts.
  *
- * @param  int $post The post ID.
+ * @param  WP_Post $post The post object.
  *
  * @return void
  */
@@ -281,18 +281,18 @@ function display_rss_enclosure( $post ) {
 		"' type='" .
 		esc_attr( $podcast_mime ) .
 		"' />\n";
-	}
 
-	echo wp_kses(
-		$enclosure,
-		array(
-			'enclosure' => array(
-				'url'    => array(),
-				'length' => array(),
-				'type'   => array(),
-			),
-		)
-	);
+		echo wp_kses(
+			$enclosure,
+			array(
+				'enclosure' => array(
+					'url'    => array(),
+					'length' => array(),
+					'type'   => array(),
+				),
+			)
+		);
+	}
 }
 
 /**

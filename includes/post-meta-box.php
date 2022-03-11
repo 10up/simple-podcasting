@@ -133,7 +133,8 @@ function save_meta_box( $post_id ) {
 			update_post_meta( $post_id, 'podcast_mime', $podcast_meta['podcast_mime'] );
 
 			// Add enclosure meta data
-			$enclosure = $podcast_meta['url'] . PHP_EOL . $podcast_meta['filesize'] . PHP_EOL . $podcast_meta['podcast_mime'];
+			$enclosure = $podcast_meta['url'] . "\n" . $podcast_meta['filesize'] . "\n" . $podcast_meta['podcast_mime'];
+
 			update_post_meta( $post_id, 'enclosure', $enclosure );
 		}
 	}
