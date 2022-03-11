@@ -6,6 +6,7 @@ vendor
 composer.lock
 phpunit.xml
 .idea
+.phpunit.result.cache
 
 # Project Files
 dist

@@ -11,7 +11,7 @@ class BlockTests extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp() : void {
 		\WP_Mock::setUp();
 	}
 	/**
@@ -19,7 +19,7 @@ class BlockTests extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown() : void {
 		\WP_Mock::tearDown();
 	}
 
@@ -69,7 +69,7 @@ class BlockTests extends TestCase {
 	 * @dataProvider data_provider_for_test_block_editor_meta_cleanup
 	 */
 	public function test_block_editor_meta_cleanup( $creating, $has_block, $metadata_exists, $expected ) {
-		$post = new stdClass;
+		$post     = new stdClass();
 		$post->ID = 42;
 
 		\WP_Mock::userFunction( 'has_block' )
@@ -89,32 +89,31 @@ class BlockTests extends TestCase {
 		$this->assertNull( tenup_podcasting\block\block_editor_meta_cleanup( $post, null, $creating ) );
 	}
 
-	public function data_provider_for_test_block_editor_meta_cleanup()
-	{
+	public function data_provider_for_test_block_editor_meta_cleanup() {
 		return array(
 			'Don\'t delete meta if creating post' => array(
-				'creating' => true,
-				'has_block' => false,
+				'creating'        => true,
+				'has_block'       => false,
 				'metadata_exists' => false,
-				'expected' => null,
+				'expected'        => null,
 			),
-			'Don\'t delete meta if has block' => array(
-				'creating' => false,
-				'has_block' => true,
+			'Don\'t delete meta if has block'     => array(
+				'creating'        => false,
+				'has_block'       => true,
 				'metadata_exists' => false,
-				'expected' => null,
+				'expected'        => null,
 			),
-			'Don\'t delete meta if no metadata' => array(
-				'creating' => false,
-				'has_block' => false,
+			'Don\'t delete meta if no metadata'   => array(
+				'creating'        => false,
+				'has_block'       => false,
 				'metadata_exists' => false,
-				'expected' => null,
+				'expected'        => null,
 			),
-			'Delete 6 metas' => array(
-				'creating' => false,
-				'has_block' => false,
+			'Delete 6 metas'                      => array(
+				'creating'        => false,
+				'has_block'       => false,
 				'metadata_exists' => true,
-				'expected' => array('podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit'),
+				'expected'        => array( 'podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit' ),
 			),
 		);
 	}

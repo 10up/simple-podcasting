@@ -11,7 +11,7 @@ class RestExternalUrlTests extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp() : void {
 		\WP_Mock::setUp();
 	}
 	/**
@@ -19,7 +19,7 @@ class RestExternalUrlTests extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown() : void {
 		\WP_Mock::tearDown();
 	}
 

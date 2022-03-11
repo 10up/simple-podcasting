@@ -11,7 +11,7 @@ class CustomizeFeedTests extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp() : void {
 		\WP_Mock::setUp();
 	}
 	/**
@@ -19,7 +19,7 @@ class CustomizeFeedTests extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown() : void {
 		\WP_Mock::tearDown();
 	}
 
@@ -170,7 +170,7 @@ class CustomizeFeedTests extends TestCase {
 			$this->assertSame( $expected, $result );
 		} elseif ( is_array( $expected ) ) {
 			foreach ( $expected as $message => $regex_string ) {
-				$this->assertRegExp( $regex_string, $output, $message );
+				$this->assertMatchesRegularExpression( $regex_string, $output, $message );
 			}
 		}
 	}
