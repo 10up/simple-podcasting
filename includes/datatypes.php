@@ -70,6 +70,16 @@ function register_meta() {
 			'single'       => true,
 		)
 	);
+
+	\register_meta(
+		'post',
+		'enclosure',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
 

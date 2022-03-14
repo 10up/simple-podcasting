@@ -76,5 +76,6 @@ function delete_all_podcast_meta( $post_id ) {
 		delete_post_meta( $post_id, 'podcast_mime' );
 		delete_post_meta( $post_id, 'podcast_captioned' );
 		delete_post_meta( $post_id, 'podcast_explicit' );
+		delete_post_meta( $post_id, 'enclosure' );
 	}
 }
