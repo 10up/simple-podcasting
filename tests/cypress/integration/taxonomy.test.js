@@ -1,4 +1,8 @@
 describe('Admin can create and update podcast taxonomy', () => {
+	before(() => {
+		cy.login();
+	});
+
 	it('Can see taxonomy menu item', () => {
 		cy.visit('/wp-admin');
 		cy.get(
