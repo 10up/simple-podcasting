@@ -49,7 +49,8 @@
     "lint-staged": "^12.3.7",
     "node-wp-i18n": "^1.2.6",
     "nth-check": ">=2.0.1",
-    "tmpl": ">=1.0.5"
+    "tmpl": ">=1.0.5",
+    "markdown-it": ">=12.3.2"
   },
   "prettier": "@wordpress/prettier-config"
 }
