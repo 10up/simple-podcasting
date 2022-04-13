@@ -35,3 +35,14 @@ jobs:
 
     - name: Test
       run: npm run cypress:run
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: cypress-artifact
+        retention-days: 2
+        path: |
+          ${{ github.workspace }}/cypress-test/tests/cypress/screenshots/
+          ${{ github.workspace }}/cypress-test/tests/cypress/videos/
+          ${{ github.workspace }}/cypress-test/tests/cypress/logs/
