@@ -23,17 +23,7 @@ describe('Admin can create and update podcast taxonomy', () => {
 	});
 
 	it('Can delete all taxonomies', () => {
-		cy.visit(
-			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
-		);
-		cy.get('#cb-select-all-1').click();
-		cy.get('#bulk-action-selector-top').select('delete');
-		cy.get('#doaction').click();
-		cy.url().should(
-			'contains',
-			'http://localhost:8889/wp-admin/edit-tags.php'
-		);
-		cy.get('.wp-list-table').should('contain.text', 'No podcasts found');
+		cy.deleteAllTerms('podcasting_podcasts');
 	});
 
 	it('Can add a new taxonomy', () => {
