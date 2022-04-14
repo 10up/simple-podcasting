@@ -41,7 +41,7 @@ describe('Admin can create and update podcast taxonomy', () => {
 		cy.get('#name').click().clear();
 		cy.get('#name').type('Distributed');
 		cy.get('#slug').click().clear();
-		cy.get('#submit').click();
+		cy.get('input[type="submit"]').click();
 		cy.url().should('contains', 'http://localhost:8889/wp-admin/term.php');
 		cy.visit(
 			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'

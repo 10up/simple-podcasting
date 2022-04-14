@@ -15,7 +15,6 @@
 
 import '@10up/cypress-wp-utils';
 import 'cypress-file-upload';
-import '@cypress/skip-test/support';
 
 beforeEach(() => {
 	Cypress.Cookies.defaults({
