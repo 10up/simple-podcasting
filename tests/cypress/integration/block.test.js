@@ -1,14 +1,15 @@
 describe('Admin can publish posts with podcast block', () => {
 	const taxonomy = 'Remote work';
 
-	before(() => {
-		cy.login();
-		cy.createTerm(taxonomy, 'podcasting_podcasts');
-	});
-
 	it('Can insert the block and publish the post', () => {
+		cy.skipOn(!Cypress.env('HAS_BLOCKS_EDITOR'));
+
+		cy.login();
+
+		cy.createTerm(taxonomy, 'podcasting_podcasts');
+
 		cy.visit('/wp-admin/post-new.php');
-		cy.get('button[aria-label="Close dialog"]').click();
+		cy.closeWelcomeGuide();
 		cy.get('h1.editor-post-title__input, #post-title-0')
 			.first()
 			.as('title-input');

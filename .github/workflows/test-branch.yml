@@ -13,9 +13,9 @@ jobs:
     strategy:
       matrix:
         core:
-          - {name: 'WP latest', version: 'latest'}
-          - {name: 'WP trunk', version: 'WordPress/WordPress#master'}
-          - {name: 'WP minimum', version: 'WordPress/WordPress#4.6'}
+          - {name: 'WP latest', version: 'latest', hasBlocksEditor: true}
+          - {name: 'WP trunk', version: 'WordPress/WordPress#master', hasBlocksEditor: true}
+          - {name: 'WP minimum', version: 'WordPress/WordPress#4.6', hasBlocksEditor: false}
 
     steps:
     - name: Checkout
@@ -34,7 +34,8 @@ jobs:
       run: npm run wp-env start
 
     - name: Test
-      run: npm run cypress:run
+      run: npm run cypress:run -- --env HAS_BLOCKS_EDITOR=${{ matrix.core.hasBlocksEditor }}
+
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
@@ -43,6 +44,6 @@ jobs:
         name: cypress-artifact
         retention-days: 2
         path: |
-          ${{ github.workspace }}/cypress-test/tests/cypress/screenshots/
-          ${{ github.workspace }}/cypress-test/tests/cypress/videos/
-          ${{ github.workspace }}/cypress-test/tests/cypress/logs/
+          ${{ github.workspace }}/tests/cypress/screenshots/
+          ${{ github.workspace }}/tests/cypress/videos/
+          ${{ github.workspace }}/tests/cypress/logs/
