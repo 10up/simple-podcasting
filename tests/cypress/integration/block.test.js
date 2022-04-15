@@ -1,7 +1,7 @@
 describe('Admin can publish posts with podcast block', () => {
 	const taxonomy = 'Remote work';
 
-	if (Cypress.env('HAS_BLOCKS_EDITOR')) {
+	if (Cypress.env('HAS_BLOCK_EDITOR')) {
 		it('Can insert the block and publish the post', () => {
 			cy.login();
 

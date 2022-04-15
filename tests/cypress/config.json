@@ -8,6 +8,6 @@
   "supportFile": "tests/cypress/support/index.js",
   "video": false,
   "env": {
-    "HAS_BLOCKS_EDITOR": true
+    "HAS_BLOCK_EDITOR": true
   }
 }

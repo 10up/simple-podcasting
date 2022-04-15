@@ -13,9 +13,9 @@ jobs:
     strategy:
       matrix:
         core:
-          - {name: 'WP latest', version: 'latest', hasBlocksEditor: true}
-          - {name: 'WP trunk', version: 'WordPress/WordPress#master', hasBlocksEditor: true}
-          - {name: 'WP minimum', version: 'WordPress/WordPress#4.6', hasBlocksEditor: false}
+          - {name: 'WP latest', version: 'latest', hasBlockEditor: true}
+          - {name: 'WP trunk', version: 'WordPress/WordPress#master', hasBlockEditor: true}
+          - {name: 'WP minimum', version: 'WordPress/WordPress#4.6', hasBlockEditor: false}
 
     steps:
     - name: Checkout
@@ -34,7 +34,7 @@ jobs:
       run: npm run wp-env start
 
     - name: Test
-      run: npm run cypress:run -- --env HAS_BLOCKS_EDITOR=${{ matrix.core.hasBlocksEditor }}
+      run: npm run cypress:run -- --env HAS_BLOCK_EDITOR=${{ matrix.core.hasBlockEditor }}
 
 
     - name: Upload artifacts

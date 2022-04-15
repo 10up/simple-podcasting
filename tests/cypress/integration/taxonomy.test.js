@@ -37,12 +37,12 @@ describe('Admin can create and update podcast taxonomy', () => {
 			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
 		);
 		cy.get('.row-title').should('have.text', 'Remote work').click();
-		cy.url().should('contains', 'http://localhost:8889/wp-admin/term.php');
+		cy.url().should('contain', 'http://localhost:8889/wp-admin/term.php');
 		cy.get('#name').click().clear();
 		cy.get('#name').type('Distributed');
 		cy.get('#slug').click().clear();
 		cy.get('input[type="submit"]').click();
-		cy.url().should('contains', 'http://localhost:8889/wp-admin/term.php');
+		cy.url().should('contain', 'http://localhost:8889/wp-admin/term.php');
 		cy.visit(
 			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
 		);
@@ -50,20 +50,21 @@ describe('Admin can create and update podcast taxonomy', () => {
 		cy.get('.row-title').should('have.text', 'Distributed');
 	});
 
-	if (Cypress.env('HAS_BLOCKS_EDITOR')) {
+	// WP 4.6 doesn't have the delete link in the edit term detail page.
+	if (Cypress.env('HAS_BLOCK_EDITOR')) {
 		it('Can delete taxonomy', () => {
 			cy.visit(
 				'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
 			);
 			cy.get('.row-title').should('have.text', 'Distributed').click();
 			cy.url().should(
-				'contains',
+				'contain',
 				'http://localhost:8889/wp-admin/term.php'
 			);
 			cy.on('window:confirm', () => true);
 			cy.get('.delete').click();
 			cy.url().should(
-				'contains',
+				'contain',
 				'http://localhost:8889/wp-admin/edit-tags.php'
 			);
 			cy.get('.wp-list-table').should(
