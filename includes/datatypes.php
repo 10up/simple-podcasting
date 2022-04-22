@@ -70,6 +70,16 @@ function register_meta() {
 			'single'       => true,
 		)
 	);
+
+	\register_meta(
+		'post',
+		'enclosure',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
 
@@ -176,7 +186,7 @@ add_action( 'admin_menu', __NAMESPACE__ . '\add_top_level_menu' );
  */
 function add_podcasting_taxonomy_help_text() {
 	echo '<div class="notice notice-info"><p>';
-	esc_html_e( 'Once at least one podcast exists, you can add episodes by creating a post, assigning it to the appropriate podcast, and inserting an audio player or podcast block into the content of the post. You can then submit the feed URL to podcast directories.', 'podcasting' );
+	esc_html_e( 'Once at least one podcast exists, you can add episodes by creating a post, assigning it to the appropriate podcast, and inserting an audio player or podcast block into the content of the post. You can then submit the feed URL to podcast directories.', 'simple-podcasting' );
 	echo '</p></div>';
 }
 add_action( 'after-podcasting_podcasts-table', __NAMESPACE__ . '\add_podcasting_taxonomy_help_text' );
@@ -397,10 +407,9 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 
 	wp_nonce_field( 'podcasting_edit', 'podcasting_nonce' );
 	wp_enqueue_media();
-
 	if ( $taxonomy ) {
 		$url = get_term_feed_link( $term->term_id, TAXONOMY_NAME );
-		__( 'Your Podcast Feed:', 'ads-txt' );
+		esc_html_e( 'Your Podcast Feed: ', 'simple-podcasting' );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		esc_html_e( 'This is the URL you submit to iTunes or podcasting service.', 'simple-podcasting' );
 	}
@@ -459,13 +468,13 @@ add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_
  */
 function add_custom_term_columns( $columns ) {
 	$columns = array_merge(
-		[
+		array(
 			'podcasting_image' => __( 'Podcast Cover', 'simple-podcasting' ),
-		],
+		),
 		$columns,
-		[
+		array(
 			'feedurl' => __( 'Feed URL', 'simple-podcasting' ),
-		]
+		)
 	);
 	unset( $columns['description'] );
 	unset( $columns['author'] );
@@ -479,14 +488,14 @@ add_filter( 'manage_edit-' . TAXONOMY_NAME . '_columns', __NAMESPACE__ . '\add_c
 function get_meta_fields() {
 	return array(
 		array(
-			'slug'        => 'podcasting_subtitle',
-			'title'       => __( 'Subtitle', 'simple-podcasting' ),
-			'type'        => 'textfield',
+			'slug'  => 'podcasting_subtitle',
+			'title' => __( 'Subtitle', 'simple-podcasting' ),
+			'type'  => 'textfield',
 		),
 		array(
-			'slug'        => 'podcasting_talent_name',
-			'title'       => __( 'Artist / Author name', 'simple-podcasting' ),
-			'type'        => 'textfield',
+			'slug'  => 'podcasting_talent_name',
+			'title' => __( 'Artist / Author name', 'simple-podcasting' ),
+			'type'  => 'textfield',
 		),
 		array(
 			'slug'  => 'podcasting_email',
@@ -494,20 +503,20 @@ function get_meta_fields() {
 			'type'  => 'textfield',
 		),
 		array(
-			'slug'        => 'podcasting_summary',
-			'title'       => __( 'Summary', 'simple-podcasting' ),
-			'type'        => 'textarea',
+			'slug'  => 'podcasting_summary',
+			'title' => __( 'Summary', 'simple-podcasting' ),
+			'type'  => 'textarea',
 		),
 		array(
-			'slug'        => 'podcasting_copyright',
-			'title'       => __( 'Copyright / License information', 'simple-podcasting' ),
-			'type'        => 'textfield',
+			'slug'  => 'podcasting_copyright',
+			'title' => __( 'Copyright / License information', 'simple-podcasting' ),
+			'type'  => 'textfield',
 		),
 		array(
-			'slug'        => 'podcasting_explicit',
-			'title'       => __( 'Mark as explicit', 'simple-podcasting' ),
-			'type'        => 'select',
-			'options'     => array(
+			'slug'    => 'podcasting_explicit',
+			'title'   => __( 'Mark as explicit', 'simple-podcasting' ),
+			'type'    => 'select',
+			'options' => array(
 				'No',
 				'Yes',
 				'Clean',
@@ -560,6 +569,7 @@ function get_meta_fields() {
  * @return array Array of podcasting categories.
  */
 function get_podcasting_categories() {
+	// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned -- keep nested array readable
 	return array(
 		'arts' => array(
 			'name' => 'Arts',
@@ -683,13 +693,14 @@ function get_podcasting_categories() {
 			'name' => 'TV & Film',
 		),
 	);
+	// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 }
 
 /**
  * Transform podcasting categories into dropdown options
  */
 function get_podcasting_categories_options() {
-	$to_return  = array( '' => __( 'None' ) );
+	$to_return  = array( '' => __( 'None', 'simple-podcasting' ) );
 	$categories = get_podcasting_categories();
 
 	foreach ( $categories as $key => $category ) {

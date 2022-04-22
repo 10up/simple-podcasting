@@ -1,14 +1,15 @@
 node_modules
 bower_components
+languages
 release
 vendor
 composer.lock
 phpunit.xml
 .idea
-package-lock.json
+.phpunit.result.cache
 
 # Project Files
-#dist
+dist
 ruleset.xml
 
 # Editors
@@ -34,3 +35,8 @@ Desktop.ini
 
 .env
 setup.log
+# E2E testing
+artifacts
+tests/cypress/downloads
+tests/cypress/screenshots
+tests/cypress/videos

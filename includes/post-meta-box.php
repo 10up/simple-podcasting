@@ -31,10 +31,8 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );
  * @param  object WP_Post $post The current post.
  */
 function meta_box_html( $post ) {
-	$podcast_url = get_post_meta( $post->ID, 'podcast_url', true );
-	$podcast_duration = get_post_meta( $post->ID, 'podcast_duration', true );
-	$podcast_mime = get_post_meta( $post->ID, 'podcast_mime', true );
-	$podcast_explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
+	$podcast_url       = get_post_meta( $post->ID, 'podcast_url', true );
+	$podcast_explicit  = get_post_meta( $post->ID, 'podcast_explicit', true );
 	$podcast_captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
 
 	wp_nonce_field( plugin_basename( __FILE__ ), 'simple-podcasting' );
@@ -50,8 +48,8 @@ function meta_box_html( $post ) {
 		<label for="podcast_explicit_content">
 			<?php esc_html_e( 'Explicit Content', 'simple-podcasting' ); ?>
 			<select id="podcast_explicit_content" name="podcast_explicit_content">
-				<option value="no"<?php selected( $podcast_explicit, 'no' ); ?>><?php esc_html_e( 'No' ); ?></option>
-				<option value="yes"<?php selected( $podcast_explicit, 'yes' ); ?>><?php esc_html_e( 'Yes' ); ?></option>
+				<option value="no"<?php selected( $podcast_explicit, 'no' ); ?>><?php esc_html_e( 'No', 'simple-podcasting' ); ?></option>
+				<option value="yes"<?php selected( $podcast_explicit, 'yes' ); ?>><?php esc_html_e( 'Yes', 'simple-podcasting' ); ?></option>
 				<option value="clean"<?php selected( $podcast_explicit, 'clean' ); ?>><?php esc_html_e( 'Clean', 'simple-podcasting' ); ?></option>
 			</select>
 		</label>
@@ -60,7 +58,7 @@ function meta_box_html( $post ) {
 	<p>
 		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'simple-podcasting' ); ?></label>
 		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $podcast_url ); ?>" size="35" />
-		<input type="button" id="podcasting-enclosure-button" value="<?php esc_attr_e( 'Choose File', 'simple-podcasting' ); ?>" class="button"data-modal-title="<?php esc_attr_e( 'Podcast Enclosure', 'simple-podcasting' ); ?>" data-modal-button="<?php esc_attr_e( 'Select this file' ); ?>" />
+		<input type="button" id="podcasting-enclosure-button" value="<?php esc_attr_e( 'Choose File', 'simple-podcasting' ); ?>" class="button" data-modal-title="<?php esc_attr_e( 'Podcast Enclosure', 'simple-podcasting' ); ?>" data-modal-button="<?php esc_attr_e( 'Select this file', 'simple-podcasting' ); ?>" />
 	</p>
 
 	<p class="howto"><?php esc_html_e( 'Optional: Use this field if you have more than one audio/video file in your post.', 'simple-podcasting' ); ?></p>
@@ -89,9 +87,9 @@ function save_meta_box( $post_id ) {
 
 	$_post = wp_unslash( $_POST );
 
-	$url              = false;
+	$url               = false;
 	$podcast_captioned = 0;
-	$podcast_explicit = 'no';
+	$podcast_explicit  = 'no';
 
 	if ( isset( $_post['podcast_closed_captioned'] ) && 'on' === $_post['podcast_closed_captioned'] ) {
 		$podcast_captioned = 1;
@@ -106,7 +104,7 @@ function save_meta_box( $post_id ) {
 	} else {
 		// Search for an audio shortcode to determine the audio enclosure url.
 		$pattern = get_shortcode_regex();
-		$post = get_post( $post_id );
+		$post    = get_post( $post_id );
 
 		if (
 			preg_match_all( '/' . $pattern . '/s', $post->post_content, $matches )
@@ -133,6 +131,11 @@ function save_meta_box( $post_id ) {
 			update_post_meta( $post_id, 'podcast_filesize', $podcast_meta['filesize'] );
 			update_post_meta( $post_id, 'podcast_duration', $podcast_meta['duration'] );
 			update_post_meta( $post_id, 'podcast_mime', $podcast_meta['podcast_mime'] );
+
+			// Add enclosure meta data
+			$enclosure = $podcast_meta['url'] . "\n" . $podcast_meta['filesize'] . "\n" . $podcast_meta['podcast_mime'];
+
+			update_post_meta( $post_id, 'enclosure', $enclosure );
 		}
 	}
 
@@ -157,15 +160,9 @@ function edit_post_enqueues( $hook_suffix ) {
 		return;
 	}
 
-	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-		$js_file = 'assets/js/podcasting-edit-post.js';
-	} else {
-		$js_file = 'dist/js/podcasting-edit-post.min.js';
-	}
-
 	wp_enqueue_script(
 		'podcasting_edit_post_screen',
-		PODCASTING_URL . $js_file,
+		PODCASTING_URL . 'dist/podcasting-edit-post.js',
 		array( 'jquery' ),
 		PODCASTING_VERSION,
 		true
