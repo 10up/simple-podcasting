@@ -1,8 +1,12 @@
 /.git
 /.github
+/.husky
 /.wordpress-org
+/assets
 /gulp-tasks
 /node_modules
+/tests
+/vendor
 
 /.babelrc
 /.distignore
@@ -10,9 +14,11 @@
 /.eslintignore
 /.eslintrc
 /.gitignore
+/.phpcs.xml.dist
 /.prettierrc
 /CHANGELOG.md
 /CODE_OF_CONDUCT.md
+/composer.json
 /composer.lock
 /CONTRIBUTING.md
 /CREDITS.md
@@ -20,5 +26,6 @@
 /LICENSE.md
 /package.json
 /package-lock.json
+/phpunit.xml.dist
 /README.md
-/webpack.config.babel.js
+/webpack.config.js

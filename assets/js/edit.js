@@ -76,6 +76,7 @@ class Edit extends Component {
 				filesize,
 				duration,
 				caption: attachment.title,
+				enclosure: attachment.url + "\n" + filesize + "\n" + mime
 			} );
 			this.setState( { src: attachment.url } );
 		};
@@ -169,7 +170,7 @@ class Edit extends Component {
 							{ ( ( caption && caption.length ) || !! isSelected ) && (
 								<RichText
 									tagName="figcaption"
-									placeholder={ __( 'Write caption…' ) }
+									placeholder={ __( 'Write caption…', 'simple-podcasting' ) }
 									value={ caption }
 									onChange={ ( value ) => setAttributes( { caption: value } ) }
 									isSelected={ isSelected }

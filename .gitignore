@@ -1,10 +1,12 @@
 node_modules
 bower_components
+languages
 release
 vendor
 composer.lock
 phpunit.xml
 .idea
+.phpunit.result.cache
 
 # Project Files
 dist

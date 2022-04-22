@@ -171,84 +171,104 @@ function feed_item() {
 		return false;
 	}
 
-	$author = get_option( 'podcasting_talent_name' );
-	if ( empty( $author ) ) {
-		$author = get_the_author();
+	$feed_item = array(
+		'author'    => get_option( 'podcasting_talent_name' ),
+		'explicit'  => get_post_meta( $post->ID, 'podcast_explicit', true ),
+		'captioned' => get_post_meta( $post->ID, 'podcast_captioned', true ),
+		'keywords'  => '',
+		'image'     => '',
+		'summary'   => '',
+		'subtitle'  => '',
+		'duration'  => get_post_meta( $post->ID, 'podcast_duration', true ),
+	);
+
+	if ( empty( $feed_item['author'] ) ) {
+		$feed_item['author'] = get_the_author();
 	}
-
-	echo '<itunes:author>' . esc_html( $author ) . "</itunes:author>\n";
-
-	$explicit = get_post_meta( $post->ID, 'podcast_explicit', true );
 
 	// fall back to the podcast setting.
-	if ( empty( $explicit ) ) {
-		$explicit = get_term_meta( $term->term_id, 'podcasting_explicit', true );
+	if ( empty( $feed_item['explicit'] ) ) {
+		$feed_item['explicit'] = get_term_meta( $term->term_id, 'podcasting_explicit', true );
 	}
 
-	echo '<itunes:explicit>';
-
-	if ( empty( $explicit ) ) {
-		echo 'no';
-	} else {
-		echo esc_html( $explicit );
-	}
-
-	echo "</itunes:explicit>\n";
-
-	$captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
-
-	if ( $captioned ) {
-		echo "<itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>\n";
+	// "no" explicit by default
+	if ( empty( $feed_item['explicit'] ) ) {
+		$feed_item['explicit'] = 'no';
 	}
 
 	// Add the featured image if available.
 	if ( has_post_thumbnail( $post->ID ) ) {
-		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' );
-		if ( ! empty( $image ) ) {
-			if ( is_array( $image ) ) {
-				$image = $image[0];
-			}
-			echo "<itunes:image href='" . esc_url( $image ) . "' />\n";
+		$feed_item['image'] = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'post-thumbnail' );
+		if ( ! empty( $feed_item['image'] ) && is_array( $feed_item['image'] ) ) {
+			$feed_item['image'] = $feed_item['image'][0];
 		}
 	}
 
-	// @todo add a filter here
-	$keywords = '';
-	if ( ! empty( $keywords ) ) {
-		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
-	}
-
 	if ( has_excerpt() ) {
-		$excerpt = get_the_excerpt();
+		$feed_item['summary'] = get_the_excerpt();
 	} else {
-		$excerpt = get_term_meta( $term->term_id, 'podcasting_summary', true );
+		$feed_item['summary'] = get_term_meta( $term->term_id, 'podcasting_summary', true );
 	}
-	$excerpt = apply_filters( 'the_excerpt_rss', $excerpt );
+	$feed_item['summary'] = apply_filters( 'the_excerpt_rss', $feed_item['summary'] );
 
-	echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $excerpt ) ) . "</itunes:summary>\n";
+	$feed_item['subtitle'] = wp_trim_words( $feed_item['summary'], 10, '&#8230;' );
 
-	$subtitle = wp_trim_words( $excerpt, 10, '&#8230;' );
+	/**
+	 * Filter podcasting feed item data
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array $feed_item {
+	 *     Item data to filter.
+	 *
+	 *     @type string $author    Podcast author.
+	 *     @type string $explicit  Explicit content (yes|no|clean).
+	 *     @type string $captioned Closed Captioned ("1"|"0"). Optional.
+	 *     @type string $keywords  Episode keywords. Optional.
+	 *     @type string $image     Episode image. Optional.
+	 *     @type string $summary   Episode summary.
+	 *     @type string $subtitle  Episode subtitle.
+	 *     @type string $duration  Episode duration (HH:MM). Optional.
+	 * }
+	 * @param int $post->ID Podcast episode post ID.
+	 * @param int $term->term_id Podcast term ID.
+	 */
+	$feed_item = apply_filters( 'simple_podcasting_feed_item', $feed_item, $post->ID, $term->term_id );
 
-	echo '<itunes:subtitle>' . esc_html( $subtitle ) . "</itunes:subtitle>\n";
+	// Output enclosure if it's not present in the post
+	$enclosure = get_post_meta( $post->ID, 'enclosure', true );
+	if ( empty( $enclosure ) ) {
+		display_rss_enclosure( $post );
+	}
 
-	// Add an enclosure duration if available.
-	$duration = get_post_meta( $post->ID, 'podcast_duration', true );
-	if ( ! empty( $duration ) ) {
-		echo '<itunes:duration>' . esc_html( $duration ) . "</itunes:duration>\n";
+	// Output all custom RSS tags.
+	echo '<itunes:author>' . esc_html( $feed_item['author'] ) . "</itunes:author>\n";
+	echo '<itunes:explicit>' . esc_html( $feed_item['explicit'] ) . "</itunes:explicit>\n";
+	if ( $feed_item['captioned'] ) {
+		echo "<itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>\n";
+	}
+	if ( ! empty( $feed_item['image'] ) ) {
+		echo "<itunes:image href='" . esc_url( $feed_item['image'] ) . "' />\n";
+	}
+	if ( ! empty( $feed_item['keywords'] ) ) {
+		echo '<itunes:keywords>' . esc_html( $feed_item['keywords'] ) . "</itunes:keywords>\n";
+	}
+	echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $feed_item['summary'] ) ) . "</itunes:summary>\n";
+	echo '<itunes:subtitle>' . esc_html( $feed_item['subtitle'] ) . "</itunes:subtitle>\n";
+	if ( ! empty( $feed_item['duration'] ) ) {
+		echo '<itunes:duration>' . esc_html( $feed_item['duration'] ) . "</itunes:duration>\n";
 	}
 }
 add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
 
 /**
- * Adjust the enclosure feed for podcasts.
+ * Displays the enclosure feed for podcasts.
  *
- * @param  string $enclosure The enclosure (media url).
+ * @param  WP_Post $post The post object.
  *
- * @return string            The adjusted enclosure.
+ * @return void
  */
-function rss_enclosure( $enclosure ) {
-	global $post;
-
+function display_rss_enclosure( $post ) {
 	$podcast_url      = get_post_meta( $post->ID, 'podcast_url', true );
 	$podcast_filesize = get_post_meta( $post->ID, 'podcast_filesize', true );
 	$podcast_mime     = get_post_meta( $post->ID, 'podcast_mime', true );
@@ -261,11 +281,19 @@ function rss_enclosure( $enclosure ) {
 		"' type='" .
 		esc_attr( $podcast_mime ) .
 		"' />\n";
-	}
 
-	return $enclosure;
+		echo wp_kses(
+			$enclosure,
+			array(
+				'enclosure' => array(
+					'url'    => array(),
+					'length' => array(),
+					'type'   => array(),
+				),
+			)
+		);
+	}
 }
-add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
 
 /**
  * Generate the category elements from the given option (e.g. podcasting_category_1).
@@ -360,4 +388,3 @@ function pre_get_posts( $query ) {
 
 // Filter the feed query.
 add_action( 'pre_get_posts', __NAMESPACE__ . '\pre_get_posts', 10, 1 );
-

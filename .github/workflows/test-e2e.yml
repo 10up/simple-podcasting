@@ -1,0 +1,52 @@
+name: E2E Test
+
+on:
+  push:
+    branches:
+      - trunk
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        core:
+          - {name: 'WP latest', version: 'latest', hasBlockEditor: true}
+          - {name: 'WP trunk', version: 'WordPress/WordPress#master', hasBlockEditor: true}
+          - {name: 'WP minimum', version: 'WordPress/WordPress#4.6', hasBlockEditor: false}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm i
+
+    - name: Build asset
+      run: npm run build
+
+    - name: Set the core version
+      run: ./tests/bin/set-core-version.js ${{ matrix.core.version }}
+
+    - name: Set up WP environment
+      run: npm run wp-env start
+
+    - name: Test
+      run: npm run cypress:run -- --env HAS_BLOCK_EDITOR=${{ matrix.core.hasBlockEditor }}
+
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: cypress-artifact
+        retention-days: 2
+        path: |
+          ${{ github.workspace }}/tests/cypress/screenshots/
+          ${{ github.workspace }}/tests/cypress/videos/
+          ${{ github.workspace }}/tests/cypress/logs/

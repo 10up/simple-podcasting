@@ -2,7 +2,7 @@
 
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.8.1%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Test PRs](https://github.com/10up/simple-podcasting/actions/workflows/test-pr.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-pr.yml) [![Test Branches](https://github.com/10up/simple-podcasting/actions/workflows/test-branch.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-branch.yml) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
 
 ## Table of Contents
 * [Overview](#overview)
@@ -11,6 +11,8 @@
 * [Create Podcast](#create-your-podcast)
 * [Add Content to Podcast](#add-content-to-your-podcast)
 * [Submit Podcast Feed to Apple Podcasts](#submit-your-podcast-feed-to-apple-podcasts)
+* [Control how many episodes are listed on the feed](#control-how-many-episodes-are-listed-on-the-feed)
+* [Customize RSS feed](#customize-rss-feed)
 * [Contributing](#contributing)
 
 ## Overview
@@ -21,7 +23,7 @@ Podcasting is a method to distribute audio messages through a feed to which list
 
 ## Requirements
 
-* PHP 5.3+
+* PHP 7.0+
 * [WordPress](http://wordpress.org) 4.6+
 * RSS feeds must not be disabled
 
@@ -70,7 +72,9 @@ Podcast setup | Podcast in editor | Podcast feed
 
 ## Control how many episodes are listed on the feed
 
-```
+If you want to adjust the default number of episodes included in a podcast RSS feed, then utilize the following to do so...
+
+```php
 <?php
 
 add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per_page' );
@@ -86,6 +90,22 @@ function podcasting_feed_episodes_per_page( $qty ) {
 	return 300;
 }
 
+```
+
+## Customize RSS feed
+
+If you want to modify RSS feed items output, there is a filter for that:
+
+```php
+<?php
+
+function podcasting_feed_item_filter( $feed_item = array(), $post_id = null, $term_id = null ) {
+	if ( 42 === $post_id ) {
+		$feed_item['keywords'] = 'one,two,three';
+	}
+	return $feed_item;
+}
+add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 );
 ```
 
 ## Support Level
