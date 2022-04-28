@@ -102,8 +102,21 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 
 == Changelog ==
 
+= 1.2.3 - 2022-04-28 =
+* **Added** Compatibility tests against PHP 7 and 8 (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Added** Default Pull Request Reviewers via CODEOWNERS file (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@cadic](https://profiles.wordpress.org/cadic)).
+* **Added** Dependency security scanning (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Changed** Unit tests against PHP 8 (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Changed** Bump required PHP 7.0 (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Changed** Replaced custom commands with @10up/cypress-wp-utils in end-to-end tests (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu), [@cadic](https://profiles.wordpress.org/cadic), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Fixed** Missing `<enclosure>` in feed item (props [@davexpression](https://profiles.wordpress.org/davexpression/), [@cadic](https://profiles.wordpress.org/cadic), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Fixed** Failing Cypress test on WP Minimum (props [@dinhtungdu](https://profiles.wordpress.org/dinhtungdu), [@cadic](https://profiles.wordpress.org/cadic), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Fixed** Updated badges in readme (props [@cadic](https://profiles.wordpress.org/cadic), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Security** Upgraded node dependencies (props [@cadic](https://profiles.wordpress.org/cadic), [@dharm1025](https://profiles.wordpress.org/dharm1025), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Security** Bump async from 2.6.3 to 2.6.4 (props [@dependabot](https://github.com/apps/dependabot)).
+
 = 1.2.2 - 2022-03-01 =
-* **Added:** Filter 'simple_podcasting_feed_item' to modify RSS feed item data before output (props [@cadic](https://profiles.wordpress.org/cadic), [@iamdharmesh](https://profiles.wordpress.org/dharm1025), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
+* **Added:** Filter 'simple_podcasting_feed_item' to modify RSS feed item data before output (props [@cadic](https://profiles.wordpress.org/cadic), [@dharm1025](https://profiles.wordpress.org/dharm1025), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
 * **Added:** Unit tests (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
 * **Added:** GitHub action job to run PHPCS (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter)).
 * **Added:** Auto-create pot file in languages folder during the build process (props [@dkotter](https://profiles.wordpress.org/dkotter), [@cadic](https://profiles.wordpress.org/cadic)).
