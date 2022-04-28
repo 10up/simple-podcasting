@@ -2,9 +2,31 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
+## [1.2.3] - 2022-04-28
+### Added
+- Compatibility tests against PHP 7 and 8 (props [@cadic](https://github.com/cadic), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#150](https://github.com/10up/simple-podcasting/pull/150)).
+- Default Pull Request Reviewers via CODEOWNERS file (props [@jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic) via [#156](https://github.com/10up/simple-podcasting/pull/156)).
+- Dependency security scanning (props [@jeffpaul](https://github.com/jeffpaul) via [#168](https://github.com/10up/simple-podcasting/pull/168)).
+
+### Changed
+- Unit tests against PHP 8 (props [@cadic](https://github.com/cadic), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#150](https://github.com/10up/simple-podcasting/pull/150)).
+- Bump required PHP 7.0 (props [@cadic](https://github.com/cadic), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#150](https://github.com/10up/simple-podcasting/pull/150)).
+- Replaced custom commands with @10up/cypress-wp-utils in end-to-end tests (props [@dinhtungdu](https://github.com/dinhtungdu), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#162](https://github.com/10up/simple-podcasting/pull/162)).
+
+### Fixed
+- Missing `<enclosure>` in feed item (props [@davexpression](https://github.com/davexpression), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#147](https://github.com/10up/simple-podcasting/pull/147)).
+- Failing Cypress test on WP Minimum (props [@dinhtungdu](https://github.com/dinhtungdu), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#164](https://github.com/10up/simple-podcasting/pull/164)).
+- Updated badges in readme (props [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#167](https://github.com/10up/simple-podcasting/pull/167)).
+
+### Security
+- Upgraded node dependencies (props [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#158](https://github.com/10up/simple-podcasting/pull/158) and [#163](https://github.com/10up/simple-podcasting/pull/163)).
+- Bump async from 2.6.3 to 2.6.4 (props [@dependabot](https://github.com/apps/dependabot) via [#166](https://github.com/10up/simple-podcasting/pull/166)).
+- Bump node-forge from 1.2.1 to 1.3.0 (props [@dependabot](https://github.com/apps/dependabot) via [#160](https://github.com/10up/simple-podcasting/pull/160)).
+- Bump minimist from 1.2.5 to 1.2.6 (props [@dependabot](https://github.com/apps/dependabot) via [#159](https://github.com/10up/simple-podcasting/pull/159)).
+
 ## [1.2.2] - 2022-03-01
 ### Added
-- Filter `simple_podcasting_feed_item` to modify RSS feed item data before output (props (props [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#144](https://github.com/10up/simple-podcasting/pull/144)).
+- Filter `simple_podcasting_feed_item` to modify RSS feed item data before output (props [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#144](https://github.com/10up/simple-podcasting/pull/144)).
 - Unit tests (props [@cadic](https://github.com/cadic) via [#142](https://github.com/10up/simple-podcasting/pull/142), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul)).
 - GitHub action job to run PHPCS (props [@cadic](https://github.com/cadic), [@dkotter](https://github.com/dkotter) via [#136](https://github.com/10up/simple-podcasting/pull/136)).
 - Auto-create pot file in languages folder during the build process (props [@dkotter](https://github.com/dkotter), [@cadic](https://github.com/cadic) via [#131](https://github.com/10up/simple-podcasting/pull/131)).
@@ -88,6 +110,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.2.3]: https://github.com/10up/simple-podcasting/compare/1.2.2...1.2.3
 [1.2.2]: https://github.com/10up/simple-podcasting/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/10up/simple-podcasting/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/10up/simple-podcasting/compare/1.1.1...1.2.0
