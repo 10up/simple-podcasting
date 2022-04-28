@@ -110,7 +110,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
-[1.2.3]: https://github.com/10up/simple-podcasting/compare/1.2.2...1.2.3-release
+[1.2.3]: https://github.com/10up/simple-podcasting/compare/1.2.2...1.2.3-deploy
 [1.2.2]: https://github.com/10up/simple-podcasting/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/10up/simple-podcasting/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/10up/simple-podcasting/compare/1.1.1...1.2.0
