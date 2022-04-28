@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file, per [the Ke
 ### Security
 - Upgraded node dependencies (props [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#158](https://github.com/10up/simple-podcasting/pull/158) and [#163](https://github.com/10up/simple-podcasting/pull/163)).
 - Bump async from 2.6.3 to 2.6.4 (props [@dependabot](https://github.com/apps/dependabot) via [#166](https://github.com/10up/simple-podcasting/pull/166)).
+- Bump node-forge from 1.2.1 to 1.3.0 (props [@dependabot](https://github.com/apps/dependabot) via [#160](https://github.com/10up/simple-podcasting/pull/160)).
+- Bump minimist from 1.2.5 to 1.2.6 (props [@dependabot](https://github.com/apps/dependabot) via [#159](https://github.com/10up/simple-podcasting/pull/159)).
 
 ## [1.2.2] - 2022-03-01
 ### Added

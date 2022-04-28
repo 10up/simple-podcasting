@@ -114,6 +114,8 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 * **Fixed** Updated badges in readme (props [@cadic](https://profiles.wordpress.org/cadic), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
 * **Security** Upgraded node dependencies (props [@cadic](https://profiles.wordpress.org/cadic), [@dharm1025](https://profiles.wordpress.org/dharm1025), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
 * **Security** Bump async from 2.6.3 to 2.6.4 (props [@dependabot](https://github.com/apps/dependabot)).
+* **Security** Bump node-forge from 1.2.1 to 1.3.0 (props [@dependabot](https://github.com/apps/dependabot)).
+* **Security** Bump minimist from 1.2.5 to 1.2.6 (props [@dependabot](https://github.com/apps/dependabot).
 
 = 1.2.2 - 2022-03-01 =
 * **Added:** Filter 'simple_podcasting_feed_item' to modify RSS feed item data before output (props [@cadic](https://profiles.wordpress.org/cadic), [@dharm1025](https://profiles.wordpress.org/dharm1025), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
