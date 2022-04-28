@@ -2,7 +2,7 @@
 
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Test PRs](https://github.com/10up/simple-podcasting/actions/workflows/test-pr.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-pr.yml) [![Test Branches](https://github.com/10up/simple-podcasting/actions/workflows/test-branch.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-branch.yml) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![E2E Test](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
 
 ## Table of Contents
 * [Overview](#overview)

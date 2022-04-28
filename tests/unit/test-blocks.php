@@ -113,7 +113,7 @@ class BlockTests extends TestCase {
 				'creating'        => false,
 				'has_block'       => false,
 				'metadata_exists' => true,
-				'expected'        => array( 'podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit' ),
+				'expected'        => array( 'podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit', 'enclosure' ),
 			),
 		);
 	}

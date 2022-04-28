@@ -149,6 +149,7 @@ class CustomizeFeedTests extends TestCase {
 
 		\WP_Mock::passthruFunction( 'get_post_thumbnail_id' );
 		\WP_Mock::passthruFunction( 'wp_strip_all_tags' );
+		\WP_Mock::passthruFunction( 'wp_kses' );
 
 		\WP_Mock::userFunction( 'has_excerpt' )
 			->andReturn( isset( $post->excerpt ) );
@@ -177,7 +178,7 @@ class CustomizeFeedTests extends TestCase {
 
 	public function data_provider_for_test_feed_item() {
 		return array(
-			'Term not found' => array(
+			'Term not found'              => array(
 				'talent_option' => '',
 				'post_data'     => (object) array(),
 				'term'          => false,
@@ -187,7 +188,7 @@ class CustomizeFeedTests extends TestCase {
 				'filters'       => false,
 				'expected'      => false,
 			),
-			'Mixed Test 1'   => array(
+			'Mixed Test 1'                => array(
 				'talent_option' => 'Talent from settings',
 				'post_data'     => (object) array(
 					'ID'        => 42,
@@ -216,7 +217,7 @@ class CustomizeFeedTests extends TestCase {
 					'Duration is empty'             => '/^((?!<itunes:duration>).)*$/s',
 				),
 			),
-			'Mixed Test 2'   => array(
+			'Mixed Test 2'                => array(
 				'talent_option' => '',
 				'post_data'     => (object) array(
 					'ID'      => 42,
@@ -244,7 +245,7 @@ class CustomizeFeedTests extends TestCase {
 					'Duration'                 => '/<itunes:duration>1:23<\/itunes:duration>/',
 				),
 			),
-			'Mixed Test 3'   => array(
+			'Mixed Test 3'                => array(
 				'talent_option' => '',
 				'post_data'     => (object) array(
 					'ID' => 42,
@@ -269,6 +270,25 @@ class CustomizeFeedTests extends TestCase {
 					'Summary from plugin settings'  => '/<itunes:summary>Summary from plugin settings<\/itunes:summary>/',
 					'Subtitle from plugin settings' => '/<itunes:subtitle>Summary from plugin settings<\/itunes:subtitle>/',
 					'Duration'                      => '/<itunes:duration>1:23<\/itunes:duration>/',
+				),
+			),
+			'Enclosure from podcast meta' => array(
+				'talent_option' => '',
+				'post_data'     => (object) array(
+					'ID' => 42,
+				),
+				'term'          => (object) array( 'term_id' => 2 ),
+				'post_author'   => 'Post Author',
+				'post_meta'     => array(
+					'enclosure'        => false,
+					'podcast_url'      => 'http://example.com/media.mp3',
+					'podcast_filesize' => '42000',
+					'podcast_mime'     => 'audio/mpeg',
+				),
+				'term_meta'     => array(),
+				'filters'       => false,
+				'expected'      => array(
+					'Enclosure' => '/<enclosure url=\'http:\/\/example.com\/media.mp3\' length=\'42000\' type=\'audio\/mpeg\' \/>/',
 				),
 			),
 		);

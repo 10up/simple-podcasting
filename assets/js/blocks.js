@@ -67,7 +67,12 @@ export default registerBlockType(
 				source: 'meta',
 				meta: 'podcast_explicit',
 				default: 'no',
-			}
+			},
+			enclosure: {
+				type: 'string',
+				source: 'meta',
+				meta: 'enclosure',
+			},
 		},
 		transforms,
 

@@ -235,6 +235,12 @@ function feed_item() {
 	 */
 	$feed_item = apply_filters( 'simple_podcasting_feed_item', $feed_item, $post->ID, $term->term_id );
 
+	// Output enclosure if it's not present in the post
+	$enclosure = get_post_meta( $post->ID, 'enclosure', true );
+	if ( empty( $enclosure ) ) {
+		display_rss_enclosure( $post );
+	}
+
 	// Output all custom RSS tags.
 	echo '<itunes:author>' . esc_html( $feed_item['author'] ) . "</itunes:author>\n";
 	echo '<itunes:explicit>' . esc_html( $feed_item['explicit'] ) . "</itunes:explicit>\n";
@@ -256,15 +262,13 @@ function feed_item() {
 add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
 
 /**
- * Adjust the enclosure feed for podcasts.
+ * Displays the enclosure feed for podcasts.
  *
- * @param  string $enclosure The enclosure (media url).
+ * @param  WP_Post $post The post object.
  *
- * @return string            The adjusted enclosure.
+ * @return void
  */
-function rss_enclosure( $enclosure ) {
-	global $post;
-
+function display_rss_enclosure( $post ) {
 	$podcast_url      = get_post_meta( $post->ID, 'podcast_url', true );
 	$podcast_filesize = get_post_meta( $post->ID, 'podcast_filesize', true );
 	$podcast_mime     = get_post_meta( $post->ID, 'podcast_mime', true );
@@ -277,11 +281,19 @@ function rss_enclosure( $enclosure ) {
 		"' type='" .
 		esc_attr( $podcast_mime ) .
 		"' />\n";
-	}
 
-	return $enclosure;
+		echo wp_kses(
+			$enclosure,
+			array(
+				'enclosure' => array(
+					'url'    => array(),
+					'length' => array(),
+					'type'   => array(),
+				),
+			)
+		);
+	}
 }
-add_filter( 'rss_enclosure', __NAMESPACE__ . '\rss_enclosure' );
 
 /**
  * Generate the category elements from the given option (e.g. podcasting_category_1).
@@ -376,4 +388,3 @@ function pre_get_posts( $query ) {
 
 // Filter the feed query.
 add_action( 'pre_get_posts', __NAMESPACE__ . '\pre_get_posts', 10, 1 );
-

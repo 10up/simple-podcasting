@@ -30,7 +30,7 @@ class HelpersTests extends TestCase {
 
 		$this->assertNull(tenup_podcasting\helpers\delete_all_podcast_meta( 42 ));
 
-		$meta_keys = array('podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit');
+		$meta_keys = array('podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit', 'enclosure');
 		foreach ( $meta_keys as $meta_key ) {
 			\WP_Mock::userFunction( 'delete_post_meta' )->with( 42, $meta_key );
 		}
