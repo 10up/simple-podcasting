@@ -2,7 +2,7 @@
 Contributors: 10up, helen, adamsilverstein, jakemgold
 Tags: simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
 Requires at least: 4.6
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 7.0
 Stable tag: 1.2.3
 License: GPLv2 or later
