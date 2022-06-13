@@ -48,6 +48,8 @@ if ( function_exists( 'register_block_type' ) ) {
 	require_once PODCASTING_PATH . 'includes/blocks.php';
 }
 
+require_once PODCASTING_PATH . 'includes/block-patterns.php';
+
 /**
  * Is podcasting enabled?
  *
