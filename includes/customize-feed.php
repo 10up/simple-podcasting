@@ -172,14 +172,17 @@ function feed_item() {
 	}
 
 	$feed_item = array(
-		'author'    => get_option( 'podcasting_talent_name' ),
-		'explicit'  => get_post_meta( $post->ID, 'podcast_explicit', true ),
-		'captioned' => get_post_meta( $post->ID, 'podcast_captioned', true ),
-		'keywords'  => '',
-		'image'     => '',
-		'summary'   => '',
-		'subtitle'  => '',
-		'duration'  => get_post_meta( $post->ID, 'podcast_duration', true ),
+		'author'      => get_option( 'podcasting_talent_name' ),
+		'explicit'    => get_post_meta( $post->ID, 'podcast_explicit', true ),
+		'captioned'   => get_post_meta( $post->ID, 'podcast_captioned', true ),
+		'keywords'    => '',
+		'image'       => '',
+		'summary'     => '',
+		'subtitle'    => '',
+		'duration'    => get_post_meta( $post->ID, 'podcast_duration', true ),
+		'season'      => get_post_meta( $post->ID, 'podcast_season_number', true ),
+		'episode'     => get_post_meta( $post->ID, 'podcast_episode_number', true ),
+		'episodeType' => get_post_meta( $post->ID, 'podcast_episode_type', true ),
 	);
 
 	if ( empty( $feed_item['author'] ) ) {
@@ -221,14 +224,17 @@ function feed_item() {
 	 * @param array $feed_item {
 	 *     Item data to filter.
 	 *
-	 *     @type string $author    Podcast author.
-	 *     @type string $explicit  Explicit content (yes|no|clean).
-	 *     @type string $captioned Closed Captioned ("1"|"0"). Optional.
-	 *     @type string $keywords  Episode keywords. Optional.
-	 *     @type string $image     Episode image. Optional.
-	 *     @type string $summary   Episode summary.
-	 *     @type string $subtitle  Episode subtitle.
-	 *     @type string $duration  Episode duration (HH:MM). Optional.
+	 *     @type string $author      Podcast author.
+	 *     @type string $explicit    Explicit content (yes|no|clean).
+	 *     @type string $captioned   Closed Captioned ("1"|"0"). Optional.
+	 *     @type string $keywords    Episode keywords. Optional.
+	 *     @type string $image       Episode image. Optional.
+	 *     @type string $summary     Episode summary.
+	 *     @type string $subtitle    Episode subtitle.
+	 *     @type string $duration    Episode duration (HH:MM). Optional.
+	 *     @type number $season      Season number Optional.
+	 *     @type number $episode     Episode number Optional.
+	 *     @type string $episodeType Episode type Optional.
 	 * }
 	 * @param int $post->ID Podcast episode post ID.
 	 * @param int $term->term_id Podcast term ID.
@@ -257,6 +263,15 @@ function feed_item() {
 	echo '<itunes:subtitle>' . esc_html( $feed_item['subtitle'] ) . "</itunes:subtitle>\n";
 	if ( ! empty( $feed_item['duration'] ) ) {
 		echo '<itunes:duration>' . esc_html( $feed_item['duration'] ) . "</itunes:duration>\n";
+	}
+	if ( ! empty( $feed_item['season'] ) ) {
+		echo '<itunes:season>' . esc_html( absint( $feed_item['season'] ) ) . "</itunes:season>\n";
+	}
+	if ( ! empty( $feed_item['episode'] ) ) {
+		echo '<itunes:episode>' . esc_html( absint( $feed_item['episode'] ) ) . "</itunes:episode>\n";
+	}
+	if ( ! empty( $feed_item['episodeType'] ) ) {
+		echo '<itunes:episodeType>' . esc_html( $feed_item['episodeType'] ) . "</itunes:episodeType>\n";
 	}
 }
 add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );

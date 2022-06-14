@@ -34,6 +34,9 @@ function meta_box_html( $post ) {
 	$podcast_url       = get_post_meta( $post->ID, 'podcast_url', true );
 	$podcast_explicit  = get_post_meta( $post->ID, 'podcast_explicit', true );
 	$podcast_captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
+	$season_number     = get_post_meta( $post->ID, 'podcast_season_number', true );
+	$episode_number    = get_post_meta( $post->ID, 'podcast_episode_number', true );
+	$episode_type      = get_post_meta( $post->ID, 'podcast_episode_type', true );
 
 	wp_nonce_field( plugin_basename( __FILE__ ), 'simple-podcasting' );
 	?>
@@ -54,7 +57,28 @@ function meta_box_html( $post ) {
 			</select>
 		</label>
 	</p>
-
+	<p>
+		<label for="podcast_season_number">
+			<?php esc_html_e( 'Season Number', 'simple-podcasting' ); ?>
+			<input type="number" min="0" max="2000" step="1" id="podcast_season_number" name="podcast_season_number" value="<?php echo esc_attr( $season_number ); ?>" />
+		</label>
+	</p>
+	<p>
+		<label for="podcast_episode_number">
+			<?php esc_html_e( 'Episode Number', 'simple-podcasting' ); ?>
+			<input type="number" min="0" max="2000" step="1" id="podcast_episode_number" name="podcast_episode_number" value="<?php echo esc_attr( $episode_number ); ?>" />
+		</label>
+	</p>
+	<p>
+		<label for="podcast_episode_type">
+			<?php esc_html_e( 'Episode Type', 'simple-podcasting' ); ?>
+			<select id="podcast_episode_type" name="podcast_episode_type">
+				<option value="full"<?php selected( $episode_type, 'full' ); ?>><?php esc_html_e( 'Full', 'simple-podcasting' ); ?></option>
+				<option value="trailer"<?php selected( $episode_type, 'trailer' ); ?>><?php esc_html_e( 'Trailer', 'simple-podcasting' ); ?></option>
+				<option value="bonus"<?php selected( $episode_type, 'bonus' ); ?>><?php esc_html_e( 'Bonus', 'simple-podcasting' ); ?></option>
+			</select>
+		</label>
+	</p>
 	<p>
 		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'simple-podcasting' ); ?></label>
 		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $podcast_url ); ?>" size="35" />
@@ -90,6 +114,9 @@ function save_meta_box( $post_id ) {
 	$url               = false;
 	$podcast_captioned = 0;
 	$podcast_explicit  = 'no';
+	$season_number     = isset( $_post['podcast_season_number'] ) ? absint( $_post['podcast_season_number'] ) : 0;
+	$episode_number    = isset( $_post['podcast_episode_number'] ) ? absint( $_post['podcast_episode_number'] ) : 0;
+	$episode_type      = isset( $_post['podcast_episode_type'] ) && in_array( $_post['podcast_episode_type'], array( 'full', 'trailer', 'bonus' ), true ) ? sanitize_text_field( $_post['podcast_episode_type'] ) : '';
 
 	if ( isset( $_post['podcast_closed_captioned'] ) && 'on' === $_post['podcast_closed_captioned'] ) {
 		$podcast_captioned = 1;
@@ -141,6 +168,9 @@ function save_meta_box( $post_id ) {
 
 	update_post_meta( $post_id, 'podcast_explicit', $podcast_explicit );
 	update_post_meta( $post_id, 'podcast_captioned', $podcast_captioned );
+	update_post_meta( $post_id, 'podcast_season_number', $season_number );
+	update_post_meta( $post_id, 'podcast_episode_number', $episode_number );
+	update_post_meta( $post_id, 'podcast_episode_type', $episode_type );
 
 }
 add_action( 'save_post_post', __NAMESPACE__ . '\save_meta_box' );

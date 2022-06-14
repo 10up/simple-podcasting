@@ -13,7 +13,10 @@ const {
 	PanelRow,
 	SelectControl,
 	TextControl,
+	RadioControl,
 } = wp.components;
+const Spacer = wp.components.__experimentalSpacer;
+const NumberControl = wp.components.__experimentalNumberControl;
 const { Fragment } = wp.element;
 
 const { apiFetch } = wp;
@@ -43,6 +46,9 @@ class Edit extends Component {
 		const { caption, explicit } = attributes;
 		const duration = attributes.duration || '';
 		const captioned = attributes.captioned || '';
+		const seasonNumber = attributes.seasonNumber || 0;
+		const episodeNumber = attributes.episodeNumber || 0;
+		const episodeType = attributes.episodeType || '';
 		const { className, src } = this.state;
 
 		const onSelectAttachment = ( attachment ) => {
@@ -159,6 +165,42 @@ class Edit extends Component {
 								label={ __( 'Length (MM:SS)', 'simple-podcasting' ) }
 								value={ duration }
 								onChange={ duration => setAttributes( { duration } ) }
+							/>
+						</PanelRow>
+						<PanelRow>
+							<NumberControl
+								label={ __( 'Season Number', 'simple-podcasting' ) }
+								onChange={ seasonNumber => setAttributes( { seasonNumber } ) }
+								isShiftStepEnabled={ true }
+								shiftStep={ 1 }
+								value={ seasonNumber }
+								min={ 0 }
+								max={ 2000 }
+							/>
+						</PanelRow>
+						<Spacer marginBottom={6} />
+						<PanelRow>
+							<NumberControl
+								label={ __( 'Episode Number', 'simple-podcasting' ) }
+								onChange={ episodeNumber => setAttributes( { episodeNumber } ) }
+								isShiftStepEnabled={ true }
+								shiftStep={ 1 }
+								value={ episodeNumber }
+								min={ 0 }
+								max={ 2000 }
+							/>
+						</PanelRow>
+						<Spacer marginBottom={6} />
+						<PanelRow>
+							<RadioControl
+								label={ __( 'Episode Type', 'simple-podcasting' ) }
+								selected={ episodeType }
+								options={ [
+									{ label: __( 'Full', 'simple-podcasting' ), value: 'full' },
+									{ label: __( 'Trailer', 'simple-podcasting' ), value: 'trailer' },
+									{ label: __( 'Bonus', 'simple-podcasting' ), value: 'bonus' },
+								] }
+								onChange={ episodeType => setAttributes( { episodeType } ) }
 							/>
 						</PanelRow>
 					</PanelBody>
