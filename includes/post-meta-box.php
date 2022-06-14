@@ -69,16 +69,17 @@ function meta_box_html( $post ) {
 			<input type="number" min="0" max="2000" step="1" id="podcast_episode_number" name="podcast_episode_number" value="<?php echo esc_attr( $episode_number ); ?>" />
 		</label>
 	</p>
-	<p>
-		<label for="podcast_episode_type">
-			<?php esc_html_e( 'Episode Type', 'simple-podcasting' ); ?>
-			<select id="podcast_episode_type" name="podcast_episode_type">
-				<option value="full"<?php selected( $episode_type, 'full' ); ?>><?php esc_html_e( 'Full', 'simple-podcasting' ); ?></option>
-				<option value="trailer"<?php selected( $episode_type, 'trailer' ); ?>><?php esc_html_e( 'Trailer', 'simple-podcasting' ); ?></option>
-				<option value="bonus"<?php selected( $episode_type, 'bonus' ); ?>><?php esc_html_e( 'Bonus', 'simple-podcasting' ); ?></option>
-			</select>
-		</label>
-	</p>
+	<div style="display: flex; align-items: center;">
+		<p style="margin-right: 5px;"><?php esc_html_e( 'Episode Type', 'simple-podcasting' ); ?></p>
+		<p>
+			<input type="radio" id="full" name="podcast_episode_type" value="full" <?php echo isset( $episode_type ) && 'full' === $episode_type ? 'checked' : ''; ?>>
+			<label for="full"><?php esc_html_e( 'Full', 'simple-podcasting' ); ?></label><br>
+			<input type="radio" id="trailer" name="podcast_episode_type" value="trailer" <?php echo isset( $episode_type ) && 'trailer' === $episode_type ? 'checked' : ''; ?>>
+			<label for="trailer"><?php esc_html_e( 'Trailer', 'simple-podcasting' ); ?></label><br>
+			<input type="radio" id="bonus" name="podcast_episode_type" value="bonus" <?php echo isset( $episode_type ) && 'bonus' === $episode_type ? 'checked' : ''; ?>>
+			<label for="bonus"><?php esc_html_e( 'Bonus', 'simple-podcasting' ); ?></label>
+		</p>
+	</div>
 	<p>
 		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'simple-podcasting' ); ?></label>
 		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $podcast_url ); ?>" size="35" />
