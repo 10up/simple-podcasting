@@ -201,8 +201,8 @@ class CustomizeFeedTests extends TestCase {
 					'podcast_explicit'       => '',
 					'podcast_captioned'      => '',
 					'podcast_duration'       => '',
-					'podcast_season_number'  => 0,
-					'podcast_episode_number' => 0,
+					'podcast_season_number'  => '',
+					'podcast_episode_number' => '',
 					'podcast_episode_type'   => '',
 				),
 				'term_meta'     => array(
@@ -235,8 +235,8 @@ class CustomizeFeedTests extends TestCase {
 					'podcast_explicit'       => 'yes',
 					'podcast_captioned'      => '1',
 					'podcast_duration'       => '1:23',
-					'podcast_season_number'  => 2,
-					'podcast_episode_number' => 4,
+					'podcast_season_number'  => '2',
+					'podcast_episode_number' => '4',
 					'podcast_episode_type'   => 'full',
 				),
 				'term_meta'     => array(
