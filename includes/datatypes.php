@@ -86,7 +86,7 @@ function register_meta() {
 		'podcast_season_number',
 		array(
 			'show_in_rest' => true,
-			'type'         => 'number',
+			'type'         => 'string',
 			'single'       => true,
 		)
 	);
@@ -96,7 +96,7 @@ function register_meta() {
 		'podcast_episode_number',
 		array(
 			'show_in_rest' => true,
-			'type'         => 'number',
+			'type'         => 'string',
 			'single'       => true,
 		)
 	);

@@ -180,8 +180,8 @@ function feed_item() {
 		'summary'     => '',
 		'subtitle'    => '',
 		'duration'    => get_post_meta( $post->ID, 'podcast_duration', true ),
-		'season'      => (int) get_post_meta( $post->ID, 'podcast_season_number', true ),
-		'episode'     => (int) get_post_meta( $post->ID, 'podcast_episode_number', true ),
+		'season'      => get_post_meta( $post->ID, 'podcast_season_number', true ),
+		'episode'     => get_post_meta( $post->ID, 'podcast_episode_number', true ),
 		'episodeType' => get_post_meta( $post->ID, 'podcast_episode_type', true ),
 	);
 
@@ -232,8 +232,8 @@ function feed_item() {
 	 *     @type string $summary     Episode summary.
 	 *     @type string $subtitle    Episode subtitle.
 	 *     @type string $duration    Episode duration (HH:MM). Optional.
-	 *     @type number $season      Season number Optional.
-	 *     @type number $episode     Episode number Optional.
+	 *     @type string $season      Season number Optional.
+	 *     @type string $episode     Episode number Optional.
 	 *     @type string $episodeType Episode type Optional.
 	 * }
 	 * @param int $post->ID Podcast episode post ID.
@@ -270,7 +270,7 @@ function feed_item() {
 	if ( ! empty( $feed_item['episode'] ) ) {
 		echo '<itunes:episode>' . esc_html( $feed_item['episode'] ) . "</itunes:episode>\n";
 	}
-	if ( ! empty( $feed_item['episodeType'] ) ) {
+	if ( ! empty( $feed_item['episodeType'] ) && 'none' !== $feed_item['episodeType'] ) {
 		echo '<itunes:episodeType>' . esc_html( $feed_item['episodeType'] ) . "</itunes:episodeType>\n";
 	}
 }

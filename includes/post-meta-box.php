@@ -60,18 +60,20 @@ function meta_box_html( $post ) {
 	<p>
 		<label for="podcast_season_number">
 			<?php esc_html_e( 'Season Number', 'simple-podcasting' ); ?>
-			<input type="number" min="0" max="2000" step="1" id="podcast_season_number" name="podcast_season_number" value="<?php echo esc_attr( $season_number ); ?>" />
+			<input type="text" id="podcast_season_number" name="podcast_season_number" value="<?php echo esc_attr( $season_number ); ?>" />
 		</label>
 	</p>
 	<p>
 		<label for="podcast_episode_number">
 			<?php esc_html_e( 'Episode Number', 'simple-podcasting' ); ?>
-			<input type="number" min="0" max="2000" step="1" id="podcast_episode_number" name="podcast_episode_number" value="<?php echo esc_attr( $episode_number ); ?>" />
+			<input type="text" id="podcast_episode_number" name="podcast_episode_number" value="<?php echo esc_attr( $episode_number ); ?>" />
 		</label>
 	</p>
 	<div style="display: flex; align-items: center;">
 		<p style="margin-right: 5px;"><?php esc_html_e( 'Episode Type', 'simple-podcasting' ); ?></p>
 		<p>
+			<input type="radio" id="none" name="podcast_episode_type" value="none" <?php echo isset( $episode_type ) && 'none' === $episode_type ? 'checked' : ''; ?>>
+			<label for="none"><?php esc_html_e( 'None', 'simple-podcasting' ); ?></label><br>
 			<input type="radio" id="full" name="podcast_episode_type" value="full" <?php echo isset( $episode_type ) && 'full' === $episode_type ? 'checked' : ''; ?>>
 			<label for="full"><?php esc_html_e( 'Full', 'simple-podcasting' ); ?></label><br>
 			<input type="radio" id="trailer" name="podcast_episode_type" value="trailer" <?php echo isset( $episode_type ) && 'trailer' === $episode_type ? 'checked' : ''; ?>>
@@ -115,9 +117,9 @@ function save_meta_box( $post_id ) {
 	$url               = false;
 	$podcast_captioned = 0;
 	$podcast_explicit  = 'no';
-	$season_number     = isset( $_post['podcast_season_number'] ) ? absint( $_post['podcast_season_number'] ) : 0;
-	$episode_number    = isset( $_post['podcast_episode_number'] ) ? absint( $_post['podcast_episode_number'] ) : 0;
-	$episode_type      = isset( $_post['podcast_episode_type'] ) && in_array( $_post['podcast_episode_type'], array( 'full', 'trailer', 'bonus' ), true ) ? sanitize_text_field( $_post['podcast_episode_type'] ) : '';
+	$season_number     = isset( $_post['podcast_season_number'] ) ? sanitize_text_field( $_post['podcast_season_number'] ) : '';
+	$episode_number    = isset( $_post['podcast_episode_number'] ) ? sanitize_text_field( $_post['podcast_episode_number'] ) : '';
+	$episode_type      = isset( $_post['podcast_episode_type'] ) && in_array( $_post['podcast_episode_type'], array( 'none', 'full', 'trailer', 'bonus' ), true ) ? sanitize_text_field( $_post['podcast_episode_type'] ) : '';
 
 	if ( isset( $_post['podcast_closed_captioned'] ) && 'on' === $_post['podcast_closed_captioned'] ) {
 		$podcast_captioned = 1;

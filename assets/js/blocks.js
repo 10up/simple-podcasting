@@ -75,12 +75,12 @@ export default registerBlockType(
 				meta: 'enclosure',
 			},
 			seasonNumber: {
-				type: 'number',
+				type: 'string',
 				source: 'meta',
 				meta: 'podcast_season_number',
 			},
 			episodeNumber: {
-				type: 'number',
+				type: 'string',
 				source: 'meta',
 				meta: 'podcast_episode_number',
 			},
