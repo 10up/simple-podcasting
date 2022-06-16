@@ -27,17 +27,8 @@ function get_pattern_content( $template_name ) {
  */
 function register_poscasting_block_patterns() {
 
-	$podcasting_terms = get_terms(
-		array(
-			'taxonomy'      => TAXONOMY_NAME,
-			'hide_empty'    => false,
-			'fields'        => 'ids',
-			'no_found_rows' => true,
-		)
-	);
-
 	register_block_pattern(
-		'poscasting/latest-posts',
+		'podcasting/latest-podcast',
 		array(
 			'title'   => __( 'Latest Podcasts', 'simple-podcasting' ),
 			'content' => get_pattern_content( 'latest-podcasts' ),

@@ -35,6 +35,19 @@ function init() {
 			'editor_style'  => 'podcasting-block-editor',
 		)
 	);
+
+	register_block_type(
+		'podcasting/podcast-duration',
+		array(
+			'attributes'      => array(
+				'postId' => array(
+					'type' => 'integer',
+				),
+			),
+			'editor_script'   => 'podcasting-block-editor',
+			'render_callback' => __NAMESPACE__ . '\podcast_duration_block_render',
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\init' );
 
@@ -97,3 +110,23 @@ function block_editor_meta_cleanup( $post, $request, $creating ) {
 	\tenup_podcasting\helpers\delete_all_podcast_meta( $post->ID );
 }
 add_action( 'rest_after_insert_post', __NAMESPACE__ . '\block_editor_meta_cleanup', 10, 3 );
+
+
+/**
+ * Podcast duration block renderer
+ *
+ * @param array  $attributes attributes of the block
+ * @param string $content content of the block
+ * @param object $block block object
+ */
+function podcast_duration_block_render( $attributes, $content, $block ) {
+
+	if ( ! isset( $attributes['postId'] ) ) {
+		return '';
+	}
+
+	return sprintf(
+		'<span class="podcast-duration">%s</span>',
+		\tenup_podcasting\helpers\get_podcast_duration( $attributes['postId'] )
+	);
+}

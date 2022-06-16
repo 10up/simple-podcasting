@@ -82,3 +82,25 @@ function delete_all_podcast_meta( $post_id ) {
 		delete_post_meta( $post_id, 'podcast_episode_type' );
 	}
 }
+
+
+/**
+ * Get duration in readable format
+ *
+ * @param integer $post_id post ID to fetch meta
+ */
+function get_podcast_duration( $post_id ) {
+	$duration    = get_post_meta( $post_id, 'podcast_duration', true );
+	$formatted   = human_readable_duration( $duration );
+	$replace_map = array(
+		'hour'   => 'hr',
+		'minute' => 'min',
+		'second' => 'sec',
+	);
+
+	foreach ( $replace_map as $search => $replace ) {
+		$formatted = str_replace( $search, $replace, $formatted );
+	}
+
+	return $formatted;
+}
