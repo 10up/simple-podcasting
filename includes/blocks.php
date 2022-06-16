@@ -48,6 +48,19 @@ function init() {
 			'render_callback' => __NAMESPACE__ . '\podcast_duration_block_render',
 		)
 	);
+
+	register_block_type(
+		'podcasting/podcast-duration',
+		array(
+			'attributes'      => array(
+				'postId' => array(
+					'type' => 'integer',
+				),
+			),
+			'editor_script'   => 'podcasting-block-editor',
+			'render_callback' => __NAMESPACE__ . '\podcast_duration_block_render',
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\init' );
 
