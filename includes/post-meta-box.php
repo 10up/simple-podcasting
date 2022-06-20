@@ -34,6 +34,9 @@ function meta_box_html( $post ) {
 	$podcast_url       = get_post_meta( $post->ID, 'podcast_url', true );
 	$podcast_explicit  = get_post_meta( $post->ID, 'podcast_explicit', true );
 	$podcast_captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
+	$season_number     = get_post_meta( $post->ID, 'podcast_season_number', true );
+	$episode_number    = get_post_meta( $post->ID, 'podcast_episode_number', true );
+	$episode_type      = get_post_meta( $post->ID, 'podcast_episode_type', true );
 
 	wp_nonce_field( plugin_basename( __FILE__ ), 'simple-podcasting' );
 	?>
@@ -54,7 +57,31 @@ function meta_box_html( $post ) {
 			</select>
 		</label>
 	</p>
-
+	<p>
+		<label for="podcast_season_number">
+			<?php esc_html_e( 'Season Number', 'simple-podcasting' ); ?>
+			<input type="text" id="podcast_season_number" name="podcast_season_number" value="<?php echo esc_attr( $season_number ); ?>" />
+		</label>
+	</p>
+	<p>
+		<label for="podcast_episode_number">
+			<?php esc_html_e( 'Episode Number', 'simple-podcasting' ); ?>
+			<input type="text" id="podcast_episode_number" name="podcast_episode_number" value="<?php echo esc_attr( $episode_number ); ?>" />
+		</label>
+	</p>
+	<div style="display: flex; align-items: center;">
+		<p style="margin-right: 5px;"><?php esc_html_e( 'Episode Type', 'simple-podcasting' ); ?></p>
+		<p>
+			<input type="radio" id="none" name="podcast_episode_type" value="none" <?php echo isset( $episode_type ) && 'none' === $episode_type ? 'checked' : ''; ?>>
+			<label for="none"><?php esc_html_e( 'None', 'simple-podcasting' ); ?></label><br>
+			<input type="radio" id="full" name="podcast_episode_type" value="full" <?php echo isset( $episode_type ) && 'full' === $episode_type ? 'checked' : ''; ?>>
+			<label for="full"><?php esc_html_e( 'Full', 'simple-podcasting' ); ?></label><br>
+			<input type="radio" id="trailer" name="podcast_episode_type" value="trailer" <?php echo isset( $episode_type ) && 'trailer' === $episode_type ? 'checked' : ''; ?>>
+			<label for="trailer"><?php esc_html_e( 'Trailer', 'simple-podcasting' ); ?></label><br>
+			<input type="radio" id="bonus" name="podcast_episode_type" value="bonus" <?php echo isset( $episode_type ) && 'bonus' === $episode_type ? 'checked' : ''; ?>>
+			<label for="bonus"><?php esc_html_e( 'Bonus', 'simple-podcasting' ); ?></label>
+		</p>
+	</div>
 	<p>
 		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'simple-podcasting' ); ?></label>
 		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $podcast_url ); ?>" size="35" />
@@ -90,6 +117,9 @@ function save_meta_box( $post_id ) {
 	$url               = false;
 	$podcast_captioned = 0;
 	$podcast_explicit  = 'no';
+	$season_number     = isset( $_post['podcast_season_number'] ) ? sanitize_text_field( $_post['podcast_season_number'] ) : '';
+	$episode_number    = isset( $_post['podcast_episode_number'] ) ? sanitize_text_field( $_post['podcast_episode_number'] ) : '';
+	$episode_type      = isset( $_post['podcast_episode_type'] ) && in_array( $_post['podcast_episode_type'], array( 'none', 'full', 'trailer', 'bonus' ), true ) ? sanitize_text_field( $_post['podcast_episode_type'] ) : '';
 
 	if ( isset( $_post['podcast_closed_captioned'] ) && 'on' === $_post['podcast_closed_captioned'] ) {
 		$podcast_captioned = 1;
@@ -141,6 +171,9 @@ function save_meta_box( $post_id ) {
 
 	update_post_meta( $post_id, 'podcast_explicit', $podcast_explicit );
 	update_post_meta( $post_id, 'podcast_captioned', $podcast_captioned );
+	update_post_meta( $post_id, 'podcast_season_number', $season_number );
+	update_post_meta( $post_id, 'podcast_episode_number', $episode_number );
+	update_post_meta( $post_id, 'podcast_episode_type', $episode_type );
 
 }
 add_action( 'save_post_post', __NAMESPACE__ . '\save_meta_box' );

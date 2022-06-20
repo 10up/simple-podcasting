@@ -198,9 +198,12 @@ class CustomizeFeedTests extends TestCase {
 				'term'          => (object) array( 'term_id' => 2 ),
 				'post_author'   => 'Post Author',
 				'post_meta'     => array(
-					'podcast_explicit'  => '',
-					'podcast_captioned' => '',
-					'podcast_duration'  => '',
+					'podcast_explicit'       => '',
+					'podcast_captioned'      => '',
+					'podcast_duration'       => '',
+					'podcast_season_number'  => '',
+					'podcast_episode_number' => '',
+					'podcast_episode_type'   => '',
 				),
 				'term_meta'     => array(
 					'podcasting_explicit' => '',
@@ -215,6 +218,9 @@ class CustomizeFeedTests extends TestCase {
 					'Post excerpt as summary'       => '/<itunes:summary>Post Excerpt<\/itunes:summary>/',
 					'Post excerpt as subtitle'      => '/<itunes:subtitle>Post Excerpt<\/itunes:subtitle>/',
 					'Duration is empty'             => '/^((?!<itunes:duration>).)*$/s',
+					'Doesnt contain season'         => '/^((?!season).)*$/s',
+					'Doesnt contain episode'        => '/^((?!episode).)*$/s',
+					'Doesnt contain episode type'   => '/^((?!episodeType).)*$/s',
 				),
 			),
 			'Mixed Test 2'                => array(
@@ -226,9 +232,12 @@ class CustomizeFeedTests extends TestCase {
 				'term'          => (object) array( 'term_id' => 2 ),
 				'post_author'   => 'Post Author',
 				'post_meta'     => array(
-					'podcast_explicit'  => 'yes',
-					'podcast_captioned' => '1',
-					'podcast_duration'  => '1:23',
+					'podcast_explicit'       => 'yes',
+					'podcast_captioned'      => '1',
+					'podcast_duration'       => '1:23',
+					'podcast_season_number'  => '2',
+					'podcast_episode_number' => '4',
+					'podcast_episode_type'   => 'full',
 				),
 				'term_meta'     => array(
 					'podcasting_explicit' => '',
@@ -243,6 +252,9 @@ class CustomizeFeedTests extends TestCase {
 					'Long Summary'             => '/<itunes:summary>Very Long Post Excerpt Very Long Post Excerpt Very Long Post Excerpt Very Long Post Excerpt<\/itunes:summary>/',
 					'Short Subtitle'           => '/<itunes:subtitle>Short Excerpt<\/itunes:subtitle>/',
 					'Duration'                 => '/<itunes:duration>1:23<\/itunes:duration>/',
+					'Season'                   => '/<itunes:season>2<\/itunes:season>/',
+					'Episode'                  => '/<itunes:episode>4<\/itunes:episode>/',
+					'Episode type'             => '/<itunes:episodeType>full<\/itunes:episodeType>/',
 				),
 			),
 			'Mixed Test 3'                => array(
