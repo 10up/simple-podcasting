@@ -9,6 +9,7 @@ module.exports = {
 	},
     entry: {
         'blocks': path.resolve( process.cwd(), 'assets/js', 'blocks.js' ),
+		'block-patterns': path.resolve( process.cwd(), 'assets/js', 'block-patterns.js' ),
         'podcasting-edit-post': path.resolve( process.cwd(), 'assets/js', 'podcasting-edit-post.js' ),
         'podcasting-edit-term': path.resolve( process.cwd(), 'assets/js', 'podcasting-edit-term.js' ),
     }

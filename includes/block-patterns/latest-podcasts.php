@@ -15,18 +15,15 @@ $podcast_terms = get_terms(
 );
 ?>
 
-<!-- wp:query {"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"podcasting_podcasts": <?php echo json_encode( $podcast_terms ); ?> }}, "className":"podcasting-latest-podcast"} -->
-<div class="wp-block-query podcasting-latest-podcast">
+<!-- wp:query {"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"podcasting_podcasts": <?php echo json_encode( $podcast_terms ); ?> }},"align":"full","className":"podcasting-latest-podcast"} -->
+<div class="wp-block-query alignfull podcasting-latest-podcast">
 	<!-- wp:post-template -->
-	<!-- wp:heading {"level":3} -->
-	<h2 id="h-creating-elitist-selection-standards">Creating (Elitist) Selection Standards</h2>
-	<!-- /wp:heading -->
 	<!-- wp:post-featured-image /-->
 	<!-- wp:post-title /-->
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 	<div class="wp-block-group">
 		<!-- wp:post-date {"format":"F j, Y"} /-->
-		<!-- wp:podcasting/podcast-duration  /-->
+		<!-- wp:podcasting/podcast-duration /-->
 	</div>
 	<!-- /wp:group -->
 	<!-- wp:post-excerpt /-->

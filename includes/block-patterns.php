@@ -36,3 +36,20 @@ function register_poscasting_block_patterns() {
 	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_poscasting_block_patterns' );
+
+
+/**
+ * Enqueue block pattern styles
+ */
+function block_pattern_enqueues() {
+
+	wp_register_style(
+		'podcasting_block_pattern_styles',
+		PODCASTING_URL . 'dist/block-patterns.css',
+		array(),
+		PODCASTING_VERSION
+	);
+
+	wp_enqueue_style( 'podcasting_block_pattern_styles' );
+}
+add_action( 'enqueue_block_assets', __NAMESPACE__ . '\block_pattern_enqueues' );
