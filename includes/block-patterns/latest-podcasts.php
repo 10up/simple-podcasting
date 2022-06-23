@@ -20,8 +20,8 @@ $podcast_terms = get_terms(
 	<!-- wp:post-template -->
 	<!-- wp:post-featured-image /-->
 	<!-- wp:post-title /-->
-	<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
-	<div class="wp-block-group">
+	<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"},"className":"podcasting-meta"} -->
+	<div class="wp-block-group podcasting-meta">
 		<!-- wp:post-date {"format":"F j, Y"} /-->
 		<!-- wp:podcasting/podcast-duration /-->
 	</div>

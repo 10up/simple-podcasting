@@ -1,16 +1,19 @@
-.podcasting-latest-podcast .post {
+.podcasting-latest-podcast .wp-block-post {
 	box-sizing: border-box;
+	color: #ffff;
 	display: flex;
+	flex-basis: 100%;
 	flex-direction: column;
 	font-size: 14px;
 	justify-content: flex-end;
 	min-height: 430px;
 	padding: 40px 60px;
 	position: relative;
-	color: #ffff;
+	width: 100%;
+	z-index: 1;
 }
 
-.podcasting-latest-podcast .post::after {
+.podcasting-latest-podcast .wp-block-post::after {
 	background-color: rgba(0,0,0,0.6);
 	content: '';
 	height: 100%;
@@ -21,7 +24,7 @@
 	z-index: -1;
 }
 
-.podcasting-latest-podcast .post .wp-block-post-featured-image {
+.podcasting-latest-podcast .wp-block-post .wp-block-post-featured-image {
 	height: 100%;
 	left: 0;
 	margin: 0;
@@ -31,17 +34,19 @@
 	z-index: -1;
 }
 
-.podcasting-latest-podcast .post .wp-block-post-featured-image img {
-	height: 100%;
+.podcasting-latest-podcast .wp-block-post .wp-block-post-featured-image img {
 	left: 0;
 	margin: 0;
+	max-height: 100%;
+	object-fit: cover;
+	object-position: center;
 	position: absolute;
 	top: 0;
 	width: 100%;
 	z-index: -1;
 }
 
-.podcasting-latest-podcast .post .wp-block-post-title {
+.podcasting-latest-podcast .wp-block-post .wp-block-post-title {
 	margin: 0;
 	font-size: 26px;
 	font-weight: 700;
@@ -49,14 +54,33 @@
 	margin-bottom: 10px;
 }
 
-.podcasting-latest-podcast .post .wp-block-post-excerpt {
+.podcasting-latest-podcast .wp-block-post .wp-block-post-excerpt {
 	margin-top: 10px;
 }
 
-.podcasting-latest-podcast .post .wp-block-post-excerpt > :is(:first-child) {
+.podcasting-latest-podcast .wp-block-post .podcasting-meta {
+    gap: 10px;
+}
+
+.podcasting-latest-podcast .wp-block-post .podcasting-meta > * {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.podcasting-latest-podcast .wp-block-post .podcasting-meta > *:not(:last-child)::after {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 100%;
+}
+
+.podcasting-latest-podcast .wp-block-post .wp-block-post-excerpt > :is(:first-child) {
 	margin-top: 0;
 }
 
-.podcasting-latest-podcast .post .wp-block-post-excerpt > :is(:last-child) {
+.podcasting-latest-podcast .wp-block-post .wp-block-post-excerpt > :is(:last-child) {
 	margin-bottom: 0;
 }
