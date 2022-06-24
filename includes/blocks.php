@@ -37,15 +37,18 @@ function init() {
 	);
 
 	register_block_type(
-		'podcasting/podcast-duration',
+		'podcasting/podcast-meta',
 		array(
 			'attributes'      => array(
-				'postId' => array(
+				'postId'   => array(
 					'type' => 'integer',
+				),
+				'metaName' => array(
+					'type' => 'string',
 				),
 			),
 			'editor_script'   => 'podcasting-block-editor',
-			'render_callback' => __NAMESPACE__ . '\podcast_duration_block_render',
+			'render_callback' => __NAMESPACE__ . '\podcast_meta_block_render',
 		)
 	);
 
@@ -126,13 +129,13 @@ add_action( 'rest_after_insert_post', __NAMESPACE__ . '\block_editor_meta_cleanu
 
 
 /**
- * Podcast duration block renderer
+ * Podcast meta block renderer
  *
  * @param array  $attributes attributes of the block
  * @param string $content content of the block
  * @param object $block block object
  */
-function podcast_duration_block_render( $attributes, $content, $block ) {
+function podcast_meta_block_render( $attributes, $content, $block ) {
 
 	if ( ! isset( $attributes['postId'] ) ) {
 		return '';

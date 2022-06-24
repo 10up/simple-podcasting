@@ -1,2 +1,2 @@
-import './blocks/podcast/index.js'
-import './blocks/podcast-duration/index.js';
+import './blocks/podcast'
+import './blocks/podcast-meta'
