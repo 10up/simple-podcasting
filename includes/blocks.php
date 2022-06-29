@@ -141,8 +141,20 @@ function podcast_meta_block_render( $attributes, $content, $block ) {
 		return '';
 	}
 
+	$post_id       = $attributes['postId'];
+	$allowed_metas = array(
+		'podcast_season_number'  => get_post_meta( $post_id, 'podcast_season_number', true ),
+		'podcast_episode_number' => get_post_meta( $post_id, 'podcast_episode_number', true ),
+		'podcast_duration'       => \tenup_podcasting\helpers\get_podcast_duration( $post_id ),
+	);
+
+	if ( empty( $attributes['metaName'] ) || ! isset( $allowed_metas[ $attributes['metaName'] ] ) ) {
+		return '';
+	}
+
 	return sprintf(
-		'<span class="podcast-duration">%s</span>',
-		\tenup_podcasting\helpers\get_podcast_duration( $attributes['postId'] )
+		'<span class="%1$s">%2$s</span>',
+		esc_attr( str_replace( '_', '-', $attributes['metaName'] ) ),
+		$allowed_metas[ $attributes['metaName'] ]
 	);
 }
