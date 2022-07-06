@@ -1,7 +1,11 @@
 #! /bin/bash
-
-SLUG=simple-podcasting
+CURRENT_WORKING_DIR="$(pwd)"
+PROJECT_DIR="$(dirname "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" )"
+SLUG="$(basename "$PROJECT_DIR")"
 PROJECT_TYPE=plugin
+if [ -f "$PROJECT_DIR/style.css" ]; then
+	PROJECT_TYPE=theme
+fi
 
 if [[ ! -z "$CODESPACE_NAME" ]]
 then
@@ -38,3 +42,5 @@ wp core install --url="$SITE_HOST" --title="$(getTitleFromSlug) Development" --a
 
 echo "Activate $SLUG"
 wp $PROJECT_TYPE activate $SLUG
+
+exit 0

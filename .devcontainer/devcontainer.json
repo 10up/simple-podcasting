@@ -2,12 +2,10 @@
 	"name": "${localWorkspaceFolderBasename}",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "wordpress",
-	"forwardPorts": [
-    8080
-	],
+	"forwardPorts": [ 8080 ],
 	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [ "felixfbecker.php-debug" ],
+	"extensions": [ "xdebug.php-debug" ],
 	"workspaceFolder": "/var/www/html/",
 	"postCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
-  "remoteUser": "www-data"
+	"remoteUser": "www-data"
 }
