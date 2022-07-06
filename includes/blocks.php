@@ -20,10 +20,19 @@ function init() {
 		true
 	);
 
+	wp_register_style(
+		'podcasting-block-editor',
+		PODCASTING_URL . 'dist/blocks.css',
+		array(),
+		$block_asset['version'],
+		'all'
+	);
+
 	register_block_type(
 		'podcasting/podcast',
 		array(
 			'editor_script' => 'podcasting-block-editor',
+			'editor_style'  => 'podcasting-block-editor',
 		)
 	);
 }
@@ -41,6 +50,9 @@ function register_js_strings() {
 	__( 'Podcast Settings', 'simple-podcasting' );
 	__( 'Length (MM:SS)', 'simple-podcasting' );
 	__( 'a podcast episode', 'simple-podcasting' );
+	__( 'Season Number', 'simple-podcasting' );
+	__( 'Episode Number', 'simple-podcasting' );
+	__( 'Episode Type', 'simple-podcasting' );
 }
 add_action( 'init', __NAMESPACE__ . '\register_js_strings' );
 

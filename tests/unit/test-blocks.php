@@ -41,6 +41,20 @@ class BlockTests extends TestCase {
 		);
 
 		\WP_Mock::userFunction(
+			'wp_register_style',
+			array(
+				'times' => 1,
+				'args'  => array(
+					'podcasting-block-editor',
+					PODCASTING_URL . 'dist/blocks.css',
+					array(),
+					$block_asset['version'],
+					'all',
+				),
+			)
+		);
+
+		\WP_Mock::userFunction(
 			'register_block_type',
 			array(
 				'times' => 1,
@@ -48,6 +62,7 @@ class BlockTests extends TestCase {
 					'podcasting/podcast',
 					array(
 						'editor_script' => 'podcasting-block-editor',
+						'editor_style'  => 'podcasting-block-editor',
 					),
 				),
 			)
@@ -59,7 +74,7 @@ class BlockTests extends TestCase {
 	}
 
 	public function test_register_js_strings() {
-		\WP_Mock::userFunction( '__', array( 'times' => 4 ) );
+		\WP_Mock::userFunction( '__', array( 'times' => 7 ) );
 
 		$result = tenup_podcasting\block\register_js_strings();
 		$this->assertNull( $result );
@@ -109,11 +124,11 @@ class BlockTests extends TestCase {
 				'metadata_exists' => false,
 				'expected'        => null,
 			),
-			'Delete 6 metas'                      => array(
+			'Delete 10 metas'                      => array(
 				'creating'        => false,
 				'has_block'       => false,
 				'metadata_exists' => true,
-				'expected'        => array( 'podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit', 'enclosure' ),
+				'expected'        => array( 'podcast_url', 'podcast_filesize', 'podcast_duration', 'podcast_mime', 'podcast_captioned', 'podcast_explicit', 'enclosure', 'podcast_season_number', 'podcast_episode_number', 'podcast_episode_type' ),
 			),
 		);
 	}

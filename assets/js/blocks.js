@@ -7,6 +7,7 @@ import { registerBlockType } from '@wordpress/blocks';
 // Split the Edit component out.
 import Edit from './edit';
 import transforms from './transforms';
+import '../css/podcasting-editor-screen.css';
 
 /**
  * Register example block
@@ -73,6 +74,21 @@ export default registerBlockType(
 				source: 'meta',
 				meta: 'enclosure',
 			},
+			seasonNumber: {
+				type: 'string',
+				source: 'meta',
+				meta: 'podcast_season_number',
+			},
+			episodeNumber: {
+				type: 'string',
+				source: 'meta',
+				meta: 'podcast_episode_number',
+			},
+			episodeType: {
+				type: 'string',
+				source: 'meta',
+				meta: 'podcast_episode_type',
+			}
 		},
 		transforms,
 
