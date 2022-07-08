@@ -65,7 +65,5 @@ wp --allow-root $PROJECT_TYPE activate $SLUG
 
 # Install Xdebug
 pecl install "xdebug" || true && docker-php-ext-enable xdebug
-echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 exit 0

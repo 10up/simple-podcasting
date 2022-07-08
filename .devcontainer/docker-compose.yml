@@ -15,6 +15,7 @@ services:
     volumes:
       - wordpress:/var/www/html
       - "../:/var/www/html/wp-content/plugins/simple-podcasting"
+      - "./configs/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 
   db:
     image: mariadb
