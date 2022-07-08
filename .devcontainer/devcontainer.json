@@ -6,5 +6,6 @@
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [ "xdebug.php-debug" ],
 	"workspaceFolder": "/var/www/html/",
-	"postCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/setup.sh"
+	"postCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/setup.sh",
+	"onCreateCommand": "/var/www/html/wp-content/plugins/${localWorkspaceFolderBasename}/.devcontainer/create.sh"
 }
