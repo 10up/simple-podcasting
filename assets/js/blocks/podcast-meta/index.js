@@ -1,9 +1,14 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-import { BlockControls, InspectorControls } from '@wordpress/block-editor';
-import ServerSideRender from '@wordpress/server-side-render';
-import { SelectControl, PanelBody, PanelRow } from '@wordpress/components';
-import { Fragment, useEffect } from '@wordpress/element';
+import { InspectorControls } from '@wordpress/block-editor';
+import {
+	SelectControl,
+	PanelBody,
+	PanelRow,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+    __experimentalToggleGroupControlOption as ToggleGroupControlOption
+} from '@wordpress/components';
+import { Fragment, useEffect, useCallback } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
 export default registerBlockType(
@@ -18,47 +23,83 @@ export default registerBlockType(
 			},
 			metaName: {
 				type: 'string'
+			},
+			headingSize: {
+				type: 'string',
+				default: 'h2'
 			}
 		},
 		ancestor: ['core/query'],
 		usesContext: [ 'postId' ],
 		edit: ({
 			context: { postId },
-			attributes: { metaName },
-			setAttributes,
-			clientId
+			attributes,
+			setAttributes
 		}) => {
 
-			const parent = useSelect(select => select('core/block-editor').getBlockParents(clientId))
-			console.log(parent);
+			useEffect(() => {
+				setAttributes({ postId });
+			}, [postId])
 
-			setAttributes({ postId });
+			const { metaName, headingSize, className } = attributes;
+			const { meta } = useSelect((select) => select('core').getEntityRecord('postType', 'post', postId) )
 
-			// useEffect(() => {
-			// 	setAttributes({ metaName })
+			const getPodcastDuration = useCallback(
+				() => {
 
-			// 	console.log(metaName, postId);
+					let hours, minutes, seconds;
+					const values = meta[metaName].trim().split(':');
 
-			// }, [postId])
+					if(values.length === 3) {
+						[hours, minutes, seconds] = values
+					}else if( values.length === 2 ) {
+						[minutes, seconds] = values
+					}
 
-			// const { meta } = useSelect((select) => select('core').getEntityRecord('postType', 'post', postId))
+					const invalidValues = ['0', '00']
+					let duration = [];
 
-			// console.log(meta)
+					if(hours && ! invalidValues.includes(hours)) {
+						duration.push(`${hours} hr`)
+					}
+
+					if(minutes && ! invalidValues.includes(minutes)) {
+						duration.push(`${minutes} min`)
+					}
+
+					if(seconds && ! invalidValues.includes(seconds)) {
+						duration.push(`${seconds} sec`)
+					}
+
+					return duration.join(' ')
+				},
+				[meta]
+			);
+
+			const PodcastMeta = () => {
+				const classNames = [metaName.replaceAll('_', '-')];
+
+				if(className){
+					classNames.push(className)
+				}
+
+				let TagName = 'span';
+				let value = meta[metaName];
+
+				switch(metaName){
+					case 'podcast_season_number':
+					case 'podcast_episode_number':
+						TagName = headingSize;
+						break;
+					case 'podcast_duration':
+						value = getPodcastDuration();
+						break;
+				}
+				return <TagName className={classNames.join(' ')}>{value}</TagName>
+			}
 
 			return (
 				<Fragment>
-					<BlockControls group="block">
-						{
-							[ 'podcast_season_number', 'podcast_episode_number' ].includes( metaName ) && (
-								<HeadingLevelDropdown
-									selectedLevel={ level }
-									onChange={ ( newLevel ) =>
-										setAttributes( { level: newLevel } )
-									}
-								/>
-							)
-						}
-					</BlockControls>
 					<InspectorControls>
 						<PanelBody title={ __( 'Podcast Meta', 'simple-podcasting' ) }>
 							<PanelRow>
@@ -67,26 +108,41 @@ export default registerBlockType(
 									value={ metaName }
 									onChange={ metaName => setAttributes( { metaName } )  }
 									options={ [
-										{ value: '', label: __( 'Select a podcast data type','simple-podcasting' ) },
+										{ value: '', label: __( 'Select a podcast meta','simple-podcasting' ) },
 										{ value: 'podcast_season_number', label: __( 'Season Number','simple-podcasting' ) },
 										{ value: 'podcast_episode_number', label: __( 'Episode Number', 'simple-podcasting' ) },
 										{ value: 'podcast_duration', label: __( 'Podcast Duration', 'simple-podcasting' ) }
 									] }
 								/>
 							</PanelRow>
+							{
+								['podcast_season_number', 'podcast_episode_number'].includes(metaName) && (
+									<PanelRow>
+										<ToggleGroupControl
+											label={__('Heading Level', 'simple-podcasting')}
+											value={headingSize}
+											onChange={(headingSize) => setAttributes({headingSize})}
+											isBlock>
+											{
+												['h1', 'h2', 'h3', 'h4'].map((level) => {
+													return (
+														<ToggleGroupControlOption
+															value={level}
+															label={level.toUpperCase()}
+															key={level}
+														/>
+													)
+												})
+											}
+										</ToggleGroupControl>
+									</PanelRow>
+								)
+							}
 						</PanelBody>
 					</InspectorControls>
-					{ postId && metaName && (
-						<ServerSideRender
-							block="podcasting/podcast-meta"
-							attributes={ { metaName, postId } }
-						/>
-					) }
-					{/* {meta[metaName]} */}
+					<PodcastMeta />
 				</Fragment>
 			)
-
 		}
 	}
 )
-

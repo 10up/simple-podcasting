@@ -23,7 +23,7 @@ $podcast_terms = get_terms(
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"},"className":"podcasting-meta"} -->
 	<div class="wp-block-group podcasting-meta">
 		<!-- wp:post-date {"format":"F j, Y"} /-->
-		<!-- wp:podcasting/podcast-duration /-->
+		<!-- wp:podcasting/podcast-meta {"metaName":"podcast_duration"} /-->
 	</div>
 	<!-- /wp:group -->
 	<!-- wp:post-excerpt /-->

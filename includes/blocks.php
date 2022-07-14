@@ -40,28 +40,19 @@ function init() {
 		'podcasting/podcast-meta',
 		array(
 			'attributes'      => array(
-				'postId'   => array(
+				'postId'      => array(
 					'type' => 'integer',
 				),
-				'metaName' => array(
+				'metaName'    => array(
 					'type' => 'string',
+				),
+				'headingSize' => array(
+					'type'    => 'string',
+					'default' => 'h2'
 				),
 			),
 			'editor_script'   => 'podcasting-block-editor',
 			'render_callback' => __NAMESPACE__ . '\podcast_meta_block_render',
-		)
-	);
-
-	register_block_type(
-		'podcasting/podcast-duration',
-		array(
-			'attributes'      => array(
-				'postId' => array(
-					'type' => 'integer',
-				),
-			),
-			'editor_script'   => 'podcasting-block-editor',
-			'render_callback' => __NAMESPACE__ . '\podcast_duration_block_render',
 		)
 	);
 }
@@ -152,9 +143,26 @@ function podcast_meta_block_render( $attributes, $content, $block ) {
 		return '';
 	}
 
+	if ( empty( $attributes['headingSize'] ) ) {
+		$attributes['headingSize'] = 'h2';
+	}
+
+	$element_map = array(
+		'podcast_season_number'  => $attributes['headingSize'],
+		'podcast_episode_number' => $attributes['headingSize'],
+		'podcast_duration'       => 'span'
+	);
+
+	$classnames = array( str_replace( '_', '-', $attributes['metaName'] ) );
+
+	if ( ! empty( $attributes['className'] ) ) {
+		$classnames[] = $attributes['className'];
+	}
+
 	return sprintf(
-		'<span class="%1$s">%2$s</span>',
-		esc_attr( str_replace( '_', '-', $attributes['metaName'] ) ),
+		'<%1$s class="%2$s">%3$s</%1$s>',
+		$element_map[ $attributes['metaName'] ],
+		esc_attr( join( ' ', $classnames ) ),
 		$allowed_metas[ $attributes['metaName'] ]
 	);
 }
