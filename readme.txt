@@ -40,7 +40,7 @@ Repeat for each podcast you would like to create.
 
  * Create a new post and assign it to one or more Podcasts using the panel labeled Podcasts.
  * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (sometimes referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
- * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available and to optionally specify one media item if the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available, season number, episode number, episode type and to optionally specify one media item in the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
 
 === Submit your podcast feed to Apple Podcasts ===
 
