@@ -102,6 +102,12 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 
 == Changelog ==
 
+= 1.2.4 - 2022-07-25 =
+* **Added:** Season number, episode number and episode type attributes can now be stored with a Podcast (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#175](https://github.com/10up/simple-podcasting/pull/175)).
+* **Changed:** Bump WordPress version "tested up to" 6.0 (props [@cadic](https://github.com/cadic) via [#171](https://github.com/10up/simple-podcasting/issues/171)).
+* **Fixed:** Incorrect Language value in the Feed (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#176](https://github.com/10up/simple-podcasting/pull/176)).
+* **Security:** Bump `terser` from 5.12.1 to 5.14.2 (props [@dependabot](https://github.com/apps/dependabot) via [#180](https://github.com/10up/simple-podcasting/pull/180)).
+
 = 1.2.3 - 2022-04-28 =
 * **Added** Compatibility tests against PHP 7 and 8 (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
 * **Added** Default Pull Request Reviewers via CODEOWNERS file (props [@jeffpaul](https://profiles.wordpress.org/jeffpaul), [@cadic](https://profiles.wordpress.org/cadic)).
