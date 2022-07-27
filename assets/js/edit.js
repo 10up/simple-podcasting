@@ -13,6 +13,7 @@ const {
 	PanelRow,
 	SelectControl,
 	TextControl,
+	RadioControl,
 } = wp.components;
 const { Fragment } = wp.element;
 
@@ -43,6 +44,9 @@ class Edit extends Component {
 		const { caption, explicit } = attributes;
 		const duration = attributes.duration || '';
 		const captioned = attributes.captioned || '';
+		const seasonNumber = attributes.seasonNumber || '';
+		const episodeNumber = attributes.episodeNumber || '';
+		const episodeType = attributes.episodeType || '';
 		const { className, src } = this.state;
 
 		const onSelectAttachment = ( attachment ) => {
@@ -159,6 +163,33 @@ class Edit extends Component {
 								label={ __( 'Length (MM:SS)', 'simple-podcasting' ) }
 								value={ duration }
 								onChange={ duration => setAttributes( { duration } ) }
+							/>
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label={ __( 'Season Number', 'simple-podcasting' ) }
+								value={ seasonNumber }
+								onChange={ seasonNumber => setAttributes( { seasonNumber } ) }
+							/>
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label={ __( 'Episode Number', 'simple-podcasting' ) }
+								value={ episodeNumber }
+								onChange={ episodeNumber => setAttributes( { episodeNumber } ) }
+							/>
+						</PanelRow>
+						<PanelRow>
+							<RadioControl
+								label={ __( 'Episode Type', 'simple-podcasting' ) }
+								selected={ episodeType }
+								options={ [
+									{ label: __( 'None', 'simple-podcasting' ), value: 'none' },
+									{ label: __( 'Full', 'simple-podcasting' ), value: 'full' },
+									{ label: __( 'Trailer', 'simple-podcasting' ), value: 'trailer' },
+									{ label: __( 'Bonus', 'simple-podcasting' ), value: 'bonus' },
+								] }
+								onChange={ episodeType => setAttributes( { episodeType } ) }
 							/>
 						</PanelRow>
 					</PanelBody>

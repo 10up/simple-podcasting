@@ -80,6 +80,36 @@ function register_meta() {
 			'single'       => true,
 		)
 	);
+
+	\register_meta(
+		'post',
+		'podcast_season_number',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+		)
+	);
+
+	\register_meta(
+		'post',
+		'podcast_episode_number',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+		)
+	);
+
+	\register_meta(
+		'post',
+		'podcast_episode_type',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
 
