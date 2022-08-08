@@ -4,7 +4,7 @@ Tags: simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg
 Requires at least: 4.6
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,7 +40,7 @@ Repeat for each podcast you would like to create.
 
  * Create a new post and assign it to one or more Podcasts using the panel labeled Podcasts.
  * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (sometimes referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
- * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available and to optionally specify one media item if the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available, season number, episode number, episode type and to optionally specify one media item in the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
 
 === Submit your podcast feed to Apple Podcasts ===
 
@@ -101,6 +101,12 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
+
+= 1.2.4 - 2022-07-27 =
+* **Added:** Season number, episode number and episode type attributes can now be stored with a Podcast (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#175](https://github.com/10up/simple-podcasting/pull/175)).
+* **Changed:** Bump WordPress version "tested up to" 6.0 (props [@cadic](https://github.com/cadic) via [#171](https://github.com/10up/simple-podcasting/issues/171)).
+* **Fixed:** Incorrect Language value in the Feed (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#176](https://github.com/10up/simple-podcasting/pull/176)).
+* **Security:** Bump `terser` from 5.12.1 to 5.14.2 (props [@dependabot](https://github.com/apps/dependabot) via [#180](https://github.com/10up/simple-podcasting/pull/180)).
 
 = 1.2.3 - 2022-04-28 =
 * **Added** Compatibility tests against PHP 7 and 8 (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).

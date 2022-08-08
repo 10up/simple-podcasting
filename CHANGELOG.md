@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [1.2.4] - 2022-07-27
+### Added
+- Season number, episode number and episode type attributes can now be stored with a Podcast (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#175](https://github.com/10up/simple-podcasting/pull/175)).
+
+### Changed
+- Bump WordPress version "tested up to" 6.0 (props [@cadic](https://github.com/cadic) via [#171](https://github.com/10up/simple-podcasting/issues/171)).
+
+### Fixed
+- Incorrect Language value in the Feed (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#176](https://github.com/10up/simple-podcasting/pull/176)).
+
+### Security
+- Bump `terser` from 5.12.1 to 5.14.2 (props [@dependabot](https://github.com/apps/dependabot) via [#180](https://github.com/10up/simple-podcasting/pull/180)).
+
 ## [1.2.3] - 2022-04-28
 ### Added
 - Compatibility tests against PHP 7 and 8 (props [@cadic](https://github.com/cadic), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#150](https://github.com/10up/simple-podcasting/pull/150)).
@@ -112,6 +125,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.2.4]: https://github.com/10up/simple-podcasting/compare/1.2.3-deploy...1.2.4
 [1.2.3]: https://github.com/10up/simple-podcasting/compare/1.2.2...1.2.3-deploy
 [1.2.2]: https://github.com/10up/simple-podcasting/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/10up/simple-podcasting/compare/1.2.0...1.2.1
