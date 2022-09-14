@@ -20,6 +20,9 @@ const { Fragment } = wp.element;
 const { apiFetch } = wp;
 const ALLOWED_MEDIA_TYPES = [ 'audio' ];
 
+// Import taxonomy panel.
+import PostTaxonomies from './taxonomy-panel';
+
 class Edit extends Component {
 	constructor( { className } ) {
 		super( ...arguments );
@@ -130,6 +133,7 @@ class Edit extends Component {
 			<Fragment>
 				{controls}
 				<InspectorControls>
+					<PostTaxonomies />
 					<PanelBody
 						title={ __( 'Podcast Settings', 'simple-podcasting' ) }
 					>
