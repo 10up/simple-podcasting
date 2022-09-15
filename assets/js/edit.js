@@ -20,8 +20,8 @@ const { Fragment } = wp.element;
 const { apiFetch } = wp;
 const ALLOWED_MEDIA_TYPES = [ 'audio' ];
 
-// Import taxonomy panel.
-import PostTaxonomies from './taxonomy-panel';
+// Import hierarchical term selector.
+import HierarchicalTermSelector from './term-selector/hierarchical-term-selector';
 
 class Edit extends Component {
 	constructor( { className } ) {
@@ -133,10 +133,14 @@ class Edit extends Component {
 			<Fragment>
 				{controls}
 				<InspectorControls>
-					<PostTaxonomies />
 					<PanelBody
 						title={ __( 'Podcast Settings', 'simple-podcasting' ) }
 					>
+						<PanelRow>
+							<div id="hierar-podcasting_podcasts">
+								<HierarchicalTermSelector slug="podcasting_podcasts" />
+							</div>
+						</PanelRow>
 						<PanelRow>
 							<label
 								htmlFor="podcast-captioned-form-toggle"
