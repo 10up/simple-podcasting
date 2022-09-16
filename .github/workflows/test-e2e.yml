@@ -18,7 +18,7 @@ jobs:
         core:
           - {name: 'WP latest', version: 'latest', hasBlockEditor: true}
           - {name: 'WP trunk', version: 'WordPress/WordPress#master', hasBlockEditor: true}
-          - {name: 'WP minimum', version: 'WordPress/WordPress#4.6', hasBlockEditor: false}
+          - {name: 'WP minimum', version: 'WordPress/WordPress#5.7', hasBlockEditor: false}
 
     steps:
     - name: Checkout

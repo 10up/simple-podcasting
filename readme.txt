@@ -1,7 +1,7 @@
 === Simple Podcasting ===
 Contributors: 10up, helen, adamsilverstein, jakemgold
 Tags: simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
-Requires at least: 4.6
+Requires at least: 5.7
 Tested up to: 6.0
 Requires PHP: 7.0
 Stable tag: 1.2.4
