@@ -49,4 +49,4 @@ jobs:
       run: composer install
 
     - name: Check PHP Compatibility
-      run: ./vendor/bin/phpcs -p simple-podcasting.php includes --standard=PHPCompatibilityWP --extensions=php --runtime-set testVersion ${{ matrix.php }}
+      run: ./vendor/bin/phpcs -p simple-podcasting.php includes --standard=PHPCompatibilityWP --extensions=php --runtime-set testVersion 7.4-
