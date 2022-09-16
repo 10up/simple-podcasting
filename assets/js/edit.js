@@ -20,7 +20,11 @@ const { Fragment } = wp.element;
 const { apiFetch } = wp;
 const ALLOWED_MEDIA_TYPES = [ 'audio' ];
 
-// Import hierarchical term selector.
+/*
+ * Import hierarchical term selector.
+ *
+ * @TODO Import from `@wordpress/editor` once minimum WP version is 6.0.
+ */
 import HierarchicalTermSelector from './term-selector/hierarchical-term-selector';
 
 class Edit extends Component {
