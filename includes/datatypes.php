@@ -571,6 +571,16 @@ function get_meta_fields() {
 			'description' => __( 'Comma-separated keywords to help people find your podcast.', 'simple-podcasting' ),
 		),
 		array(
+			'slug'    => 'podcasting_type_of_show',
+			'title'   => __( 'Type of show', 'simple-podcasting' ),
+			'type'    => 'select',
+			'options' => array(
+				0          => 'n/a',
+				'episodic' => 'Episodic',
+				'serial'   => 'Serial',
+			),
+		),
+		array(
 			'slug'    => 'podcasting_category_1',
 			'title'   => __( 'Category 1', 'simple-podcasting' ),
 			'type'    => 'select',
