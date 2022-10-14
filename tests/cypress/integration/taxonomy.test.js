@@ -1,3 +1,5 @@
+const { randomName } = require('../support/functions');
+
 describe('Admin can create and update podcast taxonomy', () => {
 	before(() => {
 		cy.login();
@@ -63,5 +65,27 @@ describe('Admin can create and update podcast taxonomy', () => {
 			'http://localhost:8889/wp-admin/edit-tags.php'
 		);
 		cy.get('.wp-list-table').should('contain.text', 'No podcasts found');
+	});
+
+	it('Can add taxonomy with type of show', () => {
+		let podcastName = 'Podcast ' + randomName();
+		cy.createTerm(podcastName, 'podcasting_podcasts', {
+			beforeSave: () => {
+				cy.get('#podcasting_type_of_show').select('n/a');
+			},
+		});
+		cy.get('.notice').contains('Item added.');
+		cy.get('.row-title').contains(podcastName).click();
+		cy.get('#podcasting_type_of_show').should('have.value', '0');
+
+		podcastName = 'Podcast ' + randomName();
+		cy.createTerm(podcastName, 'podcasting_podcasts', {
+			beforeSave: () => {
+				cy.get('#podcasting_type_of_show').select('Serial');
+			},
+		});
+		cy.get('.notice').contains('Item added.');
+		cy.get('.row-title').contains(podcastName).click();
+		cy.get('#podcasting_type_of_show').should('have.value', 'serial');
 	});
 });
