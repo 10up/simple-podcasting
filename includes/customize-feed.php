@@ -158,6 +158,12 @@ function feed_head() {
 		echo '<itunes:keywords>' . esc_html( $keywords ) . "</itunes:keywords>\n";
 	}
 
+	$type_of_show = get_term_meta( $term->term_id, 'podcasting_type_of_show', true );
+
+	if ( '0' !== $type_of_show ) {
+		echo '<itunes:type>' . esc_html( $type_of_show ) . "</itunes:type>\n";
+	}
+
 	generate_categories();
 }
 add_action( 'rss2_head', __NAMESPACE__ . '\feed_head' );
