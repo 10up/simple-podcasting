@@ -10,12 +10,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: install node v12
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
-        node-version: 12
+        node-version-file: .nvmrc
     - name: Build
       run: |
-        npm install
+        npm ci
         npm run build
     - name: WordPress Plugin Deploy
       id: deploy
