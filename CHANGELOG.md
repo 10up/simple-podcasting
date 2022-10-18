@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [1.3.0] - 2022-07-28
+## [1.3.0] - 2022-10-18
 ### Added
 - Podcasts Taxonomy term(s) added in block settings (props [@helen](https://github.com/helen), [@jeffpaul](https://github.com/jeffpaul), [@faisal-alvi](https://github.com/faisal-alvi), [@peterwilsoncc](https://github.com/peterwilsoncc), [@cadic](https://github.com/cadic) via [#183](https://github.com/10up/simple-podcasting/pull/183))
 - Type of show setting for the podcast (props [@cadic](https://github.com/cadic), [@faisal-alvi](https://github.com/faisal-alvi), [@jeffpaul](https://github.com/jeffpaul) via [#188](https://github.com/10up/simple-podcasting/pull/188))
