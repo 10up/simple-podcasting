@@ -575,9 +575,9 @@ function get_meta_fields() {
 			'title'   => __( 'Type of show', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => array(
-				0          => 'n/a',
-				'episodic' => 'Episodic',
-				'serial'   => 'Serial',
+				0          => __( 'n/a', 'simple-podcasting' ),
+				'episodic' => __( 'Episodic', 'simple-podcasting' ),
+				'serial'   => __( 'Serial', 'simple-podcasting' ),
 			),
 		),
 		array(
