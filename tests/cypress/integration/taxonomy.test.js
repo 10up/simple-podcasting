@@ -67,25 +67,28 @@ describe('Admin can create and update podcast taxonomy', () => {
 		cy.get('.wp-list-table').should('contain.text', 'No podcasts found');
 	});
 
-	it('Can add taxonomy with type of show', () => {
-		let podcastName = 'Podcast ' + randomName();
-		cy.createTerm(podcastName, 'podcasting_podcasts', {
-			beforeSave: () => {
-				cy.get('#podcasting_type_of_show').select('n/a');
-			},
-		});
-		cy.get('.notice').contains('Item added.');
-		cy.get('.row-title').contains(podcastName).click();
-		cy.get('#podcasting_type_of_show').should('have.value', '0');
+	const tests = {
+		0: 'n/a',
+		serial: 'Serial',
+		episodic: 'Episodic',
+	};
 
-		podcastName = 'Podcast ' + randomName();
-		cy.createTerm(podcastName, 'podcasting_podcasts', {
-			beforeSave: () => {
-				cy.get('#podcasting_type_of_show').select('Serial');
-			},
+	for (const [typeOfShowKey, typeOfShowName] of Object.entries(tests)) {
+		it(`Can add taxonomy with ${typeOfShowName} type of show`, () => {
+			const podcastName = 'Podcast ' + randomName();
+			cy.createTerm(podcastName, 'podcasting_podcasts', {
+				beforeSave: () => {
+					cy.get('#podcasting_type_of_show').select(typeOfShowName);
+				},
+			}).then((term) => {
+				cy.visit(
+					`/wp-admin/term.php?taxonomy=podcasting_podcasts&tag_ID=${term.term_id}`
+				);
+				cy.get('#podcasting_type_of_show').should(
+					'have.value',
+					typeOfShowKey
+				);
+			});
 		});
-		cy.get('.notice').contains('Item added.');
-		cy.get('.row-title').contains(podcastName).click();
-		cy.get('#podcasting_type_of_show').should('have.value', 'serial');
-	});
+	}
 });
