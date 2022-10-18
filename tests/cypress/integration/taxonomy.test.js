@@ -1,3 +1,5 @@
+const { randomName } = require('../support/functions');
+
 describe('Admin can create and update podcast taxonomy', () => {
 	before(() => {
 		cy.login();
@@ -64,4 +66,29 @@ describe('Admin can create and update podcast taxonomy', () => {
 		);
 		cy.get('.wp-list-table').should('contain.text', 'No podcasts found');
 	});
+
+	const tests = {
+		0: 'n/a',
+		serial: 'Serial',
+		episodic: 'Episodic',
+	};
+
+	for (const [typeOfShowKey, typeOfShowName] of Object.entries(tests)) {
+		it(`Can add taxonomy with ${typeOfShowName} type of show`, () => {
+			const podcastName = 'Podcast ' + randomName();
+			cy.createTerm(podcastName, 'podcasting_podcasts', {
+				beforeSave: () => {
+					cy.get('#podcasting_type_of_show').select(typeOfShowName);
+				},
+			}).then((term) => {
+				cy.visit(
+					`/wp-admin/term.php?taxonomy=podcasting_podcasts&tag_ID=${term.term_id}`
+				);
+				cy.get('#podcasting_type_of_show').should(
+					'have.value',
+					typeOfShowKey
+				);
+			});
+		});
+	}
 });
