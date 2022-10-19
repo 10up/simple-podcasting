@@ -14,8 +14,11 @@
 /.eslintignore
 /.eslintrc
 /.gitignore
+/.nvmrc
 /.phpcs.xml.dist
+/.phpunit.result.cache
 /.prettierrc
+/.wp-env.json
 /CHANGELOG.md
 /CODE_OF_CONDUCT.md
 /composer.json
