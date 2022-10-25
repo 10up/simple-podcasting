@@ -48,6 +48,23 @@ Repeat for each podcast you would like to create.
 * Ensure you test feeds before submitting them, see [Apple's "Test a Podcast page"](https://help.apple.com/itc/podcasts_connect/#/itcac471c970) for more information.
 * Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see [Apple's "Submit a podcast" page](https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9) for more information.
 
+=== Submit your podcast feed to Pocket Casts
+
+* Validate your feeds at [https://www.castfeedvalidator.com/ Cast Feed Validator] before submitting them.
+* Submit the podcast feed to https://pocketcasts.com/submit/
+
+=== How do I get my podcast featured on Pocket Casts?
+
+The Featured section of Pocket Casts is human-curated. To ensure that all podcasts have an equal opportunity at being featured, selections are made on the basis of merit.
+
+If you’d like to suggest your podcast for a featured spot, reach out to `curation@pocketcasts.com`
+
+For more information, [https://pocketcasts.com/podcast-producers/ read more].
+
+=== How do I submit private and paid podcast feeds?
+
+Follow this documentation to submit [https://support.pocketcasts.com/article/password-protected-podcasts-2/ private and paid podcast feeds]
+
 === Control how many episodes are listed on the feed ===
 
 If you want to adjust the default number of episodes included in a podcast RSS feed, then utilize the following to do so...
