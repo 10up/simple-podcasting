@@ -31,6 +31,10 @@
 
 	&__header-title {
 		text-align: center;
+		font-family: 'Roboto';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 17.8983px;
 	}
 
 	&__logo {
@@ -45,6 +49,11 @@
 
 	&__plugin-name {
 		margin-left: 11px;
+		font-family: 'Roboto';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 17.8983px;
+		line-height: 20px;
 	}
 
 	&__header-controls {
@@ -67,6 +76,11 @@
 		margin-top: 13px;
 		margin-bottom: 14px;
 	}
+
+	&__create-a-new-post-button {
+		width: 240px;
+		text-align: center;
+	}
 }
 
 .simple-podcasting {
@@ -75,6 +89,13 @@
 		&--step-1 {
 			max-width: 524px;
 		}
+
+		&--step-2 {
+			display: flex;
+			max-width: 1038px;
+			margin-top: 68px;
+		}
+
 		margin: 0 auto;
 	}
 
@@ -117,6 +138,40 @@
 		line-height: 24px;
 		color: #828282;
 		margin-top: 4px;
+	}
+
+	&__panel {
+		font-family: 'Roboto';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 24px;
+		flex-grow: 1;
+		flex-basis: 0;
+
+		p {
+			font-family: 'Roboto';
+			font-style: normal;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 24px;
+		}
+
+		&--left {
+			max-width: 483px;
+		}
+	}
+
+	&__podcast-block-preview {
+		width: 468px;
+		float: right;
+		box-shadow: 0px 0px 26px 8px rgba(0, 0, 0, 0.05);
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
 	}
 }
 

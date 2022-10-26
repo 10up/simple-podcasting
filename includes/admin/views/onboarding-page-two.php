@@ -6,8 +6,27 @@
  */
 
 ?>
-<div id="simple-podcasting__onboarding-body">
-	<div id="simple-podcasting__page-title">
-		<?php esc_html_e( 'Create your first podcast show', 'simple-podcasting' ); ?>
+<div class="simple-podcasting__onboarding-body simple-podcasting__onboarding-body--step-2">
+	<div class="simple-podcasting__panel simple-podcasting__panel--left">
+		<div id="simple-podcasting__page-title">
+			<?php esc_html_e( 'Well done!', 'simple-podcasting' ); ?>
+		</div>
+
+		<p><?php echo __( 'You can always <a href="#">edit show details</a> later.', 'simple-podcasting' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+		<p><?php esc_html_e( 'To create your first episode:', 'simple-podcasting' ); ?></p>
+		<ol>
+			<li><?php esc_html_e( 'Create a new post', 'simple-podcasting' ); ?></li>
+			<li><?php esc_html_e( 'Assign the post to a podcast show', 'simple-podcasting' ); ?></li>
+			<li><?php esc_html_e( 'Insert a podcast block with an audio file into the content', 'simple-podcasting' ); ?></li>
+		</ol>
+		<p><?php esc_html_e( 'You can then submit the feed URL to podcatchers. The feed will automatically update each time you add a new episode.', 'simple-podcasting' ); ?></p>
+		<p><?php esc_html_e( "Let's start!", 'simple-podcasting' ); ?></p>
+		<button class="simple-podcasting__btn simple-podcasting__btn--black" id="simple-podcasting__create-a-new-post-button"><?php esc_html_e( 'Create a new Post', 'simple-podcasting' ); ?></button>
+	</div>
+
+	<div class="simple-podcasting__panel simple-podcasting__panel--right">
+		<div class="simple-podcasting__podcast-block-preview">
+			<img src="<?php echo esc_url( PODCASTING_URL . 'dist/assets/images/podcast-block-preview.svg' ); ?>" />
+		</div>
 	</div>
 </div>
