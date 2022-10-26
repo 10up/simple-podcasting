@@ -106,8 +106,16 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 	}
 
 	if ( 'admin_page_simple-podcasting-onboarding' === $hook_suffix ) {
+		wp_enqueue_media();
+		wp_enqueue_script(
+			'podcasting_onboarding_screen_script',
+			PODCASTING_URL . 'dist/podcasting-onboarding.js',
+			array( 'jquery' ),
+			PODCASTING_VERSION
+		);
+
 		wp_enqueue_style(
-			'podcasting_onboarding_screen',
+			'podcasting_onboarding_screen_style',
 			PODCASTING_URL . 'dist/podcasting-onboarding.css',
 			array(),
 			PODCASTING_VERSION

@@ -7,8 +7,6 @@
 
 namespace tenup_podcasting\admin;
 
-add_action( 'admin_menu', 'tenup_podcasting\admin\register_onoarding_page' );
-
 /**
  * Registers a hidden sub menu page for the onboarding wizard.
  */
@@ -22,6 +20,7 @@ function register_onoarding_page() {
 		'\tenup_podcasting\admin\render_page_contents'
 	);
 }
+add_action( 'admin_menu', 'tenup_podcasting\admin\register_onoarding_page' );
 
 /**
  * Renders the page content for the onboarding wizard.
@@ -49,3 +48,44 @@ function render_page_contents() {
 	}
 }
 
+/**
+ * Onboarding data saving handler.
+ */
+function onboarding_action_handler() {
+	if ( ! isset( $_POST['simple-podcasting-action'] ) ) {
+		return;
+	}
+
+	$podcast_name        = isset( $_POST['podcast-name'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-name'] ) ) : null;
+	$podcast_description = isset( $_POST['podcast-description'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-description'] ) ) : null;
+	$podcast_category    = isset( $_POST['podcast-category'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-category'] ) ) : null;
+	$podcast_cover_id    = isset( $_POST['podcast-cover-image-id'] ) ? absint( wp_unslash( $_POST['podcast-cover-image-id'] ) ) : null;
+
+	if ( empty( $podcast_name ) || empty( $podcast_category ) ) {
+		return;
+	}
+
+	$result = wp_insert_term(
+		$podcast_name,
+		TAXONOMY_NAME
+	);
+
+	if ( is_wp_error( $result ) ) {
+		return;
+	}
+
+	if ( $podcast_description ) {
+		update_term_meta( $result['term_id'], 'podcasting_summary', $podcast_description );
+	}
+
+	if ( $podcast_category ) {
+		update_term_meta( $result['term_id'], 'podcasting_category_1', $podcast_category );
+	}
+
+	if ( $podcast_cover_id ) {
+		$image_url = wp_get_attachment_url( (int) $podcast_cover_id );
+		update_term_meta( $result['term_id'], 'podcasting_image', $podcast_cover_id );
+		update_term_meta( $result['term_id'], 'podcasting_image_url', $image_url );
+	}
+}
+add_action( 'admin_init', '\tenup_podcasting\admin\onboarding_action_handler' );
