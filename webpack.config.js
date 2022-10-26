@@ -11,5 +11,6 @@ module.exports = {
         'blocks': path.resolve( process.cwd(), 'assets/js', 'blocks.js' ),
         'podcasting-edit-post': path.resolve( process.cwd(), 'assets/js', 'podcasting-edit-post.js' ),
         'podcasting-edit-term': path.resolve( process.cwd(), 'assets/js', 'podcasting-edit-term.js' ),
+        'podcasting-onboarding': path.resolve( process.cwd(), 'assets/js', 'onboarding.js' ),
     }
 };

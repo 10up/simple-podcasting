@@ -21,6 +21,7 @@ define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
 
+require_once PODCASTING_PATH . 'includes/admin/onboarding.php';
 require_once PODCASTING_PATH . 'includes/datatypes.php';
 require_once PODCASTING_PATH . 'includes/helpers.php';
 require_once PODCASTING_PATH . 'includes/rest-external-url.php';
@@ -77,6 +78,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 	$screens = array(
 		'edit-tags.php',
 		'term.php',
+		'admin_page_simple-podcasting-onboarding',
 	);
 
 	if ( ! in_array( $hook_suffix, $screens, true ) ) {
@@ -88,6 +90,21 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		PODCASTING_URL . 'dist/podcasting-edit-term.css',
 		array(),
 		PODCASTING_VERSION
+	);
+
+	wp_enqueue_style(
+		'podcasting_onboarding_screen',
+		PODCASTING_URL . 'dist/podcasting-onboarding.css',
+		array(),
+		PODCASTING_VERSION
+	);
+
+	wp_enqueue_script(
+		'podcasting_edit_term_screen',
+		PODCASTING_URL . 'dist/podcasting-onboarding.js',
+		array(),
+		PODCASTING_VERSION,
+		true
 	);
 
 	wp_enqueue_script(
