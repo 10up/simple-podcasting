@@ -213,11 +213,14 @@
 	font-size: 14px;
 	letter-spacing: 1px;
 
+	text-decoration: none;
+
 	cursor: pointer;
 
 	&--ghost {
 		border: 1px solid #000000;
 		background-color: rgba(0, 0, 0, 0);
+		color: #000;
 	}
 
 	&--black {

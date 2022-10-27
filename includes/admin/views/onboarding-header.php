@@ -21,6 +21,6 @@
 	</div>
 
 	<div id="simple-podcasting__header-controls">
-		<button type="button" class="simple-podcasting__btn simple-podcasting__btn--ghost" id="simple-podcasting-btn__skip-onboarding"><?php esc_html_e( 'Skip Setup', 'simple-podcasting' ); ?></button>
+		<a href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>" class="simple-podcasting__btn simple-podcasting__btn--ghost" id="simple-podcasting-btn__skip-onboarding"><?php esc_html_e( 'Skip Setup', 'simple-podcasting' ); ?></a>
 	</div>
 </div>
