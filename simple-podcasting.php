@@ -42,6 +42,19 @@ function activate_plugin() {
 	create_podcasts_taxonomy();
 	\flush_rewrite_rules();
 
+	$terms = get_terms(
+		array(
+			'taxonomy'   => 'podcasting_podcasts',
+			'hide_empty' => false,
+		)
+	);
+
+	$has_podcast = is_array( $terms ) && ! empty( $terms );
+
+	if ( $has_podcast ) {
+		update_option( 'simple_podcasting_onboarding', 'completed' );
+	}
+
 	if ( '' === get_option( 'simple_podcasting_onboarding', '' ) ) {
 		update_option( 'simple_podcasting_onboarding', 'no' );
 	}

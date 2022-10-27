@@ -11,21 +11,6 @@ namespace tenup_podcasting\admin;
  * Registers a hidden sub menu page for the onboarding wizard.
  */
 function register_onoarding_page() {
-	$terms = get_terms(
-		array(
-			'taxonomy'   => 'podcasting_podcasts',
-			'hide_empty' => false,
-		)
-	);
-
-	$referer              = wp_get_referer();
-	$is_refered_by_step_1 = admin_url( 'admin.php?page=simple-podcasting-onboarding&step=1' ) === $referer;
-
-	/** Return if 1 or more podcast(s) already exist. */
-	if ( ! $is_refered_by_step_1 && ( is_wp_error( $terms ) || ( is_array( $terms ) && ! empty( $terms ) ) || ! empty( $terms ) ) ) {
-		return;
-	}
-
 	add_submenu_page(
 		null,
 		esc_html__( 'Simple Podcasting Onboarding' ),
@@ -34,6 +19,12 @@ function register_onoarding_page() {
 		'simple-podcasting-onboarding',
 		'\tenup_podcasting\admin\render_page_contents'
 	);
+
+	if ( 'no' === get_option( 'simple_podcasting_onboarding', '' ) ) {
+		update_option( 'simple_podcasting_onboarding', 'in-progress' );
+		wp_safe_redirect( admin_url( 'admin.php?page=simple-podcasting-onboarding&step=1' ) );
+		die;
+	}
 }
 add_action( 'admin_menu', 'tenup_podcasting\admin\register_onoarding_page' );
 
@@ -41,15 +32,15 @@ add_action( 'admin_menu', 'tenup_podcasting\admin\register_onoarding_page' );
  * Renders the page content for the onboarding wizard.
  */
 function render_page_contents() {
-	$page = filter_input( INPUT_GET, 'step', FILTER_VALIDATE_INT );
+	$step = filter_input( INPUT_GET, 'step', FILTER_VALIDATE_INT );
 
-	if ( ! $page ) {
-		$page = 1;
+	if ( ! $step ) {
+		$step = 1;
 	}
 
 	require_once 'views/onboarding-header.php';
 
-	switch ( $page ) {
+	switch ( $step ) {
 		case 1:
 			require_once 'views/onboarding-page-one.php';
 			break;
@@ -108,8 +99,9 @@ function onboarding_action_handler() {
 		update_term_meta( $result['term_id'], 'podcasting_image_url', $image_url );
 	}
 
-	header( 'SID:DHARTH' );
-	wp_safe_redirect( admin_url( 'admin.php?page=simple-podcasting-onboarding&step=2' ) );
-	die;
+	if ( 'in-progress' === get_option( 'simple_podcasting_onboarding', '' ) ) {
+		wp_safe_redirect( admin_url( 'admin.php?page=simple-podcasting-onboarding&step=2' ) );
+		die;
+	}
 }
 add_action( 'admin_init', '\tenup_podcasting\admin\onboarding_action_handler' );

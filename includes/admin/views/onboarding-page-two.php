@@ -33,4 +33,5 @@
 			<img src="<?php echo esc_url( PODCASTING_URL . 'dist/assets/images/podcast-block-preview.svg' ); ?>" />
 		</div>
 	</div>
+	<?php update_option( 'simple_podcasting_onboarding', 'completed' ); ?>
 </div>
