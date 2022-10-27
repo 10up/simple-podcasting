@@ -11,10 +11,18 @@ namespace tenup_podcasting\admin;
  * Registers a hidden sub menu page for the onboarding wizard.
  */
 function register_onoarding_page() {
-	$terms = get_terms( 'podcasting_podcasts' );
+	$terms = get_terms(
+		array(
+			'taxonomy'   => 'podcasting_podcasts',
+			'hide_empty' => false,
+		)
+	);
+
+	$referer              = wp_get_referer();
+	$is_refered_by_step_1 = admin_url( 'admin.php?page=simple-podcasting-onboarding&step=1' ) === $referer;
 
 	/** Return if 1 or more podcast(s) already exist. */
-	if ( is_wp_error( $terms ) || ( is_array( $terms ) && ! empty( $terms ) ) || ! empty( $terms ) ) {
+	if ( ! $is_refered_by_step_1 && ( is_wp_error( $terms ) || ( is_array( $terms ) && ! empty( $terms ) ) || ! empty( $terms ) ) ) {
 		return;
 	}
 
@@ -97,5 +105,9 @@ function onboarding_action_handler() {
 		update_term_meta( $result['term_id'], 'podcasting_image', $podcast_cover_id );
 		update_term_meta( $result['term_id'], 'podcasting_image_url', $image_url );
 	}
+
+	header( 'SID:DHARTH' );
+	wp_safe_redirect( admin_url( 'admin.php?page=simple-podcasting-onboarding&step=2' ) );
+	die;
 }
 add_action( 'admin_init', '\tenup_podcasting\admin\onboarding_action_handler' );

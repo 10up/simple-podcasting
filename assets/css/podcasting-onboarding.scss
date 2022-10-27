@@ -64,7 +64,6 @@
 	}
 
 	&__page-title {
-		margin-top: 40px;
 		margin-bottom: 30px;
 		font-family: 'Roboto';
 		font-style: normal;
@@ -79,14 +78,23 @@
 	}
 
 	&__create-a-new-post-button {
+		padding: 10px 40px;
 		width: 240px;
+
+		display: block;
 		text-align: center;
+		text-decoration: none;
+
+		color: #fff !important;
 	}
 }
 
 .simple-podcasting {
 	// Body.
 	&__onboarding-body {
+		margin: 0 auto;
+		margin-top: 68px;
+
 		&--step-1 {
 			max-width: 524px;
 		}
@@ -94,10 +102,7 @@
 		&--step-2 {
 			display: flex;
 			max-width: 1038px;
-			margin-top: 68px;
 		}
-
-		margin: 0 auto;
 	}
 
 	&__setting {
@@ -160,6 +165,11 @@
 
 		&--left {
 			max-width: 483px;
+
+			a {
+				color: #000;
+				font-weight: 700;
+			}
 		}
 	}
 
@@ -172,6 +182,20 @@
 			display: block;
 			width: 100%;
 			height: auto;
+		}
+	}
+
+	&__step-2-controls {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		margin-top: 64px;
+
+		a {
+			letter-spacing: 1px;
+			text-decoration-line: underline;
+			color: #4F4F4F !important;
 		}
 	}
 }
@@ -187,6 +211,7 @@
 	font-style: normal;
 	font-weight: 700;
 	font-size: 14px;
+	letter-spacing: 1px;
 
 	cursor: pointer;
 
