@@ -67,7 +67,9 @@ function render_page_contents() {
  * Onboarding data saving handler.
  */
 function onboarding_action_handler() {
-	if ( ! isset( $_POST['simple-podcasting-action'] ) ) {
+	if ( ! isset( $_POST['simple-podcasting-onboarding-nonce'] )
+	|| ! wp_verify_nonce( $_POST['simple-podcasting-onboarding-nonce'], 'simple-podcasting-create-show-action' )
+	) {
 		return;
 	}
 
