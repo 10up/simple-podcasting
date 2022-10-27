@@ -11,6 +11,13 @@ namespace tenup_podcasting\admin;
  * Registers a hidden sub menu page for the onboarding wizard.
  */
 function register_onoarding_page() {
+	$terms = get_terms( 'podcasting_podcasts' );
+
+	/** Return if 1 or more podcast(s) already exist. */
+	if ( is_wp_error( $terms ) || ( is_array( $terms ) && ! empty( $terms ) ) || ! empty( $terms ) ) {
+		return;
+	}
+
 	add_submenu_page(
 		null,
 		esc_html__( 'Simple Podcasting Onboarding' ),
@@ -74,14 +81,17 @@ function onboarding_action_handler() {
 		return;
 	}
 
+	/** Add podcast summary. */
 	if ( $podcast_description ) {
 		update_term_meta( $result['term_id'], 'podcasting_summary', $podcast_description );
 	}
 
+	/** Add podcast category. */
 	if ( $podcast_category ) {
 		update_term_meta( $result['term_id'], 'podcasting_category_1', $podcast_category );
 	}
 
+	/** Add podcast cover ID and URL. */
 	if ( $podcast_cover_id ) {
 		$image_url = wp_get_attachment_url( (int) $podcast_cover_id );
 		update_term_meta( $result['term_id'], 'podcasting_image', $podcast_cover_id );
