@@ -41,6 +41,10 @@ endpoints\externalurl\setup();
 function activate_plugin() {
 	create_podcasts_taxonomy();
 	\flush_rewrite_rules();
+
+	if ( '' === get_option( 'simple_podcasting_onboarding', '' ) ) {
+		update_option( 'simple_podcasting_onboarding', 'no' );
+	}
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
