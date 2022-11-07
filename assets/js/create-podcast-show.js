@@ -11,12 +11,15 @@ import {
 	Flex,
 	FlexItem
 } from "@wordpress/components";
+import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { useState } from "@wordpress/element";
 
 const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	const [ showName, setShowName ] = useState( '' );
 	const [ showCategory, setShowCategory ] = useState( '' );
 	const [ description, setDescription ] = useState( '' );
+	const [ coverId, setCoverId ] = useState( '' );
+	const [ coverUrl, setCoverUrl ] = useState( '' );
 
 	const modalStyle = {
 		maxWidth: '645px',
@@ -71,12 +74,52 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 			</div>
 
 			<div className="podcasting__modal-field-row" style={ fieldStyle }>
-				<BaseControl label={ __( 'Show Cover Image', 'simple-podcasting' ) } />
-				<Button
-					variant="secondary"
-					text={ __( 'Select Image', 'simple-podcasting' ) }
-				/>
-				<BaseControl help={ __( 'Square images are required to properly display within podcatcher apps.Minimum size: 1400 px x 1400 px. Maximum size: 2048 px x 2048 px.', 'simple-podcasting' ) } />
+				<MediaUploadCheck>
+					<MediaUpload
+						onSelect={ ( media ) => {
+							setCoverId( media.id );
+							setCoverUrl( media.url );
+						} }
+						allowedTypes={ [ 'image' ] }
+						value={ coverId }
+						render={ ( { open } ) => (
+							<>
+								<BaseControl label={ __( 'Show Cover Image', 'simple-podcasting' ) } />
+								<Flex justify="normal">
+									<FlexItem>
+										<Button
+											variant="secondary"
+											text={ coverId ? __( 'Replace Image', 'simple-podcasting' ) : __( 'Select Image', 'simple-podcasting' ) }
+											onClick={ open }
+										/>
+									</FlexItem>
+									{
+										coverId && (
+											<FlexItem>
+												<Button
+													variant="secondary"
+													text={ __( 'Remove', 'simple-podcasting' ) }
+													isDestructive
+												/>
+											</FlexItem>
+										)
+									}
+								</Flex>
+								{
+									coverId && (
+										<div className="podcasting-cover-preview" style={ {
+											maxWidth: '256px',
+											marginTop: '1rem',
+										} }>
+											<img src={ coverUrl } style={ { width: '100%' } } />
+										</div>
+									)
+								}
+								<BaseControl help={ __( 'Square images are required to properly display within podcatcher apps.Minimum size: 1400 px x 1400 px. Maximum size: 2048 px x 2048 px.', 'simple-podcasting' ) } />
+							</>
+						) }
+					/>
+				</MediaUploadCheck>
 			</div>
 
 			<Flex justify="normal" gap={ 9 }>
