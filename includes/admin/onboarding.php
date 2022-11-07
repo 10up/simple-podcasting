@@ -70,6 +70,23 @@ function onboarding_action_handler() {
 	$podcast_cover_id    = isset( $_POST['podcast-cover-image-id'] ) ? absint( wp_unslash( $_POST['podcast-cover-image-id'] ) ) : null;
 
 	if ( empty( $podcast_name ) || empty( $podcast_category ) ) {
+		add_action(
+			'admin_notices',
+			function() use ( $podcast_name, $podcast_category ) {
+				?>
+			<div class="notice notice-error is-dismissible">
+				<?php if ( '' === $podcast_name ) : ?>
+					<p><?php esc_html_e( 'Show name is required.', 'simple-podcasting' ); ?></p>
+				<?php endif; ?>
+
+				<?php if ( '' === $podcast_category ) : ?>
+					<p><?php esc_html_e( 'Podcast category is required.', 'simple-podcasting' ); ?></p>
+				<?php endif; ?>
+			</div>
+				<?php
+			}
+		);
+
 		return;
 	}
 
@@ -79,6 +96,16 @@ function onboarding_action_handler() {
 	);
 
 	if ( is_wp_error( $result ) ) {
+		add_action(
+			'admin_notices',
+			function() use ( $result ) {
+				?>
+			<div class="notice notice-error is-dismissible">
+				<p><?php printf( esc_html__( 'Taxonomy error: %s', 'simple-podcasting' ), esc_html( $result->get_error_message() ) ); ?></p>
+			</div>
+				<?php
+			}
+		);
 		return;
 	}
 
