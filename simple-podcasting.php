@@ -107,14 +107,6 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 
 		wp_enqueue_script(
 			'podcasting_edit_term_screen',
-			PODCASTING_URL . 'dist/podcasting-onboarding.js',
-			array(),
-			PODCASTING_VERSION,
-			true
-		);
-
-		wp_enqueue_script(
-			'podcasting_edit_term_screen',
 			PODCASTING_URL . 'dist/podcasting-edit-term.js',
 			array( 'jquery' ),
 			PODCASTING_VERSION,
@@ -128,7 +120,8 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 			'podcasting_onboarding_screen_script',
 			PODCASTING_URL . 'dist/podcasting-onboarding.js',
 			array( 'jquery' ),
-			PODCASTING_VERSION
+			PODCASTING_VERSION,
+			true
 		);
 
 		wp_enqueue_style(
@@ -138,7 +131,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 			PODCASTING_VERSION
 		);
 
-		wp_enqueue_style( 'podcasting_onboarding_fonts', 'https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto:wght@400;700&display=swap' ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		wp_enqueue_style( 'podcasting_onboarding_fonts', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 	}
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
