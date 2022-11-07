@@ -13,6 +13,7 @@ module.exports = {
         'podcasting-edit-post': path.resolve( process.cwd(), 'assets/js', 'podcasting-edit-post.js' ),
         'podcasting-edit-term': path.resolve( process.cwd(), 'assets/js', 'podcasting-edit-term.js' ),
         'podcasting-onboarding': path.resolve( process.cwd(), 'assets/js', 'onboarding.js' ),
+        'create-podcast-show': path.resolve( process.cwd(), 'assets/js', 'create-podcast-show.js' ),
     },
     plugins: [
         ...defaultConfig.plugins,

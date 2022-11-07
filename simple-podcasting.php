@@ -133,6 +133,14 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 
 		wp_enqueue_style( 'podcasting_onboarding_fonts', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 	}
+
+	wp_enqueue_script(
+		'podcasting_create_podcast_plugin',
+		PODCASTING_URL . 'dist/create-podcast-show.js',
+		array(),
+		PODCASTING_VERSION,
+		true
+	);
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
 
