@@ -35,6 +35,8 @@ const CreatePodcastShowModal = ( { isModalOpen, openModal, closeModal } ) => {
 		return false;
 	}
 
+	const categoriesOptions = Object.keys( podcastingShowPluginVars.categories ).map( key => ( { label: key, label: podcastingShowPluginVars.categories[key] } ) );
+
 	return (
 		<Modal
 			title={ __( 'Add New Podcast Show', 'simple-podcasting' ) }
@@ -54,10 +56,7 @@ const CreatePodcastShowModal = ( { isModalOpen, openModal, closeModal } ) => {
 					label={ __( 'Show Category*', 'simple-podcasting' ) }
 					help={ __( 'Select the category listeners will use to discover your show when browsing  podcatchers. You can also add subcategories later.', 'simple-podcasting' ) }
 					required
-					options={ [
-						{ value: '', label: 'Select a User', disabled: true },
-						{ value: 'a', label: 'User A' },
-					] }
+					options={ categoriesOptions }
 				/>
 			</FieldRow>
 
@@ -65,6 +64,7 @@ const CreatePodcastShowModal = ( { isModalOpen, openModal, closeModal } ) => {
 				<TextareaControl
 					label={ __( 'Show Description', 'simple-podcasting' ) }
 					help={ __( 'Briefly describe to your listeners what your show is about. (No HTML please.)', 'simple-podcasting' ) }
+					rows={ 6 }
 				/>
 			</FieldRow>
 

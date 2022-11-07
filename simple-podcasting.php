@@ -135,12 +135,14 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 	}
 
 	wp_enqueue_script(
-		'podcasting_create_podcast_plugin',
+		'podcasting_create_podcast_show_plugin',
 		PODCASTING_URL . 'dist/create-podcast-show.js',
 		array(),
 		PODCASTING_VERSION,
 		true
 	);
+
+	wp_localize_script( 'podcasting_create_podcast_show_plugin', 'podcastingShowPluginVars', array( 'categories' => \tenup_podcasting\get_podcasting_categories_options() ) );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
 
