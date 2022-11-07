@@ -18,7 +18,7 @@ module.exports = {
         ...defaultConfig.plugins,
         new CopyPlugin({
             patterns: [
-              { from: "assets/images/*.svg", to: "./" },
+              { from: "assets/images/*", to: "./" },
             ],
         } )
     ]
