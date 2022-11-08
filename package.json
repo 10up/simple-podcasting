@@ -25,8 +25,8 @@
     "prebuild": "npm run makepot",
     "prepare": "husky install",
     "wp-env": "wp-env",
-    "cypress:open": "cypress open --config-file tests/cypress/config.json",
-    "cypress:run": "cypress run --config-file tests/cypress/config.json"
+    "cypress:open": "cypress open --browser chrome --config-file tests/cypress/config.json",
+    "cypress:run": "cypress run --browser chrome --config-file tests/cypress/config.json"
   },
   "lint-staged": {
     "*.php": [

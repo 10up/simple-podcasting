@@ -7,6 +7,7 @@
   "downloadsFolder": "tests/cypress/downloads",
   "supportFile": "tests/cypress/support/index.js",
   "video": false,
+  "chromeWebSecurity": false,
   "env": {
     "HAS_BLOCK_EDITOR": true
   }
