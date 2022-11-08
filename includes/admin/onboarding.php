@@ -23,7 +23,7 @@ function register_onoarding_page() {
 	if ( 'no' === get_option( 'simple_podcasting_onboarding', '' ) ) {
 		update_option( 'simple_podcasting_onboarding', 'in-progress' );
 		wp_safe_redirect( admin_url( 'admin.php?page=simple-podcasting-onboarding&step=1' ) );
-		die;
+		wp_die();
 	}
 }
 add_action( 'admin_menu', 'tenup_podcasting\admin\register_onoarding_page' );
