@@ -18,7 +18,8 @@ jobs:
       - name: WPCS check
         uses: cadic/wpcs-action@a8d739b2b49c697eb362479832acd206768d2033 # try to fix php8
         with:
-          use_local_config: true
+          use_local_config: false
+          standard: 'WordPress'
           extra_args: '--report-json=./phpcs-report.json'
       - name: Update summary
         run: |
