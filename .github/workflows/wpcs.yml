@@ -16,11 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: WPCS check
-        uses: cadic/wpcs-action@a8d739b2b49c697eb362479832acd206768d2033 # try to fix php8
+        uses: cadic/wpcs-action@722158b8b65754b9c2c2955bb5bb33247659e4ac # try to fix php8
         with:
-          use_local_config: false
-          standard: 'WordPress'
-          excludes: 'tests/'
+          use_local_config: true
+          standard: '10up-Default'
           extra_args: '--report-json=./phpcs-report.json'
       - name: Update summary
         run: |
