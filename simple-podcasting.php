@@ -141,3 +141,5 @@ function setup_edit_screen() {
 	}
 }
 add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
+
+in_array( $a, array() );
