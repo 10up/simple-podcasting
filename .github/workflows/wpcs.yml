@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: WPCS check
-        uses: cadic/wpcs-action@722158b8b65754b9c2c2955bb5bb33247659e4ac # try to fix php8
+        uses: cadic/wpcs-action@add/10up-default
         with:
           use_local_config: true
           standard: '10up-Default'
