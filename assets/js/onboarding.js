@@ -4,7 +4,7 @@ import '../css/podcasting-onboarding.scss';
 	$( function() {
 		const selectImageBtn = $( '#simple-podcasting__upload-cover-image' );
 		const coverImage = $( 'input[name="podcast-cover-image-id"]' );
-		const coverImagePreview = $( '#podcast-cover-image-preview' );
+		const coverImagePreview = $( '#simple-podcasting__cover-image-preview' );
 		let uploader_frame = null;
 
 		/** Upload image button handler */

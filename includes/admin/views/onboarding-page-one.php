@@ -30,7 +30,7 @@
 		<div class="simple-podcasting__setting">
 			<input type="hidden" name="podcast-cover-image-id" value="">
 			<label class="simple-podcasting__setting-label"><?php esc_html_e( 'Cover image', 'simple-podcasting' ); ?></label>
-			<div id="podcast-cover-image-preview"></div>
+			<div id="simple-podcasting__cover-image-preview"></div>
 			<button type="button" class="simple-podcasting__btn simple-podcasting__btn--ghost" id="simple-podcasting__upload-cover-image"><?php esc_html_e( 'Select image', 'simple-podcasting' ); ?></button>
 			<div class="simple-podcasting__setting-description"><?php esc_html_e( 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px. Make sure the image is square so it will properly display within podcatcher apps.', 'simple-podcasting' ); ?></div>
 		</div>

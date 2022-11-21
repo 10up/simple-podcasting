@@ -87,6 +87,13 @@
 
 		color: #fff !important;
 	}
+
+	&__cover-image-preview {
+		img {
+			display: block;
+			max-width: 256px;
+		}
+	}
 }
 
 .simple-podcasting {
