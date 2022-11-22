@@ -39,6 +39,50 @@ function init() {
 add_action( 'init', __NAMESPACE__ . '\init' );
 
 /**
+ * Registers block for Podcast Platforms.
+ */
+function register_podcast_platforms_block() {
+	if ( ! file_exists( PODCASTING_PATH . 'dist/podcast-platforms-block.asset.php' ) ) {
+		return;
+	}
+
+	$block_asset = require PODCASTING_PATH . 'dist/podcast-platforms-block.asset.php';
+
+	wp_register_script(
+		'podcast-platforms-block-editor',
+		PODCASTING_URL . 'dist/podcast-platforms-block.js',
+		$block_asset['dependencies'],
+		$block_asset['version'],
+		true
+	);
+
+	wp_localize_script(
+		'podcast-platforms-block-editor',
+		'podcastingPlatformVars',
+		array(
+			'podcastingUrl' => PODCASTING_URL,
+		)
+	);
+
+	wp_register_style(
+		'podcast-platforms-block-editor',
+		PODCASTING_URL . 'dist/podcast-platforms-block.css',
+		array(),
+		$block_asset['version'],
+		'all'
+	);
+
+	register_block_type(
+		'podcasting/podcast-platforms',
+		array(
+			'editor_script' => 'podcast-platforms-block-editor',
+			'editor_style'  => 'podcast-platforms-block-editor',
+		)
+	);
+}
+add_action( 'init', __NAMESPACE__ . '\register_podcast_platforms_block' );
+
+/**
  * Register JS block-specific strings.
  *
  * These need to be available in PHP for .pot creation but don't need to do anything.
@@ -97,3 +141,35 @@ function block_editor_meta_cleanup( $post, $request, $creating ) {
 	\tenup_podcasting\helpers\delete_all_podcast_meta( $post->ID );
 }
 add_action( 'rest_after_insert_post', __NAMESPACE__ . '\block_editor_meta_cleanup', 10, 3 );
+
+/**
+ * Returns podcast platforms meta.
+ */
+function ajax_get_podcast_platforms() {
+	$term_id = filter_input( INPUT_GET, 'show_id', FILTER_VALIDATE_INT );
+
+	if ( ! $term_id ) {
+		wp_send_json_error( esc_html__( 'Term ID not valid', 'simple-podcasting' ) );
+	}
+
+	$platforms = get_term_meta( $term_id, 'podcasting_platforms', true );
+
+	if ( ! is_array( $platforms ) ) {
+		wp_send_json_error( esc_html__( 'No shows found', 'simple-podcasting' ) );
+	}
+
+	$platforms = array_filter(
+		$platforms,
+		function( $platform ) {
+			return ! empty( $platform );
+		}
+	);
+
+	$result = array(
+		'platforms' => $platforms,
+		'theme'     => '',
+	);
+
+	wp_send_json_success( $result );
+}
+add_action( 'wp_ajax_get_podcast_platforms', __NAMESPACE__ . '\ajax_get_podcast_platforms' );

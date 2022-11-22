@@ -1,0 +1,40 @@
+.simple-podcasting {
+	&__podcast-platforms {
+		padding: 1rem;
+
+		&--selected {
+			border: 1px solid;
+		}
+	}
+
+	&__podcast-search-results {
+		cursor: pointer;
+	}
+
+	&__select-show-popover {
+		max-width: 400px;
+		width: 100%;
+
+		.components-popover__content {
+			width: 100%;
+			padding: 1rem;
+		}
+	}
+
+	&__podcasting-platform-list {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: center;
+
+		img {
+			display: block;
+			max-width: 48px;
+		}
+	}
+
+	&__podcasting-platform-list-item {
+		display: flex;
+		align-self: center;
+		padding: 0 0.75rem;
+	}
+}
