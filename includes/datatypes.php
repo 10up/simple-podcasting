@@ -222,6 +222,100 @@ function add_podcasting_taxonomy_help_text() {
 add_action( 'after-podcasting_podcasts-table', __NAMESPACE__ . '\add_podcasting_taxonomy_help_text' );
 
 /**
+ * Renders the terms fields for platforms
+ *
+ * @param  array   $field   The field data.
+ * @param  string  $value   The existing field value.
+ * @param  boolean $term_id The term id, or false for the new term form.
+ */
+function render_platform_fields( $field, $value, $term_id ) {
+	$platforms = array(
+		array(
+			'slug'  => 'pocket-casts',
+			'title' => esc_html__( 'Pocket Casts', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'apple-podcasts',
+			'title' => esc_html__( 'Apple Podcasts', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'google-podcasts',
+			'title' => esc_html__( 'Google Podcasts', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'stitcher',
+			'title' => esc_html__( 'Stitcher', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'playerfm',
+			'title' => esc_html__( 'PlayerFM', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'overcast',
+			'title' => esc_html__( 'Overcast', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'pandora',
+			'title' => esc_html__( 'Pandora', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'castro',
+			'title' => esc_html__( 'Castro', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'tunein',
+			'title' => esc_html__( 'TuneIn', 'simple-podcasting' ),
+		),
+		array(
+			'slug'  => 'spotify',
+			'title' => esc_html__( 'Spotify', 'simple-podcasting' ),
+		),
+	);
+	?>
+
+	<table id="simple_podcasting__platforms" class="simple_podcasting__platforms widefat striped">
+		<thead>
+			<th><?php esc_html_e( 'Platform', 'simple-podcasting' ); ?></th>
+			<th><?php esc_html_e( 'Podcast URL', 'simple-podcasting' ); ?></th>
+			<th><?php esc_html_e( 'Icon', 'simple-podcasting' ); ?></th>
+		</thead>
+
+		<tbody>
+			<?php foreach ( $platforms as $platform ) : ?>
+				<tr>
+					<td class="simple_podcasting__platforms-title"><?php echo esc_html( $platform['title'] ); ?></td>
+					<td class="simple_podcasting__platforms-url">
+						<input
+							name="<?php printf( '%s[%s]', esc_attr( $field['slug'] ), esc_attr( $platform['slug'] ) ); ?>"
+							id="<?php printf( '%s[%s]', esc_attr( $field['slug'] ), esc_attr( $platform['slug'] ) ); ?>"
+							type="url"
+							value="<?php echo isset( $value[ $platform['slug'] ] ) ? esc_url( $value[ $platform['slug'] ] ) : ''; ?>"
+							class="widefat"
+						>
+					</td>
+					<td class="simple_podcasting__platforms-icon">
+						<img src="
+						<?php
+						printf(
+							'%s%s/%s/%s',
+							esc_url( PODCASTING_URL ),
+							'dist/images/icons',
+							esc_attr( $platform['slug'] ),
+							'color-100.png'
+						)
+						?>
+						" />
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+
+	<?php
+}
+add_action( 'simple_podcasting_custom_field_platform_fields', __NAMESPACE__ . '\render_platform_fields', 10, 3 );
+
+/**
  * Add fields to the add term screen.
  *
  * @param \WP_Term $term The term object.
@@ -346,6 +440,10 @@ function the_field( $field, $value = '', $term_id = false ) {
 			<?php
 			break;
 
+		case $field['type']:
+			do_action( 'simple_podcasting_custom_field_' . $field['type'], $field, $value, $term_id );
+			break;
+
 	}
 	if ( isset( $field['description'] ) ) {
 		?>
@@ -375,7 +473,25 @@ function save_podcasting_term_meta( $term_id ) {
 		$slug = $field['slug'];
 
 		if ( isset( $_POST[ $slug ] ) ) {
-			$sanitized_value = sanitize_text_field( wp_unslash( $_POST[ $slug ] ) );
+			if ( is_array( $_POST[ $slug ] ) ) {
+				$sanitized_value = filter_var_array(
+					$_POST[ $slug ],
+					array(
+						'pocket-casts'    => FILTER_SANITIZE_URL,
+						'apple-podcasts'  => FILTER_SANITIZE_URL,
+						'google-podcasts' => FILTER_VALIDATE_URL,
+						'stitcher'        => FILTER_VALIDATE_URL,
+						'playerfm'        => FILTER_VALIDATE_URL,
+						'overcast'        => FILTER_VALIDATE_URL,
+						'pandora'         => FILTER_VALIDATE_URL,
+						'castro'          => FILTER_VALIDATE_URL,
+						'tunein'          => FILTER_VALIDATE_URL,
+						'spotify'         => FILTER_VALIDATE_URL,
+					)
+				);
+			} else {
+				$sanitized_value = sanitize_text_field( wp_unslash( $_POST[ $slug ] ) );
+			}
 
 			// If the field is an image field, store the image URL along with the slug.
 			if ( strpos( $slug, '_image' ) ) {
@@ -597,6 +713,11 @@ function get_meta_fields() {
 			'title'   => __( 'Category 3', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories_options(),
+		),
+		array(
+			'slug'  => 'podcasting_platforms',
+			'title' => __( 'Podcasting platforms', 'simple-podcasting' ),
+			'type'  => 'platform_fields',
 		),
 	);
 }

@@ -1,4 +1,5 @@
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+const CopyPlugin = require( 'copy-webpack-plugin' );
 const path = require( 'path' );
 
 module.exports = {
@@ -11,5 +12,11 @@ module.exports = {
         'blocks': path.resolve( process.cwd(), 'assets/js', 'blocks.js' ),
         'podcasting-edit-post': path.resolve( process.cwd(), 'assets/js', 'podcasting-edit-post.js' ),
         'podcasting-edit-term': path.resolve( process.cwd(), 'assets/js', 'podcasting-edit-term.js' ),
-    }
+    },
+    plugins: [
+		...defaultConfig.plugins,
+		new CopyPlugin({
+			patterns: [{ from: 'assets/images/icons', to: './images/icons' }],
+		}),
+	]
 };
