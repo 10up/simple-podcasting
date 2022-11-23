@@ -32,3 +32,12 @@
 .simple_podcasting__platforms-url {
 	min-width: 220px;
 }
+
+.simple_podcasting__platforms-icon {
+	transition: background-color 0.2s ease-out;
+}
+
+.simple_podcasting__platforms-icon--darken-bg {
+	background-color: rgb(28 52 59 / 22%);
+	transition: background-color 0.2s ease-in;
+}

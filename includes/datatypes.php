@@ -229,6 +229,12 @@ add_action( 'after-podcasting_podcasts-table', __NAMESPACE__ . '\add_podcasting_
  * @param  boolean $term_id The term id, or false for the new term form.
  */
 function render_platform_fields( $field, $value, $term_id ) {
+	$theme = get_term_meta( $term_id, 'podcasting_icon_theme', true );
+
+	if ( empty( $theme ) ) {
+		$theme = 'color';
+	}
+
 	$platforms = array(
 		array(
 			'slug'  => 'pocket-casts',
@@ -293,18 +299,21 @@ function render_platform_fields( $field, $value, $term_id ) {
 							class="widefat"
 						>
 					</td>
-					<td class="simple_podcasting__platforms-icon">
-						<img src="
-						<?php
-						printf(
-							'%s%s/%s/%s',
-							esc_url( PODCASTING_URL ),
-							'dist/images/icons',
-							esc_attr( $platform['slug'] ),
-							'color-100.png'
-						)
-						?>
-						" />
+					<td class="simple_podcasting__platforms-icon <?php echo 'white' === $theme ? 'simple_podcasting__platforms-icon--darken-bg' : ''; ?>">
+						<img
+							src="
+							<?php
+							printf(
+								'%s%s/%s/%s',
+								esc_url( PODCASTING_URL ),
+								'dist/images/icons',
+								esc_attr( $platform['slug'] ),
+								esc_attr( $theme ) . '-100.png'
+							)
+							?>
+							"
+							data-platform="<?php echo esc_attr( $platform['slug'] ); ?>"
+						/>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -361,94 +370,116 @@ function the_field( $field, $value = '', $term_id = false ) {
 				)
 			);
 			break;
+
 		case 'textfield':
 			?>
-			<input
-				name="<?php echo esc_attr( $field['slug'] ); ?>"
-				id="<?php echo esc_attr( $field['slug'] ); ?>"
-				type="text"
-				value="<?php echo esc_attr( $value ); ?>"
-				size="40"
-			>
-			<?php
+				<input
+					name="<?php echo esc_attr( $field['slug'] ); ?>"
+					id="<?php echo esc_attr( $field['slug'] ); ?>"
+					type="text"
+					value="<?php echo esc_attr( $value ); ?>"
+					size="40"
+				>
+				<?php
 			break;
+
 		case 'textarea':
 			?>
-			<textarea name="<?php echo esc_attr( $field['slug'] ); ?>" id="<?php echo esc_attr( $field['slug'] ); ?>" rows="5" cols="40"><?php echo esc_textarea( $value ); ?></textarea>
-			<?php
+				<textarea name="<?php echo esc_attr( $field['slug'] ); ?>" id="<?php echo esc_attr( $field['slug'] ); ?>" rows="5" cols="40"><?php echo esc_textarea( $value ); ?></textarea>
+				<?php
 			break;
+
 		case 'select':
 			?>
-			<select
-				name="<?php echo esc_attr( $field['slug'] ); ?>"
-				id="<?php echo esc_attr( $field['slug'] ); ?>"
-				class="postform"
-			>
-			<?php
-			$options = $field['options'];
-			foreach ( $options as $key => $label ) {
-				?>
-				<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $value ); ?>>
-					<?php echo esc_html( $label ); ?>
-				</option>
+				<select
+					name="<?php echo esc_attr( $field['slug'] ); ?>"
+					id="<?php echo esc_attr( $field['slug'] ); ?>"
+					class="postform"
+				>
 				<?php
-			}
-			?>
-			</select>
-			<?php
+				$options = $field['options'];
+				foreach ( $options as $key => $label ) {
+					?>
+					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $value ); ?>>
+						<?php echo esc_html( $label ); ?>
+					</option>
+					<?php
+				}
+				?>
+				</select>
+				<?php
 			break;
+
 		case 'image':
 			$image_url = get_term_meta( $term_id, $field['slug'] . '_url', true );
 			?>
-			<div class="media-wrapper">
+				<div class="media-wrapper">
 				<?php
 				$has_image = ( '' === $value );
 				?>
-				<div class="podasting-existing-image <?php echo ( $has_image ? 'hidden' : '' ); ?>">
-					<a href="#" >
-						<img
-						src="<?php echo esc_url( $image_url ); ?>"
-						alt=""
-						class="podcast-image-thumbnail"
-					>
-					</a>
-					<input
-						type="hidden"
-						id="<?php echo esc_attr( $field['slug'] ); ?>"
-						name="<?php echo esc_attr( $field['slug'] ); ?>"
-						value="<?php echo esc_attr( $value ); ?>"
-					>
-					<br />
-					<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
-						remove image
-					</a>
+					<div class="podasting-existing-image <?php echo ( $has_image ? 'hidden' : '' ); ?>">
+						<a href="#" >
+							<img
+							src="<?php echo esc_url( $image_url ); ?>"
+							alt=""
+							class="podcast-image-thumbnail"
+						>
+						</a>
+						<input
+							type="hidden"
+							id="<?php echo esc_attr( $field['slug'] ); ?>"
+							name="<?php echo esc_attr( $field['slug'] ); ?>"
+							value="<?php echo esc_attr( $value ); ?>"
+						>
+						<br />
+						<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
+							remove image
+						</a>
+					</div>
+					<div class="podcasting-upload-image <?php echo ( ! $has_image ? 'hidden' : '' ); ?>">
+						<input
+							type="button"
+							class="podcasting-media-button button-secondary"
+							id="image-<?php echo esc_attr( $field['slug'] ); ?>"
+							value="<?php esc_attr_e( 'Select Image', 'simple-podcasting' ); ?>"
+							data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
+							data-choose="<?php esc_attr_e( 'Podcast Image', 'simple-podcasting' ); ?>"
+							data-update="<?php esc_attr_e( 'Choose Selected Image', 'simple-podcasting' ); ?>"
+							data-preview-size="thumbnail"
+							data-mime-type="image"
+						>
+					</div>
 				</div>
-				<div class="podcasting-upload-image <?php echo ( ! $has_image ? 'hidden' : '' ); ?>">
+				<?php
+			break;
+
+		case 'radio':
+			$selected = empty( $value ) ? 'color' : $value;
+
+			foreach ( $field['options'] as $option ) {
+				?>
+				<label>
 					<input
-						type="button"
-						class="podcasting-media-button button-secondary"
-						id="image-<?php echo esc_attr( $field['slug'] ); ?>"
-						value="<?php esc_attr_e( 'Select Image', 'simple-podcasting' ); ?>"
-						data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
-						data-choose="<?php esc_attr_e( 'Podcast Image', 'simple-podcasting' ); ?>"
-						data-update="<?php esc_attr_e( 'Choose Selected Image', 'simple-podcasting' ); ?>"
-						data-preview-size="thumbnail"
-						data-mime-type="image"
-					>
-				</div>
-			</div>
-			<?php
+						type="radio"
+						name="podcasting_icon_theme"
+						value="<?php echo esc_attr( $option['value'] ); ?>"
+						<?php checked( $selected, $option['value'] ); ?>
+					/>
+					<?php echo esc_html( $option['label'] ); ?>
+				</label>
+				<?php
+			}
 			break;
 
 		case $field['type']:
 			do_action( 'simple_podcasting_custom_field_' . $field['type'], $field, $value, $term_id );
 			break;
-
 	}
+
 	if ( isset( $field['description'] ) ) {
 		?>
 		<p class="description"><?php echo esc_html( $field['description'] ); ?></p>
-		<?php
+			<?php
 	}
 }
 
@@ -716,8 +747,27 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'  => 'podcasting_platforms',
-			'title' => __( 'Podcasting platforms', 'simple-podcasting' ),
+			'title' => __( 'Podcasting Platforms', 'simple-podcasting' ),
 			'type'  => 'platform_fields',
+		),
+		array(
+			'slug'    => 'podcasting_icon_theme',
+			'title'   => __( 'Podcasting Platforms icon theme', 'simple-podcasting' ),
+			'type'    => 'radio',
+			'options' => array(
+				array(
+					'label' => 'Color',
+					'value' => 'color',
+				),
+				array(
+					'label' => 'Black',
+					'value' => 'black',
+				),
+				array(
+					'label' => 'White',
+					'value' => 'white',
+				),
+			),
 		),
 	);
 }

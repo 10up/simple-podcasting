@@ -97,6 +97,14 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		PODCASTING_VERSION,
 		true
 	);
+
+	wp_localize_script(
+		'podcasting_edit_term_screen',
+		'podcastingEditPostVars',
+		array(
+			'iconUrl' => PODCASTING_URL . 'dist/images/icons',
+		),
+	);
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
 

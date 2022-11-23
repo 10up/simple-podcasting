@@ -30,7 +30,7 @@
   },
   "lint-staged": {
     "*.php": [
-      "./vendor/bin/phpcs --standard=10up-Default --extensions=php --warning-severity=8 -s --runtime-set testVersion 5.3"
+      "./vendor/bin/phpcs --standard=10up-Default --extensions=php --warning-severity=8 -s --runtime-set testVersion 7.4"
     ],
     "tests/**/*.js": [
       "./node_modules/.bin/wp-scripts format"

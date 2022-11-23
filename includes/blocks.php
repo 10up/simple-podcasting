@@ -165,9 +165,15 @@ function ajax_get_podcast_platforms() {
 		}
 	);
 
+	$theme = get_term_meta( $term_id, 'podcasting_icon_theme', true );
+
+	if ( empty( $theme ) ) {
+		$theme = 'color';
+	}
+
 	$result = array(
 		'platforms' => $platforms,
-		'theme'     => '',
+		'theme'     => $theme,
 	);
 
 	wp_send_json_success( $result );
