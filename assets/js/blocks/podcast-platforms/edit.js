@@ -2,6 +2,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
+import { useDebounce } from 'use-debounce';
 import {
 	Button,
 	SearchControl,
@@ -22,6 +23,9 @@ function Edit( props ) {
 
 	/** State for the search text for the show name. Defaults to empty string. */
 	const [ searchText, setSearchText ] = useState( '' );
+
+	/** Debounced search text so that we don't trigger useEffect() for every character change. */
+	const [ debouncedSearchText ] = useDebounce( searchText, 300 );
 
 	/** State for search results matched by the search text. Defaults to array. */
 	const [ searchResults, setSearchResults ] = useState( [] );
@@ -62,7 +66,7 @@ function Edit( props ) {
 		};
 
 		searchPodcastShow();
-	}, [ searchText ] );
+	}, [ debouncedSearchText ] );
 
 	/**
 	 * Fetches the podcasting platforms for a show whenever
