@@ -1,10 +1,6 @@
 .simple-podcasting {
 	&__podcast-platforms {
-		padding: 1rem;
-
-		&--selected {
-			border: 1px solid;
-		}
+		padding: 2.5rem 1rem 1rem 1rem;
 	}
 
 	&__podcast-search-results {
@@ -25,7 +21,7 @@
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: center;
-		margin-bottom: 2rem;
+		margin-bottom: 3rem;
 
 		img {
 			display: block;

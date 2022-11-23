@@ -133,22 +133,26 @@ function Edit( props ) {
 							} )
 						}
 					</div>
-				) : <p>{ __( 'No platforms set for this show.', 'simple-podcasting' ) }</p>
+				) : null
 			}
 			{
-				isSelected || ! platformSlugs.length ? (
+				isSelected || ! showId ? (
 					<Dropdown
 						className="simple-podcasting__select-show-popover"
 						contentClassName="simple-podcasting__select-show-popover"
 						position="bottom right"
 						onClose={ () => setSearchText( '' ) }
 						renderToggle={ ( { isOpen, onToggle } ) => (
-							<Button
-								variant="primary"
-								onClick={ onToggle }
-								aria-expanded={ isOpen }
-								text={ __( 'Select a show', 'simple-podcasting' ) }
-							/>
+							<>
+								{ ! showId && <p>{ __( 'Select a Podcast Show using the button below:', 'simple-podcasting' ) }</p> }
+								{ showId && ! platformSlugs.length && <p>{ __( 'No platforms set for this show.', 'simple-podcasting' ) }</p> }
+								<Button
+									variant="primary"
+									onClick={ onToggle }
+									aria-expanded={ isOpen }
+									text={ __( 'Select a Show', 'simple-podcasting' ) }
+								/>
+							</>
 						) }
 						renderContent={ ( { isOpen, onToggle, onClose } ) => (
 							<div>
