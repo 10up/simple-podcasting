@@ -3,6 +3,7 @@
 /.husky
 /.wordpress-org
 /assets
+/bin
 /gulp-tasks
 /node_modules
 /tests
