@@ -37,16 +37,12 @@ jobs:
       - name: Setup node version and npm cache
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Install Node dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci --no-optional
-
-      - name: Install Composer dependencies
-        if: steps.cache-vendor.outputs.cache-hit != 'true'
-        run: composer install --no-dev
 
       - name: Build plugin
         run: npm run build
