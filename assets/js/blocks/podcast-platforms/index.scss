@@ -1,6 +1,16 @@
+.wp-block {
+	.simple-podcasting__podcasting-platform-list {
+		margin-bottom: 3rem;
+	}
+
+	.simple-podcasting__podcast-platforms {
+		padding: 2.5rem 1rem 1rem 1rem;
+	}
+}
+
 .simple-podcasting {
 	&__podcast-platforms {
-		padding: 2.5rem 1rem 1rem 1rem;
+		padding: 1rem 1rem 1rem 1rem;
 	}
 
 	&__podcast-search-results {
@@ -21,11 +31,19 @@
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: center;
-		margin-bottom: 3rem;
+
+		a {
+			text-decoration: none !important;
+		}
 
 		img {
 			display: block;
-			max-width: 48px;
+
+			@for $i from 1 through 6 {
+				&.simple-pocasting__icon-size--#{$i * 16} {
+					max-width: #{$i * 16}px;
+				}
+			}
 		}
 	}
 

@@ -75,12 +75,70 @@ function register_podcast_platforms_block() {
 	register_block_type(
 		'podcasting/podcast-platforms',
 		array(
-			'editor_script' => 'podcast-platforms-block-editor',
-			'editor_style'  => 'podcast-platforms-block-editor',
+			'editor_script'   => 'podcast-platforms-block-editor',
+			'editor_style'    => 'podcast-platforms-block-editor',
+			'style'           => 'podcast-platforms-block-editor',
+			'render_callback' => __NAMESPACE__ . '\render_podcasting_platforms',
 		)
 	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_podcast_platforms_block' );
+
+/**
+ * Renders the block `podcasting/podcast-platforms`.
+ *
+ * @param array $attrs Block attributes.
+ * @return string
+ */
+function render_podcasting_platforms( $attrs ) {
+	if ( ! ( is_array( $attrs ) && isset( $attrs['showId'] ) ) ) {
+		return '';
+	}
+
+	$show_id   = isset( $attrs['showId'] ) ? $attrs['showId'] : 0;
+	$icon_size = isset( $attrs['iconSize'] ) ? $attrs['iconSize'] : 48;
+
+	if ( 0 === $show_id ) {
+		return '';
+	}
+
+	$platforms = get_term_meta( $show_id, 'podcasting_platforms', true );
+	$theme     = get_term_meta( $show_id, 'podcasting_icon_theme', true );
+	$theme     = empty( $theme ) ? 'color' : $theme;
+
+	if ( ! is_array( $platforms ) || empty( $platforms ) ) {
+		return '';
+	}
+
+	ob_start();
+
+	?>
+
+	<div class="simple-podcasting__podcast-platforms">
+		<div class='simple-podcasting__podcasting-platform-list'>
+			<?php foreach ( $platforms as $slug => $url ) : ?>
+				<?php
+				if ( empty( $url ) ) {
+					continue;
+				}
+				?>
+
+				<span class='simple-podcasting__podcasting-platform-list-item'>
+					<a href="<?php echo esc_url( $url ); ?>" target="_blank">
+						<img
+							class="simple-pocasting__icon-size--<?php echo esc_attr( $icon_size ); ?>"
+							src="<?php printf( '%sdist/images/icons/%s/%s-100.png', esc_url( PODCASTING_URL ), esc_attr( $slug ), esc_attr( $theme ) ); ?>"
+						/>
+					</a>
+				</span>
+			<?php endforeach; ?>
+		</div>
+	</div>
+
+	<?php
+
+	return ob_get_clean();
+}
 
 /**
  * Register JS block-specific strings.

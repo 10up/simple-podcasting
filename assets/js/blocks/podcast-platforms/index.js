@@ -23,11 +23,16 @@ export default registerBlockType(
 		attributes: {
 			showId: {
 				type: 'number',
+				default: 0,
+			},
+			iconSize: {
+				type: 'number',
+				default: 48,
 			},
 		},
 
 		edit: Edit,
 
-		save: () => false,
+		save: () => null,
 	},
 );
