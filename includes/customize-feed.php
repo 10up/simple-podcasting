@@ -57,7 +57,7 @@ add_filter( 'wp_audio_shortcode', '__return_empty_string', 999 );
 
 /**
  * Sets the podcast language and description in the feed to the values in the term edit screen.
- * 
+ *
  * @param string $output    The value being displayed.
  * @param string $requested The item that was requested.
  *
@@ -84,7 +84,7 @@ function bloginfo_rss( $output, $requested ) {
 		}
 
 		if ( ! empty( $summary ) ) {
-			$output = "<![CDATA[" . $summary . "]]>";
+			$output = '<![CDATA[' . $summary . ']]>';
 		}
 	}
 	return $output;
