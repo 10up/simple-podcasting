@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: WPCS check
-        uses: cadic/wpcs-action@add/10up-default
+        uses: 10up/wpcs-action@fix/24-add-vipcs-to-10up-default
         with:
           use_local_config: true
           standard: '10up-Default'
