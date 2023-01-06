@@ -119,6 +119,17 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 
 == Changelog ==
 
+= 1.4.0 - 2023-01-06 =
+* **Added** Description field to rss feed (props [@supersmo](https://github.com/supersmo), [@cadic](https://github.com/cadic) via [#204](https://github.com/10up/simple-podcasting/pull/204))
+* **Changed** Bump Wordpress tested up to to 6.1 (props [@jayedul](https://github.com/jayedul), [@dkotter](https://github.com/dkotter) via [#201](https://github.com/10up/simple-podcasting/pull/201))
+* **Changed** Cypress integration migrated to 11+ (props [@jayedul](https://github.com/jayedul), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#205](https://github.com/10up/simple-podcasting/pull/205))
+* **Changed** Updated docs to add podcast feed to Pocket Casts (props [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic) via [#192](https://github.com/10up/simple-podcasting/pull/192))
+* **Fixed** Spotify not accepting feeds with empty `<description>` field (props [@supersmo](https://github.com/supersmo), [@cadic](https://github.com/cadic) via [#204](https://github.com/10up/simple-podcasting/pull/204))
+* **Other** Build pre-release zip GitHub action (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@faisal-alvi](https://github.com/faisal-alvi), [@vikrampm1](https://github.com/vikrampm1) via [#199](https://github.com/10up/simple-podcasting/pull/199))
+* **Security** Bump loader-utils from 2.0.2 to 2.0.3 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#195](https://github.com/10up/simple-podcasting/pull/195))
+* **Security** Bump loader-utils from 2.0.3 to 2.0.4 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic) via [#198](https://github.com/10up/simple-podcasting/pull/198))
+* **Security** Bump simple-git from 3.14.1 to 3.15.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul) via [#202](https://github.com/10up/simple-podcasting/pull/202))
+
 = 1.3.0 - 2022-10-18 =
 **Note that this version bumps the minimum PHP version from 7.0 to 7.4 and the minimum WordPress version from 4.6 to 5.7.**
 
