@@ -1,5 +1,5 @@
 === Simple Podcasting ===
-Contributors:      10up, helen, adamsilverstein, jakemgold
+Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
 Tags:              simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
 Requires at least: 5.7
 Tested up to:      6.1
