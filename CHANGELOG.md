@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Spotify not accepting feeds with empty `<description>` field (props [@supersmo](https://github.com/supersmo), [@cadic](https://github.com/cadic) via [#204](https://github.com/10up/simple-podcasting/pull/204)).
 
 ### Security
+- Bump `json5` from 1.0.1 to 1.0.2 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#212](https://github.com/10up/simple-podcasting/pull/212)).
 - Bump `loader-utils` from 2.0.2 to 2.0.4 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#195](https://github.com/10up/simple-podcasting/pull/195), [#198](https://github.com/10up/simple-podcasting/pull/198)).
 - Bump `simple-git` from 3.14.1 to 3.15.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul) via [#202](https://github.com/10up/simple-podcasting/pull/202)).
 
