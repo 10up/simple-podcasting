@@ -7,7 +7,6 @@
 
 namespace tenup_podcasting\block_patterns;
 
-
 /**
  * Register block and its assets.
  */
