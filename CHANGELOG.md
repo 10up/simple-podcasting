@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [1.4.0] - 2023-01-06
+## [1.4.0] - 2023-01-23
 ### Added
 - New podcast onboarding flow (props [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@helen](https://github.com/helen), [@jeffpaul](https://github.com/jeffpaul), [@Nicolas-knight](https://github.com/Nicolas-knight), [@jnetek](https://github.com/jnetek) via [#193](https://github.com/10up/simple-podcasting/pull/193)).
 - Description field to RSS feed (props [@supersmo](https://github.com/supersmo), [@cadic](https://github.com/cadic) via [#204](https://github.com/10up/simple-podcasting/pull/204)).
