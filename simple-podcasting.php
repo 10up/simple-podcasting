@@ -3,7 +3,7 @@
  * Plugin Name:       Simple Podcasting
  * Plugin URI:        https://github.com/10up/simple-podcasting
  * Description:       Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
- * Version:           1.3.0
+ * Version:           1.4.0
  * Author:            10up
  * Author URI:        http://10up.com/
  * License:           GPL v2 or later
@@ -15,12 +15,13 @@
 
 namespace tenup_podcasting;
 
-define( 'PODCASTING_VERSION', '1.3.0' );
+define( 'PODCASTING_VERSION', '1.4.0' );
 define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
 define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
 
+require_once PODCASTING_PATH . 'includes/admin/onboarding.php';
 require_once PODCASTING_PATH . 'includes/datatypes.php';
 require_once PODCASTING_PATH . 'includes/helpers.php';
 require_once PODCASTING_PATH . 'includes/rest-external-url.php';
@@ -40,6 +41,23 @@ endpoints\externalurl\setup();
 function activate_plugin() {
 	create_podcasts_taxonomy();
 	\flush_rewrite_rules();
+
+	$terms = get_terms(
+		array(
+			'taxonomy'   => 'podcasting_podcasts',
+			'hide_empty' => false,
+		)
+	);
+
+	$has_podcast = is_array( $terms ) && ! empty( $terms );
+
+	if ( $has_podcast ) {
+		update_option( 'simple_podcasting_onboarding', 'completed' );
+	}
+
+	if ( '' === get_option( 'simple_podcasting_onboarding', '' ) ) {
+		update_option( 'simple_podcasting_onboarding', 'no' );
+	}
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 
@@ -79,24 +97,42 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		'term.php',
 	);
 
-	if ( ! in_array( $hook_suffix, $screens, true ) ) {
-		return;
+	if ( in_array( $hook_suffix, $screens, true ) ) {
+		wp_enqueue_style(
+			'podcasting_edit_term_screen',
+			PODCASTING_URL . 'dist/podcasting-edit-term.css',
+			array(),
+			PODCASTING_VERSION
+		);
+
+		wp_enqueue_script(
+			'podcasting_edit_term_screen',
+			PODCASTING_URL . 'dist/podcasting-edit-term.js',
+			array( 'jquery' ),
+			PODCASTING_VERSION,
+			true
+		);
 	}
 
-	wp_enqueue_style(
-		'podcasting_edit_term_screen',
-		PODCASTING_URL . 'dist/podcasting-edit-term.css',
-		array(),
-		PODCASTING_VERSION
-	);
+	if ( 'admin_page_simple-podcasting-onboarding' === $hook_suffix ) {
+		wp_enqueue_media();
+		wp_enqueue_script(
+			'podcasting_onboarding_screen_script',
+			PODCASTING_URL . 'dist/podcasting-onboarding.js',
+			array( 'jquery' ),
+			PODCASTING_VERSION,
+			true
+		);
 
-	wp_enqueue_script(
-		'podcasting_edit_term_screen',
-		PODCASTING_URL . 'dist/podcasting-edit-term.js',
-		array( 'jquery' ),
-		PODCASTING_VERSION,
-		true
-	);
+		wp_enqueue_style(
+			'podcasting_onboarding_screen_style',
+			PODCASTING_URL . 'dist/podcasting-onboarding.css',
+			array(),
+			PODCASTING_VERSION
+		);
+
+		wp_enqueue_style( 'podcasting_onboarding_fonts', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+	}
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
 
