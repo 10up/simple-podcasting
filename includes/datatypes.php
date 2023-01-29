@@ -524,7 +524,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'  => 'podcasting_talent_name',
-			'title' => __( 'Artist / Author name', 'simple-podcasting' ),
+			'title' => __( 'Artist / Author name (required)', 'simple-podcasting' ),
 			'type'  => 'textfield',
 		),
 		array(
@@ -534,7 +534,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'  => 'podcasting_summary',
-			'title' => __( 'Summary', 'simple-podcasting' ),
+			'title' => __( 'Summary (required)', 'simple-podcasting' ),
 			'type'  => 'textarea',
 		),
 		array(
@@ -560,7 +560,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'        => 'podcasting_image',
-			'title'       => __( 'Cover image', 'simple-podcasting' ),
+			'title'       => __( 'Cover image (required)', 'simple-podcasting' ),
 			'type'        => 'image',
 			'description' => __( 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px', 'simple-podcasting' ),
 		),
