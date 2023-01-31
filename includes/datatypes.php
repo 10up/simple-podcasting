@@ -848,3 +848,37 @@ function get_podcasting_language_options() {
 		)
 	);
 }
+
+/**
+ * Validate Podcast Taxonomy Fields.
+ *
+ * @param string $term
+ * @param [type] $taxonomy
+ * @param [type] $args
+ * @return void
+ */
+function validate_taxonomy_fields( $term, $taxonomy, $args ) {
+	// Bailout, if not the podcasts taxonomy.
+	if ( 'podcasting_podcasts' !== $taxonomy ) {
+		return;
+	}
+
+	// Validate Empty Podcast Author Name.
+	if ( empty( trim( $args['podcasting_talent_name'] ) ) ) {
+		return new \WP_Error( 'empty_term_talent_name', __( 'A Podcast Artist / Author Name is required.' ) );
+	}
+
+	// Validate Empty Podcast Summary.
+	if ( empty( trim( $args['podcasting_summary'] ) ) ) {
+		return new \WP_Error( 'empty_term_summary', __( 'A Podcast summary is required.' ) );
+	}
+
+	// Validate Podcast Image.
+	if ( empty( trim( $args['podcasting_image'] ) ) ) {
+		return new \WP_Error( 'empty_term_cover_image', __( 'A Podcast cover image is required.' ) );
+	}
+
+
+}
+
+add_filter( 'pre_insert_term', __NAMESPACE__ . '\validate_taxonomy_fields', 10, 3 );
