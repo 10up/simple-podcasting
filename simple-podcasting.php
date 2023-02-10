@@ -25,6 +25,7 @@ require_once PODCASTING_PATH . 'includes/admin/onboarding.php';
 require_once PODCASTING_PATH . 'includes/datatypes.php';
 require_once PODCASTING_PATH . 'includes/helpers.php';
 require_once PODCASTING_PATH . 'includes/rest-external-url.php';
+require_once PODCASTING_PATH . 'includes/transcripts.php';
 
 // Init the endpoint.
 endpoints\externalurl\setup();

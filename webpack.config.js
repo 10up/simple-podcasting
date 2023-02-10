@@ -25,6 +25,11 @@ module.exports = {
 			'assets/js',
 			'onboarding.js'
 		),
+		'podcasting-transcript': path.resolve(
+			process.cwd(),
+			'includes/blocks/podcast-transcript',
+			'index.js'
+		),
 	},
 	plugins: [
 		...defaultConfig.plugins,
