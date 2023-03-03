@@ -11,10 +11,12 @@ namespace tenup_podcasting\block_patterns;
  * Register block and its assets.
  */
 function init() {
-	$podcast_terms = get_terms( [
-		'taxonomy' => TAXONOMY_NAME,
-		'fields'   => 'ids',
-	] );
+	$podcast_terms = get_terms(
+		[
+			'taxonomy' => TAXONOMY_NAME,
+			'fields'   => 'ids',
+		]
+	);
 
 	if ( empty( $podcast_terms ) ) {
 		return;
