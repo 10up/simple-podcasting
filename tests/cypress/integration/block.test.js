@@ -4,8 +4,17 @@ describe('Admin can publish posts with podcast block', () => {
 	if (Cypress.env('HAS_BLOCK_EDITOR')) {
 		it('Can insert the block and publish the post', () => {
 			cy.login();
-
-			cy.createTerm(taxonomy, 'podcasting_podcasts');
+			cy.uploadMedia('tests/cypress/fixtures/example.jpg');
+			cy.createTerm(taxonomy, 'podcasting_podcasts', {
+				beforeSave: () => {
+					cy.get('#podcasting_talent_name').type('Person Doe');
+					cy.get('#podcasting_summary').type('Lorem ipsum dolor');
+					cy.get('#image-podcasting_image').click();
+					cy.get('#menu-item-browse').click();
+					cy.get('.attachments-wrapper').click();
+					cy.get('.media-button-select').click();
+				},
+			});
 
 			cy.visit('/wp-admin/post-new.php');
 			cy.closeWelcomeGuide();

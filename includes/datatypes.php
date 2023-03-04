@@ -864,7 +864,7 @@ function validate_taxonomy_fields( $term, $taxonomy, $args ) {
 		return $term;
 	}
 
-	if ( empty( trim( $args['tag-name'] ) ) ) {
+	if ( empty( trim( $term ) ) ) {
 		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required..' ) );
 	}
 

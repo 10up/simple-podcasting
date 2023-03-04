@@ -19,17 +19,24 @@
 			<div class="simple-podcasting__setting-description"><?php esc_html_e( 'What’s the title of your podcast show that listeners will see?', 'simple-podcasting' ); ?></div>
 		</div>
 
+		<!-- Show artist/author -->
+		<div class="simple-podcasting__setting">
+			<label class="simple-podcasting__setting-label"><?php esc_html_e( 'Show Artist / Author name*', 'simple-podcasting' ); ?></label>
+			<div class="simple-podcasting__setting-input"><input name="podcast-artist" required type="text" /></div>
+			<div class="simple-podcasting__setting-description"><?php esc_html_e( 'Who’s the artist or author of your podcast show that listeners will see?', 'simple-podcasting' ); ?></div>
+		</div>
+
 		<!-- Show description -->
 		<div class="simple-podcasting__setting">
-			<label class="simple-podcasting__setting-label"><?php esc_html_e( 'Show description', 'simple-podcasting' ); ?></label>
-			<div class="simple-podcasting__setting-input"><textarea name="podcast-description" rows="5"></textarea></div>
+			<label class="simple-podcasting__setting-label"><?php esc_html_e( 'Show description*', 'simple-podcasting' ); ?></label>
+			<div class="simple-podcasting__setting-input"><textarea name="podcast-description" rows="5" required></textarea></div>
 			<div class="simple-podcasting__setting-description"><?php esc_html_e( 'Briefly describe to your listeners what your podcast is about. (No HTML please)', 'simple-podcasting' ); ?></div>
 		</div>
 
 		<!-- Cover image -->
 		<div class="simple-podcasting__setting">
-			<input type="hidden" name="podcast-cover-image-id" value="">
-			<label class="simple-podcasting__setting-label"><?php esc_html_e( 'Cover image', 'simple-podcasting' ); ?></label>
+			<input type="hidden" name="podcast-cover-image-id" value="" required>
+			<label class="simple-podcasting__setting-label"><?php esc_html_e( 'Cover image*', 'simple-podcasting' ); ?></label>
 			<div id="simple-podcasting__cover-image-preview"></div>
 			<button type="button" class="simple-podcasting__btn simple-podcasting__btn--ghost" id="simple-podcasting__upload-cover-image"><?php esc_html_e( 'Select image', 'simple-podcasting' ); ?></button>
 			<div class="simple-podcasting__setting-description"><?php esc_html_e( 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px. Make sure the image is square so it will properly display within podcatcher apps.', 'simple-podcasting' ); ?></div>

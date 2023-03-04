@@ -30,7 +30,17 @@ describe('Admin can create and update podcast taxonomy', () => {
 	});
 
 	it('Can add a new taxonomy', () => {
-		cy.createTerm('Remote work', 'podcasting_podcasts');
+		cy.uploadMedia('tests/cypress/fixtures/example.jpg');
+		cy.createTerm('Remote work', 'podcasting_podcasts', {
+			beforeSave: () => {
+				cy.get('#podcasting_talent_name').type('Person Doe');
+				cy.get('#podcasting_summary').type('Lorem ipsum dolor');
+				cy.get('#image-podcasting_image').click();
+				cy.get('#menu-item-browse').click();
+				cy.get('.attachments-wrapper').click();
+				cy.get('.media-button-select').click();
+			},
+		});
 		cy.get('.row-title').should('have.text', 'Remote work');
 	});
 
@@ -76,9 +86,16 @@ describe('Admin can create and update podcast taxonomy', () => {
 	for (const [typeOfShowKey, typeOfShowName] of Object.entries(tests)) {
 		it(`Can add taxonomy with ${typeOfShowName} type of show`, () => {
 			const podcastName = 'Podcast ' + randomName();
+			cy.uploadMedia('tests/cypress/fixtures/example.jpg');
 			cy.createTerm(podcastName, 'podcasting_podcasts', {
 				beforeSave: () => {
 					cy.get('#podcasting_type_of_show').select(typeOfShowName);
+					cy.get('#podcasting_talent_name').type('Person Doe');
+					cy.get('#podcasting_summary').type('Lorem ipsum dolor');
+					cy.get('#image-podcasting_image').click();
+					cy.get('#menu-item-browse').click();
+					cy.get('.attachments-wrapper').click();
+					cy.get('.media-button-select').click();
 				},
 			}).then((term) => {
 				cy.visit(
