@@ -65,7 +65,7 @@ function onboarding_action_handler() {
 	}
 
 	$podcast_name           = isset( $_POST['podcast-name'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-name'] ) ) : null;
-	$podcasting_talent_name = isset( $_POST['podcast-name'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-artist'] ) ) : null;
+	$podcasting_talent_name = isset( $_POST['podcast-artist'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-artist'] ) ) : null;
 	$podcast_description    = isset( $_POST['podcast-description'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-description'] ) ) : null;
 	$podcast_category       = isset( $_POST['podcast-category'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-category'] ) ) : null;
 	$podcast_cover_id       = isset( $_POST['podcast-cover-image-id'] ) ? absint( wp_unslash( $_POST['podcast-cover-image-id'] ) ) : null;
