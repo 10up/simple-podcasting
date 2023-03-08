@@ -864,23 +864,58 @@ function validate_taxonomy_fields( $term, $taxonomy, $args ) {
 		return $term;
 	}
 
-	if ( empty( trim( $term ) ) ) {
-		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required..' ) );
+	$referer              = sanitize_text_field( $_POST['_wp_http_referer'] );
+	$is_onboarding_step_1 = false !== strpos( $referer, 'page=simple-podcasting-onboarding&step=1' );
+
+	$term = trim( $term );
+	if ( ! $is_onboarding_step_1 && empty( $term ) ) {
+		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.' ) );
 	}
 
-	// Validate Empty Podcast Author Name.
-	if ( empty( trim( $args['podcasting_talent_name'] ) ) ) {
+	if ( $is_onboarding_step_1 ) {
+		$args['tag-name']              = sanitize_title( $_POST['podcast-name'] );
+		$args['podcasting_category_1'] = sanitize_text_field( $_POST['podcast-category'] );
+	}
+
+	// Require podcast name.
+	$args['tag-name'] = trim( $args['tag-name'] );
+	if ( empty( $args['tag-name'] ) ) {
+		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.' ) );
+	}
+
+	// Require podcast author name only on term edit screen.
+	$args['podcasting_talent_name'] = trim( $args['podcasting_talent_name'] );
+	if ( empty( $args['podcasting_talent_name'] ) ) {
 		return new \WP_Error( 'empty_term_talent_name', __( 'A podcast artist or author name is required.' ) );
 	}
 
-	// Validate Empty Podcast Summary.
-	if ( empty( trim( $args['podcasting_summary'] ) ) ) {
+	// Require podcast description.
+	$args['podcasting_summary'] = trim( $args['podcasting_summary'] );
+	if ( empty( $args['podcasting_summary'] ) ) {
 		return new \WP_Error( 'empty_term_summary', __( 'A podcast summary is required.' ) );
 	}
 
-	// Validate Podcast Image.
-	if ( empty( trim( $args['podcasting_image'] ) ) ) {
+	// Require podcast image.
+	$args['podcasting_image'] = trim( $args['podcasting_image'] );
+	if ( empty( $args['podcasting_image'] ) ) {
 		return new \WP_Error( 'empty_term_cover_image', __( 'A podcast cover image is required.' ) );
+	}
+
+	// Require podcast category.
+	$args['podcating_category_1'] = trim( $args['podcasting_category_1'] );
+	$args['podcating_category_2'] = trim( $args['podcasting_category_2'] );
+	$args['podcating_category_3'] = trim( $args['podcasting_category_3'] );
+
+	$is_missing_category = $is_onboarding_step_1 ?
+		empty( $args['podcasting_category_1'] ) :
+		(
+			empty( $args['podcasting_category_1'] ) &&
+			empty( $args['podcasting_category_2'] ) &&
+			empty( $args['podcasting_category_3'] )
+		);
+
+	if ( $is_missing_category ) {
+		return new \WP_Error( 'empty_term_category', __( 'A podcast category is required.' ) );
 	}
 
 	return $term;
