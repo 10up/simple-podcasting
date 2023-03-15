@@ -4,7 +4,7 @@ The following acknowledges the Maintainers for this repository, those who have C
 
 The following individuals are responsible for curating the list of issues, responding to pull requests, and ensuring regular releases happen.
 
-[Max Lyuchin (@cadic)](https://github.com/cadic), [Jeffrey Paul](https://github.com/jeffpaul).
+[Jeffrey Paul (@jeffpaul)](https://github.com/jeffpaul).
 
 ## Contributors
 
