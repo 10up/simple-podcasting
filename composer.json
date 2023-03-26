@@ -21,5 +21,10 @@
     "10up/wp_mock": "^0.4.2",
     "phpunit/phpunit": "^9.5",
     "phpcompatibility/phpcompatibility-wp": "*"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

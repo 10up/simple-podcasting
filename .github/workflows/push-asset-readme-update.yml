@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: install node v10
-      uses: actions/setup-node@v1
+    - name: install node
+      uses: actions/setup-node@v3
       with:
-        node-version: 10
+        node-version-file: .nvmrc
     - name: Build
       run: |
-        npm install
+        npm ci
         npm run build
     - name: WordPress.org plugin asset/readme update
       uses: 10up/action-wordpress-plugin-asset-update@stable

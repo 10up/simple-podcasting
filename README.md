@@ -23,8 +23,8 @@ Podcasting is a method to distribute audio messages through a feed to which list
 
 ## Requirements
 
-* PHP 7.0+
-* [WordPress](http://wordpress.org) 4.6+
+* PHP 7.4+
+* [WordPress](http://wordpress.org) 5.7+
 * RSS feeds must not be disabled
 
 ## Installation
@@ -69,6 +69,23 @@ Repeat for each podcast you would like to create.
 Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
+
+## Submit your podcast feed to Pocket Casts
+
+* Validate your feeds at [Cast Feed Validator](https://www.castfeedvalidator.com/) before submitting them.
+* Submit the podcast feed to https://pocketcasts.com/submit/
+
+### How do I get my podcast featured on Pocket Casts?
+
+The Featured section of Pocket Casts is human-curated. To ensure that all podcasts have an equal opportunity at being featured, selections are made on the basis of merit.
+
+If you’d like to suggest your podcast for a featured spot, reach out to curation@pocketcasts.com.
+
+For more information, [read more](https://pocketcasts.com/podcast-producers/).
+
+### How do I submit private and paid podcast feeds?
+
+Follow this documentation to submit [private and paid podcast feeds](https://support.pocketcasts.com/article/password-protected-podcasts-2/)
 
 ## Control how many episodes are listed on the feed
 

@@ -14,18 +14,24 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         core:
-          - {name: 'WP latest', version: 'latest', hasBlockEditor: true}
-          - {name: 'WP trunk', version: 'WordPress/WordPress#master', hasBlockEditor: true}
-          - {name: 'WP minimum', version: 'WordPress/WordPress#4.6', hasBlockEditor: false}
+          - {name: 'WP latest', version: 'latest'}
+          - {name: 'WP trunk', version: 'WordPress/WordPress#master'}
+          - {name: 'WP minimum', version: 'WordPress/WordPress#5.7'}
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: install node
+      uses: actions/setup-node@v3
+      with:
+        node-version-file: .nvmrc
+
     - name: Install dependencies
-      run: npm i
+      run: npm ci
 
     - name: Build asset
       run: npm run build
@@ -35,10 +41,11 @@ jobs:
 
     - name: Set up WP environment
       run: npm run wp-env start
+      continue-on-error: ${{ matrix.core.name == 'WP trunk' }}
 
     - name: Test
-      run: npm run cypress:run -- --env HAS_BLOCK_EDITOR=${{ matrix.core.hasBlockEditor }}
-
+      run: npm run cypress:run
+      continue-on-error: ${{ matrix.core.name == 'WP trunk' }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2

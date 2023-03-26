@@ -2,6 +2,60 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
+## [Unreleased] - TBD
+
+## [1.4.0] - 2023-01-23
+### Added
+- New podcast onboarding flow (props [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@helen](https://github.com/helen), [@jeffpaul](https://github.com/jeffpaul), [@Nicolas-knight](https://github.com/Nicolas-knight), [@jnetek](https://github.com/jnetek) via [#193](https://github.com/10up/simple-podcasting/pull/193)).
+- Description field to RSS feed (props [@supersmo](https://github.com/supersmo), [@cadic](https://github.com/cadic) via [#204](https://github.com/10up/simple-podcasting/pull/204)).
+- Build pre-release zip GitHub Action (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@faisal-alvi](https://github.com/faisal-alvi), [@vikrampm1](https://github.com/vikrampm1) via [#199](https://github.com/10up/simple-podcasting/pull/199)).
+
+### Changed
+- Bump Wordpress "tested up to" to 6.1 (props [@jayedul](https://github.com/jayedul), [@dkotter](https://github.com/dkotter) via [#201](https://github.com/10up/simple-podcasting/pull/201)).
+- Cypress integration migrated to 11+ (props [@jayedul](https://github.com/jayedul), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#205](https://github.com/10up/simple-podcasting/pull/205)).
+- Updated docs to add podcast feed to Pocket Casts (props [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic) via [#192](https://github.com/10up/simple-podcasting/pull/192)).
+
+### Fixed
+- Spotify not accepting feeds with empty `<description>` field (props [@supersmo](https://github.com/supersmo), [@cadic](https://github.com/cadic) via [#204](https://github.com/10up/simple-podcasting/pull/204)).
+
+### Security
+- Bump `json5` from 1.0.1 to 1.0.2 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#212](https://github.com/10up/simple-podcasting/pull/212)).
+- Bump `loader-utils` from 2.0.2 to 2.0.4 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#195](https://github.com/10up/simple-podcasting/pull/195), [#198](https://github.com/10up/simple-podcasting/pull/198)).
+- Bump `simple-git` from 3.14.1 to 3.15.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul) via [#202](https://github.com/10up/simple-podcasting/pull/202)).
+
+## [1.3.0] - 2022-10-18
+**Note that this version bumps the minimum PHP version from 7.0 to 7.4 and the minimum WordPress version from 4.6 to 5.7.**
+
+### Added
+- Podcasts Taxonomy term(s) added in block settings (props [@helen](https://github.com/helen), [@jeffpaul](https://github.com/jeffpaul), [@faisal-alvi](https://github.com/faisal-alvi), [@peterwilsoncc](https://github.com/peterwilsoncc), [@cadic](https://github.com/cadic) via [#183](https://github.com/10up/simple-podcasting/pull/183)).
+- Type of show setting for the podcast (props [@cadic](https://github.com/cadic), [@faisal-alvi](https://github.com/faisal-alvi), [@jeffpaul](https://github.com/jeffpaul) via [#188](https://github.com/10up/simple-podcasting/pull/188)).
+
+### Changed
+- Podcasting Categories and Sub-Categories (props [@zamanq](https://github.com/zamanq), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@cadic](https://github.com/cadic), [@dchucks](https://github.com/dchucks) via [#179](https://github.com/10up/simple-podcasting/pull/179)).
+- Bumped minimum PHP version required from 7.0 to 7.4 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul), [@vikrampm1](https://github.com/vikrampm1) via [#184](https://github.com/10up/simple-podcasting/pull/184)).
+- Bumped minimum WordPress version required from 4.6 to 5.7 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul), [@vikrampm1](https://github.com/vikrampm1) via [#184](https://github.com/10up/simple-podcasting/pull/184)).
+- Upgrade dependencies (props [@cadic](https://github.com/cadic), [@faisal-alvi](https://github.com/faisal-alvi) via [#187](https://github.com/10up/simple-podcasting/pull/187)).
+
+### Fixed
+- Saving podcast enclosure with Classic Editor (props [@cadic](https://github.com/cadic), [@faisal-alvi](https://github.com/faisal-alvi) via [#186](https://github.com/10up/simple-podcasting/pull/186)).
+
+### Security
+- Bump `got` from 10.7.0 to 11.8.5 (props [@faisal-alvi](https://github.com/faisal-alvi), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#185](https://github.com/10up/simple-podcasting/pull/185)).
+- Bump `@wordpress/env` from 4.5.0 to 5.2.0 (props [@faisal-alvi](https://github.com/faisal-alvi), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#185](https://github.com/10up/simple-podcasting/pull/185)).
+
+## [1.2.4] - 2022-07-27
+### Added
+- Season number, episode number and episode type attributes can now be stored with a Podcast (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#175](https://github.com/10up/simple-podcasting/pull/175)).
+
+### Changed
+- Bump WordPress version "tested up to" 6.0 (props [@cadic](https://github.com/cadic) via [#171](https://github.com/10up/simple-podcasting/issues/171)).
+
+### Fixed
+- Incorrect Language value in the Feed (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#176](https://github.com/10up/simple-podcasting/pull/176)).
+
+### Security
+- Bump `terser` from 5.12.1 to 5.14.2 (props [@dependabot](https://github.com/apps/dependabot) via [#180](https://github.com/10up/simple-podcasting/pull/180)).
+
 ## [1.2.3] - 2022-04-28
 ### Added
 - Compatibility tests against PHP 7 and 8 (props [@cadic](https://github.com/cadic), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#150](https://github.com/10up/simple-podcasting/pull/150)).
@@ -110,6 +164,9 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.4.0]: https://github.com/10up/simple-podcasting/compare/1.3.0...1.4.0
+[1.3.0]: https://github.com/10up/simple-podcasting/compare/1.2.4...1.3.0
+[1.2.4]: https://github.com/10up/simple-podcasting/compare/1.2.3-deploy...1.2.4
 [1.2.3]: https://github.com/10up/simple-podcasting/compare/1.2.2...1.2.3-deploy
 [1.2.2]: https://github.com/10up/simple-podcasting/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/10up/simple-podcasting/compare/1.2.0...1.2.1

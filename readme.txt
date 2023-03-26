@@ -1,12 +1,12 @@
 === Simple Podcasting ===
-Contributors: 10up, helen, adamsilverstein, jakemgold
-Tags: simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
-Requires at least: 4.6
-Tested up to: 6.0
-Requires PHP: 7.0
-Stable tag: 1.2.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
+Tags:              simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
+Requires at least: 5.7
+Tested up to:      6.1
+Requires PHP:      7.4
+Stable tag:        1.4.0
+License:           GPLv2 or later
+License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
 
@@ -40,13 +40,30 @@ Repeat for each podcast you would like to create.
 
  * Create a new post and assign it to one or more Podcasts using the panel labeled Podcasts.
  * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (sometimes referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
- * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available and to optionally specify one media item if the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available, season number, episode number, episode type and to optionally specify one media item in the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
 
 === Submit your podcast feed to Apple Podcasts ===
 
 * Each podcast has a unique feed URL you can find on the Podcasts page. This is the URL you will submit to Apple.
 * Ensure you test feeds before submitting them, see [Apple's "Test a Podcast page"](https://help.apple.com/itc/podcasts_connect/#/itcac471c970) for more information.
 * Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see [Apple's "Submit a podcast" page](https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9) for more information.
+
+=== Submit your podcast feed to Pocket Casts
+
+* Validate your feeds at [https://www.castfeedvalidator.com/ Cast Feed Validator] before submitting them.
+* Submit the podcast feed to https://pocketcasts.com/submit/
+
+=== How do I get my podcast featured on Pocket Casts?
+
+The Featured section of Pocket Casts is human-curated. To ensure that all podcasts have an equal opportunity at being featured, selections are made on the basis of merit.
+
+If you’d like to suggest your podcast for a featured spot, reach out to `curation@pocketcasts.com`
+
+For more information, [https://pocketcasts.com/podcast-producers/ read more].
+
+=== How do I submit private and paid podcast feeds?
+
+Follow this documentation to submit [https://support.pocketcasts.com/article/password-protected-podcasts-2/ private and paid podcast feeds]
 
 === Control how many episodes are listed on the feed ===
 
@@ -101,6 +118,37 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
+
+= 1.4.0 - 2023-01-06 =
+* **Added:** New podcast onboarding flow (props [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@helen](https://github.com/helen), [@jeffpaul](https://github.com/jeffpaul), [@Nicolas-knight](https://github.com/Nicolas-knight), [@jnetek](https://github.com/jnetek) via [#193](https://github.com/10up/simple-podcasting/pull/193)).
+* **Added:** Description field to RSS feed (props [@supersmo](https://github.com/supersmo), [@cadic](https://github.com/cadic) via [#204](https://github.com/10up/simple-podcasting/pull/204)).
+* **Added:** Build pre-release zip GitHub Action (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@faisal-alvi](https://github.com/faisal-alvi), [@vikrampm1](https://github.com/vikrampm1) via [#199](https://github.com/10up/simple-podcasting/pull/199)).
+* **Changed:** Bump Wordpress "tested up to" to 6.1 (props [@jayedul](https://github.com/jayedul), [@dkotter](https://github.com/dkotter) via [#201](https://github.com/10up/simple-podcasting/pull/201)).
+* **Changed:** Cypress integration migrated to 11+ (props [@jayedul](https://github.com/jayedul), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#205](https://github.com/10up/simple-podcasting/pull/205)).
+* **Changed:** Updated docs to add podcast feed to Pocket Casts (props [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic) via [#192](https://github.com/10up/simple-podcasting/pull/192)).
+* **Fixed:** Spotify not accepting feeds with empty `<description>` field (props [@supersmo](https://github.com/supersmo), [@cadic](https://github.com/cadic) via [#204](https://github.com/10up/simple-podcasting/pull/204)).
+* **Security:** Bump `json5` from 1.0.1 to 1.0.2 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#212](https://github.com/10up/simple-podcasting/pull/212)).
+* **Security:** Bump `loader-utils` from 2.0.2 to 2.0.4 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#195](https://github.com/10up/simple-podcasting/pull/195), [#198](https://github.com/10up/simple-podcasting/pull/198)).
+* **Security:** Bump `simple-git` from 3.14.1 to 3.15.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul) via [#202](https://github.com/10up/simple-podcasting/pull/202)).
+
+= 1.3.0 - 2022-10-18 =
+**Note that this version bumps the minimum PHP version from 7.0 to 7.4 and the minimum WordPress version from 4.6 to 5.7.**
+
+* **Added** Podcasts Taxonomy term(s) added in block settings (props [@helen](https://github.com/helen), [@jeffpaul](https://github.com/jeffpaul), [@faisal-alvi](https://github.com/faisal-alvi), [@peterwilsoncc](https://github.com/peterwilsoncc), [@cadic](https://github.com/cadic) via [#183](https://github.com/10up/simple-podcasting/pull/183)).
+* **Added** Type of show setting for the podcast (props [@cadic](https://github.com/cadic), [@faisal-alvi](https://github.com/faisal-alvi), [@jeffpaul](https://github.com/jeffpaul) via [#188](https://github.com/10up/simple-podcasting/pull/188)).
+* **Changed** Podcasting Categories and Sub-Categories (props [@zamanq](https://github.com/zamanq), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@cadic](https://github.com/cadic), [@dchucks](https://github.com/dchucks) via [#179](https://github.com/10up/simple-podcasting/pull/179)).
+* **Changed** Bumped minimum PHP version required from 7.0 to 7.4 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul), [@vikrampm1](https://github.com/vikrampm1) via [#184](https://github.com/10up/simple-podcasting/pull/184)).
+* **Changed** Bumped minimum WordPress version required from 4.6 to 5.7 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul), [@vikrampm1](https://github.com/vikrampm1) via [#184](https://github.com/10up/simple-podcasting/pull/184)).
+* **Changed** Upgraded dependencies (props [@cadic](https://github.com/cadic), [@faisal-alvi](https://github.com/faisal-alvi) via [#187](https://github.com/10up/simple-podcasting/pull/187)).
+* **Fixed** Saving podcast enclosure with Classic Editor (props [@cadic](https://github.com/cadic), [@faisal-alvi](https://github.com/faisal-alvi) via [#186](https://github.com/10up/simple-podcasting/pull/186)).
+* **Security** Bump `got` from 10.7.0 to 11.8.5 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#185](https://github.com/10up/simple-podcasting/pull/185)).
+* **Security** Bump `@wordpress/env` from 4.5.0 to 5.2.0 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#185](https://github.com/10up/simple-podcasting/pull/185)).
+
+= 1.2.4 - 2022-07-27 =
+* **Added:** Season number, episode number and episode type attributes can now be stored with a Podcast (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#175](https://github.com/10up/simple-podcasting/pull/175)).
+* **Changed:** Bump WordPress version "tested up to" 6.0 (props [@cadic](https://github.com/cadic) via [#171](https://github.com/10up/simple-podcasting/issues/171)).
+* **Fixed:** Incorrect Language value in the Feed (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#176](https://github.com/10up/simple-podcasting/pull/176)).
+* **Security:** Bump `terser` from 5.12.1 to 5.14.2 (props [@dependabot](https://github.com/apps/dependabot) via [#180](https://github.com/10up/simple-podcasting/pull/180)).
 
 = 1.2.3 - 2022-04-28 =
 * **Added** Compatibility tests against PHP 7 and 8 (props [@cadic](https://profiles.wordpress.org/cadic), [@dkotter](https://profiles.wordpress.org/dkotter), [@jeffpaul](https://profiles.wordpress.org/jeffpaul)).
@@ -173,3 +221,8 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 
 = 1.0 =
 * Initial plugin release.
+
+== Upgrade Notice ==
+
+= 1.3.0 =
+* Note that this version bumps the minimum PHP version from 7.0 to 7.4 and the minimum WordPress version from 4.6 to 5.7.
