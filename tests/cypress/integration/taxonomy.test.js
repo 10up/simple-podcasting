@@ -1,4 +1,4 @@
-const { randomName } = require('../support/functions');
+const { randomName, populatePodcast } = require('../support/functions');
 
 describe('Admin can create and update podcast taxonomy', () => {
 	before(() => {
@@ -33,12 +33,11 @@ describe('Admin can create and update podcast taxonomy', () => {
 		cy.uploadMedia('tests/cypress/fixtures/example.jpg');
 		cy.createTerm('Remote work', 'podcasting_podcasts', {
 			beforeSave: () => {
-				cy.get('#podcasting_talent_name').type('Person Doe');
-				cy.get('#podcasting_summary').type('Lorem ipsum dolor');
-				cy.get('#image-podcasting_image').click();
-				cy.get('#menu-item-browse').click();
-				cy.get('.attachments-wrapper').click();
-				cy.get('.media-button-select').click();
+				populatePodcast({
+					author: 'Person Doe',
+					summary: 'Lorem ipsum dolor',
+					category: 'arts:food',
+				});
 			},
 		});
 		cy.get('.row-title').should('have.text', 'Remote work');
@@ -89,13 +88,12 @@ describe('Admin can create and update podcast taxonomy', () => {
 			cy.uploadMedia('tests/cypress/fixtures/example.jpg');
 			cy.createTerm(podcastName, 'podcasting_podcasts', {
 				beforeSave: () => {
-					cy.get('#podcasting_type_of_show').select(typeOfShowName);
-					cy.get('#podcasting_talent_name').type('Person Doe');
-					cy.get('#podcasting_summary').type('Lorem ipsum dolor');
-					cy.get('#image-podcasting_image').click();
-					cy.get('#menu-item-browse').click();
-					cy.get('.attachments-wrapper').click();
-					cy.get('.media-button-select').click();
+					populatePodcast({
+						typeOfShowName,
+						author: 'Person Doe',
+						summary: 'Lorem ipsum dolor',
+						category: 'arts:food',
+					});
 				},
 			}).then((term) => {
 				cy.visit(

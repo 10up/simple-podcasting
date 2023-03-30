@@ -1,5 +1,24 @@
+import 'cypress-localstorage-commands';
+const { populatePodcast } = require('../support/functions');
+
 describe('Admin can publish posts with podcast block', () => {
 	const taxonomy = 'Remote work';
+
+	before(() => {
+		const userId = '1';
+		cy.setLocalStorage(
+			`WP_DATA_USER_${userId}`,
+			JSON.stringify({
+				'core/edit-post': {
+					preferences: {
+						features: {
+							welcomeGuide: false,
+						},
+					},
+				},
+			})
+		);
+	});
 
 	if (Cypress.env('HAS_BLOCK_EDITOR')) {
 		it('Can insert the block and publish the post', () => {
@@ -7,12 +26,11 @@ describe('Admin can publish posts with podcast block', () => {
 			cy.uploadMedia('tests/cypress/fixtures/example.jpg');
 			cy.createTerm(taxonomy, 'podcasting_podcasts', {
 				beforeSave: () => {
-					cy.get('#podcasting_talent_name').type('Person Doe');
-					cy.get('#podcasting_summary').type('Lorem ipsum dolor');
-					cy.get('#image-podcasting_image').click();
-					cy.get('#menu-item-browse').click();
-					cy.get('.attachments-wrapper').click();
-					cy.get('.media-button-select').click();
+					populatePodcast({
+						author: 'Person Doe',
+						summary: 'Lorem ipsum dolor',
+						category: 'arts:food',
+					});
 				},
 			});
 
@@ -29,7 +47,9 @@ describe('Admin can publish posts with podcast block', () => {
 				.first()
 				.as('block-search');
 			cy.get('@block-search').click().type('Podcast');
-			cy.get('.editor-block-list-item-podcasting-podcast').click();
+			cy.get('.editor-block-list-item-podcasting-podcast', {
+				timeout: 4000,
+			}).click();
 			cy.get('.edit-post-header-toolbar__inserter-toggle').click();
 			cy.get(
 				'.wp-block-podcasting-podcast input[type="file"]'

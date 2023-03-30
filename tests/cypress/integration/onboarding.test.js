@@ -30,7 +30,11 @@ describe('Onboarding tests', () => {
 			.closest('form')
 			.submit();
 
-		cy.contains('Taxonomy error: A podcast name is required..');
+		cy.get('input[name="podcast-name"]').then(($input) => {
+			expect($input[0].validationMessage).to.eq(
+				'Please fill out this field.'
+			);
+		});
 	});
 
 	it('Should pass onboarding', () => {
@@ -45,7 +49,7 @@ describe('Onboarding tests', () => {
 		);
 		cy.get('#simple-podcasting__upload-cover-image').click();
 		cy.get('#menu-item-browse').click();
-		cy.get('.attachments-wrapper').click();
+		cy.get('.attachments-wrapper li:first-of-type').click();
 		cy.get('.media-button-select').click();
 		cy.get('select[name=podcast-category]').select('Arts');
 		cy.get('#simple-podcasting__create-podcast-button')
