@@ -582,7 +582,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'    => 'podcasting_category_1',
-			'title'   => __( 'Category 1', 'simple-podcasting' ),
+			'title'   => __( 'Category 1 (required)', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories_options(),
 		),
