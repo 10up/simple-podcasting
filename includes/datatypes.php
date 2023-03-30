@@ -858,7 +858,7 @@ function get_podcasting_language_options() {
  *
  * @return string
  */
-function validate_taxonomy_fields( $term, $taxonomy, $args ) {
+function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
 	// Bailout, if not the podcasts taxonomy.
 	if ( 'podcasting_podcasts' !== $taxonomy ) {
 		return $term;
@@ -869,6 +869,11 @@ function validate_taxonomy_fields( $term, $taxonomy, $args ) {
 
 	if ( ! $is_onboarding_step_1 && empty( trim( $term ) ) ) {
 		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.' ) );
+	}
+
+	// The third argument was only introduced in the `pre_insert_term` filter in WP 6.1, so bail if it's empty.
+	if ( empty( $args ) ) {
+		return $term;
 	}
 
 	if ( $is_onboarding_step_1 ) {

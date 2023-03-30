@@ -1,4 +1,4 @@
-const { randomName } = require('../support/functions');
+const { randomName, populatePodcast } = require('../support/functions');
 
 describe('Onboarding tests', () => {
 	before(() => {
@@ -43,15 +43,12 @@ describe('Onboarding tests', () => {
 
 		const podcastName = 'Onboarding ' + randomName();
 		cy.get('input[name=podcast-name]').click().type(podcastName);
-		cy.get('input[name="podcast-artist"]').type('Person Doe');
-		cy.get('textarea[name="podcast-description"]').type(
-			'Lorem ipsum dolor'
-		);
-		cy.get('#simple-podcasting__upload-cover-image').click();
-		cy.get('#menu-item-browse').click();
-		cy.get('.attachments-wrapper li:first-of-type').click();
-		cy.get('.media-button-select').click();
-		cy.get('select[name=podcast-category]').select('Arts');
+		populatePodcast({
+			author: 'Person Doe',
+			summary: 'Lorem ipsum dolor',
+			category: 'Arts',
+			onboarding: true,
+		});
 		cy.get('#simple-podcasting__create-podcast-button')
 			.closest('form')
 			.submit();
