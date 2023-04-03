@@ -39,7 +39,7 @@
     ]
   },
   "devDependencies": {
-    "@10up/cypress-wp-utils": "git+https://github.com/10up/cypress-wp-utils.git#build",
+    "@10up/cypress-wp-utils": "github:10up/cypress-wp-utils#build",
     "@wordpress/env": "^5.4.0",
     "@wordpress/prettier-config": "^2.2.0",
     "@wordpress/scripts": "^24.3.0",
