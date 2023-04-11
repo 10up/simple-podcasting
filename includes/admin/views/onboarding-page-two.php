@@ -30,7 +30,10 @@
 
 	<div class="simple-podcasting__panel simple-podcasting__panel--right">
 		<div class="simple-podcasting__podcast-block-preview">
-			<?php require_once PODCASTING_PATH . 'dist/assets/images/podcast-block-preview.svg'; ?>
+			<img
+				srcset="<?php echo esc_url( PODCASTING_URL . 'dist/assets/images/podcast-block-preview.png' ); ?>, <?php echo esc_url( PODCASTING_URL . 'dist/assets/images/podcast-block-preview@2x.png' ); ?> 2x"
+				src="<?php echo esc_url( PODCASTING_URL . 'dist/assets/images/podcast-block-preview.png' ); ?>"
+			/>
 		</div>
 	</div>
 	<?php update_option( 'simple_podcasting_onboarding', 'completed' ); ?>
