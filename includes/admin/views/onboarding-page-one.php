@@ -48,6 +48,6 @@
 
 		<!-- Create button -->
 		<button class="simple-podcasting__btn simple-podcasting__btn--black" id="simple-podcasting__create-podcast-button"><?php esc_html_e( 'Create', 'simple-podcasting' ); ?></button>
-		<?php wp_nonce_field( 'simple-podcasting-create-show-action', 'simple-podcasting-onboarding-nonce' ); ?>
+		<?php wp_nonce_field( 'simple-podcasting-create-show-action', 'simple-podcasting-create-show-nonce-field' ); ?>
 	</div>
 </form>

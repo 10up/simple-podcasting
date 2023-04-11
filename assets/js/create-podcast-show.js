@@ -30,6 +30,24 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 		marginBottom: '26px',
 	};
 
+	const createShow = async () => {
+		const formData = new FormData();
+
+		formData.append( 'action', 'simple_podcasting_create_podcast' );
+		formData.append( 'simple-podcasting-create-show-nonce-field', podcastingShowPluginVars.nonce );
+		formData.append( 'podcast-name', showName );
+		formData.append( 'podcast-description', description );
+		formData.append( 'podcast-category', showCategory );
+
+		await fetch(
+			ajaxurl,
+			{
+				method: 'POST',
+				body: formData
+			}
+		);
+	};
+
 	if ( ! isModalOpen ) {
 		return false;
 	}
@@ -128,6 +146,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 						variant="primary"
 						text={ __( 'Create Show', 'simple-podcasting' ) }
 						disabled={ ! showName || '' === showCategory }
+						onClick={ createShow }
 					/>
 				</FlexItem>
 				<FlexItem>
@@ -145,7 +164,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 const CreatePodcastShowPlugin = () => {
 	const [ isModalOpen, setIsModalOpen ] = useState( false );
 	const openModal = () => setIsModalOpen( true );
-    const closeModal = () => setIsModalOpen( false );
+	const closeModal = () => setIsModalOpen( false );
 
 	return (
 		<>

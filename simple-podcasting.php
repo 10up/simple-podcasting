@@ -21,7 +21,9 @@ define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
 
+require_once PODCASTING_PATH . 'includes/create-podcast.php';
 require_once PODCASTING_PATH . 'includes/admin/onboarding.php';
+require_once PODCASTING_PATH . 'includes/admin/create-podcast-component.php';
 require_once PODCASTING_PATH . 'includes/datatypes.php';
 require_once PODCASTING_PATH . 'includes/helpers.php';
 require_once PODCASTING_PATH . 'includes/rest-external-url.php';
@@ -137,16 +139,6 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 
 		wp_enqueue_style( 'podcasting_onboarding_fonts', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 	}
-
-	wp_enqueue_script(
-		'podcasting_create_podcast_show_plugin',
-		PODCASTING_URL . 'dist/create-podcast-show.js',
-		array(),
-		PODCASTING_VERSION,
-		true
-	);
-
-	wp_localize_script( 'podcasting_create_podcast_show_plugin', 'podcastingShowPluginVars', array( 'categories' => \tenup_podcasting\get_podcasting_categories_options() ) );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\podcasting_edit_term_enqueues' );
 
