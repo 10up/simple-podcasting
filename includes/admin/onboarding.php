@@ -11,8 +11,19 @@ namespace tenup_podcasting\admin;
  * Adds methods required for handling the onboarding wizard.
  */
 class Onboarding {
+	/**
+	 * Indicates onboarding is in progress.
+	 *
+	 * @var string
+	 */
 	const STATUS_IN_PROGRESS = 'in-progress';
-	const STATUS_COMPLETED   = 'completed';
+
+	/**
+	 * Indicates onboarding is complete.
+	 *
+	 * @var string
+	 */
+	const STATUS_COMPLETED = 'completed';
 
 	/**
 	 * Holds the object for Create_Podcast.
