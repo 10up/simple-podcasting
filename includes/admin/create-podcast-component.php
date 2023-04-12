@@ -77,7 +77,7 @@ class Create_Podcast_Component {
 			wp_send_json_error( $is_sanitized->get_error_message() );
 		}
 
-		wp_send_json_success();
+		wp_send_json_success( esc_html__( 'Podcast created successfully.', 'simple-podcasting' ) );
 	}
 }
 

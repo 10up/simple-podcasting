@@ -9,7 +9,8 @@ import {
 	TextareaControl,
 	BaseControl,
 	Flex,
-	FlexItem
+	FlexItem,
+	Notice
 } from "@wordpress/components";
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { useState } from "@wordpress/element";
@@ -18,8 +19,11 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	const [ showName, setShowName ] = useState( '' );
 	const [ showCategory, setShowCategory ] = useState( '' );
 	const [ description, setDescription ] = useState( '' );
-	const [ coverId, setCoverId ] = useState( '' );
+	const [ coverId, setCoverId ] = useState( 0 );
 	const [ coverUrl, setCoverUrl ] = useState( '' );
+	const [ ajaxInprogress, setAjaxInProgress ] = useState( false );
+	const [ isError, setIsError ] = useState( false );
+	const [ responseMessage, setResponseMessage ] = useState( '' )
 
 	const modalStyle = {
 		maxWidth: '645px',
@@ -31,6 +35,8 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	};
 
 	const createShow = async () => {
+		setAjaxInProgress( true );
+
 		const formData = new FormData();
 
 		formData.append( 'action', 'simple_podcasting_create_podcast' );
@@ -38,14 +44,21 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 		formData.append( 'podcast-name', showName );
 		formData.append( 'podcast-description', description );
 		formData.append( 'podcast-category', showCategory );
+		formData.append( 'podcast-cover-image-id', coverId );
 
-		await fetch(
+		const response = await fetch(
 			ajaxurl,
 			{
 				method: 'POST',
 				body: formData
 			}
 		);
+
+		const responseJson = await response.json();
+
+		setIsError( ! responseJson.success );
+		setResponseMessage( responseJson.data );
+		setAjaxInProgress( false );
 	};
 
 	if ( ! isModalOpen ) {
@@ -58,7 +71,14 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 		<Modal
 			title={ __( 'Add New Podcast Show', 'simple-podcasting' ) }
 			style={ modalStyle }
-			onRequestClose={ closeModal }
+			onRequestClose={ ( event ) => {
+				const selectImageBtn = event.target.closest( '.simple-podcasting__select-image-btn' );
+
+				if ( selectImageBtn ) {
+					return;
+				}
+				closeModal();
+			} }
 		>
 			<div className="podcasting__modal-field-row" style={ fieldStyle }>
 				<TextControl
@@ -109,10 +129,11 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 											variant="secondary"
 											text={ coverId ? __( 'Replace Image', 'simple-podcasting' ) : __( 'Select Image', 'simple-podcasting' ) }
 											onClick={ open }
+											className="simple-podcasting__select-image-btn"
 										/>
 									</FlexItem>
 									{
-										coverId && (
+										coverId ? (
 											<FlexItem>
 												<Button
 													variant="secondary"
@@ -120,18 +141,18 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 													isDestructive
 												/>
 											</FlexItem>
-										)
+										) : null
 									}
 								</Flex>
 								{
-									coverId && (
+									coverId ? (
 										<div className="podcasting-cover-preview" style={ {
 											maxWidth: '256px',
 											marginTop: '1rem',
 										} }>
 											<img src={ coverUrl } style={ { width: '100%' } } />
 										</div>
-									)
+									) : null
 								}
 								<BaseControl help={ __( 'Square images are required to properly display within podcatcher apps.Minimum size: 1400 px x 1400 px. Maximum size: 2048 px x 2048 px.', 'simple-podcasting' ) } />
 							</>
@@ -147,6 +168,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 						text={ __( 'Create Show', 'simple-podcasting' ) }
 						disabled={ ! showName || '' === showCategory }
 						onClick={ createShow }
+						isBusy={ ajaxInprogress }
 					/>
 				</FlexItem>
 				<FlexItem>
@@ -155,6 +177,15 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 						text={ __( 'Cancel', 'simple-podcasting' ) }
 						onClick={ closeModal }
 					/>
+				</FlexItem>
+				<FlexItem>
+					{
+						responseMessage ? (
+							<Notice status={ isError ? 'error' : 'success' } isDismissible={ false }>
+								{ responseMessage }
+							</Notice>
+						) : null
+					}
 				</FlexItem>
 			</Flex>
 		</Modal>
