@@ -110,8 +110,77 @@ function register_meta() {
 			'single'       => true,
 		)
 	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_summary',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_category_1',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_image',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'number',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return absint( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_image_url',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return filter_var( $val, FILTER_VALIDATE_URL );
+			},
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
+
+/**
+ * Podcasting term meta generic auth callback.
+ *
+ * @return boolean
+ */
+function podcasting_term_auth_callback() {
+	if ( current_user_can( 'manage_categories' ) ) {
+		return true;
+	}
+
+	return false;
+}
 
 /**
  * Add a custom podcasts taxonomy.
