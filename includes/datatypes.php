@@ -868,7 +868,7 @@ function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
 	$is_onboarding_step_1 = false !== strpos( $referer, 'page=simple-podcasting-onboarding&step=1' );
 
 	if ( ! $is_onboarding_step_1 && empty( trim( $term ) ) ) {
-		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.' ) );
+		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.', 'simple-podcasting' ) );
 	}
 
 	// The third argument was only introduced in the `pre_insert_term` filter in WP 6.1, so bail if it's empty.
