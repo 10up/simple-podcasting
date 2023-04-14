@@ -11,7 +11,7 @@ on:
 
 jobs:
   build: 
-    uses: 10up/simple-podcasting/.github/workflows/build-release-zip.yml@update/207 # TODO: Update this to develop branch.
+    uses: 10up/simple-podcasting/.github/workflows/build-release-zip.yml@develop
   cypress:
     needs: build
     runs-on: ubuntu-latest
