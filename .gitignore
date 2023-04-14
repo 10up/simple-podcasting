@@ -33,7 +33,7 @@ Thumbs.db
 Desktop.ini
 
 # E2E testing
-.wp-env.json
+.wp-env.override.json
 artifacts
 tests/cypress/downloads
 tests/cypress/screenshots
