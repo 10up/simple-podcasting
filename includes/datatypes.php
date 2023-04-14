@@ -877,8 +877,8 @@ function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
 	}
 
 	if ( $is_onboarding_step_1 ) {
-		$args['tag-name']              = sanitize_title( $_POST['podcast-name'] );
-		$args['podcasting_category_1'] = sanitize_text_field( $_POST['podcast-category'] );
+		$args['tag-name']              = sanitize_title( wp_unslash( $_POST['podcast-name'] ) );
+		$args['podcasting_category_1'] = sanitize_text_field( wp_unslash( $_POST['podcast-category'] ) );
 	}
 
 	// Require podcast name.
