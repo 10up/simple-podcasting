@@ -95,7 +95,7 @@ function onboarding_action_handler() {
 		return;
 	}
 
-	/** Add podcast author. */
+	/* Add podcast author. */
 	if ( $podcasting_talent_name ) {
 		update_term_meta( $result['term_id'], 'podcasting_talent_name', $podcasting_talent_name );
 	}
