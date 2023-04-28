@@ -13,7 +13,7 @@ use WP_Post;
 /**
  * Wrap unwrapped text in a paragraph tag.
  *
- * @param string $text
+ * @param string $text The incoming markup.
  *
  * @return string
  */
@@ -41,7 +41,7 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
  * Adds transcript query var.
  * Used to indicate that the transcript template should be rendered.
  *
- * @param array $vars
+ * @param array $vars Array of existing query vars.
  *
  * @return array
  */
@@ -55,7 +55,7 @@ add_filter( 'query_vars', __NAMESPACE__ . '\\query_vars', 10, 1 );
 /**
  * Renders transcript template.
  *
- * @param string $template
+ * @param string $template Template path.
  *
  * @return string
  */
@@ -70,7 +70,7 @@ add_filter( 'taxonomy_template', __NAMESPACE__ . '\\template', 10, 1 );
 /**
  * Adds rewrite rule to podcasts.
  *
- * @param array $rules
+ * @param array $rules Array of redirect rules.
  *
  * @return array
  */
@@ -83,7 +83,7 @@ add_filter( 'podcasting_podcasts_rewrite_rules', __NAMESPACE__ . '\\rewrite_rule
 /**
  * Get the transcript link from a post object
  *
- * @param WP_Post $post
+ * @param WP_Post $post Post object.
  *
  * @return string url
  */
