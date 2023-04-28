@@ -19,6 +19,9 @@ use WP_Post;
  */
 function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
 	// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	// phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+	// phpcs:disable WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
 	$doc = new DOMDocument();
 	libxml_use_internal_errors( true );
 	$doc->loadHTML( '<html><body>' . $text . '</body></html>' );
@@ -35,6 +38,9 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
 
 	return $filtered_text;
 	// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	// phpcs:enable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+	// phpcs:enable WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
 }
 
 /**
