@@ -18,7 +18,7 @@
 <body>
 <?php
 $podcast_slug = get_query_var( 'podcasting-episode' );
-$post_object = get_page_by_path( $podcast_slug, OBJECT, 'post' );
+$post_object  = get_page_by_path( $podcast_slug, OBJECT, 'post' );
 if ( $post_object instanceof WP_Post ) {
 	echo wp_kses_post(
 		tenup_podcasting\transcripts\podcasting_wrap_unwrapped_text_in_paragraph(

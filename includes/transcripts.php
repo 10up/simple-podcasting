@@ -6,6 +6,7 @@
  */
 
 namespace tenup_podcasting\transcripts;
+
 use DOMDocument;
 use WP_Post;
 
@@ -13,13 +14,15 @@ use WP_Post;
  * Wrap unwrapped text in a paragraph tag.
  *
  * @param string $text
+ *
  * @return string
  */
 function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
-	$doc = new DOMDocument;
-	libxml_use_internal_errors(true);
+	// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	$doc = new DOMDocument();
+	libxml_use_internal_errors( true );
 	$doc->loadHTML( '<html><body>' . $text . '</body></html>' );
-	$bodyNode = $doc->getElementsByTagName( 'body' )->item(0);
+	$bodyNode      = $doc->getElementsByTagName( 'body' )->item( 0 );
 	$filtered_text = '';
 
 	foreach ( $bodyNode->childNodes as $node ) {
@@ -31,6 +34,7 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
 	}
 
 	return $filtered_text;
+	// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 }
 
 /**
@@ -38,6 +42,7 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
  * Used to indicate that the transcript template should be rendered.
  *
  * @param array $vars
+ *
  * @return array
  */
 function query_vars( $vars ) {
@@ -51,6 +56,7 @@ add_filter( 'query_vars', __NAMESPACE__ . '\\query_vars', 10, 1 );
  * Renders transcript template.
  *
  * @param string $template
+ *
  * @return string
  */
 function template( $template ) {
@@ -65,6 +71,7 @@ add_filter( 'taxonomy_template', __NAMESPACE__ . '\\template', 10, 1 );
  * Adds rewrite rule to podcasts.
  *
  * @param array $rules
+ *
  * @return array
  */
 function rewrite_rules( $rules ) {
@@ -77,6 +84,7 @@ add_filter( 'podcasting_podcasts_rewrite_rules', __NAMESPACE__ . '\\rewrite_rule
  * Get the transcript link from a post object
  *
  * @param WP_Post $post
+ *
  * @return string url
  */
 function get_transcript_link_from_post( WP_Post $post ) {
