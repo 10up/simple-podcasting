@@ -7,6 +7,7 @@
 
 namespace tenup_podcasting\transcripts;
 use DOMDocument;
+use WP_Post;
 
 /**
  * Wrap unwrapped text in a paragraph tag.
@@ -30,4 +31,58 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
 	}
 
 	return $filtered_text;
+}
+
+/**
+ * Adds transcript query var.
+ * Used to indicate that the transcript template should be rendered.
+ *
+ * @param array $vars
+ * @return array
+ */
+function query_vars( $vars ) {
+	$vars[] = 'podcast-transcript';
+	$vars[] = 'podcasting-episode';
+	return $vars;
+}
+add_filter( 'query_vars', __NAMESPACE__ . '\\query_vars', 10, 1 );
+
+/**
+ * Renders transcript template.
+ *
+ * @param string $template
+ * @return string
+ */
+function template( $template ) {
+	if ( ! get_query_var( 'podcast-transcript' ) || ! get_query_var( 'podcasting_podcasts' ) ) {
+		return $template;
+	}
+	return PODCASTING_PATH . 'templates/transcript.php';
+}
+add_filter( 'taxonomy_template', __NAMESPACE__ . '\\template', 10, 1 );
+
+/**
+ * Adds rewrite rule to podcasts.
+ *
+ * @param array $rules
+ * @return array
+ */
+function rewrite_rules( $rules ) {
+	$rules['^podcasts/([^/]+)/([^/]+)/transcript'] = 'index.php?podcast-transcript=1&podcasting_podcasts=$matches[1]&podcasting-episode=$matches[2]';
+	return $rules;
+}
+add_filter( 'podcasting_podcasts_rewrite_rules', __NAMESPACE__ . '\\rewrite_rules', 10, 1 );
+
+/**
+ * Get the transcript link from a post object
+ *
+ * @param WP_Post $post
+ * @return string url
+ */
+function get_transcript_link_from_post( WP_Post $post ) {
+	$podcast = get_the_terms( $post, TAXONOMY_NAME );
+	if ( ! $podcast ) {
+		return '';
+	}
+	return trailingslashit( get_term_link( $podcast[0]->term_id ) ) . $post->post_name . '/transcript/';
 }

@@ -11,10 +11,12 @@
  */
 
 use tenup_podcasting\transcripts;
+use function tenup_podcasting\transcripts\get_transcript_link_from_post;
 
 if ( 'none' !== $attributes['display'] ) : ?>
 <div <?php echo get_block_wrapper_attributes(); // phpcs:ignore ?>>
 	<?php
+	global $post;
 	switch( $attributes['display'] ) {
 		case 'post':
 			echo transcripts\podcasting_wrap_unwrapped_text_in_paragraph(
@@ -31,7 +33,7 @@ if ( 'none' !== $attributes['display'] ) : ?>
 		case 'link':
 			printf(
 				'<p><a href="%s">%s</a></p>',
-				esc_attr( '' ),
+				esc_url( get_transcript_link_from_post( $post ) ),
 				esc_html( $attributes['linkText'] )
 			);
 			break;
