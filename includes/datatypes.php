@@ -183,28 +183,6 @@ function filter_parent_file( $file ) {
 add_filter( 'parent_file', __NAMESPACE__ . '\filter_parent_file' );
 
 /**
- * Set up term meta for podcasts.
- */
-function register_term_meta() {
-	$podcasting_meta_fields = get_meta_fields();
-
-	foreach ( $podcasting_meta_fields as $field ) {
-		register_meta(
-			'term',
-			$field['slug'],
-			array(
-				'sanitize_callback' => 'sanitize_my_meta_key',
-				'type'              => $field['type'],
-				'description'       => $field['title'],
-				'single'            => true,
-				'show_in_rest'      => false,
-			)
-		);
-	}
-}
-add_action( 'init', __NAMESPACE__ . '\register_term_meta' );
-
-/**
  * Add "Podcasts" as its own top level menu item.
  */
 function add_top_level_menu() {

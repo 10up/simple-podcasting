@@ -111,16 +111,6 @@ function feed_head() {
 		echo '<itunes:subtitle>' . esc_html( wp_strip_all_tags( $subtitle ) ) . "</itunes:subtitle>\n";
 	}
 
-	$summary = get_term_meta( $term->term_id, 'podcasting_summary', true );
-
-	if ( empty( $summary ) ) {
-		$summary = get_bloginfo( 'description' );
-	}
-
-	if ( ! empty( $summary ) ) {
-		echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $summary ) ) . "</itunes:summary>\n";
-	}
-
 	$author = get_term_meta( $term->term_id, 'podcasting_talent_name', true );
 	if ( ! empty( $author ) ) {
 		echo '<itunes:author>' . esc_html( wp_strip_all_tags( $author ) ) . "</itunes:author>\n";
@@ -279,7 +269,6 @@ function feed_item() {
 	if ( ! empty( $feed_item['keywords'] ) ) {
 		echo '<itunes:keywords>' . esc_html( $feed_item['keywords'] ) . "</itunes:keywords>\n";
 	}
-	echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $feed_item['summary'] ) ) . "</itunes:summary>\n";
 	echo '<itunes:subtitle>' . esc_html( $feed_item['subtitle'] ) . "</itunes:subtitle>\n";
 	if ( ! empty( $feed_item['duration'] ) ) {
 		echo '<itunes:duration>' . esc_html( $feed_item['duration'] ) . "</itunes:duration>\n";
