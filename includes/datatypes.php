@@ -887,22 +887,22 @@ function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
 
 	// Require podcast name.
 	if ( empty( trim( $args['tag-name'] ) ) ) {
-		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.' ) );
+		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.', 'simple-podcasting' ) );
 	}
 
 	// Require podcast author name only on term edit screen.
 	if ( empty( trim( $args['podcasting_talent_name'] ) ) ) {
-		return new \WP_Error( 'empty_term_talent_name', __( 'A podcast artist or author name is required.' ) );
+		return new \WP_Error( 'empty_term_talent_name', __( 'A podcast artist or author name is required.', 'simple-podcasting' ) );
 	}
 
 	// Require podcast description.
 	if ( empty( trim( $args['podcasting_summary'] ) ) ) {
-		return new \WP_Error( 'empty_term_summary', __( 'A podcast summary is required.' ) );
+		return new \WP_Error( 'empty_term_summary', __( 'A podcast summary is required.', 'simple-podcasting' ) );
 	}
 
 	// Require podcast image.
 	if ( empty( trim( $args['podcasting_image'] ) ) ) {
-		return new \WP_Error( 'empty_term_cover_image', __( 'A podcast cover image is required.' ) );
+		return new \WP_Error( 'empty_term_cover_image', __( 'A podcast cover image is required.', 'simple-podcasting' ) );
 	}
 
 	// Require podcast category.
@@ -915,7 +915,7 @@ function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
 		);
 
 	if ( $is_missing_category ) {
-		return new \WP_Error( 'empty_term_category', __( 'A podcast category is required.' ) );
+		return new \WP_Error( 'empty_term_category', __( 'A podcast category is required.', 'simple-podcasting' ) );
 	}
 
 	return $term;
