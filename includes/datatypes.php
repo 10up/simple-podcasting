@@ -864,8 +864,12 @@ function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
 		return $term;
 	}
 
-	$referer              = sanitize_text_field( $_POST['_wp_http_referer'] );
-	$is_onboarding_step_1 = false !== strpos( $referer, 'page=simple-podcasting-onboarding&step=1' );
+	$referer      = sanitize_text_field( $_POST['_wp_http_referer'] );
+	$query_string = parse_url( $referer, PHP_URL_QUERY );
+	parse_str( $query_string, $query );
+
+	$is_onboarding_step_1 = isset( $query['page'] ) && isset( $query['step'] )
+		&& 'simple-podcasting-onboarding' === $query['page'] && '1' === $query['step'];
 
 	if ( ! $is_onboarding_step_1 && empty( trim( $term ) ) ) {
 		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.', 'simple-podcasting' ) );
