@@ -21,8 +21,8 @@
 
 		<!-- Show artist/author -->
 		<div class="simple-podcasting__setting">
-			<label class="simple-podcasting__setting-label"><?php esc_html_e( 'Show Artist / Author name*', 'simple-podcasting' ); ?></label>
-			<div class="simple-podcasting__setting-input"><input name="podcast-artist" required type="text" /></div>
+			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-artist"><?php esc_html_e( 'Show Artist / Author name*', 'simple-podcasting' ); ?></label>
+			<div class="simple-podcasting__setting-input"><input name="podcast-artist" id="simple-podcasting-podcast-artist" required type="text" /></div>
 			<div class="simple-podcasting__setting-description"><?php esc_html_e( 'Who’s the artist or author of your podcast show that listeners will see?', 'simple-podcasting' ); ?></div>
 		</div>
 
