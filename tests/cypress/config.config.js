@@ -5,7 +5,15 @@ module.exports = defineConfig({
 	screenshotsFolder: __dirname + '/screenshots',
 	videosFolder: __dirname + '/videos',
 	downloadsFolder: __dirname + '/downloads',
-	video: false,
+	video: true,
+	reporter: 'mochawesome',
+	reporterOptions: {
+		mochaFile: 'mochawesome-[name]',
+		reportDir: __dirname + '/reports',
+		overwrite: false,
+		html: false,
+		json: true,
+	},
 	chromeWebSecurity: false,
 	env: {
 		HAS_BLOCK_EDITOR: true,
