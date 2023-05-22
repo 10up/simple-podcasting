@@ -64,35 +64,21 @@ function onboarding_action_handler() {
 		return;
 	}
 
-	$podcast_name        = isset( $_POST['podcast-name'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-name'] ) ) : null;
-	$podcast_description = isset( $_POST['podcast-description'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-description'] ) ) : null;
-	$podcast_category    = isset( $_POST['podcast-category'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-category'] ) ) : null;
-	$podcast_cover_id    = isset( $_POST['podcast-cover-image-id'] ) ? absint( wp_unslash( $_POST['podcast-cover-image-id'] ) ) : null;
-
-	if ( empty( $podcast_name ) || empty( $podcast_category ) ) {
-		add_action(
-			'admin_notices',
-			function() use ( $podcast_name, $podcast_category ) {
-				?>
-			<div class="notice notice-error is-dismissible">
-				<?php if ( '' === $podcast_name ) : ?>
-					<p><?php esc_html_e( 'Show name is required.', 'simple-podcasting' ); ?></p>
-				<?php endif; ?>
-
-				<?php if ( '' === $podcast_category ) : ?>
-					<p><?php esc_html_e( 'Podcast category is required.', 'simple-podcasting' ); ?></p>
-				<?php endif; ?>
-			</div>
-				<?php
-			}
-		);
-
-		return;
-	}
+	$podcast_name           = isset( $_POST['podcast-name'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-name'] ) ) : null;
+	$podcasting_talent_name = isset( $_POST['podcast-artist'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-artist'] ) ) : null;
+	$podcast_description    = isset( $_POST['podcast-description'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-description'] ) ) : null;
+	$podcast_category       = isset( $_POST['podcast-category'] ) ? sanitize_text_field( wp_unslash( $_POST['podcast-category'] ) ) : null;
+	$podcast_cover_id       = isset( $_POST['podcast-cover-image-id'] ) ? absint( wp_unslash( $_POST['podcast-cover-image-id'] ) ) : null;
 
 	$result = wp_insert_term(
 		$podcast_name,
-		TAXONOMY_NAME
+		TAXONOMY_NAME,
+		[
+			// Add these args for validation.
+			'podcasting_talent_name' => $podcasting_talent_name,
+			'podcasting_summary'     => $podcast_description,
+			'podcasting_image'       => $podcast_cover_id,
+		]
 	);
 
 	if ( is_wp_error( $result ) ) {
@@ -107,6 +93,11 @@ function onboarding_action_handler() {
 			}
 		);
 		return;
+	}
+
+	/* Add podcast author. */
+	if ( $podcasting_talent_name ) {
+		update_term_meta( $result['term_id'], 'podcasting_talent_name', $podcasting_talent_name );
 	}
 
 	/** Add podcast summary. */

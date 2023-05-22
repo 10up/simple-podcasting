@@ -47,6 +47,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "cypress": "^11.2.0",
     "cypress-file-upload": "^5.0.8",
+    "cypress-localstorage-commands": "^2.2.2",
     "cypress-mochawesome-reporter": "^3.4.0",
     "eslint-plugin-cypress": "^2.12.1",
     "husky": "^8.0.1",

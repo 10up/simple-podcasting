@@ -502,7 +502,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'  => 'podcasting_talent_name',
-			'title' => __( 'Artist / Author name', 'simple-podcasting' ),
+			'title' => __( 'Artist / Author name (required)', 'simple-podcasting' ),
 			'type'  => 'textfield',
 		),
 		array(
@@ -512,7 +512,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'  => 'podcasting_summary',
-			'title' => __( 'Summary', 'simple-podcasting' ),
+			'title' => __( 'Summary (required)', 'simple-podcasting' ),
 			'type'  => 'textarea',
 		),
 		array(
@@ -538,7 +538,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'        => 'podcasting_image',
-			'title'       => __( 'Cover image', 'simple-podcasting' ),
+			'title'       => __( 'Cover image (required)', 'simple-podcasting' ),
 			'type'        => 'image',
 			'description' => __( 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px', 'simple-podcasting' ),
 		),
@@ -560,7 +560,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'    => 'podcasting_category_1',
-			'title'   => __( 'Category 1', 'simple-podcasting' ),
+			'title'   => __( 'Category 1 (required)', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories_options(),
 		),
@@ -826,3 +826,77 @@ function get_podcasting_language_options() {
 		)
 	);
 }
+
+/**
+ * Validate Podcast Taxonomy Fields.
+ *
+ * @param string $term     Term.
+ * @param string $taxonomy Taxonomy Name.
+ * @param array  $args     List of arguments.
+ *
+ * @return string
+ */
+function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
+	// Bailout, if not the podcasts taxonomy.
+	if ( 'podcasting_podcasts' !== $taxonomy ) {
+		return $term;
+	}
+
+	$referer      = sanitize_text_field( $_POST['_wp_http_referer'] );
+	$query_string = parse_url( $referer, PHP_URL_QUERY );
+	parse_str( $query_string, $query );
+
+	$is_onboarding_step_1 = isset( $query['page'] ) && isset( $query['step'] )
+		&& 'simple-podcasting-onboarding' === $query['page'] && '1' === $query['step'];
+
+	if ( ! $is_onboarding_step_1 && empty( trim( $term ) ) ) {
+		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.', 'simple-podcasting' ) );
+	}
+
+	// The third argument was only introduced in the `pre_insert_term` filter in WP 6.1, so bail if it's empty.
+	if ( empty( $args ) ) {
+		return $term;
+	}
+
+	if ( $is_onboarding_step_1 ) {
+		$args['tag-name']              = sanitize_title( wp_unslash( $_POST['podcast-name'] ) );
+		$args['podcasting_category_1'] = sanitize_text_field( wp_unslash( $_POST['podcast-category'] ) );
+	}
+
+	// Require podcast name.
+	if ( empty( trim( $args['tag-name'] ) ) ) {
+		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.', 'simple-podcasting' ) );
+	}
+
+	// Require podcast author name only on term edit screen.
+	if ( empty( trim( $args['podcasting_talent_name'] ) ) ) {
+		return new \WP_Error( 'empty_term_talent_name', __( 'A podcast artist or author name is required.', 'simple-podcasting' ) );
+	}
+
+	// Require podcast description.
+	if ( empty( trim( $args['podcasting_summary'] ) ) ) {
+		return new \WP_Error( 'empty_term_summary', __( 'A podcast summary is required.', 'simple-podcasting' ) );
+	}
+
+	// Require podcast image.
+	if ( empty( trim( $args['podcasting_image'] ) ) ) {
+		return new \WP_Error( 'empty_term_cover_image', __( 'A podcast cover image is required.', 'simple-podcasting' ) );
+	}
+
+	// Require podcast category.
+	$is_missing_category = $is_onboarding_step_1 ?
+		empty( trim( $args['podcasting_category_1'] ) ) :
+		(
+			empty( trim( $args['podcasting_category_1'] ) ) &&
+			empty( trim( $args['podcasting_category_2'] ) ) &&
+			empty( trim( $args['podcasting_category_3'] ) )
+		);
+
+	if ( $is_missing_category ) {
+		return new \WP_Error( 'empty_term_category', __( 'A podcast category is required.', 'simple-podcasting' ) );
+	}
+
+	return $term;
+}
+
+add_filter( 'pre_insert_term', __NAMESPACE__ . '\validate_taxonomy_fields', 10, 3 );
