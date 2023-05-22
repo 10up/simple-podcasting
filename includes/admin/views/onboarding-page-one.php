@@ -44,8 +44,8 @@
 
 		<!-- Podcast category -->
 		<div class="simple-podcasting__setting">
-			<label class="simple-podcasting__setting-label"><?php esc_html_e( 'Podcast category*', 'simple-podcasting' ); ?></label>
-			<select name="podcast-category" aria-describedby="simple-podcasting__podcast-category-description" required>
+			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-category"><?php esc_html_e( 'Podcast category*', 'simple-podcasting' ); ?></label>
+			<select name="podcast-category" id="simple-podcasting-podcast-category" aria-describedby="simple-podcasting__podcast-category-description" required>
 				<?php foreach ( \tenup_podcasting\get_podcasting_categories_options() as $option_value => $option_label ) : ?>
 					<option value="<?php echo esc_attr( $option_value ); ?>"><?php echo esc_html( $option_label ); ?></option>
 				<?php endforeach; ?>
