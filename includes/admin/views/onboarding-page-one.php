@@ -15,7 +15,7 @@
 		<!-- Show name -->
 		<div class="simple-podcasting__setting">
 			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-name"><?php esc_html_e( 'Show name*', 'simple-podcasting' ); ?></label>
-			<div class="simple-podcasting__setting-input"><input name="podcast-name" id=simple-podcasting-podcast-name" aria-describedby="simple-podcasting__podcast-name-description" required type="text" /></div>
+			<div class="simple-podcasting__setting-input"><input name="podcast-name" id="simple-podcasting-podcast-name" aria-describedby="simple-podcasting__podcast-name-description" required type="text" /></div>
 			<div class="simple-podcasting__setting-description" id="simple-podcasting__podcast-name-description"><?php esc_html_e( 'What’s the title of your podcast show that listeners will see?', 'simple-podcasting' ); ?></div>
 		</div>
 
