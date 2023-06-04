@@ -1,4 +1,4 @@
-const { randomName } = require('../support/functions');
+const { randomName, populatePodcast } = require('../support/functions');
 
 describe('Onboarding tests', () => {
 	before(() => {
@@ -6,6 +6,7 @@ describe('Onboarding tests', () => {
 	});
 
 	beforeEach(() => {
+		cy.uploadMedia('tests/cypress/fixtures/example.jpg');
 		cy.activatePlugin('simple-podcasting');
 		cy.deleteAllTerms('podcasting_podcasts');
 		cy.deactivatePlugin('simple-podcasting');
@@ -29,8 +30,11 @@ describe('Onboarding tests', () => {
 			.closest('form')
 			.submit();
 
-		cy.contains('Show name is required.');
-		cy.contains('Podcast category is required.');
+		cy.get('input[name="podcast-name"]').then(($input) => {
+			expect($input[0].validationMessage).to.eq(
+				'Please fill out this field.'
+			);
+		});
 	});
 
 	it('Should pass onboarding', () => {
@@ -39,8 +43,12 @@ describe('Onboarding tests', () => {
 
 		const podcastName = 'Onboarding ' + randomName();
 		cy.get('input[name=podcast-name]').click().type(podcastName);
-		cy.get('select[name=podcast-category]').select('Arts');
-
+		populatePodcast({
+			author: 'Person Doe',
+			summary: 'Lorem ipsum dolor',
+			category: 'Arts',
+			onboarding: true,
+		});
 		cy.get('#simple-podcasting__create-podcast-button')
 			.closest('form')
 			.submit();

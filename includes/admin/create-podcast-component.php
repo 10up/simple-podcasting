@@ -8,26 +8,14 @@
 
 namespace tenup_podcasting\admin;
 
-use tenup_podcasting\Create_Podcast;
-
 /**
  * Adds methods to create a podcast using the Gutenberg inspector component.
  */
 class Create_Podcast_Component {
-
-	/**
-	 * Holds the object for Create_Podcast.
-	 *
-	 * @var \tenup_podcasting\Create_Podcast
-	 */
-	protected $create_podcast = null;
-
 	/**
 	 * Constructor method.
 	 */
 	public function __construct() {
-		$this->create_podcast = new Create_Podcast();
-
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 	}
 

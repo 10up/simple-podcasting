@@ -21,7 +21,6 @@ define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
 
-require_once PODCASTING_PATH . 'includes/create-podcast.php';
 require_once PODCASTING_PATH . 'includes/admin/onboarding.php';
 require_once PODCASTING_PATH . 'includes/admin/create-podcast-component.php';
 require_once PODCASTING_PATH . 'includes/datatypes.php';

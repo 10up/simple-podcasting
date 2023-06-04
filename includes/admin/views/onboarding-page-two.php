@@ -5,8 +5,6 @@
  * @package tenup_podcasting
  */
 
-use tenup_podcasting\admin\Onboarding
-
 ?>
 <div class="simple-podcasting__onboarding-body simple-podcasting__onboarding-body--step-2">
 	<div class="simple-podcasting__panel simple-podcasting__panel--left">
@@ -38,5 +36,5 @@ use tenup_podcasting\admin\Onboarding
 			/>
 		</div>
 	</div>
-	<?php update_option( 'simple_podcasting_onboarding', Onboarding::STATUS_COMPLETED ); ?>
+	<?php update_option( 'simple_podcasting_onboarding', 'completed' ); ?>
 </div>
