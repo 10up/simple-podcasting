@@ -17,7 +17,7 @@ import { useState } from "@wordpress/element";
 const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	const [ showName, setShowName ] = useState( '' );
 	const [ showCategory, setShowCategory ] = useState( '' );
-	const [ description, setDescription ] = useState( '' );
+	const [ summary, setSummary ] = useState( '' );
 	const [ coverId, setCoverId ] = useState( 0 );
 	const [ coverUrl, setCoverUrl ] = useState( '' );
 	const [ ajaxInprogress, setAjaxInProgress ] = useState( false );
@@ -40,7 +40,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 		formData.append( 'action', 'simple_podcasting_create_podcast' );
 		formData.append( 'simple-podcasting-create-show-nonce-field', podcastingShowPluginVars.nonce );
 		formData.append( 'podcast-name', showName );
-		formData.append( 'podcast-description', description );
+		formData.append( 'podcast-description', summary );
 		formData.append( 'podcast-category', showCategory );
 		formData.append( 'podcast-cover-image-id', coverId );
 
@@ -51,7 +51,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 				{
 					name: showName,
 					meta: {
-						podcasting_summary: description,
+						podcasting_summary: summary,
 						podcasting_category_1: showCategory,
 						podcasting_image: coverId,
 						podcasting_image_url: coverUrl
@@ -99,7 +99,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 								setIsPodcastCreated( false );
 								setShowName( '' );
 								setShowCategory( '' );
-								setDescription( '' );
+								setSummary( '' );
 								setCoverId( 0 );
 								setCoverUrl( '' );
 							} }
@@ -109,7 +109,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 					<>
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<TextControl
-								label={ __( 'Show name*', 'simple-podcasting' ) }
+								label={ __( 'Podcast name*', 'simple-podcasting' ) }
 								help={ __( 'This is the name that listeners will see when searching or subscribing.', 'simple-podcasting' ) }
 								value={ showName }
 								onChange={ ( val ) => setShowName( val ) }
@@ -119,7 +119,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<SelectControl
-								label={ __( 'Show Category*', 'simple-podcasting' ) }
+								label={ __( 'Category*', 'simple-podcasting' ) }
 								help={ __( 'Select the category listeners will use to discover your show when browsing  podcatchers. You can also add subcategories later.', 'simple-podcasting' ) }
 								options={ categoriesOptions }
 								value={ showCategory }
@@ -130,11 +130,11 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<TextareaControl
-								label={ __( 'Show Description', 'simple-podcasting' ) }
+								label={ __( 'Summary', 'simple-podcasting' ) }
 								help={ __( 'Briefly describe to your listeners what your show is about. (No HTML please.)', 'simple-podcasting' ) }
 								rows={ 6 }
-								value={ description }
-								onChange={ ( val ) => setDescription( val ) }
+								value={ summary }
+								onChange={ ( val ) => setSummary( val ) }
 							/>
 						</div>
 
@@ -149,7 +149,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 									value={ coverId }
 									render={ ( { open } ) => (
 										<>
-											<BaseControl label={ __( 'Show Cover Image', 'simple-podcasting' ) } />
+											<BaseControl label={ __( 'Cover Image', 'simple-podcasting' ) } />
 											<Flex justify="normal">
 												<FlexItem>
 													<Button
