@@ -16,11 +16,6 @@ import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { useState, useEffect } from "@wordpress/element";
 import { useSelect, dispatch } from "@wordpress/data";
 
-// Due to unsupported versions of React, we're importing stores from the
-// `wp` namespace instead of @wordpress NPM packages for the following.
-const { store: editorStore } = wp.editor;
-const { store: coreDataStore } = wp.coreData;
-
 const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	const [ showName, setShowName ] = useState( '' );
 	const [ showCategory, setShowCategory ] = useState( '' );
@@ -43,7 +38,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 		setAjaxInProgress( true );
 
 		try {
-			const podcast = await wp.data.dispatch( coreDataStore ).saveEntityRecord(
+			const podcast = await wp.data.dispatch( 'core' ).saveEntityRecord(
 				'taxonomy',
 				'podcasting_podcasts',
 				{
@@ -216,8 +211,8 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 
 const CreatePodcastShowPlugin = () => {
 	const { allPodcasts, attachedPodcasts, currentPostId } = useSelect( ( select ) => {
-		const { getEntityRecords } = select( coreDataStore );
-		const { getCurrentPostId } = select( editorStore );
+		const { getEntityRecords } = select( 'core' );
+		const { getCurrentPostId } = select( 'core/editor' );
 
 		return {
 			allPodcasts: getEntityRecords( 'taxonomy', 'podcasting_podcasts' ) || [],
@@ -256,7 +251,7 @@ const CreatePodcastShowPlugin = () => {
 			updatedAttachedPodcastIds = attachedPodcastIds.filter( ( currentPodcastId ) => currentPodcastId !== podcastId );
 		}
 
-		dispatch( coreDataStore ).editEntityRecord(
+		dispatch( 'core' ).editEntityRecord(
 			'postType',
 			'post',
 			currentPostId,
