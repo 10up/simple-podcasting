@@ -42,15 +42,6 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	const createShow = async () => {
 		setAjaxInProgress( true );
 
-		const formData = new FormData();
-
-		formData.append( 'action', 'simple_podcasting_create_podcast' );
-		formData.append( 'simple-podcasting-create-show-nonce-field', podcastingShowPluginVars.nonce );
-		formData.append( 'podcast-name', showName );
-		formData.append( 'podcast-description', summary );
-		formData.append( 'podcast-category', showCategory );
-		formData.append( 'podcast-cover-image-id', coverId );
-
 		try {
 			const podcast = await wp.data.dispatch( coreDataStore ).saveEntityRecord(
 				'taxonomy',
@@ -72,7 +63,6 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 		} catch ( error ) {
 			setAjaxInProgress( false );
 		}
-
 
 		setAjaxInProgress( false );
 	};

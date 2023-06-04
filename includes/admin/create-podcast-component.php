@@ -42,7 +42,6 @@ class Create_Podcast_Component {
 			'podcastingShowPluginVars',
 			array(
 				'categories' => \tenup_podcasting\get_podcasting_categories_options(),
-				'nonce'      => wp_create_nonce( 'simple-podcasting-create-show-action' ),
 			)
 		);
 	}
