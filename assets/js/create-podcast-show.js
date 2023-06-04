@@ -1,5 +1,5 @@
 import { registerPlugin } from "@wordpress/plugins";
-import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
+import { PluginDocumentSettingPanel, store as editPostStore } from '@wordpress/edit-post';
 import { __ } from "@wordpress/i18n";
 import {
 	Button,
@@ -10,9 +10,16 @@ import {
 	BaseControl,
 	Flex,
 	FlexItem,
+	CheckboxControl,
 } from "@wordpress/components";
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { useState } from "@wordpress/element";
+import { useState, useEffect } from "@wordpress/element";
+import { useSelect, dispatch } from "@wordpress/data";
+
+// Due to unsupported versions of React, we're importing stores from the
+// `wp` namespace instead of @wordpress NPM packages for the following.
+const { store: editorStore } = wp.editor;
+const { store: coreDataStore } = wp.coreData;
 
 const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	const [ showName, setShowName ] = useState( '' );
@@ -45,7 +52,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 		formData.append( 'podcast-cover-image-id', coverId );
 
 		try {
-			const podcast = await wp.data.dispatch( 'core' ).saveEntityRecord(
+			const podcast = await wp.data.dispatch( coreDataStore ).saveEntityRecord(
 				'taxonomy',
 				'podcasting_podcasts',
 				{
@@ -78,7 +85,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 
 	return (
 		<Modal
-			title={ isPodcastCreated ? __( 'Podcast created!', 'simple-podcasting' ) : __( 'Add New Podcast Show', 'simple-podcasting' ) }
+			title={ isPodcastCreated ? __( 'Podcast created!', 'simple-podcasting' ) : __( 'Add New Podcast', 'simple-podcasting' ) }
 			style={ modalStyle }
 			onRequestClose={ ( event ) => {
 				const selectImageBtn = event.target.closest( '.simple-podcasting__select-image-btn' );
@@ -94,7 +101,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 					<>
 						<Button
 							variant="link"
-							text={ __( 'Add another Podcast Show', 'simple-podcasting' ) }
+							text={ __( 'Add another Podcast', 'simple-podcasting' ) }
 							onClick={ () => {
 								setIsPodcastCreated( false );
 								setShowName( '' );
@@ -218,19 +225,81 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 };
 
 const CreatePodcastShowPlugin = () => {
+	const { allPodcasts, attachedPodcasts, currentPostId } = useSelect( ( select ) => {
+		const { getEntityRecords } = select( coreDataStore );
+		const { getCurrentPostId } = select( editorStore );
+
+		return {
+			allPodcasts: getEntityRecords( 'taxonomy', 'podcasting_podcasts' ) || [],
+			attachedPodcasts: getEntityRecords( 'taxonomy', 'podcasting_podcasts', { post: getCurrentPostId() } ) || [],
+			currentPostId: getCurrentPostId(),
+		}
+	} );
+
+	// Remove the default 'Podcast' taxonomy panel.
+	useEffect( () => {
+		dispatch( editPostStore ).removeEditorPanel( 'taxonomy-panel-podcasting_podcasts' );
+	}, [] );
+
+	// Sets the podcasts terms already attached to the current post.
+	useEffect( () => {
+		setAttachedPodcasts( attachedPodcasts.map( ( item ) => item.id ) );
+	}, [ attachedPodcasts ] );
+
 	const [ isModalOpen, setIsModalOpen ] = useState( false );
 	const openModal = () => setIsModalOpen( true );
 	const closeModal = () => setIsModalOpen( false );
+	const [ attachedPodcastIds, setAttachedPodcasts ] = useState( attachedPodcasts.map( ( item ) => item.id ) || [] );
+
+	/**
+	 * Attaches the podcast term to the current post if selected.
+	 *
+	 * @param {Boolean} isChecked If the podcast term checkbox is checked.
+	 * @param {Integer} podcastId The podcast term ID.
+	 */
+	function attachPodcastToPost( isChecked, podcastId ) {
+		let updatedAttachedPodcastIds = [ ...attachedPodcastIds, podcastId ];
+
+		if ( isChecked ) {
+			updatedAttachedPodcastIds = [ ...attachedPodcastIds, podcastId ];
+		} else {
+			updatedAttachedPodcastIds = attachedPodcastIds.filter( ( currentPodcastId ) => currentPodcastId !== podcastId );
+		}
+
+		dispatch( coreDataStore ).editEntityRecord(
+			'postType',
+			'post',
+			currentPostId,
+			{
+				podcasting_podcasts: updatedAttachedPodcastIds,
+			}
+		)
+
+		setAttachedPodcasts( updatedAttachedPodcastIds );
+	}
 
 	return (
 		<>
 			<PluginDocumentSettingPanel
-				title={ __( 'Podcast Show', 'simple-podcasting' ) }
+				title={ __( 'Podcasts', 'simple-podcasting' ) }
 			>
+				{
+					allPodcasts.map( ( item, index ) => {
+						return (
+							<CheckboxControl
+								key={ index }
+								label={ item.name }
+								onChange={ ( isChecked ) => attachPodcastToPost( isChecked, item.id ) }
+								checked={ attachedPodcastIds.includes( item.id ) }
+							/>
+						)
+					} )
+				}
 				<Button
 					variant="link"
-					text={ __( 'Add New Podcast Show', 'simple-podcasting' ) }
+					text={ __( 'Add New Podcast', 'simple-podcasting' ) }
 					onClick={ openModal }
+					style={ { marginTop: '12px' } }
 				/>
 			</PluginDocumentSettingPanel>
 			<CreatePodcastShowModal

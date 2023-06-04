@@ -212,6 +212,8 @@ function create_podcasts_taxonomy() {
 			'hierarchical'      => true,
 			'show_tagcloud'     => false,
 			'public'            => true,
+			'show_ui'           => true,
+			'show_in_menu'      => false,
 			'show_in_rest'      => true,
 			'show_in_nav_menus' => false,
 			'show_admin_column' => true,
