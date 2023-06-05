@@ -40,9 +40,10 @@
   },
   "devDependencies": {
     "@10up/cypress-wp-utils": "github:10up/cypress-wp-utils#build",
-    "@wordpress/env": "^5.4.0",
+    "@wordpress/env": "^8.0.0",
+    "@wordpress/plugins": "^6.2.0",
     "@wordpress/prettier-config": "^2.2.0",
-    "@wordpress/scripts": "^24.3.0",
+    "@wordpress/scripts": "^26.5.0",
     "ansi-regex": ">=6.0.1",
     "copy-webpack-plugin": "^11.0.0",
     "cypress": "^11.2.0",
