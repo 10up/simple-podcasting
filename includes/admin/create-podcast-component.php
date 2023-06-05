@@ -25,7 +25,7 @@ class Create_Podcast_Component {
 	public function admin_enqueue_scripts() {
 		$screen = get_current_screen();
 
-		if ( ! ( $screen && 'post' === $screen->post_type ) ) {
+		if ( ! ( $screen && 'post' === $screen->id ) ) {
 			return;
 		}
 
