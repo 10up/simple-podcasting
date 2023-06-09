@@ -22,6 +22,7 @@ const { store: coreDataStore } = wp.coreData;
 
 const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	const [ showName, setShowName ] = useState( '' );
+	const [ artistName, setArtistName ] = useState( '' );
 	const [ showCategory, setShowCategory ] = useState( '' );
 	const [ summary, setSummary ] = useState( '' );
 	const [ coverId, setCoverId ] = useState( 0 );
@@ -114,6 +115,16 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 						</div>
 
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
+							<TextControl
+								label={ __( 'Artist name*', 'simple-podcasting' ) }
+								help={ __( 'Who’s the artist or author of your podcast show that listeners will see?', 'simple-podcasting' ) }
+								value={ artistName }
+								onChange={ ( val ) => setArtistName( val ) }
+								required
+							/>
+						</div>
+
+						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<SelectControl
 								label={ __( 'Category*', 'simple-podcasting' ) }
 								help={ __( 'Select the category listeners will use to discover your show when browsing  podcatchers. You can also add subcategories later.', 'simple-podcasting' ) }
@@ -126,11 +137,12 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<TextareaControl
-								label={ __( 'Summary', 'simple-podcasting' ) }
+								label={ __( 'Summary*', 'simple-podcasting' ) }
 								help={ __( 'Briefly describe to your listeners what your show is about. (No HTML please.)', 'simple-podcasting' ) }
 								rows={ 6 }
 								value={ summary }
 								onChange={ ( val ) => setSummary( val ) }
+								required
 							/>
 						</div>
 
@@ -145,7 +157,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 									value={ coverId }
 									render={ ( { open } ) => (
 										<>
-											<BaseControl label={ __( 'Cover Image', 'simple-podcasting' ) } />
+											<BaseControl label={ __( 'Cover Image*', 'simple-podcasting' ) } />
 											<Flex justify="normal">
 												<FlexItem>
 													<Button
@@ -192,8 +204,8 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 							<FlexItem>
 								<Button
 									variant="primary"
-									text={ __( 'Create Show', 'simple-podcasting' ) }
-									disabled={ ! showName || '' === showCategory }
+									text={ __( 'Create Podcast', 'simple-podcasting' ) }
+									disabled={ ! showName || '' === showCategory || ! artistName || ! summary || ! coverId }
 									onClick={ createShow }
 									isBusy={ ajaxInprogress }
 								/>

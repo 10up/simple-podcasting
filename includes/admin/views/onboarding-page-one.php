@@ -28,7 +28,7 @@
 
 		<!-- Podcast description -->
 		<div class="simple-podcasting__setting">
-			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-description"><?php esc_html_e( 'Podcast description*', 'simple-podcasting' ); ?></label>
+			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-description"><?php esc_html_e( 'Podcast summary*', 'simple-podcasting' ); ?></label>
 			<div class="simple-podcasting__setting-input"><textarea name="podcast-description" id="simple-podcasting-podcast-description" aria-describedby="simple-podcasting__podcast-description-description" rows="5" required></textarea></div>
 			<div class="simple-podcasting__setting-description" id="simple-podcasting__podcast-description-description"><?php esc_html_e( 'Briefly describe to your listeners what your podcast is about. (No HTML please)', 'simple-podcasting' ); ?></div>
 		</div>
