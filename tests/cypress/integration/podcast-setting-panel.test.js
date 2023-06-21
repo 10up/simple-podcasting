@@ -65,7 +65,7 @@ describe('Create podcast setting panel', () => {
 		);
 
 		cy.get('.podcasting__select-image-btn').click();
-		cy.get('[aria-label="example"]').click();
+		cy.get('[aria-label="example"]').first().click();
 		cy.get('.media-button-select').click();
 		cy.get('.podcasting__select-image-btn').should(
 			'have.text',
@@ -89,7 +89,7 @@ describe('Create podcast setting panel', () => {
 		);
 
 		cy.get('.podcasting__select-image-btn').click();
-		cy.get('[aria-label="example"]').click();
+		cy.get('[aria-label="example"]').first().click();
 		cy.get('.media-button-select').click();
 
 		cy.get('.podcasting__create-podcast-btn').click();
@@ -121,7 +121,7 @@ describe('Create podcast setting panel', () => {
 		cy.get('.podasting-existing-image img')
 			.should('have.attr', 'src')
 			.then((src) => {
-				expect(src).to.contain('example.jpg');
+				expect(src).to.match(/example(-\d)?.jpg/);
 			});
 
 		cy.get('#podcasting_category_1').should(
