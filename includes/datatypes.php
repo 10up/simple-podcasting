@@ -113,6 +113,20 @@ function register_meta() {
 
 	\register_term_meta(
 		'podcasting_podcasts',
+		'podcasting_talent_name',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
 		'podcasting_summary',
 		array(
 			'show_in_rest' => true,

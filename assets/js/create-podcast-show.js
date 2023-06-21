@@ -52,7 +52,8 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 						podcasting_summary: summary,
 						podcasting_category_1: showCategory,
 						podcasting_image: coverId,
-						podcasting_image_url: coverUrl
+						podcasting_image_url: coverUrl,
+						podcasting_talent_name: artistName,
 					}
 				}
 			);
@@ -78,7 +79,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 			title={ isPodcastCreated ? __( 'Podcast created!', 'simple-podcasting' ) : __( 'Add New Podcast', 'simple-podcasting' ) }
 			style={ modalStyle }
 			onRequestClose={ ( event ) => {
-				const selectImageBtn = event.target.closest( '.simple-podcasting__select-image-btn' );
+				const selectImageBtn = event.target.closest( '.podcasting__select-image-btn' );
 
 				if ( selectImageBtn ) {
 					return;
@@ -106,6 +107,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 					<>
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<TextControl
+								className="podcasting__modal-name-field"
 								label={ __( 'Podcast name*', 'simple-podcasting' ) }
 								help={ __( 'This is the name that listeners will see when searching or subscribing.', 'simple-podcasting' ) }
 								value={ showName }
@@ -116,6 +118,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<TextControl
+								className="podcasting__modal-artist-field"
 								label={ __( 'Artist name*', 'simple-podcasting' ) }
 								help={ __( 'Who’s the artist or author of your podcast show that listeners will see?', 'simple-podcasting' ) }
 								value={ artistName }
@@ -126,6 +129,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<SelectControl
+								className="podcasting__modal-category-field"
 								label={ __( 'Category*', 'simple-podcasting' ) }
 								help={ __( 'Select the category listeners will use to discover your show when browsing  podcatchers. You can also add subcategories later.', 'simple-podcasting' ) }
 								options={ categoriesOptions }
@@ -137,6 +141,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 
 						<div className="podcasting__modal-field-row" style={ fieldStyle }>
 							<TextareaControl
+								className="podcasting__modal-summary-field"
 								label={ __( 'Summary*', 'simple-podcasting' ) }
 								help={ __( 'Briefly describe to your listeners what your show is about. (No HTML please.)', 'simple-podcasting' ) }
 								rows={ 6 }
@@ -161,16 +166,17 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 											<Flex justify="normal">
 												<FlexItem>
 													<Button
+														className="podcasting__select-image-btn"
 														variant="secondary"
 														text={ coverId ? __( 'Replace Image', 'simple-podcasting' ) : __( 'Select Image', 'simple-podcasting' ) }
 														onClick={ open }
-														className="simple-podcasting__select-image-btn"
 													/>
 												</FlexItem>
 												{
 													coverId ? (
 														<FlexItem>
 															<Button
+																className="podcasting__remove-image-btn"
 																variant="secondary"
 																text={ __( 'Remove', 'simple-podcasting' ) }
 																isDestructive
@@ -203,6 +209,7 @@ const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 						<Flex justify="normal" gap={ 9 }>
 							<FlexItem>
 								<Button
+									className="podcasting__create-podcast-btn"
 									variant="primary"
 									text={ __( 'Create Podcast', 'simple-podcasting' ) }
 									disabled={ ! showName || '' === showCategory || ! artistName || ! summary || ! coverId }
@@ -283,11 +290,13 @@ const CreatePodcastShowPlugin = () => {
 		<>
 			<PluginDocumentSettingPanel
 				title={ __( 'Podcasts', 'simple-podcasting' ) }
+				className='podcasting__podcast-list'
 			>
 				{
 					allPodcasts.map( ( item, index ) => {
 						return (
 							<CheckboxControl
+								className="podcasting__podcast-list-item"
 								key={ index }
 								label={ item.name }
 								onChange={ ( isChecked ) => attachPodcastToPost( isChecked, item.id ) }
@@ -301,6 +310,7 @@ const CreatePodcastShowPlugin = () => {
 					text={ __( 'Add New Podcast', 'simple-podcasting' ) }
 					onClick={ openModal }
 					style={ { marginTop: '12px' } }
+					className="podcasting__add-new-podcast"
 				/>
 			</PluginDocumentSettingPanel>
 			<CreatePodcastShowModal
