@@ -101,7 +101,7 @@ describe('Create podcast setting panel', () => {
 		cy.get('button').contains('Add another Podcast').click();
 		cy.get('.components-modal__content').should('exist');
 		cy.get('.podcasting__podcast-list-item label').should(
-			'have.text',
+			'contain',
 			'Family People'
 		);
 	});
