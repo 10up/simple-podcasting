@@ -15,13 +15,32 @@ describe('Create podcast setting panel', () => {
 		});
 	});
 
+	/**
+	 * Closes welcome guide programatically.
+	 */
+	function closeWelcomeGuide() {
+		cy.window().then((win) => {
+			if (
+				win.wp.data
+					.select('core/edit-post')
+					.isFeatureActive('welcomeGuide')
+			) {
+				win.wp.data
+					.dispatch('core/edit-post')
+					.toggleFeature('welcomeGuide');
+			}
+		});
+	}
+
 	it('Podcast setting panel exists', () => {
 		cy.visit('/wp-admin/post-new.php');
+		closeWelcomeGuide();
 		cy.get('.podcasting__podcast-list').should('exist');
 	});
 
 	it('Create podcast popup shows when clicking creating a podcast', () => {
 		cy.visit('/wp-admin/post-new.php');
+		closeWelcomeGuide();
 		cy.get('.podcasting__podcast-list').click();
 		cy.get('.podcasting__add-new-podcast').click();
 		cy.get('.components-modal__content').should('exist');
@@ -29,6 +48,7 @@ describe('Create podcast setting panel', () => {
 
 	it('Create podcast popup has valid fields', () => {
 		cy.visit('/wp-admin/post-new.php');
+		closeWelcomeGuide();
 		cy.get('.podcasting__podcast-list').click();
 		cy.get('.podcasting__add-new-podcast').click();
 
@@ -52,6 +72,7 @@ describe('Create podcast setting panel', () => {
 
 	it('Create podcast using popup', () => {
 		cy.visit('/wp-admin/post-new.php');
+		closeWelcomeGuide();
 		cy.get('.podcasting__podcast-list').click();
 		cy.get('.podcasting__add-new-podcast').click();
 
