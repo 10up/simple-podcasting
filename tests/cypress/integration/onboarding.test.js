@@ -1,4 +1,8 @@
-const { randomName, populatePodcast } = require('../support/functions');
+const {
+	randomName,
+	populatePodcast,
+	deleteAllTerms,
+} = require('../support/functions');
 
 describe('Onboarding tests', () => {
 	before(() => {
@@ -8,7 +12,10 @@ describe('Onboarding tests', () => {
 	beforeEach(() => {
 		cy.uploadMedia('tests/cypress/fixtures/example.jpg');
 		cy.activatePlugin('simple-podcasting');
-		cy.deleteAllTerms('podcasting_podcasts');
+		cy.visit(
+			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
+		);
+		deleteAllTerms();
 		cy.deactivatePlugin('simple-podcasting');
 		cy.visit('/wp-admin/options.php');
 		cy.get('body').then(($body) => {
@@ -30,11 +37,10 @@ describe('Onboarding tests', () => {
 			.closest('form')
 			.submit();
 
-		cy.get('input[name="podcast-name"]').then(($input) => {
-			expect($input[0].validationMessage).to.eq(
-				'Please fill out this field.'
-			);
-		});
+		cy.get('.notice-error').should(
+			'contain',
+			'A podcast name is required.'
+		);
 	});
 
 	it('Should pass onboarding', () => {

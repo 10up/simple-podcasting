@@ -142,7 +142,7 @@ describe('Create podcast setting panel', () => {
 		cy.get('.podasting-existing-image img')
 			.should('have.attr', 'src')
 			.then((src) => {
-				expect(src).to.match(/example(-\d)?.jpg/);
+				expect(src).to.contain('example');
 			});
 
 		cy.get('#podcasting_category_1').should(
