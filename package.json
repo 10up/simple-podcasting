@@ -1,6 +1,6 @@
 {
   "name": "@10up/simple-podcasting",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A simple podcasting solution for WordPress. ",
   "homepage": "https://github.com/10up/simple-podcasting",
   "bugs": {
@@ -39,7 +39,7 @@
     ]
   },
   "devDependencies": {
-    "@10up/cypress-wp-utils": "git+https://github.com/10up/cypress-wp-utils.git#build",
+    "@10up/cypress-wp-utils": "github:10up/cypress-wp-utils#build",
     "@wordpress/env": "^5.4.0",
     "@wordpress/prettier-config": "^2.2.0",
     "@wordpress/scripts": "^24.3.0",
@@ -47,6 +47,8 @@
     "copy-webpack-plugin": "^11.0.0",
     "cypress": "^11.2.0",
     "cypress-file-upload": "^5.0.8",
+    "cypress-localstorage-commands": "^2.2.2",
+    "cypress-mochawesome-reporter": "^3.4.0",
     "eslint-plugin-cypress": "^2.12.1",
     "husky": "^8.0.1",
     "json-schema": ">=0.4.0",

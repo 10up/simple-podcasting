@@ -3,7 +3,7 @@
  * Plugin Name:       Simple Podcasting
  * Plugin URI:        https://github.com/10up/simple-podcasting
  * Description:       Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
- * Version:           1.4.0
+ * Version:           1.5.0
  * Author:            10up
  * Author URI:        http://10up.com/
  * License:           GPL v2 or later
@@ -15,7 +15,7 @@
 
 namespace tenup_podcasting;
 
-define( 'PODCASTING_VERSION', '1.4.0' );
+define( 'PODCASTING_VERSION', '1.5.0' );
 define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
 define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
@@ -64,6 +64,10 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
 // Block editor support.
 if ( function_exists( 'register_block_type' ) ) {
 	require_once PODCASTING_PATH . 'includes/blocks.php';
+}
+
+if ( function_exists( 'register_block_pattern' ) ) {
+	require_once PODCASTING_PATH . 'includes/block-patterns.php';
 }
 
 /**
