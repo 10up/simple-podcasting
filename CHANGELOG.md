@@ -27,7 +27,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Bump `simple-git` from 3.15.1 to 3.16.0 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#215](https://github.com/10up/simple-podcasting/pull/215)).
 - Bump `http-cache-semantics` from 4.1.0 to 4.1.1 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#219](https://github.com/10up/simple-podcasting/pull/219)).
 - Bump `@sideway/formula` from 3.0.0 to 3.0.1 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#220](https://github.com/10up/simple-podcasting/pull/220)).
-- Bump webpack from 5.75.0 to 5.76.1 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#222](https://github.com/10up/simple-podcasting/pull/222)).
+- Bump `webpack` from 5.75.0 to 5.76.1 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#222](https://github.com/10up/simple-podcasting/pull/222)).
 
 ## [1.4.0] - 2023-01-23
 ### Added
