@@ -133,7 +133,7 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 * **Security:** Bump `simple-git` from 3.15.1 to 3.16.0 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#215](https://github.com/10up/simple-podcasting/pull/215)).
 * **Security:** Bump `http-cache-semantics` from 4.1.0 to 4.1.1 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#219](https://github.com/10up/simple-podcasting/pull/219)).
 * **Security:** Bump `@sideway/formula` from 3.0.0 to 3.0.1 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#220](https://github.com/10up/simple-podcasting/pull/220)).
-* **Security:** Bump webpack from 5.75.0 to 5.76.1 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#222](https://github.com/10up/simple-podcasting/pull/222)).
+* **Security:** Bump `webpack` from 5.75.0 to 5.76.1 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#222](https://github.com/10up/simple-podcasting/pull/222)).
 
 = 1.4.0 - 2023-01-06 =
 * **Added:** New podcast onboarding flow (props [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@helen](https://github.com/helen), [@jeffpaul](https://github.com/jeffpaul), [@Nicolas-knight](https://github.com/Nicolas-knight), [@jnetek](https://github.com/jnetek) via [#193](https://github.com/10up/simple-podcasting/pull/193)).
