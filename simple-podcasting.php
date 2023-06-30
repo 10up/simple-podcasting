@@ -18,11 +18,8 @@ namespace tenup_podcasting;
 define( 'PODCASTING_VERSION', '1.5.0' );
 define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
 define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
-define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
-
-trigger_error( 'The constant TAXONOMY_NAME is deprecated and will be removed in future versions. Use PODCASTING_TAXONOMY_NAME instead.', E_USER_DEPRECATED );
 
 require_once PODCASTING_PATH . 'includes/admin/onboarding.php';
 require_once PODCASTING_PATH . 'includes/datatypes.php';
