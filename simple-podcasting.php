@@ -18,7 +18,7 @@ namespace tenup_podcasting;
 define( 'PODCASTING_VERSION', '1.5.0' );
 define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
 define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
-define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
+define( 'PODCASTING_TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
 
 require_once PODCASTING_PATH . 'includes/admin/onboarding.php';
@@ -80,7 +80,7 @@ if ( function_exists( 'register_block_pattern' ) ) {
 function podcasting_is_enabled() {
 	$podcasting_terms = get_terms(
 		array(
-			'taxonomy'      => TAXONOMY_NAME,
+			'taxonomy'      => PODCASTING_TAXONOMY_NAME,
 			'hide_empty'    => false,
 			'fields'        => 'ids',
 			'no_found_rows' => true,
@@ -153,7 +153,7 @@ function custom_feed( \WP_Query $query ) {
 	}
 
 	// Is this a feed for a term in the podcasting taxonomy?
-	if ( $query->is_feed() && $query->is_tax( TAXONOMY_NAME ) ) {
+	if ( $query->is_feed() && $query->is_tax( PODCASTING_TAXONOMY_NAME ) ) {
 		remove_action( 'rss2_head', 'rss2_blavatar' );
 		remove_action( 'rss2_head', 'rss2_site_icon' );
 		remove_filter( 'the_excerpt_rss', 'add_bug_to_feed', 100 );
