@@ -201,7 +201,7 @@ function podcasting_term_auth_callback() {
  */
 function create_podcasts_taxonomy() {
 	register_taxonomy(
-		TAXONOMY_NAME,
+		PODCASTING_TAXONOMY_NAME,
 		'post',
 		array(
 			'labels'            => array(
@@ -423,7 +423,7 @@ function the_field( $field, $value = '', $term_id = false ) {
  * @param int $term_id The term is being saved.
  */
 function save_podcasting_term_meta( $term_id ) {
-	$tax = get_taxonomy( TAXONOMY_NAME );
+	$tax = get_taxonomy( PODCASTING_TAXONOMY_NAME );
 
 	if ( ! current_user_can( $tax->cap->edit_terms ) ) {
 		return;
@@ -449,8 +449,8 @@ function save_podcasting_term_meta( $term_id ) {
 		}
 	}
 }
-add_action( 'edited_' . TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
-add_action( 'created_' . TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
+add_action( 'edited_' . PODCASTING_TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
+add_action( 'created_' . PODCASTING_TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
 
 /**
  * Add podcasting fields to the term screen.
@@ -501,17 +501,17 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	wp_nonce_field( 'podcasting_edit', 'podcasting_nonce' );
 	wp_enqueue_media();
 	if ( $taxonomy ) {
-		$url = get_term_feed_link( $term->term_id, TAXONOMY_NAME );
+		$url = get_term_feed_link( $term->term_id, PODCASTING_TAXONOMY_NAME );
 		esc_html_e( 'Your Podcast Feed: ', 'simple-podcasting' );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		esc_html_e( 'This is the URL you submit to iTunes or podcasting service.', 'simple-podcasting' );
 	}
 }
-add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
-add_action( TAXONOMY_NAME . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
+add_action( PODCASTING_TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
+add_action( PODCASTING_TAXONOMY_NAME . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
 
-add_action( TAXONOMY_NAME . '_edit_form', __NAMESPACE__ . '\add_podcasting_term_edit_meta_fields' );
-add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_add_meta_fields' );
+add_action( PODCASTING_TAXONOMY_NAME . '_edit_form', __NAMESPACE__ . '\add_podcasting_term_edit_meta_fields' );
+add_action( PODCASTING_TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_add_meta_fields' );
 
 /**
  * Add a feed link to the podcasting term table.
@@ -525,12 +525,12 @@ add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting
 function add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
 
 	if ( 'feedurl' === $column_name ) {
-		$url = get_term_feed_link( $term_id, TAXONOMY_NAME );
+		$url = get_term_feed_link( $term_id, PODCASTING_TAXONOMY_NAME );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a>';
 	}
 	return $string;
 }
-add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column', 10, 3 );
+add_filter( 'manage_' . PODCASTING_TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column', 10, 3 );
 
 /**
  * Add a podcasting image to the podcasting term table.
@@ -549,7 +549,7 @@ function add_podcasting_term_podcasting_image_column( $string, $column_name, $te
 	}
 	return $string;
 }
-add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_podcasting_image_column', 10, 3 );
+add_filter( 'manage_' . PODCASTING_TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_podcasting_image_column', 10, 3 );
 
 
 /**
@@ -573,7 +573,7 @@ function add_custom_term_columns( $columns ) {
 	unset( $columns['author'] );
 	return $columns;
 }
-add_filter( 'manage_edit-' . TAXONOMY_NAME . '_columns', __NAMESPACE__ . '\add_custom_term_columns', 99 );
+add_filter( 'manage_edit-' . PODCASTING_TAXONOMY_NAME . '_columns', __NAMESPACE__ . '\add_custom_term_columns', 99 );
 
 /**
  * Get the meta fields used for podcasts.
