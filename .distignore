@@ -1,3 +1,4 @@
+# Directories
 /.git
 /.github
 /.husky
@@ -8,17 +9,8 @@
 /tests
 /vendor
 
-/.babelrc
-/.distignore
-/.editorconfig
-/.eslintignore
-/.eslintrc
-/.gitignore
-/.nvmrc
-/.phpcs.xml.dist
-/.phpunit.result.cache
-/.prettierrc
-/.wp-env.json
+# Files
+.*
 /CHANGELOG.md
 /CODE_OF_CONDUCT.md
 /composer.json

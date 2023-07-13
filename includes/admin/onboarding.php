@@ -12,7 +12,7 @@ namespace tenup_podcasting\admin;
  */
 function register_onoarding_page() {
 	add_submenu_page(
-		null,
+		'admin.php',
 		esc_html__( 'Simple Podcasting Onboarding' ),
 		'',
 		'manage_options',
@@ -72,7 +72,7 @@ function onboarding_action_handler() {
 
 	$result = wp_insert_term(
 		$podcast_name,
-		TAXONOMY_NAME,
+		PODCASTING_TAXONOMY_NAME,
 		[
 			// Add these args for validation.
 			'podcasting_talent_name' => $podcasting_talent_name,
