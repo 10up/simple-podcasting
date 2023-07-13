@@ -55,16 +55,15 @@ add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
 // Don't show audio widgets in the feed.
 add_filter( 'wp_audio_shortcode', '__return_empty_string', 999 );
 
-
 /**
- * Sets the podcast language in the feed to the one selected in the term edit screen.
+ * Sets the podcast language and description in the feed to the values in the term edit screen.
  *
  * @param string $output    The value being displayed.
  * @param string $requested The item that was requested.
  *
  * @return mixed
  */
-function bloginfo_rss_lang( $output, $requested ) {
+function bloginfo_rss( $output, $requested ) {
 	$term = get_the_term();
 	if ( ! $term ) {
 		return $output;
@@ -77,9 +76,20 @@ function bloginfo_rss_lang( $output, $requested ) {
 			$output = $lang;
 		}
 	}
+	if ( 'description' === $requested ) {
+		$summary = get_term_meta( $term->term_id, 'podcasting_summary', true );
+
+		if ( empty( $summary ) ) {
+			$summary = get_bloginfo( 'description' );
+		}
+
+		if ( ! empty( $summary ) ) {
+			$output = '<![CDATA[' . $summary . ']]>';
+		}
+	}
 	return $output;
 }
-add_filter( 'bloginfo_rss', __NAMESPACE__ . '\bloginfo_rss_lang', 10, 2 );
+add_filter( 'bloginfo_rss', __NAMESPACE__ . '\bloginfo_rss', 10, 2 );
 
 /**
  * Add podcasting details to the feed header.
@@ -97,16 +107,6 @@ function feed_head() {
 
 	if ( ! empty( $subtitle ) ) {
 		echo '<itunes:subtitle>' . esc_html( wp_strip_all_tags( $subtitle ) ) . "</itunes:subtitle>\n";
-	}
-
-	$summary = get_term_meta( $term->term_id, 'podcasting_summary', true );
-
-	if ( empty( $summary ) ) {
-		$summary = get_bloginfo( 'description' );
-	}
-
-	if ( ! empty( $summary ) ) {
-		echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $summary ) ) . "</itunes:summary>\n";
 	}
 
 	$author = get_term_meta( $term->term_id, 'podcasting_talent_name', true );
@@ -266,7 +266,6 @@ function feed_item() {
 	if ( ! empty( $feed_item['keywords'] ) ) {
 		echo '<itunes:keywords>' . esc_html( $feed_item['keywords'] ) . "</itunes:keywords>\n";
 	}
-	echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $feed_item['summary'] ) ) . "</itunes:summary>\n";
 	echo '<itunes:subtitle>' . esc_html( $feed_item['subtitle'] ) . "</itunes:subtitle>\n";
 	if ( ! empty( $feed_item['duration'] ) ) {
 		echo '<itunes:duration>' . esc_html( $feed_item['duration'] ) . "</itunes:duration>\n";

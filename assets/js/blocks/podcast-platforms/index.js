@@ -29,6 +29,10 @@ export default registerBlockType(
 				type: 'number',
 				default: 48,
 			},
+			align: {
+				type: 'string',
+				default: 'center',
+			}
 		},
 
 		edit: Edit,

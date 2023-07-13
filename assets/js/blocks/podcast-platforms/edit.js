@@ -8,11 +8,13 @@ import {
 	PanelBody,
 	PanelRow,
 	RangeControl,
-	Button,
 	SearchControl,
-	Dropdown,
 	__experimentalItemGroup as ItemGroup,
-	__experimentalItem as Item
+	__experimentalItem as Item,
+	BaseControl,
+	Button,
+	ButtonGroup,
+	Icon
 } from '@wordpress/components';
 
 
@@ -23,6 +25,7 @@ function Edit( props ) {
 		attributes: {
 			showId,
 			iconSize,
+			align,
 		},
 	} = props;
 
@@ -139,9 +142,9 @@ function Edit( props ) {
 			<InspectorControls>
 				<Panel header={ __( 'Customization Controls', 'simple-podacsting' ) }>
 					<PanelBody>
+						<BaseControl label={ __( 'Icon size', 'simple-podcasting' ) }/>
 						<PanelRow>
 							<RangeControl
-								label={ __( 'Icon sizes', 'simple-podcasting' ) }
 								min={ 16 }
 								max={ 96 }
 								step={ 16 }
@@ -149,13 +152,36 @@ function Edit( props ) {
 								onChange={ setIconSize }
 							/>
 						</PanelRow>
+						<BaseControl label={ __( 'Alignment', 'simple-podcasting' ) }/>
+						<PanelRow>
+							<ButtonGroup>
+								<Button
+									isPressed={ align === 'left' }
+									variant='ternary'
+									icon={ <Icon icon='align-left' /> }
+									onClick={ () => setAttributes( { align: 'left' } ) }
+								/>
+								<Button
+									isPressed={ align === 'center' }
+									variant='ternary'
+									icon={ <Icon icon='align-center' /> }
+									onClick={ () => setAttributes( { align: 'center' } ) }
+								/>
+								<Button
+									isPressed={ align === 'right' }
+									variant='ternary'
+									icon={ <Icon icon='align-right' /> }
+									onClick={ () => setAttributes( { align: 'right' } ) }
+								/>
+							</ButtonGroup>
+						</PanelRow>
 					</PanelBody>
 				</Panel>
 			</InspectorControls>
 			<div { ...blockProps }>
 				{
 					platformSlugs.length ? (
-						<div className='simple-podcasting__podcasting-platform-list'>
+						<div className={ `simple-podcasting__podcasting-platform-list simple-podcasting__podcasting-platform-list--${ align }` }>
 							{
 								platformSlugs.map( ( platform, index ) => {
 									return (
@@ -172,53 +198,35 @@ function Edit( props ) {
 				}
 				{
 					isSelected || ! showId ? (
-						<Dropdown
-							className="simple-podcasting__select-show-popover"
-							contentClassName="simple-podcasting__select-show-popover"
-							position="bottom right"
-							onClose={ () => setSearchText( '' ) }
-							renderToggle={ ( { isOpen, onToggle } ) => (
-								<>
-									{ ! showId && <p>{ __( 'Select a Podcast Show using the button below:', 'simple-podcasting' ) }</p> }
-									{ showId && ! platformSlugs.length && <p>{ __( 'No platforms set for this show.', 'simple-podcasting' ) }</p> }
-									<Button
-										variant="primary"
-										onClick={ onToggle }
-										aria-expanded={ isOpen }
-										text={ __( 'Select a Show', 'simple-podcasting' ) }
-									/>
-								</>
-							) }
-							renderContent={ ( { isOpen, onToggle, onClose } ) => (
-								<div>
-									<SearchControl
-										placeholder={ __( 'Search a Podcast Show', 'simple-podcasting' ) }
-										onChange={ ( searchText ) => setSearchText( searchText ) }
-										value={ searchText }
-									/>
-									<ItemGroup
-										isSeparated
-									>
-										{
-											searchResults.length ? (
+						<div className='simple-podcasting__podcasting-search-controls'>
+							<SearchControl
+								placeholder={ __( 'Search a Podcast Show', 'simple-podcasting' ) }
+								onChange={ ( searchText ) => setSearchText( searchText ) }
+								value={ searchText }
+							/>
+							{
+								searchResults.length ?
+								(
+									<div className='simple-podcasting__podcasting-search-results'>
+										<ItemGroup
+											isSeparated
+										>
+											{
 												searchResults.map( ( result ) => (
 													<Item
 														key={ result.id }
 														className='simple-podcasting__podcast-search-results'
-														onClick={ () => {
-															onShowSelect( result.id );
-															onClose();
-														} }
+														onClick={ () => onShowSelect( result.id ) }
 													>
 														{ result.title }
 													</Item>
 												) )
-											) : false
-										}
-									</ItemGroup>
-								</div>
-							) }
-						/>
+											}
+										</ItemGroup>
+									</div>
+								) : null
+							}
+						</div>
 					) : null
 				}
 			</div>

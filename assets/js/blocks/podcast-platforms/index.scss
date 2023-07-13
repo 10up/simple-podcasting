@@ -10,7 +10,7 @@
 
 .simple-podcasting {
 	&__podcast-platforms {
-		padding: 1rem 1rem 1rem 1rem;
+		padding: 1rem 0 1rem 0;
 	}
 
 	&__podcast-search-results {
@@ -30,7 +30,18 @@
 	&__podcasting-platform-list {
 		display: flex;
 		flex-flow: row wrap;
-		justify-content: center;
+
+		&--left {
+			justify-content: start;
+		}
+
+		&--center {
+			justify-content: center;
+		}
+
+		&--right {
+			justify-content: end;
+		}
 
 		a {
 			text-decoration: none !important;
@@ -50,6 +61,27 @@
 	&__podcasting-platform-list-item {
 		display: flex;
 		align-self: center;
-		padding: 0 0.75rem;
+		padding: 0.75rem;
+
+		@media screen and ( max-width: 480px ) {
+			justify-content: center;
+			width: 25%;
+		}
+	}
+
+	&__podcasting-search-controls {
+		position: relative;
+
+		input[type="search"] {
+			font-size: 1rem;
+		}
+	}
+
+	&__podcasting-search-results {
+		position: absolute;
+		border: 1px solid;
+		background-color: #fff;
+		min-width: 200px;
+		z-index: 10;
 	}
 }

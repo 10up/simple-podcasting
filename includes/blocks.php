@@ -97,14 +97,16 @@ function render_podcasting_platforms( $attrs ) {
 
 	$show_id   = isset( $attrs['showId'] ) ? $attrs['showId'] : 0;
 	$icon_size = isset( $attrs['iconSize'] ) ? $attrs['iconSize'] : 48;
+	$align     = isset( $attrs['align'] ) ? $attrs['align'] : 'center';
 
 	if ( 0 === $show_id ) {
 		return '';
 	}
 
-	$platforms = get_term_meta( $show_id, 'podcasting_platforms', true );
-	$theme     = get_term_meta( $show_id, 'podcasting_icon_theme', true );
-	$theme     = empty( $theme ) ? 'color' : $theme;
+	$supported_platforms = \tenup_podcasting\get_supported_platforms();
+	$platforms           = get_term_meta( $show_id, 'podcasting_platforms', true );
+	$theme               = get_term_meta( $show_id, 'podcasting_icon_theme', true );
+	$theme               = empty( $theme ) ? 'color' : $theme;
 
 	if ( ! is_array( $platforms ) || empty( $platforms ) ) {
 		return '';
@@ -115,16 +117,18 @@ function render_podcasting_platforms( $attrs ) {
 	?>
 
 	<div class="simple-podcasting__podcast-platforms">
-		<div class='simple-podcasting__podcasting-platform-list'>
+		<div class='simple-podcasting__podcasting-platform-list <?php echo esc_attr( 'simple-podcasting__podcasting-platform-list--' . $align ); ?>'>
 			<?php foreach ( $platforms as $slug => $url ) : ?>
 				<?php
 				if ( empty( $url ) ) {
 					continue;
 				}
+
+				$podcast_title = $supported_platforms[ $slug ]['title'];
 				?>
 
 				<span class='simple-podcasting__podcasting-platform-list-item'>
-					<a href="<?php echo esc_url( $url ); ?>" target="_blank">
+					<a href="<?php echo esc_url( $url ); ?>" target="_blank" title="<?php echo esc_attr( $podcast_title ); ?>" aria-label="<?php echo esc_attr( $podcast_title ); ?>">
 						<img
 							class="simple-pocasting__icon-size--<?php echo esc_attr( $icon_size ); ?>"
 							src="<?php printf( '%sdist/images/icons/%s/%s-100.png', esc_url( PODCASTING_URL ), esc_attr( $slug ), esc_attr( $theme ) ); ?>"
