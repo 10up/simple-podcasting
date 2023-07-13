@@ -206,11 +206,11 @@ add_action( 'after-podcasting_podcasts-table', __NAMESPACE__ . '\add_podcasting_
  */
 function get_supported_platforms() {
 	$platforms = array(
-		'pocket-casts' => array(
+		'pocket-casts'    => array(
 			'slug'  => 'pocket-casts',
 			'title' => esc_html__( 'Pocket Casts', 'simple-podcasting' ),
 		),
-		'apple-podcasts' => array(
+		'apple-podcasts'  => array(
 			'slug'  => 'apple-podcasts',
 			'title' => esc_html__( 'Apple Podcasts', 'simple-podcasting' ),
 		),
@@ -218,31 +218,31 @@ function get_supported_platforms() {
 			'slug'  => 'google-podcasts',
 			'title' => esc_html__( 'Google Podcasts', 'simple-podcasting' ),
 		),
-		'stitcher' => array(
+		'stitcher'        => array(
 			'slug'  => 'stitcher',
 			'title' => esc_html__( 'Stitcher', 'simple-podcasting' ),
 		),
-		'playerfm' => array(
+		'playerfm'        => array(
 			'slug'  => 'playerfm',
 			'title' => esc_html__( 'PlayerFM', 'simple-podcasting' ),
 		),
-		'overcast' => array(
+		'overcast'        => array(
 			'slug'  => 'overcast',
 			'title' => esc_html__( 'Overcast', 'simple-podcasting' ),
 		),
-		'pandora' => array(
+		'pandora'         => array(
 			'slug'  => 'pandora',
 			'title' => esc_html__( 'Pandora', 'simple-podcasting' ),
 		),
-		'castro' => array(
+		'castro'          => array(
 			'slug'  => 'castro',
 			'title' => esc_html__( 'Castro', 'simple-podcasting' ),
 		),
-		'tunein' => array(
+		'tunein'          => array(
 			'slug'  => 'tunein',
 			'title' => esc_html__( 'TuneIn', 'simple-podcasting' ),
 		),
-		'spotify' => array(
+		'spotify'         => array(
 			'slug'  => 'spotify',
 			'title' => esc_html__( 'Spotify', 'simple-podcasting' ),
 		),
@@ -1026,7 +1026,7 @@ function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
 	}
 
 	$referer      = sanitize_text_field( $_POST['_wp_http_referer'] );
-	$query_string = parse_url( $referer, PHP_URL_QUERY );
+	$query_string = wp_parse_url( $referer, PHP_URL_QUERY );
 	parse_str( $query_string, $query );
 
 	$is_onboarding_step_1 = isset( $query['page'] ) && isset( $query['step'] )
