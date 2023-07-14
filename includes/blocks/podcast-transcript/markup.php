@@ -27,7 +27,7 @@ if ( 'none' !== $attributes['display'] ) : ?>
 		case 'link':
 			printf(
 				'<p><a href="%s">%s</a></p>',
-				esc_url( get_transcript_link_from_post( $post ) ),
+				esc_url( get_transcript_link_from_post( get_post() ) ),
 				esc_html( $attributes['linkText'] )
 			);
 			break;
