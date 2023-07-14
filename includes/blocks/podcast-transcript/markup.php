@@ -16,7 +16,6 @@ use function tenup_podcasting\transcripts\get_transcript_link_from_post;
 if ( 'none' !== $attributes['display'] ) : ?>
 <div <?php echo get_block_wrapper_attributes(); // phpcs:ignore ?>>
 	<?php
-	global $post;
 	switch ( $attributes['display'] ) {
 		case 'post':
 			echo wp_kses_post(
