@@ -18,10 +18,6 @@ use WP_Post;
  * @return string
  */
 function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
-	// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-	// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-	// phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
-	// phpcs:disable WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
 	$doc = new DOMDocument();
 	libxml_use_internal_errors( true );
 	$doc->loadHTML( '<html><body>' . $text . '</body></html>' );
