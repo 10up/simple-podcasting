@@ -35,10 +35,6 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
 	}
 
 	return $filtered_text;
-	// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-	// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-	// phpcs:enable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
-	// phpcs:enable WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase
 }
 
 /**
