@@ -36,11 +36,13 @@ function init() {
 		)
 	);
 
+	$podcast_transcript_block_asset = require PODCASTING_PATH . 'dist/podcasting-transcript.asset.php';
+
 	wp_register_script(
 		'podcasting-transcript',
 		PODCASTING_URL . 'dist/podcasting-transcript.js',
-		$block_asset['dependencies'],
-		$block_asset['version'],
+		$podcast_transcript_block_asset['dependencies'],
+		$podcast_transcript_block_asset['version'],
 		true
 	);
 
@@ -48,13 +50,13 @@ function init() {
 		'podcasting-transcript',
 		PODCASTING_URL . 'dist/podcasting-transcript.css',
 		array(),
-		$block_asset['version'],
+		$podcast_transcript_block_asset['version'],
 		'all'
 	);
 
 	$transcript_block_args = array(
 		'editor_script' => 'podcasting-transcript',
-		'style_handles' => [ 'podcasting-transcript' ],
+		'style_handles' => array( 'podcasting-transcript' ),
 		'title'         => __( 'Podcast Transcript', 'simple-podcasting' ),
 		'description'   => '',
 		'textdomain'    => 'simple-podcasting',
