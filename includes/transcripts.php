@@ -31,6 +31,7 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
 	// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 	foreach ( $body_node->childNodes as $node ) {
 		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+		if ( XML_TEXT_NODE === $node->nodeType ) {
 			$filtered_text .= '<p>' . $doc->saveHTML( $node ) . '</p>';
 			continue;
 		}
