@@ -91,7 +91,11 @@ add_filter( 'podcasting_podcasts_rewrite_rules', __NAMESPACE__ . '\\rewrite_rule
  *
  * @return string url
  */
-function get_transcript_link_from_post( WP_Post $post ) {
+function get_transcript_link_from_post( $post = null ) {
+	$post = get_post( $post );
+	if ( ! $post ) {
+		return false;
+	}
 	$podcast = get_the_terms( $post, TAXONOMY_NAME );
 	if ( ! $podcast ) {
 		return '';
