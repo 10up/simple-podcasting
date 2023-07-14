@@ -25,7 +25,7 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
 	$doc = new DOMDocument();
 	libxml_use_internal_errors( true );
 	$doc->loadHTML( '<html><body>' . $text . '</body></html>' );
-	$bodyNode      = $doc->getElementsByTagName( 'body' )->item( 0 );
+	$body_node     = $doc->getElementsByTagName( 'body' )->item( 0 );
 	$filtered_text = '';
 
 	// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
