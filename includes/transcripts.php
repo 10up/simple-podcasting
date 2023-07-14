@@ -28,8 +28,9 @@ function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
 	$bodyNode      = $doc->getElementsByTagName( 'body' )->item( 0 );
 	$filtered_text = '';
 
-	foreach ( $bodyNode->childNodes as $node ) {
-		if ( XML_TEXT_NODE === $node->nodeType ) {
+	// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+	foreach ( $body_node->childNodes as $node ) {
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			$filtered_text .= '<p>' . $doc->saveHTML( $node ) . '</p>';
 			continue;
 		}
