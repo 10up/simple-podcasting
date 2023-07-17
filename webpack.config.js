@@ -25,6 +25,11 @@ module.exports = {
 			'assets/js',
 			'onboarding.js'
 		),
+		'create-podcast-show': path.resolve(
+			process.cwd(),
+			'assets/js',
+			'create-podcast-show.js'
+		),
 	},
 	plugins: [
 		...defaultConfig.plugins,
