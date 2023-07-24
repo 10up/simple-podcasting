@@ -183,3 +183,19 @@ function setup_edit_screen() {
 	}
 }
 add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
+
+/**
+ * Enqueue scripts to render podcast player in single post
+ */
+function render_podcast_player_in_post() {
+	if ( is_single() || is_singular() ) {
+		wp_enqueue_script(
+			'podcast_player_view',
+			PODCASTING_URL . 'dist/podcast-player-view.js',
+			array( 'jquery', 'wp-blocks', 'wp-components', 'wp-element' ),
+			PODCASTING_VERSION,
+			true
+		);
+	}
+}
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\render_podcast_player_in_post' );

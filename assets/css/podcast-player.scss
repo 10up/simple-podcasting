@@ -1,0 +1,340 @@
+$color_1: #ddd;
+$color_2: #6c7883;
+$color_3: #636469;
+$color_4: #fff;
+$color_5: transparent;
+$font-family_1: "Segoe UI", Tahoma, sans-serif;
+$background-color_1: #2f3841;
+$background-color_2: #73797f;
+
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+/* HTML5 Audio Player with Playlist, source: https://codepen.io/sekedus/pen/ExxjZEz */
+/* playlist */
+/* playlist scrollbar */
+/* progress animation */
+@-webkit-keyframes audio-progress {
+	to {
+		background-position: 25px 0;
+	}
+}
+@keyframes audio-progress {
+	to {
+		background-position: 25px 0;
+	}
+}
+/* mobile */
+* {
+	outline: 0;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	&:before {
+		outline: 0;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	&:after {
+		outline: 0;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+}
+input {
+	outline: none;
+}
+button {
+	outline: none;
+}
+a {
+	color: $color_1;
+	text-decoration: none;
+	&:hover {
+		color: $color_1;
+		text-decoration: none;
+	}
+	&:visited {
+		color: $color_1;
+		text-decoration: none;
+	}
+}
+.flex {
+	display: -webkit-flex;
+	display: flex;
+}
+.flex-wrap {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+.flex-align {
+	-webkit-align-items: center;
+	align-items: center;
+}
+.w-full {
+	width: 100%;
+}
+#simp {
+	button {
+		border: 0;
+	}
+	input {
+		border: 0;
+	}
+	img {
+		border: 0;
+	}
+	max-width: 600px;
+	font-size: 14px;
+	font-family: $font-family_1;
+	text-align: initial;
+	line-height: initial;
+	background: #17212b;
+	color: $color_1;
+	margin: 0 auto;
+	border-radius: 6px;
+	overflow: hidden;
+	.simp-album {
+		padding: 20px 25px 5px;
+		.simp-cover {
+			margin-right: 20px;
+			img {
+				max-width: 80px;
+				width: 100%;
+				margin: 0;
+				padding: 0;
+				display: block;
+			}
+		}
+		.simp-title {
+			font-size: 120%;
+			font-weight: bold;
+		}
+		.simp-artist {
+			font-size: 90%;
+			color: $color_2;
+		}
+	}
+	.simp-controls {
+		padding: 15px;
+		button {
+			font-size: 130%;
+			width: 32px;
+			height: 32px;
+			background: none;
+			color: $color_1;
+			padding: 7px;
+			cursor: pointer;
+			border: 0;
+			border-radius: 3px;
+			&:not([disabled]) {
+				&:hover {
+					background: #4082bc;
+					color: $color_4;
+				}
+			}
+		}
+		button[disabled] {
+			color: $color_3;
+			cursor: initial;
+		}
+		.simp-prev {
+			font-size: 100%;
+		}
+		.simp-next {
+			font-size: 100%;
+		}
+		.simp-tracker {
+			flex: 1;
+			margin-left: 10px;
+			position: relative;
+		}
+		.simp-volume {
+			flex: 1;
+			margin-left: 10px;
+			position: relative;
+			max-width: 110px;
+			.simp-mute {
+				margin-right: 5px;
+			}
+		}
+		.simp-buffer {
+			position: absolute;
+			top: 50%;
+			right: 0;
+			left: 0;
+			height: 5px;
+			margin-top: -2.5px;
+			border-radius: 100px;
+		}
+		.simp-loading {
+			.simp-buffer {
+				-webkit-animation: audio-progress 1s linear infinite;
+				animation: audio-progress 1s linear infinite;
+				background-image: linear-gradient(-45deg, #000 25%, transparent 25%, transparent 50%, #000 50%, #000 75%, transparent 75%, transparent);
+				background-repeat: repeat-x;
+				background-size: 25px 25px;
+				color: $color_5;
+			}
+			.simp-progress {
+				&::-webkit-slider-runnable-track {
+					background: rgba(255,255,255,.25);
+				}
+				&::-moz-range-track {
+					background: rgba(255,255,255,.25);
+				}
+			}
+		}
+		.simp-time {
+			margin-left: 10px;
+		}
+		.simp-others {
+			margin-left: 10px;
+			.simp-active {
+				background: #242f3d;
+			}
+			.simp-shide {
+				button {
+					font-size: 100%;
+					padding: 0;
+					width: 24px;
+					height: 14px;
+					display: block;
+				}
+			}
+		}
+		input[type=range] {
+			-webkit-appearance: none;
+			background: transparent;
+			height: 19px;
+			margin: 0;
+			width: 100%;
+			display: block;
+			position: relative;
+			z-index: 2;
+			&::-webkit-slider-runnable-track {
+				background: rgba(183,197,205,.66);
+				height: 5px;
+				border-radius: 2.5px;
+				transition: box-shadow .3s ease;
+				position: relative;
+			}
+			&::-moz-range-track {
+				background: rgba(183,197,205,.66);
+				height: 5px;
+				border-radius: 2.5px;
+				transition: box-shadow .3s ease;
+				position: relative;
+			}
+			&::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				background: #fff;
+				height: 13px;
+				width: 13px;
+				margin-top: -4px;
+				cursor: pointer;
+				border-radius: 50%;
+				box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 0 0 1px rgba(47,52,61,.2);
+			}
+			&::-moz-range-thumb {
+				-webkit-appearance: none;
+				background: #fff;
+				height: 13px;
+				width: 13px;
+				cursor: pointer;
+				border-radius: 50%;
+				box-shadow: 0 1px 1px rgba(0,0,0,.15), 0 0 0 1px rgba(47,52,61,.2);
+			}
+		}
+		.simp-load {
+			.simp-progress {
+				&::-webkit-slider-runnable-track {
+					background: #2f3841;
+				}
+				&::-moz-range-track {
+					background: #2f3841;
+				}
+			}
+		}
+	}
+	.simp-display {
+		overflow: hidden;
+		max-height: 650px;
+		transition: max-height .5s ease-in-out;
+	}
+	.simp-hide {
+		max-height: 0;
+	}
+	ul {
+		margin: 5px 0 0;
+		padding: 0;
+		list-style: none;
+		max-height: 245px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		scrollbar-color: #73797f #2f3841;
+		li {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: block;
+			margin: 0;
+			padding: 8px 20px;
+			cursor: pointer;
+			&:last-child {
+				padding-bottom: 13px;
+			}
+			&:nth-child(odd) {
+				background: #0e1621;
+			}
+			&:hover {
+				background: #242f3d;
+			}
+			.simp-desc {
+				font-size: 90%;
+				opacity: .5;
+				margin-left: 5px;
+			}
+		}
+		li.simp-active {
+			background: #4082bc;
+			color: $color_4;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: $background-color_1;
+		}
+		&::-webkit-scrollbar {
+			width: 6px;
+			background-color: $background-color_1;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: $background-color_2;
+		}
+	}
+}
+@media screen and (max-width:480px) {
+	#simp {
+		.simp-controls {
+			.simp-volume {
+				display: none;
+			}
+			.simp-others {
+				display: none;
+			}
+			.simp-time {
+				margin-right: 10px;
+			}
+		}
+	}
+}
+@media screen and (max-width:370px) {
+	#simp {
+		.simp-time {
+			.simp-slash {
+				display: none;
+			}
+			.end-time {
+				display: none;
+			}
+		}
+	}
+}

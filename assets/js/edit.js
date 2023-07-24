@@ -20,6 +20,7 @@ const { Fragment } = wp.element;
 const { apiFetch } = wp;
 const ALLOWED_MEDIA_TYPES = [ 'audio' ];
 
+import { PodCastPlayer } from './podcast-player';
 /*
  * Import hierarchical term selector.
  *
@@ -208,19 +209,7 @@ class Edit extends Component {
 				</InspectorControls>
 				<div className={ className }>
 					{ src ? (
-						<figure key="audio" className={ className }>
-							<audio controls="controls" src={ src } />
-							{ ( ( caption && caption.length ) || !! isSelected ) && (
-								<RichText
-									tagName="figcaption"
-									placeholder={ __( 'Write caption…', 'simple-podcasting' ) }
-									value={ caption }
-									onChange={ ( value ) => setAttributes( { caption: value } ) }
-									isSelected={ isSelected }
-								/>
-							) }
-						</figure>
-
+						<PodCastPlayer key="player"/>
 					) : (
 
 						<MediaPlaceholder
