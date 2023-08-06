@@ -120,7 +120,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		);
 	}
 
-	if ( 'admin_page_simple-podcasting-onboarding' === $hook_suffix ) {
+	if ( in_array( $hook_suffix, $screens, true ) ) {
 		wp_enqueue_media();
 		wp_enqueue_script(
 			'podcasting_onboarding_screen_script',
@@ -143,7 +143,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 			'podcastingEditPostVars',
 			array(
 				'iconUrl' => PODCASTING_URL . 'dist/images/icons',
-			),
+			)
 		);
 
 		wp_enqueue_style(

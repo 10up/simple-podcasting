@@ -115,10 +115,10 @@ function register_meta() {
 		'podcasting_podcasts',
 		'podcasting_talent_name',
 		array(
-			'show_in_rest' => true,
-			'type'         => 'string',
-			'single'       => true,
-			'auth_callback' => 'podcasting_term_auth_callback',
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
 			'sanitize_callback' => function( $val ) {
 				return sanitize_text_field( wp_unslash( $val ) );
 			},
@@ -129,10 +129,10 @@ function register_meta() {
 		'podcasting_podcasts',
 		'podcasting_summary',
 		array(
-			'show_in_rest' => true,
-			'type'         => 'string',
-			'single'       => true,
-			'auth_callback' => 'podcasting_term_auth_callback',
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
 			'sanitize_callback' => function( $val ) {
 				return sanitize_text_field( wp_unslash( $val ) );
 			},
@@ -143,10 +143,10 @@ function register_meta() {
 		'podcasting_podcasts',
 		'podcasting_category_1',
 		array(
-			'show_in_rest' => true,
-			'type'         => 'string',
-			'single'       => true,
-			'auth_callback' => 'podcasting_term_auth_callback',
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
 			'sanitize_callback' => function( $val ) {
 				return sanitize_text_field( wp_unslash( $val ) );
 			},
@@ -157,10 +157,10 @@ function register_meta() {
 		'podcasting_podcasts',
 		'podcasting_image',
 		array(
-			'show_in_rest' => true,
-			'type'         => 'number',
-			'single'       => true,
-			'auth_callback' => 'podcasting_term_auth_callback',
+			'show_in_rest'      => true,
+			'type'              => 'number',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
 			'sanitize_callback' => function( $val ) {
 				return absint( wp_unslash( $val ) );
 			},
@@ -171,10 +171,10 @@ function register_meta() {
 		'podcasting_podcasts',
 		'podcasting_image_url',
 		array(
-			'show_in_rest' => true,
-			'type'         => 'string',
-			'single'       => true,
-			'auth_callback' => 'podcasting_term_auth_callback',
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
 			'sanitize_callback' => function( $val ) {
 				return filter_var( $val, FILTER_VALIDATE_URL );
 			},
