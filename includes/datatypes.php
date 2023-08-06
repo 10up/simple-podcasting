@@ -110,8 +110,91 @@ function register_meta() {
 			'single'       => true,
 		)
 	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_talent_name',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_summary',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_category_1',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_image',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'number',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return absint( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_image_url',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'auth_callback' => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return filter_var( $val, FILTER_VALIDATE_URL );
+			},
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
+
+/**
+ * Podcasting term meta generic auth callback.
+ *
+ * @return boolean
+ */
+function podcasting_term_auth_callback() {
+	if ( current_user_can( 'manage_categories' ) ) {
+		return true;
+	}
+
+	return false;
+}
 
 /**
  * Add a custom podcasts taxonomy.
@@ -143,6 +226,8 @@ function create_podcasts_taxonomy() {
 			'hierarchical'      => true,
 			'show_tagcloud'     => false,
 			'public'            => true,
+			'show_ui'           => true,
+			'show_in_menu'      => false,
 			'show_in_rest'      => true,
 			'show_in_nav_menus' => false,
 			'show_admin_column' => true,
@@ -976,7 +1061,7 @@ function get_podcasting_categories_options() {
 
 		if ( ! empty( $category['subcategories'] ) ) {
 			foreach ( $category['subcategories'] as $subkey => $subcategory ) {
-				$to_return[ "$key:$subkey" ] = '&mdash; ' . $subcategory;
+				$to_return[ "$key:$subkey" ] = '— ' . $subcategory;
 			}
 		}
 	}
@@ -1009,77 +1094,3 @@ function get_podcasting_language_options() {
 		)
 	);
 }
-
-/**
- * Validate Podcast Taxonomy Fields.
- *
- * @param string $term     Term.
- * @param string $taxonomy Taxonomy Name.
- * @param array  $args     List of arguments.
- *
- * @return string
- */
-function validate_taxonomy_fields( $term, $taxonomy, $args = [] ) {
-	// Bailout, if not the podcasts taxonomy.
-	if ( 'podcasting_podcasts' !== $taxonomy ) {
-		return $term;
-	}
-
-	$referer      = sanitize_text_field( $_POST['_wp_http_referer'] );
-	$query_string = wp_parse_url( $referer, PHP_URL_QUERY );
-	parse_str( $query_string, $query );
-
-	$is_onboarding_step_1 = isset( $query['page'] ) && isset( $query['step'] )
-		&& 'simple-podcasting-onboarding' === $query['page'] && '1' === $query['step'];
-
-	if ( ! $is_onboarding_step_1 && empty( trim( $term ) ) ) {
-		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.', 'simple-podcasting' ) );
-	}
-
-	// The third argument was only introduced in the `pre_insert_term` filter in WP 6.1, so bail if it's empty.
-	if ( empty( $args ) ) {
-		return $term;
-	}
-
-	if ( $is_onboarding_step_1 ) {
-		$args['tag-name']              = sanitize_title( wp_unslash( $_POST['podcast-name'] ) );
-		$args['podcasting_category_1'] = sanitize_text_field( wp_unslash( $_POST['podcast-category'] ) );
-	}
-
-	// Require podcast name.
-	if ( empty( trim( $args['tag-name'] ) ) ) {
-		return new \WP_Error( 'empty_term_name', __( 'A podcast name is required.', 'simple-podcasting' ) );
-	}
-
-	// Require podcast author name only on term edit screen.
-	if ( empty( trim( $args['podcasting_talent_name'] ) ) ) {
-		return new \WP_Error( 'empty_term_talent_name', __( 'A podcast artist or author name is required.', 'simple-podcasting' ) );
-	}
-
-	// Require podcast description.
-	if ( empty( trim( $args['podcasting_summary'] ) ) ) {
-		return new \WP_Error( 'empty_term_summary', __( 'A podcast summary is required.', 'simple-podcasting' ) );
-	}
-
-	// Require podcast image.
-	if ( empty( trim( $args['podcasting_image'] ) ) ) {
-		return new \WP_Error( 'empty_term_cover_image', __( 'A podcast cover image is required.', 'simple-podcasting' ) );
-	}
-
-	// Require podcast category.
-	$is_missing_category = $is_onboarding_step_1 ?
-		empty( trim( $args['podcasting_category_1'] ) ) :
-		(
-			empty( trim( $args['podcasting_category_1'] ) ) &&
-			empty( trim( $args['podcasting_category_2'] ) ) &&
-			empty( trim( $args['podcasting_category_3'] ) )
-		);
-
-	if ( $is_missing_category ) {
-		return new \WP_Error( 'empty_term_category', __( 'A podcast category is required.', 'simple-podcasting' ) );
-	}
-
-	return $term;
-}
-
-add_filter( 'pre_insert_term', __NAMESPACE__ . '\validate_taxonomy_fields', 10, 3 );
