@@ -7,6 +7,8 @@
 
 namespace tenup_podcasting;
 
+use function tenup_podcasting\helpers\get_all_podcast_meta;
+
 /**
  * Add a Podcasting metabox to the post edit screen.
  */
@@ -31,12 +33,13 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\add_podcasting_meta_box' );
  * @param  object WP_Post $post The current post.
  */
 function meta_box_html( $post ) {
-	$podcast_url       = get_post_meta( $post->ID, 'podcast_url', true );
-	$podcast_explicit  = get_post_meta( $post->ID, 'podcast_explicit', true );
-	$podcast_captioned = get_post_meta( $post->ID, 'podcast_captioned', true );
-	$season_number     = get_post_meta( $post->ID, 'podcast_season_number', true );
-	$episode_number    = get_post_meta( $post->ID, 'podcast_episode_number', true );
-	$episode_type      = get_post_meta( $post->ID, 'podcast_episode_type', true );
+	$podcast_meta      = get_all_podcast_meta( $post->ID );
+	$podcast_url       = $podcast_meta['podcast_url'];
+	$podcast_explicit  = $podcast_meta['podcast_explicit'];
+	$podcast_captioned = $podcast_meta['podcast_captioned'];
+	$season_number     = $podcast_meta['podcast_season_number'];
+	$episode_number    = $podcast_meta['podcast_episode_number'];
+	$episode_type      = $podcast_meta['podcast_episode_type'];
 
 	wp_nonce_field( plugin_basename( __FILE__ ), 'simple-podcasting' );
 	?>

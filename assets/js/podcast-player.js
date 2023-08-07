@@ -1,61 +1,29 @@
 import { useEffect, useState } from "@wordpress/element";
 
+const { __ } = wp.i18n;
+const { RichText } = wp.blockEditor || {};
+
 import '../css/podcast-player.scss';
 
-const playlist = [
-	{
-		artist: 'Johann Pachelbel',
-		label: 'Canon in D',
-		url: 'http://localhost:10004/wp-content/uploads/2023/06/Happy-birthday-piano-instrumental.mp3'
-	},
-	{
-		artist: 'Johann Pachelbel 2',
-		label: 'Canon in D 2',
-		url: 'http://localhost:10004/wp-content/uploads/2022/12/file_example_MP3_5MG.mp3'
-	},
-	{
-		artist: 'Johann Pachelbel 3',
-		label: 'Canon in D 3',
-		url: 'http://localhost:10004/wp-content/uploads/2023/07/2020.01.02.mp3'
-	}
-]
-
-function formatTime(val) {
-  var h = 0, m = 0, s;
-  val = parseInt(val, 10);
-  if (val > 60 * 60) {
-   h = parseInt(val / (60 * 60), 10);
-   val -= h * 60 * 60;
-  }
-  if (val > 60) {
-   m = parseInt(val / 60, 10);
-   val -= m * 60;
-  }
-  s = val;
-  val = (h > 0)? h + ':' : '';
-  val += (m > 0)? ((m < 10 && h > 0)? '0' : '') + m + ':' : '0:';
-  val += ((s < 10)? '0' : '') + s;
-  return val;
-}
-
 export function PodCastPlayer(props) {
+	const {post_id, caption, isSelected, setAttributes} = props;
 
 	const [state, setState] = useState({
-		audio: new Audio(),
-		autoplay: false,
-		show_playlist: false,
-		is_playing: false,
-		active_index: props.active_index || 0,
-		progress: 0,
-		start_time: '00:00',
-		end_time: '00:00',
-		volume: 100,
-		previous_volume: 100,
+		active_index    : 0,
+		audio           : new Audio(),
+		show_playlist   : false,
+		is_playing      : false,
+		progress        : 0,
+		start_time      : '00:00',
+		end_time        : '00:00',
+		volume          : 100,
+		previous_volume : 100,
+		fetching        : false,
+		playlist        : []
 	});
 
 	state.audio.onplay =()=>{
-		console.log(state);
-		setState({...state, is_playing: true, autoplay: true});
+		setState({...state, is_playing: true});
 	}
 
 	state.audio.onpause = ()=>{
@@ -78,10 +46,39 @@ export function PodCastPlayer(props) {
 		state.audio.currentTime = 0;
 	}
 	
+	const formatTime =(val)=>{
+		var h = 0, m = 0, s;
+		val = parseInt(val, 10);
+
+		if ( isNaN( val ) || val == '' ) {
+			return '00:00';
+		}
+
+		if (val > 60 * 60) {
+			h = parseInt(val / (60 * 60), 10);
+			val -= h * 60 * 60;
+		}
+
+		if (val > 60) {
+			m = parseInt(val / 60, 10);
+			val -= m * 60;
+		}
+
+		s = val;
+		val = (h > 0)? h + ':' : '';
+		val += (m > 0)? ((m < 10 && h > 0)? '0' : '') + m + ':' : '0:';
+		val += ((s < 10)? '0' : '') + s;
+		
+		return val;
+	}
+
 	const changeTrack=(index, call_play=true)=>{
-		// state.audio.pause();
+		if(!state.playlist.length || !state.playlist[index]){
+			return;
+		}
+		
 		state.audio.currentTime = 0;
-		state.audio.src = playlist[index].url;
+		state.audio.src         = state.playlist[index].podcast_url;
 
 		if(call_play) {
 			state.audio.play();
@@ -110,80 +107,145 @@ export function PodCastPlayer(props) {
 		});
 	}
 
-	useEffect(()=>{
-		changeTrack(0, false);
-	}, []);	
+	const getList=(cb)=>{
+		setState({...state, fetching: true});
 
-	let has_play_list = playlist.length > 1;
+		window.jQuery.ajax({
+			url: window.ajaxurl || window.simple_podcasting_data.ajaxurl,
+			type: 'POST',
+			data: {
+				post_id,
+				action: 'simple_podcast_get_playlist',
+			},
+			success: function(resp) {
+				let {playlist=[], current=0} = resp?.data;
 
-	return <div className="simple-audio-player" id="simp">
-		<div className="simp-player">
-			<div className="simp-display">
-				<div className="simp-album w-full flex-wrap">
-					<div className="simp-cover">
-						<i className="fa fa-music fa-5x"></i>
+				// Set from editor
+				if ( props.podcast ) {
+					playlist = playlist.filter(podcast=>podcast.post_id!=props.podcast.post_id);
+					playlist.push(props.podcast);
+					current = playlist.length-1
+				}
+
+				setState({
+					...state,
+					playlist     : [...playlist],
+					active_index : current,
+					fetching     : false,
+				});
+			}
+		})
+	}
+
+	useEffect(getList, []);	
+	useEffect(()=>changeTrack(state.active_index, false), [state.playlist]);
+
+	if( state.fetching ) {
+		return <div>
+			Loading Podcast...
+		</div>
+	} else if(!state.playlist.length) {
+		return <div>
+			Nothing to play.
+		</div>
+	}
+
+	let has_playlist = state.playlist.length > 1;
+	let podcast      = state.playlist[state.active_index];
+
+	const meta = [
+		podcast.podcast_explicit && <><span class="dashicons dashicons-warning"></span> Explicit Content</> || null,
+		podcast.podcast_episode_type && <span>Type #{podcast.podcast_episode_type}</span> || null,
+		podcast.podcast_episode_number && <span>Episode #{podcast.podcast_episode_number}</span> || null,
+		podcast.podcast_season_number && <span>Season #{podcast.podcast_season_number}</span> || null,
+	].filter(m=>m);
+	
+	return  <div className="simple-podcasting-player">
+		<div className="simple-podcast-player">
+			<div className="simple-podcast-display">
+				<div className="simple-podcast-album">
+					<div className="simple-podcast-cover">
+						{podcast.thumbnail_url && <img src={podcast.thumbnail_url}/> || <i className="dashicons dashicons-format-audio"></i>}
 					</div>
-					<div className="simp-info">
-						<div className="simp-title">Title</div>
-						<div className="simp-artist">Artist</div>
+					<div className="simple-podcast-info">
+						<div className="simple-podcast-title">
+							{podcast.podcast_title}
+						</div>
+
+						<div className="simple-podcast-artist">
+							{podcast.podcast_terms.join(', ')}
+						</div>
+
+						<div className="meta-info">
+							{meta.map((m, index)=>{
+								return <span key={index}>
+									<span className="meta-content">{m}</span>
+									{index < meta.length-1 && <span className="meta-separator" style={{display: 'inline-block', margin: '0 5px', fontWeight: 'bold'}}>·</span> || null}
+								</span>
+							})}
+						</div>
+						{/* This is for editor */}
+						{ setAttributes && RichText && ( ( caption && caption.length ) || !! isSelected ) && (
+							<div>
+								<br/>
+								<RichText
+									tagName="figcaption"
+									placeholder={ __( 'Write caption…', 'simple-podcasting' ) }
+									value={ caption }
+									onChange={ ( value ) => setAttributes( { caption: value } ) }
+									isSelected={ isSelected }
+								/>
+							</div> || null
+						) }
+
+						{/* This is for post view */}
+						{!setAttributes && caption && <>
+							<br/>
+							<div>
+								<small dangerouslySetInnerHTML={{__html: caption}}></small>
+							</div>
+						</> || null}
 					</div>
 				</div>
 			</div>
-			<div className="simp-controls flex-wrap flex-align">
-				<div className="simp-plauseward flex flex-align">
-					{has_play_list && <button type="button" className="simp-prev fa fa-backward" disabled={state.active_index==0} onClick={()=>changeTrack(state.active_index-1)}></button> || null}
-					<button type="button" className={"simp-plause fa fa-"+(state.is_playing ? 'pause' : 'play')} onClick={()=>state.audio[state.is_playing ? 'pause' : 'play']()}></button>
-					{has_play_list && <button type="button" className="simp-next fa fa-forward" disabled={state.active_index >= playlist.length - 1} onClick={()=>changeTrack(state.active_index+1)}></button> || null}
+			<div className="simple-podcast-controls flex-wrap flex-align">
+				<div className="simple-podcast-plauseward flex flex-align">
+					{has_playlist && <button type="button" className="simple-podcast-prev dashicons dashicons-controls-back" disabled={state.active_index==0} onClick={()=>changeTrack(state.active_index-1)}></button> || null}
+					<button type="button" className={"simple-podcast-plause dashicons dashicons-controls-"+(state.is_playing ? 'pause' : 'play')} onClick={()=>state.audio[state.is_playing ? 'pause' : 'play']()}></button>
+					{has_playlist && <button type="button" className="simple-podcast-next dashicons dashicons-controls-forward" disabled={state.active_index >= state.playlist.length - 1} onClick={()=>changeTrack(state.active_index+1)}></button> || null}
 				</div>
-				<div className="simp-tracker simp-load">
-					<input className="simp-progress" type="range" min="0" max="100" step={.1} value={state.progress} onChange={seek}/>
-					<div className="simp-buffer"></div>
+				<div className="simple-podcast-tracker simple-podcast-load">
+					<input className="simple-podcast-progress" type="range" min="0" max="100" step={.1} value={state.progress} onChange={seek}/>
+					<div className="simple-podcast-buffer"></div>
 				</div>
-				<div className="simp-time flex flex-align">
+				<div className="simple-podcast-time flex flex-align">
 					<span className="start-time">{state.start_time}</span>
-					<span className="simp-slash">&#160;/&#160;</span>
+					<span className="simple-podcast-slash">&#160;/&#160;</span>
 					<span className="end-time">{state.end_time}</span>
 				</div>
-				<div className="simp-volume flex flex-align">
-					<button type="button" className={"simp-mute fa fa-volume-"+(state.volume==0 ? 'off' : 'up')} onClick={e=>volumeSet(state.volume==0 ? state.previous_volume : 0, state.previous_volume)}></button>
-					<input className="simp-v-slider" type="range" min="0" max="100" step={1} value={state.volume} onChange={volumeSet}/>
+				<div className="simple-podcast-volume flex flex-align">
+					<button type="button" className={"simple-podcast-mute dashicons dashicons-controls-volume"+(state.volume==0 ? 'off' : 'on')} onClick={e=>volumeSet(state.volume==0 ? state.previous_volume : 0, state.previous_volume)}></button>
+					<input className="simple-podcast-v-slider" type="range" min="0" max="100" step={1} value={state.volume} onChange={volumeSet}/>
 				</div>
-				<div className="simp-others flex flex-align">
-					{has_play_list && <div className="simp-shide">
-						<button type="button" className={"simp-shide-bottom fa fa-caret-"+(state.show_playlist ? 'up' : 'down')} title="Show/Hide Playlist" onClick={()=>setState({...state, show_playlist: !state.show_playlist})}></button>
+				<div className="simple-podcast-others flex flex-align">
+					{has_playlist && <div className="simple-podcast-shide">
+						<button type="button" className={"simple-podcast-shide-bottom dashicons dashicons-arrow-"+(state.show_playlist ? 'up' : 'down')} title="Show/Hide Playlist" onClick={()=>setState({...state, show_playlist: !state.show_playlist})}></button>
 					</div> || null}
 				</div>
 			</div>
 		</div>
 		{
-			(state.show_playlist && has_play_list) && <div className="simp-playlist">
+			(state.show_playlist && has_playlist) && <div className="simple-podcast-playlist">
 				<ul>
-					{playlist.map((media, index)=>{
-						let {url, label, artist} = media;
-						return <li key={index} className={state.active_index==index ? "simp-active" : ''} onClick={()=>changeTrack(index)}>
-							<span className="simp-source" data-src={url}>{label}</span>
-							<span className="simp-desc">{artist}</span>
+					{state.playlist.map((media, index)=>{
+						let {podcast_url, podcast_title, podcast_duration} = media;
+						return <li key={index} className={state.active_index==index ? "simple-podcast-active" : ''} onClick={()=>changeTrack(index)}>
+							<span className="simple-podcast-source" data-src={podcast_url}>{podcast_title}</span>
+							<span className="simple-podcast-desc">{podcast_duration}</span>
 						</li>
 					})}
 				</ul>
 			</div> || null
 		}
-		
 	</div>
 }
-
-/* 
-This is block player
-<figure key="audio" className={ className }>
-	<audio controls="controls" src={ src } />
-	{ ( ( caption && caption.length ) || !! isSelected ) && (
-		<RichText
-			tagName="figcaption"
-			placeholder={ __( 'Write caption…', 'simple-podcasting' ) }
-			value={ caption }
-			onChange={ ( value ) => setAttributes( { caption: value } ) }
-			isSelected={ isSelected }
-		/>
-	) }
-</figure>
-*/

@@ -7,6 +7,8 @@
 
 namespace tenup_podcasting;
 
+use function tenup_podcasting\helpers\get_all_podcast_meta;
+
 /**
  * Add an itunes podcasting header.
  */
@@ -178,18 +180,20 @@ function feed_item() {
 		return false;
 	}
 
+	$podcast_meta = get_all_podcast_meta( $post->ID );
+
 	$feed_item = array(
 		'author'      => get_option( 'podcasting_talent_name' ),
-		'explicit'    => get_post_meta( $post->ID, 'podcast_explicit', true ),
-		'captioned'   => get_post_meta( $post->ID, 'podcast_captioned', true ),
+		'explicit'    => $podcast_meta['podcast_explicit'],
+		'captioned'   => $podcast_meta['podcast_captioned'],
 		'keywords'    => '',
 		'image'       => '',
 		'summary'     => '',
 		'subtitle'    => '',
-		'duration'    => get_post_meta( $post->ID, 'podcast_duration', true ),
-		'season'      => get_post_meta( $post->ID, 'podcast_season_number', true ),
-		'episode'     => get_post_meta( $post->ID, 'podcast_episode_number', true ),
-		'episodeType' => get_post_meta( $post->ID, 'podcast_episode_type', true ),
+		'duration'    => $podcast_meta['podcast_duration'],
+		'season'      => $podcast_meta['podcast_season_number'],
+		'episode'     => $podcast_meta['podcast_episode_number'],
+		'episodeType' => $podcast_meta['podcast_episode_type'],
 	);
 
 	if ( empty( $feed_item['author'] ) ) {
@@ -290,9 +294,10 @@ add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );
  * @return void
  */
 function display_rss_enclosure( $post ) {
-	$podcast_url      = get_post_meta( $post->ID, 'podcast_url', true );
-	$podcast_filesize = get_post_meta( $post->ID, 'podcast_filesize', true );
-	$podcast_mime     = get_post_meta( $post->ID, 'podcast_mime', true );
+	$podcast_meta     = get_all_podcast_meta( $post->ID );
+	$podcast_url      = $podcast_meta['podcast_url'];
+	$podcast_filesize = $podcast_meta['podcast_filesize'];
+	$podcast_mime     = $podcast_meta['podcast_mime'];
 
 	if ( ! empty( $podcast_url ) ) {
 		$enclosure = "<enclosure url='" .
