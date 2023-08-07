@@ -7,6 +7,8 @@
 
 namespace tenup_podcasting\block;
 
+use function tenup_podcasting\helpers\get_playlist_by_episode;
+
 /**
  * Register block and its assets.
  */
@@ -97,3 +99,15 @@ function block_editor_meta_cleanup( $post, $request, $creating ) {
 	\tenup_podcasting\helpers\delete_all_podcast_meta( $post->ID );
 }
 add_action( 'rest_after_insert_post', __NAMESPACE__ . '\block_editor_meta_cleanup', 10, 3 );
+
+/**
+ * Podcast block playlist
+ *
+ * @return void
+ */
+function get_podcast_block_playlist() {
+	$post_id = (int) $_POST['post_id'];
+	wp_send_json_success( get_playlist_by_episode( $post_id ) );
+}
+add_action( 'wp_ajax_simple_podcast_get_playlist', __NAMESPACE__ . '\get_podcast_block_playlist' );
+add_action( 'wp_ajax_nopriv_simple_podcast_get_playlist', __NAMESPACE__ . '\get_podcast_block_playlist' );

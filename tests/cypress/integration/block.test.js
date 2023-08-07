@@ -54,9 +54,9 @@ describe('Admin can publish posts with podcast block', () => {
 			cy.get(
 				'.wp-block-podcasting-podcast input[type="file"]'
 			).attachFile('example.mp3');
-			cy.get('.wp-block-podcasting-podcast audio')
-				.should('have.attr', 'src')
-				.and('include', 'example');
+			cy.get('.wp-block-podcasting-podcast figcaption').contains(
+				'example'
+			);
 			cy.openDocumentSettingsPanel('Podcasts');
 			cy.get('.components-panel__body')
 				.contains('Podcasts')
@@ -70,9 +70,9 @@ describe('Admin can publish posts with podcast block', () => {
 				'be.visible'
 			);
 			cy.get('a.components-button.components-snackbar__action').click();
-			cy.get('.wp-block-podcasting-podcast audio')
-				.should('have.attr', 'src')
-				.and('include', 'example');
+			cy.get(
+				'.wp-block-podcasting-podcast .simple-podcast-caption'
+			).contains('example');
 			cy.visit('/wp-admin/edit.php');
 			cy.get('.column-taxonomy-podcasting_podcasts').should(
 				'contain.text',

@@ -5,7 +5,6 @@ const {
 	InspectorControls,
 	MediaPlaceholder,
 	MediaReplaceFlow,
-	RichText,
 } = wp.blockEditor;
 const {
 	FormToggle,
@@ -20,6 +19,7 @@ const { Fragment } = wp.element;
 const { apiFetch } = wp;
 const ALLOWED_MEDIA_TYPES = [ 'audio' ];
 
+import { PodCastPlayer } from './podcast-player';
 /*
  * Import hierarchical term selector.
  *
@@ -34,6 +34,7 @@ class Edit extends Component {
 		// without setting the actual value outside of the edit UI
 		this.state = {
 			src: this.props.attributes.src ? this.props.attributes.src : null,
+			attachment: null,
 			className,
 		};
 	}
@@ -54,7 +55,9 @@ class Edit extends Component {
 		const seasonNumber = attributes.seasonNumber || '';
 		const episodeNumber = attributes.episodeNumber || '';
 		const episodeType = attributes.episodeType || '';
-		const { className, src } = this.state;
+		const { className, src, attachment } = this.state;
+    	const post_id = wp.data.select('core/editor').getCurrentPostId();
+		const postTitle = wp.data.select('core/editor').getEditedPostAttribute('title');
 
 		const onSelectAttachment = ( attachment ) => {
 			// Upload and Media Library return different attachment objects.
@@ -89,7 +92,7 @@ class Edit extends Component {
 				caption: attachment.title,
 				enclosure: attachment.url + "\n" + filesize + "\n" + mime
 			} );
-			this.setState( { src: attachment.url } );
+			this.setState( { src: attachment.url, attachment } );
 		};
 
 		const onSelectURL = ( newSrc ) => {
@@ -132,6 +135,23 @@ class Edit extends Component {
 				) : null }
 			</BlockControls>
 		);
+
+		// Prepare current post data as playable podcast
+		const selected_podcast= !this.state.attachment ? null : {
+			post_id                : post_id,
+			podcast_title          : postTitle,
+			podcast_terms          : [],
+			podcast_url            : attachment.url,
+			podcast_filesize       : attachment.filesizeInBytes,
+			podcast_duration       : attachment.fileLength,
+			podcast_mime           : attachment.mime,
+			podcast_captioned      : null,
+			podcast_explicit       : explicit,
+			enclosure              : attributes.enclosure,
+			podcast_season_number  : seasonNumber,
+			podcast_episode_number : episodeNumber,
+			podcast_episode_type   : episodeType
+		}
 
 		return (
 			<Fragment>
@@ -207,23 +227,14 @@ class Edit extends Component {
 					</PanelBody>
 				</InspectorControls>
 				<div className={ className }>
-					{ src ? (
-						<figure key="audio" className={ className }>
-							<audio controls="controls" src={ src } />
-							{ ( ( caption && caption.length ) || !! isSelected ) && (
-								<RichText
-									tagName="figcaption"
-									placeholder={ __( 'Write caption…', 'simple-podcasting' ) }
-									value={ caption }
-									onChange={ ( value ) => setAttributes( { caption: value } ) }
-									isSelected={ isSelected }
-								/>
-							) }
-						</figure>
-
-					) : (
-
-						<MediaPlaceholder
+					{ src 
+						&& <PodCastPlayer 
+							post_id={post_id} 
+							podcast={selected_podcast}
+							caption={caption}
+							isSelected={isSelected}
+							setAttributes={setAttributes}/> 
+						|| <MediaPlaceholder
 							icon="microphone"
 							labels={ {
 								title: __( 'Podcast', 'simple-podcasting' ),
@@ -236,7 +247,7 @@ class Edit extends Component {
 							allowedTypes={ ALLOWED_MEDIA_TYPES }
 							value={ this.props.attributes }
 						/>
-					)}
+					}
 				</div>
 			</Fragment>
 		);
