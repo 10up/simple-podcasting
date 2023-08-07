@@ -201,7 +201,7 @@ export function PodCastPlayer(props) {
 						{/* This is for post view */}
 						{!setAttributes && caption && <>
 							<br/>
-							<div>
+							<div className="simple-podcast-caption">
 								<small dangerouslySetInnerHTML={{__html: caption}}></small>
 							</div>
 						</> || null}
