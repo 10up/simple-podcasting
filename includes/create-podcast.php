@@ -125,7 +125,7 @@ class Create_Podcast {
 
 		$result = wp_insert_term(
 			$this->podcast_name,
-			TAXONOMY_NAME
+			PODCASTING_TAXONOMY_NAME
 		);
 
 		if ( is_wp_error( $result ) ) {
