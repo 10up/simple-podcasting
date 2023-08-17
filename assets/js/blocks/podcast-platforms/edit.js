@@ -35,6 +35,9 @@ function Edit( props ) {
 	/** Debounced search text so that we don't trigger useEffect() for every character change. */
 	const [ debouncedSearchText ] = useDebounce( searchText, 300 );
 
+	/** Indicates when the ajax search for podcasts is completed. */
+	const [ isSearchCompleted, setIsSearchCompleted ] = useState( false );
+
 	/** State for search results matched by the search text. Defaults to array. */
 	const [ searchResults, setSearchResults ] = useState( [] );
 
@@ -50,6 +53,8 @@ function Edit( props ) {
 	 */
 	useEffect( () => {
 		const searchPodcastShow = async () => {
+			setIsSearchCompleted( false );
+
 			if ( ! searchText.length ) {
 				setSearchResults( [] );
 				return;
@@ -70,7 +75,12 @@ function Edit( props ) {
 				path: `/wp/v2/search?${ queryString }`,
 			} );
 
+			if ( ! searchResults.length ) {
+				setIsSearchCompleted( true );
+			}
+
 			setSearchResults( searchResults );
+			setIsSearchCompleted( true );
 		};
 
 		searchPodcastShow();
@@ -95,6 +105,7 @@ function Edit( props ) {
 			} );
 
 			if ( ! result.success ) {
+				setPlatforms( [] );
 				return;
 			}
 
@@ -117,6 +128,8 @@ function Edit( props ) {
 	 */
 	const onShowSelect = ( termId ) => {
 		setAttributes( { showId: termId } );
+		setSearchResults( [] );
+		setIsSearchCompleted( false );
 	};
 
 	/**
@@ -194,7 +207,11 @@ function Edit( props ) {
 								} )
 							}
 						</div>
-					) : null
+					) : (
+						<div className={ `simple-podcasting__podcasting-platform-list` }>
+							<p>{ __( 'No platforms are set for this podcast.', 'simple-podcasting' ) }</p>
+						</div>
+					)
 				}
 				{
 					isSelected || ! showId ? (
@@ -224,7 +241,19 @@ function Edit( props ) {
 											}
 										</ItemGroup>
 									</div>
-								) : null
+								) : (
+									! searchResults.length && isSearchCompleted ? (
+										<div className='simple-podcasting__podcasting-search-results'>
+											<ItemGroup
+												isSeparated
+											>
+												<Item>
+													{ __( 'No results found.' , 'simple-podcasting') }
+												</Item>
+											</ItemGroup>
+										</div>
+									) : null
+								)
 							}
 						</div>
 					) : null

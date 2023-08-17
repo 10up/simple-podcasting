@@ -101,6 +101,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 	$screens = array(
 		'edit-tags.php',
 		'term.php',
+		'admin_page_simple-podcasting-onboarding',
 	);
 
 	if ( in_array( $hook_suffix, $screens, true ) ) {
