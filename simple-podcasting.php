@@ -101,6 +101,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 	$screens = array(
 		'edit-tags.php',
 		'term.php',
+		'admin_page_simple-podcasting-onboarding',
 	);
 
 	if ( in_array( $hook_suffix, $screens, true ) ) {
@@ -120,7 +121,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		);
 	}
 
-	if ( 'admin_page_simple-podcasting-onboarding' === $hook_suffix ) {
+	if ( in_array( $hook_suffix, $screens, true ) ) {
 		wp_enqueue_media();
 		wp_enqueue_script(
 			'podcasting_onboarding_screen_script',
@@ -128,6 +129,22 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 			array( 'jquery' ),
 			PODCASTING_VERSION,
 			true
+		);
+
+		wp_enqueue_script(
+			'podcasting_edit_term_screen',
+			PODCASTING_URL . 'dist/podcasting-edit-term.js',
+			array( 'jquery' ),
+			PODCASTING_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'podcasting_edit_term_screen',
+			'podcastingEditPostVars',
+			array(
+				'iconUrl' => PODCASTING_URL . 'dist/images/icons',
+			)
 		);
 
 		wp_enqueue_style(
