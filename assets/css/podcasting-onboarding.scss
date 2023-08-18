@@ -2,6 +2,10 @@
 	box-sizing: border-box;
 }
 
+.admin_page_simple-podcasting-onboarding #wpcontent {
+	padding-left: 0;
+}
+
 #simple-podcasting {
 	&__onboarding-header {
 		width: 100%;
