@@ -13,7 +13,7 @@ namespace tenup_podcasting\block_patterns;
 function init() {
 	$podcast_terms = get_terms(
 		[
-			'taxonomy' => TAXONOMY_NAME,
+			'taxonomy' => PODCASTING_TAXONOMY_NAME,
 			'fields'   => 'ids',
 		]
 	);
@@ -36,7 +36,7 @@ function init() {
 								<span aria-hidden="true" class="wp-block-cover__background has-background-dim"></span>
 								<div class="wp-block-cover__inner-container">
 									<!-- wp:post-title {"isLink":true,"style":{"typography":{"fontSize":"1.6rem"},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} /-->
-									<!-- wp:post-terms {"term":"' . esc_js( TAXONOMY_NAME ) . '","style":{"typography":{"fontSize":"2rem"},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} /-->
+									<!-- wp:post-terms {"term":"' . esc_js( PODCASTING_TAXONOMY_NAME ) . '","style":{"typography":{"fontSize":"2rem"},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} /-->
 									<!-- wp:post-date {"displayType":"modified","style":{"typography":{"fontSize":"0.8rem"},"spacing":{"margin":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} /-->
 								</div>
 							</div>
