@@ -4,6 +4,7 @@
  * Plugin URI:        https://github.com/10up/simple-podcasting
  * Description:       Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
  * Version:           1.5.0
+ * Requires PHP:      7.4
  * Author:            10up
  * Author URI:        http://10up.com/
  * License:           GPL v2 or later
@@ -14,6 +15,53 @@
  */
 
 namespace tenup_podcasting;
+
+/**
+ * Get the minimum version of PHP required by this plugin.
+ *
+ * @since 1.6.0
+ *
+ * @return string Minimum version required.
+ */
+function minimum_php_requirement(): string {
+	return '7.4';
+}
+
+/**
+ * Whether PHP installation meets the minimum requirements
+ *
+ * @since 1.6.0
+ *
+ * @return bool True if meets minimum requirements, false otherwise.
+ */
+function site_meets_php_requirements(): bool {
+	return version_compare( phpversion(), minimum_php_requirement(), '>=' );
+}
+
+// Try to load the plugin files, ensuring our PHP version is met first.
+if ( ! site_meets_php_requirements() ) {
+	add_action(
+		'admin_notices',
+		function() {
+			?>
+			<div class="notice notice-error">
+				<p>
+					<?php
+					echo wp_kses_post(
+						sprintf(
+							/* translators: %s: Minimum required PHP version */
+							__( 'Simple Podcasting requires PHP version %s or later. Please upgrade PHP or disable the plugin.', 'simple-podcasting' ),
+							esc_html( minimum_php_requirement() )
+						)
+					);
+					?>
+				</p>
+			</div>
+			<?php
+		}
+	);
+	return;
+}
 
 define( 'PODCASTING_VERSION', '1.5.0' );
 define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
