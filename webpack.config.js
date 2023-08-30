@@ -20,6 +20,11 @@ module.exports = {
 			'assets/js',
 			'podcasting-edit-term.js'
 		),
+		'podcast-platforms-block': path.resolve(
+			process.cwd(),
+			'assets/js/blocks/podcast-platforms',
+			'index.js'
+		),
 		'podcasting-onboarding': path.resolve(
 			process.cwd(),
 			'assets/js',
@@ -34,7 +39,10 @@ module.exports = {
 	plugins: [
 		...defaultConfig.plugins,
 		new CopyPlugin({
-			patterns: [{ from: 'assets/images/*', to: './' }],
+			patterns: [
+				{ from: 'assets/images/*', to: './' },
+				{ from: 'assets/images/icons', to: './images/icons' }
+			],
 		}),
 	],
 };

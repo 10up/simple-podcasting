@@ -14,7 +14,15 @@ use tenup_podcasting\admin\Onboarding;
 			<?php esc_html_e( 'Well done!', 'simple-podcasting' ); ?>
 		</div>
 
-		<p><?php printf( __( 'You can always edit show details <a href="%s">here</a>.', 'simple-podcasting' ), admin_url( 'edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+		<p>
+			<?php
+			printf(
+				/* translators: %s podcast term edit page. */
+				__( 'You can always edit show details <a href="%s">here</a>.', 'simple-podcasting' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+				esc_url( admin_url( 'edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true' ) )
+			);
+			?>
+		</p>
 		<p><?php esc_html_e( 'Now let’s create your show’s first episode:', 'simple-podcasting' ); ?></p>
 		<ol>
 			<li><?php esc_html_e( 'Create a new post', 'simple-podcasting' ); ?></li>
