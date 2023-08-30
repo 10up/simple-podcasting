@@ -19,7 +19,7 @@ namespace tenup_podcasting;
 /**
  * Get the minimum version of PHP required by this plugin.
  *
- * @since 1.5.1
+ * @since 1.6.0
  *
  * @return string Minimum version required.
  */
@@ -30,7 +30,7 @@ function minimum_php_requirement(): string {
 /**
  * Whether PHP installation meets the minimum requirements
  *
- * @since 1.5.1
+ * @since 1.6.0
  *
  * @return bool True if meets minimum requirements, false otherwise.
  */
@@ -49,7 +49,7 @@ if ( ! site_meets_php_requirements() ) {
 					<?php
 					echo wp_kses_post(
 						sprintf(
-						/* translators: %s: Minimum required PHP version */
+							/* translators: %s: Minimum required PHP version */
 							__( 'Simple Podcasting requires PHP version %s or later. Please upgrade PHP or disable the plugin.', 'simple-podcasting' ),
 							esc_html( minimum_php_requirement() )
 						)
