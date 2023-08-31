@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [1.6.0] - 2023-08-31
+### Added
+- Ability to create a Podcast from within the Block Editor (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh) via [#232](https://github.com/10up/simple-podcasting/pull/232)).
+- New Podcast Platforms block that allows you to display icons and links to multiple podcast platforms (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#241](https://github.com/10up/simple-podcasting/pull/241)).
+- Check for minimum required PHP version before loading the plugin (props [@kmgalanakis](https://github.com/kmgalanakis), [@dkotter](https://github.com/dkotter) via [#248](https://github.com/10up/simple-podcasting/pull/248)).
+
+### Changed
+- Rename `TAXONOMY_NAME` constant to `PODCASTING_TAXONOMY_NAME` (props [@jayedul](https://github.com/jayedul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#238](https://github.com/10up/simple-podcasting/pull/238)).
+- Bump WordPress "tested up to" version to 6.3 (props [@dkotter](https://github.com/dkotter) via [#248](https://github.com/10up/simple-podcasting/pull/248)).
+
+### Fixed
+- Resolved a PHP warning when creating a new podcast (props [@kmgalanakis](https://github.com/kmgalanakis), [@iamdharmesh](https://github.com/iamdharmesh) via [#247](https://github.com/10up/simple-podcasting/pull/247)).
+
+### Security
+- Bump `word-wrap` from 1.2.3 to 1.2.4 (props [@dependabot](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#243](https://github.com/10up/simple-podcasting/pull/243)).
+
 ## [1.5.0] - 2023-06-29
 ### Added
 - Post Grid Block to display a grid of episode posts (props [@mehul0810](https://github.com/mehul0810), [@cadic](https://github.com/cadic), [@nateconley](https://github.com/nateconley), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul), [@ajmaurya99](https://github.com/ajmaurya99), [@nickolas-kola](https://github.com/nickolas-kola), [@achchu93](https://github.com/achchu93) via [#214](https://github.com/10up/simple-podcasting/pull/214)).
@@ -189,6 +205,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.6.0]: https://github.com/10up/simple-podcasting/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/10up/simple-podcasting/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/10up/simple-podcasting/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/10up/simple-podcasting/compare/1.2.4...1.3.0
