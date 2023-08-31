@@ -12,23 +12,23 @@
 			<?php esc_html_e( 'Create your first podcast show', 'simple-podcasting' ); ?>
 		</div>
 
-		<!-- Show name -->
+		<!-- Podcast name -->
 		<div class="simple-podcasting__setting">
-			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-name"><?php esc_html_e( 'Show name*', 'simple-podcasting' ); ?></label>
+			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-name"><?php esc_html_e( 'Podcast name*', 'simple-podcasting' ); ?></label>
 			<div class="simple-podcasting__setting-input"><input name="podcast-name" id="simple-podcasting-podcast-name" aria-describedby="simple-podcasting__podcast-name-description" required type="text" /></div>
 			<div class="simple-podcasting__setting-description" id="simple-podcasting__podcast-name-description"><?php esc_html_e( 'What’s the title of your podcast show that listeners will see?', 'simple-podcasting' ); ?></div>
 		</div>
 
-		<!-- Show artist/author -->
+		<!-- Podcast artist/author -->
 		<div class="simple-podcasting__setting">
-			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-artist"><?php esc_html_e( 'Show Artist / Author name*', 'simple-podcasting' ); ?></label>
+			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-artist"><?php esc_html_e( 'Podcast Artist / Author name*', 'simple-podcasting' ); ?></label>
 			<div class="simple-podcasting__setting-input"><input name="podcast-artist" id="simple-podcasting-podcast-artist" aria-describedby="simple-podcasting__podcast-artist-description" required type="text" /></div>
 			<div class="simple-podcasting__setting-description" id="simple-podcasting__podcast-artist-description"><?php esc_html_e( 'Who’s the artist or author of your podcast show that listeners will see?', 'simple-podcasting' ); ?></div>
 		</div>
 
-		<!-- Show description -->
+		<!-- Podcast description -->
 		<div class="simple-podcasting__setting">
-			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-description"><?php esc_html_e( 'Show description*', 'simple-podcasting' ); ?></label>
+			<label class="simple-podcasting__setting-label" for="simple-podcasting-podcast-description"><?php esc_html_e( 'Podcast summary*', 'simple-podcasting' ); ?></label>
 			<div class="simple-podcasting__setting-input"><textarea name="podcast-description" id="simple-podcasting-podcast-description" aria-describedby="simple-podcasting__podcast-description-description" rows="5" required></textarea></div>
 			<div class="simple-podcasting__setting-description" id="simple-podcasting__podcast-description-description"><?php esc_html_e( 'Briefly describe to your listeners what your podcast is about. (No HTML please)', 'simple-podcasting' ); ?></div>
 		</div>
@@ -55,6 +55,6 @@
 
 		<!-- Create button -->
 		<button class="simple-podcasting__btn simple-podcasting__btn--black" id="simple-podcasting__create-podcast-button"><?php esc_html_e( 'Create', 'simple-podcasting' ); ?></button>
-		<?php wp_nonce_field( 'simple-podcasting-create-show-action', 'simple-podcasting-onboarding-nonce' ); ?>
+		<?php wp_nonce_field( 'simple-podcasting-create-show-action', 'simple-podcasting-create-show-nonce-field' ); ?>
 	</div>
 </form>

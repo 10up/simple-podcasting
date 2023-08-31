@@ -52,3 +52,13 @@ export const populatePodcast = (args) => {
 	}
 	getFirstImage();
 };
+
+export const deleteAllTerms = () => {
+	cy.get('body').then(($body) => {
+		if ($body.find('#doaction').length > 0) {
+			cy.get('#cb-select-all-1').click({ force: true });
+			cy.get('#bulk-action-selector-top').select('delete');
+			cy.get('#doaction').click();
+		}
+	});
+};
