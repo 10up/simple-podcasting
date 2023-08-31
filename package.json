@@ -46,7 +46,7 @@
     "@wordpress/scripts": "^26.5.0",
     "ansi-regex": ">=6.0.1",
     "copy-webpack-plugin": "^11.0.0",
-    "cypress": "^11.2.0",
+    "cypress": "^13.0.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-localstorage-commands": "^2.2.2",
     "cypress-mochawesome-reporter": "^3.4.0",
