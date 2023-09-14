@@ -68,11 +68,11 @@ function init() {
 			'transcript' => array(
 				'type' => 'string',
 			),
-			'display'   => array(
+			'display'    => array(
 				'type'    => 'string',
 				'default' => 'post',
 			),
-			'linkText'  => array(
+			'linkText'   => array(
 				'type'    => 'string',
 				'default' => __( 'Transcript Link', 'simple-podcastin' ),
 			),
