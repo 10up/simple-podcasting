@@ -25,10 +25,8 @@
 $podcast_slug = get_query_var( 'podcasting-episode' );
 $post_object  = get_page_by_path( $podcast_slug, OBJECT, 'post' );
 if ( $post_object instanceof WP_Post ) {
-	echo wp_kses_post(
-		tenup_podcasting\transcripts\podcasting_wrap_unwrapped_text_in_paragraph(
-			get_post_meta( $post_object->ID, 'podcast_transcript', true )
-		)
+	echo tenup_podcasting\transcripts\podcasting_wrap_unwrapped_text_in_paragraph( // phpcs:ignore WordPress.Security.EscapeOutput 
+		get_post_meta( $post_object->ID, 'podcast_transcript', true )
 	);
 }
 ?>

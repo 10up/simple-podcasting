@@ -115,9 +115,14 @@ function register_meta() {
 		'post',
 		'podcast_transcript',
 		array(
-			'show_in_rest' => true,
-			'type'         => 'string',
-			'single'       => true,
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'sanitize_callback' => function( $val ) {
+				return wp_kses_post( $val );
+			},
+		)
+	);
 
 	\register_term_meta(
 		'podcasting_podcasts',
