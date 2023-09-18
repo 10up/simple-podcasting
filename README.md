@@ -2,7 +2,8 @@
 
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![E2E Test](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![E2E Test](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml) [![Unit Tests](https://github.com/10up/simple-podcasting/actions/workflows/phpunit.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/phpunit.yml) [![PHPCS](https://github.com/10up/simple-podcasting/actions/workflows/phpcs.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/phpcs.yml) [![PHP Compatibility](https://github.com/10up/simple-podcasting/actions/workflows/php-compatibility.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/php-compatibility.yml) [![Dependency Review](https://github.com/10up/simple-podcasting/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/dependency-review.yml)
 
 ## Table of Contents
 * [Overview](#overview)
@@ -23,8 +24,8 @@ Podcasting is a method to distribute audio messages through a feed to which list
 
 ## Requirements
 
-* PHP 7.0+
-* [WordPress](http://wordpress.org) 4.6+
+* PHP 7.4+
+* [WordPress](http://wordpress.org) 5.7+
 * RSS feeds must not be disabled
 
 ## Installation
@@ -69,6 +70,23 @@ Repeat for each podcast you would like to create.
 Podcast setup | Podcast in editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
+
+## Submit your podcast feed to Pocket Casts
+
+* Validate your feeds at [Cast Feed Validator](https://www.castfeedvalidator.com/) before submitting them.
+* Submit the podcast feed to https://pocketcasts.com/submit/
+
+### How do I get my podcast featured on Pocket Casts?
+
+The Featured section of Pocket Casts is human-curated. To ensure that all podcasts have an equal opportunity at being featured, selections are made on the basis of merit.
+
+If you’d like to suggest your podcast for a featured spot, reach out to curation@pocketcasts.com.
+
+For more information, [read more](https://pocketcasts.com/podcast-producers/).
+
+### How do I submit private and paid podcast feeds?
+
+Follow this documentation to submit [private and paid podcast feeds](https://support.pocketcasts.com/article/password-protected-podcasts-2/)
 
 ## Control how many episodes are listed on the feed
 

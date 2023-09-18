@@ -17,10 +17,6 @@ jobs:
   php_compatibility:
     name: PHP ${{ matrix.php }}
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php: [ '7.0', '7.4', '8.0', '8.1' ]
 
     steps:
     - name: Checkout
@@ -49,4 +45,4 @@ jobs:
       run: composer install
 
     - name: Check PHP Compatibility
-      run: ./vendor/bin/phpcs -p simple-podcasting.php includes --standard=PHPCompatibilityWP --extensions=php --runtime-set testVersion ${{ matrix.php }}
+      run: ./vendor/bin/phpcs -p simple-podcasting.php includes --standard=PHPCompatibilityWP --extensions=php --runtime-set testVersion 7.4-

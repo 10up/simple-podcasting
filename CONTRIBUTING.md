@@ -52,16 +52,17 @@ New releases are targeted based on number and severity of changes along with hum
 ### Release instructions
 
 1. Branch: Starting from `develop`, cut a release branch named `release/X.Y.Z` for your changes.
-1. Version bump: Bump the version number in `simple-podcasting.php`, `package-lock.json`, `package.json`, and `readme.txt` if it does not already reflect the version being released.  Update both the plugin "Version:" property and the plugin `PODCASTING_VERSION` constant in `simple-podcasting.php`.
-1. Changelog: Add/update the changelog in both `CHANGELOG.md` and `readme.txt`.
-1. Props: update `CREDITS.md` with any new contributors, confirm maintainers are accurate.
-1. New files: Check to be sure any new files/paths that are unnecessary in the production version are included in `.distignore`.
-1. Readme updates: Make any other readme changes as necessary. `README.md` is geared toward GitHub and `readme.txt` contains WordPress.org-specific content. The two are slightly different.
-1. Merge: Make a non-fast-forward merge from your release branch to `develop` (or merge the pull request), then do the same for `develop` into `trunk` (`git checkout trunk && git merge --no-ff develop`). `trunk` contains the latest stable release.
-1. Test: Run through common tasks while on `trunk` to be sure it functions correctly. Don't forget to build.
-1. Push: Push your `trunk` branch to GitHub (e.g. `git push origin trunk`).
-1. Release: Create a [new release](https://github.com/10up/simple-podcasting/releases/new), naming the tag and the release with the new version number, and targeting the `trunk` branch.  Paste the changelog from `CHANGELOG.md` into the body of the release and include a link to the [closed issues on the milestone](https://github.com/10up/simple-podcasting/milestone/#?closed=1).
-1. SVN: Wait for the [GitHub Action](https://github.com/10up/simple-podcasting/actions) to finish deploying to the WordPress.org repository. If all goes well, users with SVN commit access for that plugin will receive an emailed diff of changes.
-1. Check WordPress.org: Ensure that the changes are live on https://wordpress.org/plugins/simple-podcasting/. This may take a few minutes.
-1. Close the milestone: Edit the [milestone](https://github.com/10up/simple-podcasting/milestone/#) with release date (in the `Due date (optional)` field) and link to GitHub release (in the `Description` field), then close the milestone.
-1. Punt incomplete items: If any open issues or PRs which were milestoned for `X.Y.Z` do not make it into the release, update their milestone to `X.Y.Z+1`, `X.Y+1.0`, `X+1.0.0`, or `Future Release`.
+2. Version bump: Bump the version number in `simple-podcasting.php`, `package-lock.json`, `package.json`, and `readme.txt` if it does not already reflect the version being released.  Update both the plugin "Version:" property and the plugin `PODCASTING_VERSION` constant in `simple-podcasting.php`.
+3. Changelog: Add/update the changelog in both `CHANGELOG.md` and `readme.txt`.
+4. Props: update `CREDITS.md` with any new contributors, confirm maintainers are accurate.
+5. New files: Check to be sure any new files/paths that are unnecessary in the production version are included in `.distignore`.
+6. Readme updates: Make any other readme changes as necessary. `README.md` is geared toward GitHub and `readme.txt` contains WordPress.org-specific content. The two are slightly different.
+7. Merge: Make a non-fast-forward merge from your release branch to `develop` (or merge the pull request), then do the same for `develop` into `trunk`, ensuring you pull the most recent changes into `develop` first (`git checkout develop && git pull origin develop && git checkout trunk && git merge --no-ff develop`). `trunk` contains the latest stable release.
+8. Push: Push your `trunk` branch to GitHub (e.g. `git push origin trunk`).
+9. [Compare](https://github.com/10up/simple-podcasting/compare/trunk...develop) `trunk` to `develop` to ensure no additional changes were missed.
+10. Test the pre-release ZIP locally by [downloading](https://github.com/10up/simple-podcasting/actions/workflows/build-release-zip.yml) it from the Build release zip action artifact and installing it locally. Ensure this zip has all the files we expect, that it installs and activates correctly and that all basic functionality is working.
+11. Release: Create a [new release](https://github.com/10up/simple-podcasting/releases/new), naming the tag and the release with the new version number, and targeting the `trunk` branch.  Paste the changelog from `CHANGELOG.md` into the body of the release and include a link to the [closed issues on the milestone](https://github.com/10up/simple-podcasting/milestone/#?closed=1).
+12. SVN: Wait for the [GitHub Action](https://github.com/10up/simple-podcasting/actions) to finish deploying to the WordPress.org repository. If all goes well, users with SVN commit access for that plugin will receive an emailed diff of changes.
+13. Check WordPress.org: Ensure that the changes are live on [WordPress.org](https://wordpress.org/plugins/simple-podcasting/). This may take a few minutes.
+14. Close the milestone: Edit the [milestone](https://github.com/10up/simple-podcasting/milestone/#) with release date (in the `Due date (optional)` field) and link to GitHub release (in the `Description` field), then close the milestone.
+15. Punt incomplete items: If any open issues or PRs which were milestoned for `X.Y.Z` do not make it into the release, update their milestone to `X.Y.Z+1`, `X.Y+1.0`, `X+1.0.0`, or `Future Release`.

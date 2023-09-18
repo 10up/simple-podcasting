@@ -1,6 +1,6 @@
 {
   "name": "@10up/simple-podcasting",
-  "version": "1.2.3",
+  "version": "1.6.0",
   "description": "A simple podcasting solution for WordPress. ",
   "homepage": "https://github.com/10up/simple-podcasting",
   "bugs": {
@@ -25,34 +25,43 @@
     "prebuild": "npm run makepot",
     "prepare": "husky install",
     "wp-env": "wp-env",
-    "cypress:open": "cypress open --config-file tests/cypress/config.json",
-    "cypress:run": "cypress run --config-file tests/cypress/config.json"
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "cypress:open": "cypress open --browser chrome --config-file tests/cypress/config.config.js",
+    "cypress:run": "cypress run --browser chrome --config-file tests/cypress/config.config.js"
   },
   "lint-staged": {
     "*.php": [
-      "./vendor/bin/phpcs --standard=10up-Default --extensions=php --warning-severity=8 -s --runtime-set testVersion 5.3"
+      "./vendor/bin/phpcs --standard=10up-Default --extensions=php --warning-severity=8 -s --runtime-set testVersion 7.4"
     ],
     "tests/**/*.js": [
       "./node_modules/.bin/wp-scripts format"
     ]
   },
   "devDependencies": {
-    "@10up/cypress-wp-utils": "git+https://github.com/10up/cypress-wp-utils.git#build",
-    "@wordpress/env": "^4.5.0",
-    "@wordpress/prettier-config": "^1.1.3",
-    "@wordpress/scripts": "^22.4.0",
+    "@10up/cypress-wp-utils": "github:10up/cypress-wp-utils#build",
+    "@wordpress/env": "^5.4.0",
+    "@wordpress/plugins": "^6.2.0",
+    "@wordpress/prettier-config": "^2.2.0",
+    "@wordpress/scripts": "^26.5.0",
     "ansi-regex": ">=6.0.1",
-    "cypress": "^9.5.4",
+    "copy-webpack-plugin": "^11.0.0",
+    "cypress": "^11.2.0",
     "cypress-file-upload": "^5.0.8",
+    "cypress-localstorage-commands": "^2.2.2",
+    "cypress-mochawesome-reporter": "^3.4.0",
     "eslint-plugin-cypress": "^2.12.1",
-    "husky": "^7.0.4",
+    "husky": "^8.0.1",
     "json-schema": ">=0.4.0",
-    "lint-staged": "^12.3.7",
-    "markdown-it": ">=12.3.2",
+    "lint-staged": "^13.0.3",
+    "markdown-it": "^13.0.1",
     "node-wp-i18n": "^1.2.6",
-    "nth-check": ">=2.0.1",
-    "prettier": "2.6.2",
+    "nth-check": "^2.1.1",
+    "prettier": "^2.7.1",
     "tmpl": ">=1.0.5"
   },
-  "prettier": "@wordpress/prettier-config"
+  "prettier": "@wordpress/prettier-config",
+  "dependencies": {
+    "use-debounce": "^8.0.4"
+  }
 }

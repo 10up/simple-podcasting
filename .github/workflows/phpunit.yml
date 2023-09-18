@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         php:
           - {name: 'PHP 7.4', version: '7.4'}
@@ -31,6 +32,10 @@ jobs:
     - name: Set standard 10up cache directories
       run: |
         composer config -g cache-dir "${{ env.COMPOSER_CACHE }}"
+
+    - uses: actions/setup-node@v3
+      with:
+      node-version-file: '.nvmrc'
 
     - name: Prepare composer cache
       uses: actions/cache@v2

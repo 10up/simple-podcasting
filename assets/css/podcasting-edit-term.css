@@ -11,3 +11,33 @@
 	max-width: 100%;
 	width: 75px;
 }
+
+.simple_podcasting__platforms img {
+	display: block;
+	max-width: 42px;
+	margin: 0 auto;
+	height: auto;
+}
+
+.simple_podcasting__platforms th {
+	padding: 15px 10px;
+	text-align: center;
+}
+
+.simple_podcasting__platforms td {
+	vertical-align: middle;
+	padding: 15px 10px;
+}
+
+.simple_podcasting__platforms-url {
+	min-width: 220px;
+}
+
+.simple_podcasting__platforms-icon {
+	transition: background-color 0.2s ease-out;
+}
+
+.simple_podcasting__platforms-icon--darken-bg {
+	background-color: rgb(28 52 59 / 22%);
+	transition: background-color 0.2s ease-in;
+}
