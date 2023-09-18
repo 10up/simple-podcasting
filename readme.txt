@@ -2,9 +2,9 @@
 Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
 Tags:              simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
 Requires at least: 5.7
-Tested up to:      6.2
+Tested up to:      6.3
 Requires PHP:      7.4
-Stable tag:        1.5.0
+Stable tag:        1.6.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,15 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
+
+= 1.6.0 - 2023-08-31 =
+* **Added:** Ability to create a Podcast from within the Block Editor (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh) via [#232](https://github.com/10up/simple-podcasting/pull/232)).
+* **Added:** New Podcast Platforms block that allows you to display icons and links to multiple podcast platforms (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#241](https://github.com/10up/simple-podcasting/pull/241)).
+* **Added:** Check for minimum required PHP version before loading the plugin (props [@kmgalanakis](https://github.com/kmgalanakis), [@dkotter](https://github.com/dkotter) via [#248](https://github.com/10up/simple-podcasting/pull/248)).
+* **Changed:** Rename `TAXONOMY_NAME` constant to `PODCASTING_TAXONOMY_NAME` (props [@jayedul](https://github.com/jayedul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#238](https://github.com/10up/simple-podcasting/pull/238)).
+* **Changed:** Bump WordPress "tested up to" version to 6.3 (props [@dkotter](https://github.com/dkotter) via [#248](https://github.com/10up/simple-podcasting/pull/248)).
+* **Fixed:** Resolved a PHP warning when creating a new podcast (props [@kmgalanakis](https://github.com/kmgalanakis), [@iamdharmesh](https://github.com/iamdharmesh) via [#247](https://github.com/10up/simple-podcasting/pull/247)).
+* **Security:** Bump `word-wrap` from 1.2.3 to 1.2.4 (props [@dependabot](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#243](https://github.com/10up/simple-podcasting/pull/243)).
 
 = 1.5.0 - 2023-06-29 =
 * **Added:** Post Grid Block to display a grid of episode posts (props [@mehul0810](https://github.com/mehul0810), [@cadic](https://github.com/cadic), [@nateconley](https://github.com/nateconley), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul), [@ajmaurya99](https://github.com/ajmaurya99), [@nickolas-kola](https://github.com/nickolas-kola), [@achchu93](https://github.com/achchu93) via [#214](https://github.com/10up/simple-podcasting/pull/214)).

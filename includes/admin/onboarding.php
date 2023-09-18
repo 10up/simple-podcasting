@@ -47,7 +47,7 @@ class Onboarding {
 	 */
 	public function register_onoarding_page() {
 		add_submenu_page(
-			null,
+			'admin.php',
 			esc_html__( 'Simple Podcasting Onboarding' ),
 			'',
 			'manage_options',
