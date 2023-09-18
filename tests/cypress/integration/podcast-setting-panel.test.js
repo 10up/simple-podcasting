@@ -15,6 +15,10 @@ describe('Create podcast setting panel', () => {
 		});
 	});
 
+	beforeEach(() => {
+		cy.login();
+	});
+
 	/**
 	 * Closes welcome guide programatically.
 	 */
