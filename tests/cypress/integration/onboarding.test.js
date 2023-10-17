@@ -5,11 +5,8 @@ const {
 } = require('../support/functions');
 
 describe('Onboarding tests', () => {
-	before(() => {
-		cy.login();
-	});
-
 	beforeEach(() => {
+		cy.login();
 		cy.uploadMedia('tests/cypress/fixtures/example.jpg');
 		cy.activatePlugin('simple-podcasting');
 		cy.visit(
