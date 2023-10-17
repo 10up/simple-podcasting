@@ -13,6 +13,14 @@ describe('Create podcast setting panel', () => {
 				});
 			}
 		});
+
+		cy.visit('/wp-admin/post-new.php');
+		closeWelcomeGuide();
+		openEditorSidebar();
+	});
+
+	beforeEach(() => {
+		cy.login();
 	});
 
 	/**
@@ -28,6 +36,19 @@ describe('Create podcast setting panel', () => {
 				win.wp.data
 					.dispatch('core/edit-post')
 					.toggleFeature('welcomeGuide');
+			}
+		});
+	}
+
+	function openEditorSidebar() {
+		cy.get('button.components-button[aria-label="Settings"]').should(
+			'exist'
+		);
+		cy.get('body').then(($body) => {
+			if (!$body.find('.edit-post-sidebar').length) {
+				cy.get(
+					'button.components-button[aria-label="Settings"]'
+				).click();
 			}
 		});
 	}
