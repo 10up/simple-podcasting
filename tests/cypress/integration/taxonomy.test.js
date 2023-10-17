@@ -5,7 +5,7 @@ const {
 } = require('../support/functions');
 
 describe('Admin can create and update podcast taxonomy', () => {
-	before(() => {
+	beforeEach(() => {
 		cy.login();
 	});
 
