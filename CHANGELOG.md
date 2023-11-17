@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [1.6.1] - 2023-11-20
+### Added
+- Repo Automator GitHub Action (props [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#253](https://github.com/10up/simple-podcasting/pull/253)).
+
+### Changed
+- Ensure end-to-end tests work on Cypress v13 and bump `cypress` from 11.2.0 to 13.2.0, `@10up/cypress-wp-utils` from 0.1.0 to 0.2.0, `@wordpress/env` from 5.4.0 to 8.7.0, `cypress-localstorage-commands` from 2.2.2 to 2.2.4 and `cypress-mochawesome-reporter` from 3.4.0 to 3.6.0 (props [@iamdharmesh](https://github.com/iamdharmesh), [@Sidsector9](https://github.com/Sidsector9) via [#254](https://github.com/10up/simple-podcasting/pull/254)).
+- Bump WordPress "tested up to" version to 6.4 (props [@qasumitbagthariya](https://github.com/qasumitbagthariya), [@jeffpaul](https://github.com/jeffpaul) via [#259](https://github.com/10up/simple-podcasting/pull/259), [#260](https://github.com/10up/simple-podcasting/pull/260)).
+
+### Security
+- Bump `postcss` from 8.4.27 to 8.4.31 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#256](https://github.com/10up/simple-podcasting/pull/256)).
+
 ## [1.6.0] - 2023-08-31
 ### Added
 - Ability to create a Podcast from within the Block Editor (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh) via [#232](https://github.com/10up/simple-podcasting/pull/232)).
@@ -205,6 +216,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.6.1]: https://github.com/10up/simple-podcasting/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/10up/simple-podcasting/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/10up/simple-podcasting/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/10up/simple-podcasting/compare/1.3.0...1.4.0
