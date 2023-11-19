@@ -76,6 +76,7 @@ require_once PODCASTING_PATH . 'includes/datatypes.php';
 require_once PODCASTING_PATH . 'includes/helpers.php';
 require_once PODCASTING_PATH . 'includes/rest-external-url.php';
 require_once PODCASTING_PATH . 'includes/transcripts.php';
+require_once PODCASTING_PATH . 'includes/upgrade.php';
 
 // Init the endpoint.
 endpoints\externalurl\setup();
