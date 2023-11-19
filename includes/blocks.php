@@ -77,8 +77,8 @@ function init() {
 				'default' => __( 'Transcript Link', 'simple-podcastin' ),
 			),
 		),
-		'example'  => array(),
-		'supports' => array(
+		'example'       => array(),
+		'supports'      => array(
 			'multiple' => false,
 			'inserter' => false,
 		),
@@ -114,11 +114,11 @@ function init() {
 					'type' => 'string',
 				),
 			),
-			'supports' => array(
-					'html'     => false,
-					'reusable' => false,
+			'supports'      => array(
+				'html'     => false,
+				'reusable' => false,
 			),
-			'parent'        => ['podcasting/podcast-transcript'],
+			'parent'        => [ 'podcasting/podcast-transcript' ],
 		)
 	);
 
@@ -141,11 +141,11 @@ function init() {
 					'type' => 'string',
 				),
 			),
-			'supports' => array(
-					'html'     => false,
-					'reusable' => false,
+			'supports'      => array(
+				'html'     => false,
+				'reusable' => false,
 			),
-			'parent'        => ['podcasting/podcast-transcript'],
+			'parent'        => [ 'podcasting/podcast-transcript' ],
 		)
 	);
 }
