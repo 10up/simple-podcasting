@@ -10,7 +10,6 @@
  * @var array    $context    Block context.
  */
 
-use function tenup_podcasting\transcripts\podcasting_wrap_unwrapped_text_in_paragraph;
 use function tenup_podcasting\transcripts\get_transcript_link_from_post;
 
 if ( 'none' !== $attributes['display'] ) : ?>
@@ -19,7 +18,7 @@ if ( 'none' !== $attributes['display'] ) : ?>
 	switch ( $attributes['display'] ) {
 		case 'post':
 			echo wp_kses_post(
-				podcasting_wrap_unwrapped_text_in_paragraph(
+				do_blocks(
 					get_post_meta( get_the_ID(), 'podcast_transcript', true )
 				)
 			);

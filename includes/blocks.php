@@ -62,7 +62,7 @@ function init() {
 		'textdomain'    => 'simple-podcasting',
 		'name'          => 'podcasting/podcast-transcript',
 		'icon'          => 'format-quote',
-		'apiVersion'    => 2,
+		'api_version'   => 2,
 		'category'      => 'common',
 		'attributes'    => array(
 			'transcript' => array(
@@ -77,8 +77,8 @@ function init() {
 				'default' => __( 'Transcript Link', 'simple-podcastin' ),
 			),
 		),
-		'example'       => array(),
-		'supports'      => array(
+		'example'  => array(),
+		'supports' => array(
 			'multiple' => false,
 			'inserter' => false,
 		),
@@ -93,6 +93,60 @@ function init() {
 	register_block_type(
 		'podcasting/podcast-transcript',
 		$transcript_block_args
+	);
+
+	/**
+	 * Simple cite block.
+	 */
+	register_block_type(
+		'podcasting/podcast-transcript-cite',
+		array(
+			'editor_script' => 'podcasting-transcript',
+			'title'         => __( 'Cite', 'simple-podcasting' ),
+			'description'   => '',
+			'textdomain'    => 'simple-podcasting',
+			'name'          => 'podcasting/podcast-transcript-cite',
+			'icon'          => 'admin-users',
+			'api_version'   => 2,
+			'category'      => 'text',
+			'attributes'    => array(
+				'text' => array(
+					'type' => 'string',
+				),
+			),
+			'supports' => array(
+					'html'     => false,
+					'reusable' => false,
+			),
+			'parent'        => ['podcasting/podcast-transcript'],
+		)
+	);
+
+	/**
+	 * Simple time block.
+	 */
+	register_block_type(
+		'podcasting/podcast-transcript-time',
+		array(
+			'editor_script' => 'podcasting-transcript',
+			'title'         => __( 'Time', 'simple-podcasting' ),
+			'description'   => '',
+			'textdomain'    => 'simple-podcasting',
+			'name'          => 'podcasting/podcast-transcript-time',
+			'icon'          => 'clock',
+			'api_version'   => 2,
+			'category'      => 'text',
+			'attributes'    => array(
+				'text' => array(
+					'type' => 'string',
+				),
+			),
+			'supports' => array(
+					'html'     => false,
+					'reusable' => false,
+			),
+			'parent'        => ['podcasting/podcast-transcript'],
+		)
 	);
 }
 add_action( 'init', __NAMESPACE__ . '\init' );

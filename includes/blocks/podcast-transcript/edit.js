@@ -1,4 +1,4 @@
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { useBlockProps, RichText, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import {
 	RadioControl,
@@ -6,22 +6,42 @@ import {
 	CardBody,
 	Placeholder,
 } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useSelect, withSelect } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
+import { serialize } from '@wordpress/blocks';
 
-const Edit = ({ attributes, setAttributes, isSelected }) => {
+const Edit = withSelect((select, { clientId }) => {
+	return {
+		innerBlocks: select('core/block-editor').getBlocksByClientId(clientId),
+	};
+})(({ attributes, setAttributes, isSelected, innerBlocks, clientId }) => {
 	const blockProps = useBlockProps({});
 
 	const postType = useSelect(
 		(select) => select('core/editor').getCurrentPostType(),
 		[]
 	);
+
 	const [meta, setMeta] = useEntityProp('postType', postType, 'meta');
+
+	useEffect(() => {
+		if (innerBlocks.length) {
+			setMeta({
+				...meta,
+				podcast_transcript: serialize(innerBlocks[0].innerBlocks),
+			});
+		}
+	}, [innerBlocks]);
+
+	const isInnerBlockSelected = useSelect((select) =>
+		select('core/block-editor').hasSelectedInnerBlock(clientId)
+	);
 
 	const { display, linkText } = attributes;
 	return (
 		<section {...blockProps}>
-			{isSelected && (
+			{(isSelected || isInnerBlockSelected) && (
 				<>
 					<Card>
 						<CardBody>
@@ -82,21 +102,20 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
 			)}
 
 			{(isSelected || display === 'post') && (
-				<RichText
-					tagName="section"
-					value={meta.podcast_transcript}
-					onChange={(content) =>
-						setMeta({ ...meta, podcast_transcript: content })
-					}
-					placeholder={__('Transcript', 'simple-podcasting')}
-					allowedFormats={[
-						'podcasting/transcript-cite',
-						'podcasting/transcript-time',
-					]}
-				/>
+				<>
+					<section>
+						<InnerBlocks
+							allowedBlocks={[
+								'core/paragraph',
+								'podcasting/podcast-transcript-cite',
+								'podcasting/podcast-transcript-time',
+							]}
+						/>
+					</section>
+				</>
 			)}
 		</section>
 	);
-};
+});
 
 export default Edit;

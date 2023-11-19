@@ -11,33 +11,6 @@ use DOMDocument;
 use WP_Post;
 
 /**
- * Wrap unwrapped text in a paragraph tag.
- *
- * @param string $text The incoming markup.
- *
- * @return string
- */
-function podcasting_wrap_unwrapped_text_in_paragraph( $text ) {
-	$doc = new DOMDocument();
-	libxml_use_internal_errors( true );
-	$doc->loadHTML( '<html><body>' . $text . '</body></html>' );
-	$body_node     = $doc->getElementsByTagName( 'body' )->item( 0 );
-	$filtered_text = '';
-
-	// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-	foreach ( $body_node->childNodes as $node ) {
-		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-		if ( XML_TEXT_NODE === $node->nodeType ) {
-			$filtered_text .= '<p>' . $doc->saveHTML( $node ) . '</p>';
-			continue;
-		}
-		$filtered_text .= $doc->saveHTML( $node );
-	}
-
-	return $filtered_text;
-}
-
-/**
  * Adds transcript query var.
  * Used to indicate that the transcript template should be rendered.
  *
@@ -92,9 +65,27 @@ function get_transcript_link_from_post( $post = null ) {
 	if ( ! $post ) {
 		return false;
 	}
-	$podcast = get_the_terms( $post, TAXONOMY_NAME );
+	$podcast = get_the_terms( $post, PODCASTING_TAXONOMY_NAME );
 	if ( ! $podcast ) {
 		return '';
 	}
 	return trailingslashit( get_term_link( $podcast[0]->term_id ) ) . $post->post_name . '/transcript/';
 }
+
+/**
+ * Adds <time> element to allowed html.
+ *
+ * @param array[] $html Allowed HTML tags.
+ * @param string $context Context name.
+ * @return array[] html
+ */
+function allow_time_element( $html, $context ) {
+	if ( 'post' !== $context ) {
+		return $html;
+	}
+
+	$html['time'] = array();
+
+	return $html;
+}
+add_filter( 'wp_kses_allowed_html', __NAMESPACE__ . '\\allow_time_element', 10, 2 );

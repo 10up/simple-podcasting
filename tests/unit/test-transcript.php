@@ -23,14 +23,6 @@ class TranscriptTests extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
-	public function test_wrap_unwrapped() {
-		$test_string = "<time>0:00</time><br><cite>Person Doe</cite><br>Hello World<br><time>0:05</time><br><cite>Person Doe</cite><br>Lorem Ipsum";
-		$this->assertSame(
-			tenup_podcasting\transcripts\podcasting_wrap_unwrapped_text_in_paragraph( $test_string ),
-			'<time>0:00</time><br><cite>Person Doe</cite><br><p>Hello World</p><br><time>0:05</time><br><cite>Person Doe</cite><br><p>Lorem Ipsum</p>'
-		);
-	}
-
 	public function test_get_transcript_from_post() {
 		$post              = Mockery::mock( 'WP_Post' );
 		$post->post_name   = 'latest-podcast';
