@@ -76,7 +76,7 @@ function get_transcript_link_from_post( $post = null ) {
  * Adds <time> element to allowed html.
  *
  * @param array[] $html Allowed HTML tags.
- * @param string $context Context name.
+ * @param string  $context Context name.
  * @return array[] html
  */
 function allow_time_element( $html, $context ) {
