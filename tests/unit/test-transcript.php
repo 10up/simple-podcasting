@@ -29,6 +29,7 @@ class TranscriptTests extends TestCase {
 		$terms             = [ new stdClass() ];
 		$terms[0]->term_id = 100;
 
+		\WP_Mock::userFunction( 'get_post' )->andReturn( $post );
 		\WP_Mock::userFunction( 'get_the_terms' )->andReturn( $terms );
 		\WP_Mock::userFunction( 'get_term_link' )->andReturn( 'https://simple-podcasting.test/podcasts/test-podcast/' );
 		\WP_Mock::userFunction( 'trailingslashit' )->andReturnUsing( function( $url ) {
