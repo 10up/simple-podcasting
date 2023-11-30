@@ -35,7 +35,13 @@ function init() {
 			'editor_style'  => 'podcasting-block-editor',
 		)
 	);
+}
+add_action( 'init', __NAMESPACE__ . '\init' );
 
+/**
+ * Register block and its assets.
+ */
+function init_transcript() {
 	$podcast_transcript_block_asset = require PODCASTING_PATH . 'dist/podcasting-transcript.asset.php';
 
 	wp_register_script(
@@ -146,10 +152,10 @@ function init() {
 				'reusable' => false,
 			),
 			'parent'        => [ 'podcasting/podcast-transcript' ],
-		)
+		),
 	);
 }
-add_action( 'init', __NAMESPACE__ . '\init' );
+add_action( 'init', __NAMESPACE__ . '\init_transcript' );
 
 /**
  * Registers block for Podcast Platforms.
