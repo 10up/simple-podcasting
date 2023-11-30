@@ -1,15 +1,41 @@
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 import { useBlockProps, RichText } from '@wordpress/block-editor';
 
-const Edit = ({ attributes: { text }, setAttributes }) => {
+const Edit = ({
+	attributes,
+	attributes: { text },
+	setAttributes,
+	clientId,
+	onReplace,
+}) => {
 	const blockProps = useBlockProps();
 	return (
 		<RichText
-			{...blockProps}
 			tagName="cite"
 			value={text}
 			onChange={(content) => setAttributes({ text: content })}
 			allowedFormats={[]}
+			withoutInteractiveFormatting
+			onSplit={(value, isOriginal) => {
+				let block;
+
+				if (isOriginal || value) {
+					block = createBlock('podcasting/podcast-transcript-cite', {
+						...attributes,
+						content: value,
+					});
+				} else {
+					block = createBlock('core/paragraph');
+				}
+
+				if (isOriginal) {
+					block.clientId = clientId;
+				}
+
+				return block;
+			}}
+			onReplace={onReplace}
+			{...blockProps}
 		/>
 	);
 };

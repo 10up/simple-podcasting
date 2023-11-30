@@ -38,6 +38,8 @@ const Edit = withSelect((select, { clientId }) => {
 		select('core/block-editor').hasSelectedInnerBlock(clientId)
 	);
 
+	console.log(isInnerBlockSelected);
+
 	const { display, linkText } = attributes;
 	return (
 		<section {...blockProps}>
@@ -101,7 +103,7 @@ const Edit = withSelect((select, { clientId }) => {
 				/>
 			)}
 
-			{(isSelected || display === 'post') && (
+			{(isSelected || isInnerBlockSelected || display === 'post') && (
 				<>
 					<section>
 						<InnerBlocks
