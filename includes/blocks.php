@@ -152,7 +152,7 @@ function init_transcript() {
 				'reusable' => false,
 			),
 			'parent'        => [ 'podcasting/podcast-transcript' ],
-		),
+		)
 	);
 }
 add_action( 'init', __NAMESPACE__ . '\init_transcript' );
