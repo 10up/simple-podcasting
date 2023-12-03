@@ -55,7 +55,7 @@
     "json-schema": ">=0.4.0",
     "lint-staged": "^13.0.3",
     "markdown-it": "^13.0.1",
-    "mochawesome-json-to-md": "^1.0.1",
+    "mochawesome-json-to-md": "^0.7.2",
     "node-wp-i18n": "^1.2.6",
     "nth-check": "^2.1.1",
     "prettier": "^2.7.1",
