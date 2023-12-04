@@ -24,3 +24,4 @@ require TEST_PLUGIN_DIR . 'includes/datatypes.php';
 require TEST_PLUGIN_DIR . 'includes/helpers.php';
 require TEST_PLUGIN_DIR . 'includes/post-meta-box.php';
 require TEST_PLUGIN_DIR . 'includes/rest-external-url.php';
+require TEST_PLUGIN_DIR . 'includes/transcripts.php';

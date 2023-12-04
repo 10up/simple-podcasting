@@ -30,6 +30,11 @@ module.exports = {
 			'assets/js',
 			'onboarding.js'
 		),
+		'podcasting-transcript': path.resolve(
+			process.cwd(),
+			'includes/blocks/podcast-transcript',
+			'index.js'
+		),
 		'create-podcast-show': path.resolve(
 			process.cwd(),
 			'assets/js',
@@ -41,7 +46,7 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{ from: 'assets/images/*', to: './' },
-				{ from: 'assets/images/icons', to: './images/icons' }
+				{ from: 'assets/images/icons', to: './images/icons' },
 			],
 		}),
 	],
