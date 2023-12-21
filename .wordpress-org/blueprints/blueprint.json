@@ -1,6 +1,6 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
-	"landingPage": "\/wp-admin\/post.php?post=6&action=edit",
+	"landingPage": "\/wp-admin\/admin.php?page=simple-podcasting-onboarding&step=1",
 	"preferredVersions": {
 		"php": "7.4",
 		"wp": "latest"
@@ -23,13 +23,6 @@
 			},
 			"options": {
 				"activate": true
-			}
-		},
-		{
-			"step": "importFile",
-			"file": {
-				"resource": "url",
-				"url": "https:\/\/raw.githubusercontent.com\/10up\/simple-podcasting\/90c5b0c4a051cec97d5f3e5703bb8f40288e38a5\/.wordpress-org\/blueprints\/demo-data.xml"
 			}
 		}
 	]
