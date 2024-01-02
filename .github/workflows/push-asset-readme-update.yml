@@ -1,13 +1,6 @@
 name: Plugin asset/readme update
 
 on:
-  workflow_dispatch:
-    inputs:
-      ignoreOtherFiles:
-        description: 'Ignore other file changes'
-        required: true
-        type: boolean
-        default: false
   push:
     branches:
     - trunk
@@ -35,4 +28,3 @@ jobs:
       env:
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        IGNORE_OTHER_FILES: ${{ inputs.ignoreOtherFiles || false }}
