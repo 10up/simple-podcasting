@@ -363,31 +363,37 @@ add_action( 'wp_ajax_get_podcast_platforms', __NAMESPACE__ . '\ajax_get_podcast_
 
 /**
  * Latest podcast query for front-end.
+ *
+ * @param Object $query query object.
  */
-function latest_episode_query_loop($query) {
-	
+function latest_episode_query_loop( $query ) {
+
 	// update query to only return posts that have a podcast selected
 	return [
-		'post_type' => 'post',
+		'post_type'      => 'post',
 		'posts_per_page' => 1,
-		'orderby' => 'date',
-		'order' => 'DESC',
-		'tax_query' => [
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+		'tax_query'      => [
 			[
 				'taxonomy' => 'podcasting_podcasts',
 				'field'    => 'term_id',
-				'operator' => 'EXISTS'
-			]
+				'operator' => 'EXISTS',
+			],
 		],
 	];
 }
 
 /**
  * Latest podcast check.
+ *
+ * @param String   $pre_render   pre render object.
+ * @param Array    $parsed_block parsed block object.
+ * @param WP_Block $parent_block parent block object.
  */
 function latest_episode_check( $pre_render, $parsed_block, $parent_block ) {
-	
-	if ( isset( $parsed_block[ 'attrs' ][ 'namespace' ] ) && 'podcasting/latest-episode' === $parsed_block[ 'attrs' ][ 'namespace' ] ) {
+
+	if ( isset( $parsed_block['attrs']['namespace'] ) && 'podcasting/latest-episode' === $parsed_block['attrs']['namespace'] ) {
 		add_action( 'query_loop_block_query_vars', __NAMESPACE__ . '\latest_episode_query_loop' );
 	}
 }
@@ -395,27 +401,30 @@ add_filter( 'pre_render_block', __NAMESPACE__ . '\latest_episode_check', 10, 3 )
 
 /**
  * Latest podcast query in editor.
+ *
+ * @param Array $args    query args.
+ * @param Array $request request object.
  */
 function latest_episode_query_api( $args, $request ) {
-	
+
 	$podcasting_podcasts = $request->get_param( 'podcastingQuery' );
-	
+
 	if ( 'not_empty' === $podcasting_podcasts ) {
 		$args = [
-			'post_type' => 'post',
+			'post_type'      => 'post',
 			'posts_per_page' => 1,
-			'orderby' => 'date',
-			'order' => 'DESC',
-			'tax_query' => [
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'tax_query'      => [
 				[
 					'taxonomy' => 'podcasting_podcasts',
 					'field'    => 'term_id',
-					'operator' => 'EXISTS'
-				]
+					'operator' => 'EXISTS',
+				],
 			],
 		];
 	}
-	
+
 	return $args;
 }
-add_filter( 'rest_post_query', __NAMESPACE__ . '\latest_episode_query_api', 10, 2);
+add_filter( 'rest_post_query', __NAMESPACE__ . '\latest_episode_query_api', 10, 2 );
