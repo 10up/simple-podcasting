@@ -19,6 +19,13 @@ import { useSelect, dispatch } from "@wordpress/data";
 // `wp` namespace instead of @wordpress NPM packages for the following.
 const { store: editorStore } = wp.editor;
 const { store: coreDataStore } = wp.coreData;
+const DEFAULT_QUERY = {
+	per_page: -1,
+	orderby: 'name',
+	order: 'asc',
+	_fields: 'id,name,parent',
+	context: 'view',
+};
 
 const CreatePodcastShowModal = ( { isModalOpen, closeModal } ) => {
 	const [ showName, setShowName ] = useState( '' );
@@ -238,7 +245,7 @@ const CreatePodcastShowPlugin = () => {
 		const { getCurrentPostId } = select( editorStore );
 
 		return {
-			allPodcasts: getEntityRecords( 'taxonomy', 'podcasting_podcasts' ) || [],
+			allPodcasts: getEntityRecords( 'taxonomy', 'podcasting_podcasts', DEFAULT_QUERY ) || [],
 			attachedPodcasts: getEntityRecords( 'taxonomy', 'podcasting_podcasts', { post: getCurrentPostId() } ) || [],
 			currentPostId: getCurrentPostId(),
 		}
