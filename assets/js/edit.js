@@ -51,7 +51,7 @@ class Edit extends Component {
 
 	render() {
 		const { setAttributes, isSelected, attributes } = this.props;
-		const { caption, explicit } = attributes;
+		const { caption, explicit, displayDuration, displayDurationValue } = attributes;
 		const duration = attributes.duration || '';
 		const captioned = attributes.captioned || '';
 		const seasonNumber = attributes.seasonNumber || '';
@@ -95,6 +95,7 @@ class Edit extends Component {
 				mime,
 				filesize,
 				duration,
+				displayDurationValue: duration,
 				caption: attachment.title,
 				enclosure: attachment.url + '\n' + filesize + '\n' + mime,
 			});
@@ -116,6 +117,7 @@ class Edit extends Component {
 								mime,
 								filesize,
 								duration,
+								displayDurationValue: duration,
 								caption: '',
 							});
 						}
@@ -129,6 +131,7 @@ class Edit extends Component {
 			}
 		};
 		const toggleCaptioned = () => setAttributes({ captioned: !captioned });
+		const toggleDisplayDuration = () => setAttributes({ displayDuration: !displayDuration });
 
 		const controls = (
 			<BlockControls key="controls">
@@ -168,6 +171,20 @@ class Edit extends Component {
 								)}
 								checked={captioned}
 								onChange={toggleCaptioned}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<label htmlFor="podcast-display-duration-form-toggle">
+								{__('Display Listen Time', 'simple-podcasting')}
+							</label>
+							<FormToggle
+								id="podcast-display-duration-form-toggle"
+								label={__(
+									'Listen Time',
+									'simple-podcasting'
+								)}
+								checked={displayDuration}
+								onChange={toggleDisplayDuration}
 							/>
 						</PanelRow>
 						<PanelRow>
@@ -292,6 +309,12 @@ class Edit extends Component {
 									}
 									isSelected={isSelected}
 								/>
+							)}
+							{displayDuration && displayDurationValue && (
+								<span>
+									{__('Listen Time: ', 'simple-podcasting')}
+									{displayDurationValue}
+								</span>
 							)}
 						</figure>
 					) : (

@@ -88,6 +88,14 @@ export default registerBlockType(
 				type: 'string',
 				source: 'meta',
 				meta: 'podcast_episode_type',
+			},
+			displayDuration: {
+				type: 'boolean',
+				default: false,
+			},
+			displayDurationValue: {
+				type: 'strong',
+				default: '',
 			}
 		},
 		transforms,
@@ -95,11 +103,18 @@ export default registerBlockType(
 		edit: Edit,
 
 		save: props => {
-			const { id, src, caption } = props.attributes;
+			const { id, src, caption, displayDuration, displayDurationValue } = props.attributes;
+
 			return (
 				<figure className={ id ? `podcast-${ id }` : null }>
 					<audio controls="controls" src={ src } />
 					{ caption && caption.length > 0 && <figcaption>{ caption }</figcaption> }
+					{displayDuration && displayDurationValue && (
+						<span className="wp-block-podcasting-podcast__listen-time">
+							{__('Listen Time: ', 'simple-podcasting')}
+							{displayDurationValue}
+						</span>
+					)}
 				</figure>
 			);
 		},
