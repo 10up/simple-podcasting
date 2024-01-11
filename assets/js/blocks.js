@@ -108,7 +108,7 @@ export default registerBlockType(
 			return (
 				<figure className={ id ? `podcast-${ id }` : null }>
 					<audio controls="controls" src={ src } />
-					{ caption && caption.length > 0 && <figcaption>{ caption }</figcaption> }
+					{ caption && caption.length > 0 && <figcaption className="wp-block-podcasting-podcast__caption">{ caption }</figcaption> }
 					{displayDuration && displayDurationValue && (
 						<span className="wp-block-podcasting-podcast__listen-time">
 							{__('Listen Time: ', 'simple-podcasting')}

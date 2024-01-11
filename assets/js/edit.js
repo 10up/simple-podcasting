@@ -303,6 +303,7 @@ class Edit extends Component {
 										'Write caption…',
 										'simple-podcasting'
 									)}
+									className="wp-block-podcasting-podcast__caption"
 									value={caption}
 									onChange={(value) =>
 										setAttributes({ caption: value })
