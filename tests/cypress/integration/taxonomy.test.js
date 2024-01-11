@@ -1,13 +1,16 @@
-const { randomName, populatePodcast } = require('../support/functions');
+const {
+	randomName,
+	populatePodcast,
+	deleteAllTerms,
+} = require('../support/functions');
 
 describe('Admin can create and update podcast taxonomy', () => {
-	before(() => {
+	beforeEach(() => {
 		cy.login();
-		cy.deleteAllTerms('podcasting_podcasts');
 	});
 
-	after(() => {
-		cy.deleteAllTerms('podcasting_podcasts');
+	before(() => {
+		deleteAllTerms();
 	});
 
 	it('Can see taxonomy menu item', () => {
@@ -40,14 +43,14 @@ describe('Admin can create and update podcast taxonomy', () => {
 				});
 			},
 		});
-		cy.get('.row-title').should('have.text', 'Remote work');
+		cy.get('.row-title').first().should('have.text', 'Remote work');
 	});
 
 	it('Can edit taxonomy', () => {
 		cy.visit(
 			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
 		);
-		cy.get('.row-title').should('have.text', 'Remote work').click();
+		cy.get('.row-title').contains('Remote work').click();
 		cy.url().should('contain', 'http://localhost:8889/wp-admin/term.php');
 		cy.get('#name').click().clear();
 		cy.get('#name').type('Distributed');
@@ -58,14 +61,14 @@ describe('Admin can create and update podcast taxonomy', () => {
 			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
 		);
 
-		cy.get('.row-title').should('have.text', 'Distributed');
+		cy.get('.row-title').first().should('have.text', 'Distributed');
 	});
 
 	it('Can delete taxonomy', () => {
 		cy.visit(
 			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
 		);
-		cy.get('.row-title').should('have.text', 'Distributed').click();
+		cy.get('.row-title').contains('Distributed').click();
 		cy.url().should('contain', 'http://localhost:8889/wp-admin/term.php');
 		cy.on('window:confirm', () => true);
 		cy.get('.delete').click();
@@ -73,7 +76,10 @@ describe('Admin can create and update podcast taxonomy', () => {
 			'contain',
 			'http://localhost:8889/wp-admin/edit-tags.php'
 		);
-		cy.get('.wp-list-table').should('contain.text', 'No podcasts found');
+		cy.visit(
+			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
+		);
+		cy.get('.row-title').contains('Distributed').should('not.exist');
 	});
 
 	const tests = {

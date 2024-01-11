@@ -3,7 +3,8 @@
  * Plugin Name:       Simple Podcasting
  * Plugin URI:        https://github.com/10up/simple-podcasting
  * Description:       Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
- * Version:           1.5.0
+ * Version:           1.6.1
+ * Requires PHP:      7.4
  * Author:            10up
  * Author URI:        http://10up.com/
  * License:           GPL v2 or later
@@ -15,16 +16,67 @@
 
 namespace tenup_podcasting;
 
-define( 'PODCASTING_VERSION', '1.5.0' );
+/**
+ * Get the minimum version of PHP required by this plugin.
+ *
+ * @since 1.6.0
+ *
+ * @return string Minimum version required.
+ */
+function minimum_php_requirement() {
+	return '7.4';
+}
+
+/**
+ * Whether PHP installation meets the minimum requirements
+ *
+ * @since 1.6.0
+ *
+ * @return bool True if meets minimum requirements, false otherwise.
+ */
+function site_meets_php_requirements() {
+	return version_compare( phpversion(), minimum_php_requirement(), '>=' );
+}
+
+// Try to load the plugin files, ensuring our PHP version is met first.
+if ( ! site_meets_php_requirements() ) {
+	add_action(
+		'admin_notices',
+		function() {
+			?>
+			<div class="notice notice-error">
+				<p>
+					<?php
+					echo wp_kses_post(
+						sprintf(
+							/* translators: %s: Minimum required PHP version */
+							__( 'Simple Podcasting requires PHP version %s or later. Please upgrade PHP or disable the plugin.', 'simple-podcasting' ),
+							esc_html( minimum_php_requirement() )
+						)
+					);
+					?>
+				</p>
+			</div>
+			<?php
+		}
+	);
+	return;
+}
+
+define( 'PODCASTING_VERSION', '1.6.1' );
 define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
 define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'PODCASTING_TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
 
+require_once PODCASTING_PATH . 'includes/create-podcast.php';
 require_once PODCASTING_PATH . 'includes/admin/onboarding.php';
+require_once PODCASTING_PATH . 'includes/admin/create-podcast-component.php';
 require_once PODCASTING_PATH . 'includes/datatypes.php';
 require_once PODCASTING_PATH . 'includes/helpers.php';
 require_once PODCASTING_PATH . 'includes/rest-external-url.php';
+require_once PODCASTING_PATH . 'includes/transcripts.php';
+require_once PODCASTING_PATH . 'includes/upgrade.php';
 
 // Init the endpoint.
 endpoints\externalurl\setup();
@@ -99,6 +151,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 	$screens = array(
 		'edit-tags.php',
 		'term.php',
+		'admin_page_simple-podcasting-onboarding',
 	);
 
 	if ( in_array( $hook_suffix, $screens, true ) ) {
@@ -118,7 +171,7 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 		);
 	}
 
-	if ( 'admin_page_simple-podcasting-onboarding' === $hook_suffix ) {
+	if ( in_array( $hook_suffix, $screens, true ) ) {
 		wp_enqueue_media();
 		wp_enqueue_script(
 			'podcasting_onboarding_screen_script',
@@ -126,6 +179,22 @@ function podcasting_edit_term_enqueues( $hook_suffix ) {
 			array( 'jquery' ),
 			PODCASTING_VERSION,
 			true
+		);
+
+		wp_enqueue_script(
+			'podcasting_edit_term_screen',
+			PODCASTING_URL . 'dist/podcasting-edit-term.js',
+			array( 'jquery' ),
+			PODCASTING_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'podcasting_edit_term_screen',
+			'podcastingEditPostVars',
+			array(
+				'iconUrl' => PODCASTING_URL . 'dist/images/icons',
+			)
 		);
 
 		wp_enqueue_style(

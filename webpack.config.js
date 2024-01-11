@@ -20,16 +20,34 @@ module.exports = {
 			'assets/js',
 			'podcasting-edit-term.js'
 		),
+		'podcast-platforms-block': path.resolve(
+			process.cwd(),
+			'assets/js/blocks/podcast-platforms',
+			'index.js'
+		),
 		'podcasting-onboarding': path.resolve(
 			process.cwd(),
 			'assets/js',
 			'onboarding.js'
 		),
+		'podcasting-transcript': path.resolve(
+			process.cwd(),
+			'includes/blocks/podcast-transcript',
+			'index.js'
+		),
+		'create-podcast-show': path.resolve(
+			process.cwd(),
+			'assets/js',
+			'create-podcast-show.js'
+		),
 	},
 	plugins: [
 		...defaultConfig.plugins,
 		new CopyPlugin({
-			patterns: [{ from: 'assets/images/*', to: './' }],
+			patterns: [
+				{ from: 'assets/images/*', to: './' },
+				{ from: 'assets/images/icons', to: './images/icons' },
+			],
 		}),
 	],
 };
