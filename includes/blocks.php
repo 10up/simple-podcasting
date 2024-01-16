@@ -39,6 +39,125 @@ function init() {
 add_action( 'init', __NAMESPACE__ . '\init' );
 
 /**
+ * Register block and its assets.
+ */
+function init_transcript() {
+	$podcast_transcript_block_asset = require PODCASTING_PATH . 'dist/podcasting-transcript.asset.php';
+
+	wp_register_script(
+		'podcasting-transcript',
+		PODCASTING_URL . 'dist/podcasting-transcript.js',
+		$podcast_transcript_block_asset['dependencies'],
+		$podcast_transcript_block_asset['version'],
+		true
+	);
+
+	wp_register_style(
+		'podcasting-transcript',
+		PODCASTING_URL . 'dist/podcasting-transcript.css',
+		array(),
+		$podcast_transcript_block_asset['version'],
+		'all'
+	);
+
+	$transcript_block_args = array(
+		'editor_script' => 'podcasting-transcript',
+		'style_handles' => array( 'podcasting-transcript' ),
+		'title'         => __( 'Podcast Transcript', 'simple-podcasting' ),
+		'description'   => '',
+		'textdomain'    => 'simple-podcasting',
+		'name'          => 'podcasting/podcast-transcript',
+		'icon'          => 'format-quote',
+		'api_version'   => 2,
+		'category'      => 'common',
+		'attributes'    => array(
+			'transcript' => array(
+				'type' => 'string',
+			),
+			'display'    => array(
+				'type'    => 'string',
+				'default' => 'post',
+			),
+			'linkText'   => array(
+				'type'    => 'string',
+				'default' => __( 'Transcript Link', 'simple-podcastin' ),
+			),
+		),
+		'example'       => array(),
+		'supports'      => array(
+			'multiple' => false,
+			'inserter' => false,
+		),
+	);
+
+	$transcript_block_args['render_callback'] = function( $attributes, $content, $block ) {
+		ob_start();
+		include PODCASTING_PATH . 'includes/blocks/podcast-transcript/markup.php';
+		return ob_get_clean();
+	};
+
+	register_block_type(
+		'podcasting/podcast-transcript',
+		$transcript_block_args
+	);
+
+	/**
+	 * Simple cite block.
+	 */
+	register_block_type(
+		'podcasting/podcast-transcript-cite',
+		array(
+			'editor_script' => 'podcasting-transcript',
+			'title'         => __( 'Cite', 'simple-podcasting' ),
+			'description'   => '',
+			'textdomain'    => 'simple-podcasting',
+			'name'          => 'podcasting/podcast-transcript-cite',
+			'icon'          => 'admin-users',
+			'api_version'   => 2,
+			'category'      => 'text',
+			'attributes'    => array(
+				'text' => array(
+					'type' => 'string',
+				),
+			),
+			'supports'      => array(
+				'html'     => false,
+				'reusable' => false,
+			),
+			'parent'        => [ 'podcasting/podcast-transcript' ],
+		)
+	);
+
+	/**
+	 * Simple time block.
+	 */
+	register_block_type(
+		'podcasting/podcast-transcript-time',
+		array(
+			'editor_script' => 'podcasting-transcript',
+			'title'         => __( 'Time', 'simple-podcasting' ),
+			'description'   => '',
+			'textdomain'    => 'simple-podcasting',
+			'name'          => 'podcasting/podcast-transcript-time',
+			'icon'          => 'clock',
+			'api_version'   => 2,
+			'category'      => 'text',
+			'attributes'    => array(
+				'text' => array(
+					'type' => 'string',
+				),
+			),
+			'supports'      => array(
+				'html'     => false,
+				'reusable' => false,
+			),
+			'parent'        => [ 'podcasting/podcast-transcript' ],
+		)
+	);
+}
+add_action( 'init', __NAMESPACE__ . '\init_transcript' );
+
+/**
  * Registers block for Podcast Platforms.
  */
 function register_podcast_platforms_block() {

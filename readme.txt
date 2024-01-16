@@ -4,15 +4,15 @@ Tags:              simple podcasting, podcasting, podcast, apple podcasts, episo
 Requires at least: 5.7
 Tested up to:      6.4
 Requires PHP:      7.4
-Stable tag:        1.6.1
+Stable tag:        1.7.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
+Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor (aka Gutenberg).
 
 == Description ==
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
+Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor (aka Gutenberg).
 
 Podcasting is a method to distribute audio and video episodes through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
@@ -40,7 +40,8 @@ Repeat for each podcast you would like to create.
 
  * Create a new post and assign it to one or more Podcasts using the panel labeled Podcasts.
  * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (sometimes referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
- * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available, season number, episode number, episode type and to optionally specify one media item in the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available, season number, episode number, episode type, add a transcript and to optionally specify one media item in the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * Transcript: If desired, an optional transcript can be added from the settings of the Podcast block. This will add a Podcast Transcript block, allowing you to add a transcript consisting of time codes, citations, and paragrah text that can be embedded in the post, linked to an external plain HTML file, or linked in a special `<podcast:transcript>` XML element.
 
 === Submit your podcast feed to Apple Podcasts ===
 
@@ -118,6 +119,13 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
+
+= 1.7.0 - 2024-01-16 =
+* **Added:** Ability to add a transcript to a podcast episode by utilizing a new Podcast Transcript block. This block is added by clicking the `Add Transcript` button that will now show in the sidebar panel of the Podcast block (props [@nateconley](https://github.com/nateconley), [@peterwilsoncc](https://github.com/peterwilsoncc), [@sksaju](https://github.com/sksaju), [@kirtangajjar](https://github.com/kirtangajjar) via [#221](https://github.com/10up/simple-podcasting/pull/221)).
+* **Added:** Support for the WordPress.org plugin preview (props [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#265](https://github.com/10up/simple-podcasting/pull/265)).
+* **Fixed:** Ensure we show all Podcasting terms in the Block Editor sidebar (props [@dkotter](https://github.com/dkotter), [@channchetra](https://github.com/channchetra), [@Sidsector9](https://github.com/Sidsector9) via [#268](https://github.com/10up/simple-podcasting/pull/268)).
+* **Security:** Bump `axios` from 0.25.0 to 1.6.2 and `@wordpress/scripts` from 26.9.0 to 26.18.0 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#263](https://github.com/10up/simple-podcasting/pull/263)).
+* **Security:** Bump `follow-redirects` from 1.15.3 to 1.15.4 (props [@dependabot](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#269](https://github.com/10up/simple-podcasting/pull/269)).
 
 = 1.6.1 - 2023-11-21 =
 * **Added:** Repo Automator GitHub Action (props [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#253](https://github.com/10up/simple-podcasting/pull/253)).
