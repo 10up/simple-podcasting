@@ -31,8 +31,13 @@ function init() {
 	register_block_type(
 		'podcasting/podcast',
 		array(
-			'editor_script' => 'podcasting-block-editor',
-			'editor_style'  => 'podcasting-block-editor',
+			'editor_script'   => 'podcasting-block-editor',
+			'editor_style'    => 'podcasting-block-editor',
+			'render_callback' => function( $attributes, $content, $block ) {
+				ob_start();
+				include PODCASTING_PATH . 'includes/blocks/podcast/markup.php';
+				return ob_get_clean();
+			},
 		)
 	);
 }

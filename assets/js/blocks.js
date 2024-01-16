@@ -3,6 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+const { select } = wp.data;
 
 // Split the Edit component out.
 import Edit from './edit';
@@ -53,7 +54,7 @@ export default registerBlockType(
 				meta: 'podcast_mime',
 			},
 			caption: {
-				type: 'array',
+				type: 'string',
 				source: 'children',
 				selector: 'figcaption',
 			},
@@ -93,9 +94,33 @@ export default registerBlockType(
 				type: 'boolean',
 				default: false,
 			},
-			displayDurationValue: {
-				type: 'strong',
-				default: '',
+			displayShowTitle: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeTitle: {
+				type: 'boolean',
+				default: false,
+			},
+			displayArt: {
+				type: 'boolean',
+				default: false,
+			},
+			displayExplicitBadge: {
+				type: 'boolean',
+				default: false,
+			},
+			displaySeasonNumber: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeNumber: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeType: {
+				type: 'boolean',
+				default: false,
 			}
 		},
 		transforms,
@@ -103,18 +128,16 @@ export default registerBlockType(
 		edit: Edit,
 
 		save: props => {
-			const { id, src, caption, displayDuration, displayDurationValue } = props.attributes;
+			const {
+				id,
+				src,
+				caption
+			} = props.attributes;
 
 			return (
 				<figure className={ id ? `podcast-${ id }` : null }>
-					<audio controls="controls" src={ src } />
 					{ caption && caption.length > 0 && <figcaption className="wp-block-podcasting-podcast__caption">{ caption }</figcaption> }
-					{displayDuration && displayDurationValue && (
-						<span className="wp-block-podcasting-podcast__listen-time">
-							{__('Listen Time: ', 'simple-podcasting')}
-							{displayDurationValue}
-						</span>
-					)}
+					<audio controls="controls" src={ src } />
 				</figure>
 			);
 		},

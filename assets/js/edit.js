@@ -8,7 +8,7 @@ const {
 	RichText,
 } = wp.blockEditor;
 const {
-	FormToggle,
+	ToggleControl,
 	PanelBody,
 	PanelRow,
 	SelectControl,
@@ -19,9 +19,10 @@ const { Fragment } = wp.element;
 
 const { apiFetch } = wp;
 const ALLOWED_MEDIA_TYPES = ['audio'];
+const { select } = wp.data;
 
 import { Button } from '@wordpress/components';
-import { dispatch } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
 /*
@@ -51,7 +52,18 @@ class Edit extends Component {
 
 	render() {
 		const { setAttributes, isSelected, attributes } = this.props;
-		const { caption, explicit, displayDuration, displayDurationValue } = attributes;
+		const {
+			caption,
+			explicit,
+			displayDuration,
+			displayShowTitle,
+			displayEpisodeTitle,
+			displayArt,
+			displayExplicitBadge,
+			displaySeasonNumber,
+			displayEpisodeNumber,
+			displayEpisodeType
+		} = attributes;
 		const duration = attributes.duration || '';
 		const captioned = attributes.captioned || '';
 		const seasonNumber = attributes.seasonNumber || '';
@@ -95,7 +107,6 @@ class Edit extends Component {
 				mime,
 				filesize,
 				duration,
-				displayDurationValue: duration,
 				caption: attachment.title,
 				enclosure: attachment.url + '\n' + filesize + '\n' + mime,
 			});
@@ -130,8 +141,6 @@ class Edit extends Component {
 				this.setState({ src: newSrc });
 			}
 		};
-		const toggleCaptioned = () => setAttributes({ captioned: !captioned });
-		const toggleDisplayDuration = () => setAttributes({ displayDuration: !displayDuration });
 
 		const controls = (
 			<BlockControls key="controls">
@@ -147,6 +156,19 @@ class Edit extends Component {
 			</BlockControls>
 		);
 
+		const { getCurrentPost } = select('core/editor');
+		const postDetails = getCurrentPost();
+
+		const showId = postDetails ? postDetails.podcasting_podcasts[0] : null;
+
+		const show = select('core').getEntityRecords('taxonomy', 'podcasting_podcasts', {
+			per_page: 1,
+			term_id: showId,
+		});
+
+		const showName = show ? show[0].name : null;
+		const showImage = show ? show[0].meta.podcasting_image_url : null;
+
 		return (
 			<Fragment>
 				{controls}
@@ -160,31 +182,94 @@ class Edit extends Component {
 							</div>
 						</PanelRow>
 						<PanelRow>
-							<label htmlFor="podcast-captioned-form-toggle">
-								{__('Closed Captioned', 'simple-podcasting')}
-							</label>
-							<FormToggle
+							<ToggleControl
 								id="podcast-captioned-form-toggle"
 								label={__(
 									'Closed Captioned',
 									'simple-podcasting'
 								)}
 								checked={captioned}
-								onChange={toggleCaptioned}
+								onChange={() => setAttributes({ captioned: !captioned})}
 							/>
 						</PanelRow>
 						<PanelRow>
-							<label htmlFor="podcast-display-duration-form-toggle">
-								{__('Display Listen Time', 'simple-podcasting')}
-							</label>
-							<FormToggle
-								id="podcast-display-duration-form-toggle"
+							<ToggleControl
 								label={__(
-									'Listen Time',
+									'Display Listen Time',
 									'simple-podcasting'
 								)}
 								checked={displayDuration}
-								onChange={toggleDisplayDuration}
+								onChange={() => setAttributes({ displayDuration: !displayDuration})}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Display Show Title',
+									'simple-podcasting'
+								)}
+								checked={displayShowTitle}
+								onChange={() => setAttributes({ displayShowTitle: !displayShowTitle})}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Display Episode Title',
+									'simple-podcasting'
+								)}
+								checked={displayEpisodeTitle}
+								onChange={() => setAttributes({ displayEpisodeTitle: !displayEpisodeTitle})}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Display Show Art',
+									'simple-podcasting'
+								)}
+								checked={displayArt}
+								onChange={() => setAttributes({ displayArt: !displayArt})}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Display Explicit Badge',
+									'simple-podcasting'
+								)}
+								checked={displayExplicitBadge}
+								onChange={() => setAttributes({ displayExplicitBadge: !displayExplicitBadge})}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Display Season Number',
+									'simple-podcasting'
+								)}
+								checked={displaySeasonNumber}
+								onChange={() => setAttributes({ displaySeasonNumber: !displaySeasonNumber})}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Display Episode Number',
+									'simple-podcasting'
+								)}
+								checked={displayEpisodeNumber}
+								onChange={() => setAttributes({ displayEpisodeNumber: !displayEpisodeNumber})}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Display Episode Type',
+									'simple-podcasting'
+								)}
+								checked={displayEpisodeType}
+								onChange={() => setAttributes({ displayEpisodeType: !displayEpisodeType})}
 							/>
 						</PanelRow>
 						<PanelRow>
@@ -295,28 +380,88 @@ class Edit extends Component {
 				<div className={className}>
 					{src ? (
 						<figure key="audio" className={className}>
-							<audio controls="controls" src={src} />
-							{((caption && caption.length) || !!isSelected) && (
-								<RichText
-									tagName="figcaption"
-									placeholder={__(
-										'Write caption…',
-										'simple-podcasting'
+							<div className="wp-block-podcasting-podcast__container">
+								{showImage && displayArt && (
+									<div className="wp-block-podcasting-podcast__show-art">
+										<img
+											src={showImage}
+											alt={showName}
+											className="wp-block-podcasting-podcast__image"
+										/>
+									</div>
+								)}
+								<div className="wp-block-podcasting-podcast__details">
+									<div className="wp-block-podcasting-podcast__title-wrap">
+										{displayEpisodeTitle && (
+											<h3 className="wp-block-podcasting-podcast__show-title">
+												{displayEpisodeNumber && (
+													<span>
+														{__('Episode: ', 'simple-podcasting')}
+														{episodeNumber}
+													</span>
+												)}
+												{postDetails.title}
+											</h3>
+										)}
+										<div className="wp-block-podcasting-podcast__show-wrap">
+											{displayShowTitle && (
+												<p className="wp-block-podcasting-podcast__show-title">
+													{showName}
+												</p>
+											)}
+											{displaySeasonNumber && (
+												<p className="wp-block-podcasting-podcast__season">
+													{__(
+														'Season: ',
+														'simple-podcasting'
+													)}
+													{seasonNumber}
+												</p>
+											)}
+											{displayEpisodeType && (
+												<p className="wp-block-podcasting-podcast__season-number">
+													{__(
+														'Episode type: ',
+														'simple-podcasting'
+													)}
+													{episodeType}
+												</p>
+											)}
+										</div>
+									</div>
+									{displayExplicitBadge && (
+										<div className="wp-block-podcasting-podcast__explicit-badge">
+											{__(
+												'Explicit: ',
+												'simple-podcasting'
+											)}
+											{explicit}
+										</div>
 									)}
-									className="wp-block-podcasting-podcast__caption"
-									value={caption}
-									onChange={(value) =>
-										setAttributes({ caption: value })
-									}
-									isSelected={isSelected}
-								/>
-							)}
-							{displayDuration && displayDurationValue && (
-								<span>
-									{__('Listen Time: ', 'simple-podcasting')}
-									{displayDurationValue}
-								</span>
-							)}
+								</div>
+								{((caption && caption.length) || !!isSelected) && (
+									<RichText
+										tagName="figcaption"
+										placeholder={__(
+											'Write caption…',
+											'simple-podcasting'
+										)}
+										className="wp-block-podcasting-podcast__caption"
+										value={caption}
+										onChange={(value) =>
+											setAttributes({ caption: value })
+										}
+										isSelected={isSelected}
+									/>
+								)}
+								{displayDuration && (
+									<span>
+										{__('Listen Time: ', 'simple-podcasting')}
+										{duration}
+									</span>
+								)}
+							</div>
+							<audio controls="controls" src={src} />
 						</figure>
 					) : (
 						<MediaPlaceholder
