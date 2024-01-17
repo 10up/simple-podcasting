@@ -1,0 +1,84 @@
+.wp-block-podcasting-podcast-outer {
+    border: 1px solid #707070;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.wp-block-podcasting-podcast__container {
+    margin-bottom: 10px;
+
+    @media (min-width: 768px) {
+        display: flex;
+    }
+}
+
+.wp-block-podcasting-podcast__show-art {
+    margin-bottom: 20px;
+
+    @media (min-width: 768px) {
+        flex-basis: 100px;
+        margin-bottom: 0;
+        margin-right: 20px;
+    }
+}
+
+.wp-block-podcasting-podcast__image {
+    aspect-ratio: 1/1;
+    height: auto;
+    position: relative;
+
+    & img {
+        display: block;
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+    }
+}
+
+.wp-block-podcasting-podcast__show-title {
+    margin: 0;
+}
+
+.wp-block-podcasting-podcast__show-details {
+    color: #575757;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+
+    & span {
+        display: block;
+        margin-right: 6px;
+
+        @media (min-width: 768px) {
+            display: inline;
+        }
+
+        &::after {
+
+            @media (min-width: 768px) {
+                content: '/';
+                margin-left: 6px;
+            }
+        }
+
+        &:last-child {
+            margin-right: 0;
+
+            &::after {
+                display: none;
+            }
+        }
+    }
+}
+
+.wp-block-podcasting-podcast__caption {
+    margin-bottom: 10px;
+}
+
+.wp-block-podcasting-podcast {
+    margin: 0;
+
+    & audio {
+        display: block;
+        width: 100%;
+    }
+}

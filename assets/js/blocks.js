@@ -54,7 +54,7 @@ export default registerBlockType(
 				meta: 'podcast_mime',
 			},
 			caption: {
-				type: 'string',
+				type: 'array',
 				source: 'children',
 				selector: 'figcaption',
 			},

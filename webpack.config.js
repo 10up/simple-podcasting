@@ -40,6 +40,11 @@ module.exports = {
 			'assets/js',
 			'create-podcast-show.js'
 		),
+		'podcast': path.resolve(
+			process.cwd(),
+			'assets/js/blocks/podcast',
+			'index.js'
+		),
 	},
 	plugins: [
 		...defaultConfig.plugins,

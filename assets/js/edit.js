@@ -377,68 +377,87 @@ class Edit extends Component {
 						</PanelRow>
 					</PanelBody>
 				</InspectorControls>
-				<div className={className}>
+				<div className="wp-block-podcasting-podcast-outer">
 					{src ? (
-						<figure key="audio" className={className}>
+						<>
 							<div className="wp-block-podcasting-podcast__container">
 								{showImage && displayArt && (
 									<div className="wp-block-podcasting-podcast__show-art">
-										<img
-											src={showImage}
-											alt={showName}
-											className="wp-block-podcasting-podcast__image"
-										/>
+										<div className="wp-block-podcasting-podcast__image">
+											<img
+												src={showImage}
+												alt={showName}
+											/>
+										</div>
 									</div>
 								)}
+
 								<div className="wp-block-podcasting-podcast__details">
-									<div className="wp-block-podcasting-podcast__title-wrap">
-										{displayEpisodeTitle && (
-											<h3 className="wp-block-podcasting-podcast__show-title">
-												{displayEpisodeNumber && (
-													<span>
-														{__('Episode: ', 'simple-podcasting')}
-														{episodeNumber}
-													</span>
-												)}
-												{postDetails.title}
-											</h3>
-										)}
-										<div className="wp-block-podcasting-podcast__show-wrap">
-											{displayShowTitle && (
-												<p className="wp-block-podcasting-podcast__show-title">
-													{showName}
-												</p>
+
+									{displayEpisodeTitle && (
+										<h3 className="wp-block-podcasting-podcast__show-title">
+											{displayEpisodeNumber && (
+												<span>
+													{episodeNumber}.
+												</span>
 											)}
-											{displaySeasonNumber && (
-												<p className="wp-block-podcasting-podcast__season">
-													{__(
-														'Season: ',
-														'simple-podcasting'
-													)}
-													{seasonNumber}
-												</p>
-											)}
-											{displayEpisodeType && (
-												<p className="wp-block-podcasting-podcast__season-number">
-													{__(
-														'Episode type: ',
-														'simple-podcasting'
-													)}
-													{episodeType}
-												</p>
-											)}
-										</div>
-									</div>
-									{displayExplicitBadge && (
-										<div className="wp-block-podcasting-podcast__explicit-badge">
-											{__(
-												'Explicit: ',
-												'simple-podcasting'
-											)}
-											{explicit}
-										</div>
+											{postDetails.title}
+										</h3>
 									)}
+
+									<div className="wp-block-podcasting-podcast__show-details">
+										{displayShowTitle && (
+											<span className="wp-block-podcasting-podcast__title">
+												{showName}
+											</span>
+										)}
+										{displaySeasonNumber && (
+											<span className="wp-block-podcasting-podcast__season">
+												{__(
+													'Season: ',
+													'simple-podcasting'
+												)}
+												{seasonNumber}
+											</span>
+										)}
+										{displayEpisodeNumber && (
+											<span className="wp-block-podcasting-podcast__episode">
+												{__('Episode: ', 'simple-podcasting')}
+												{episodeNumber}
+											</span>
+										)}
+									</div>
+
+									<div className="wp-block-podcasting-podcast__show-details">
+										{displayDuration && (
+											<span className="wp-block-podcasting-podcast__duration">
+												{__('Listen Time: ', 'simple-podcasting')}
+												{duration}
+											</span>
+										)}
+										{displayEpisodeType && (
+											<span className="wp-block-podcasting-podcast__episode-type">
+												{__(
+													'Episode type: ',
+													'simple-podcasting'
+												)}
+												{episodeType}
+											</span>
+										)}
+										{displayExplicitBadge && (
+											<span className="wp-block-podcasting-podcast__explicit-badge">
+												{__(
+													'Explicit: ',
+													'simple-podcasting'
+												)}
+												{explicit}
+											</span>
+										)}
+									</div>
 								</div>
+							</div>
+
+							<figure key="audio" className={className}>
 								{((caption && caption.length) || !!isSelected) && (
 									<RichText
 										tagName="figcaption"
@@ -454,15 +473,9 @@ class Edit extends Component {
 										isSelected={isSelected}
 									/>
 								)}
-								{displayDuration && (
-									<span>
-										{__('Listen Time: ', 'simple-podcasting')}
-										{duration}
-									</span>
-								)}
-							</div>
-							<audio controls="controls" src={src} />
-						</figure>
+								<audio controls="controls" src={src} />
+							</figure>
+						</>
 					) : (
 						<MediaPlaceholder
 							icon="microphone"
