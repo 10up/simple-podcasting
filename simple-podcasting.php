@@ -250,3 +250,47 @@ function setup_edit_screen() {
 	}
 }
 add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
+
+/**
+ * Registers block assets for Latest Episode.
+ */
+function register_latest_episode_assets() {
+	if ( ! file_exists( PODCASTING_PATH . 'dist/latest-episode.asset.php' ) ) {
+		return;
+	}
+
+	$block_asset = require PODCASTING_PATH . 'dist/latest-episode.asset.php';
+
+	wp_register_style(
+		'latest-episode-block',
+		PODCASTING_URL . 'dist/latest-episode.css',
+		array(),
+		$block_asset['version'],
+		'all'
+	);
+
+	wp_enqueue_style( 'latest-episode-block' );
+}
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\register_latest_episode_assets' );
+
+/**
+ * Registers block assets for Latest Episode in admin.
+ */
+function register_latest_episode_assets_admin() {
+	if ( ! file_exists( PODCASTING_PATH . 'dist/latest-episode.asset.php' ) ) {
+		return;
+	}
+
+	$block_asset = require PODCASTING_PATH . 'dist/latest-episode.asset.php';
+
+	wp_register_style(
+		'latest-episode-block',
+		PODCASTING_URL . 'dist/latest-episode.css',
+		array(),
+		$block_asset['version'],
+		'all'
+	);
+
+	wp_enqueue_style( 'latest-episode-block' );
+}
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\register_latest_episode_assets_admin' );
