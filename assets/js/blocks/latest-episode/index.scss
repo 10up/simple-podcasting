@@ -1,0 +1,51 @@
+.podcasting-latest-episode {
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+	min-height: 20rem;
+	overflow: hidden;
+	position: relative;
+
+	& .wp-block-post-featured-image {
+		height: 100%;
+		object-fit: fill;
+		object-position: center;
+		position: absolute;
+		width: 100%;
+
+		&::after {
+			background-color: rgb(0 0 0 / 75%);
+			content: "";
+			display: block;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
+}
+
+.podcasting-latest-episode__content {
+	color: #fff;
+	padding: 3rem;
+	position: relative;
+	z-index: 1;
+
+	@media (min-width: 768px) {
+		padding: 3rem;
+	}
+
+	& .wp-block-post-excerpt,
+	& .wp-block-post-excerpt__more-text {
+		margin-top: 0.25rem;
+	}
+
+	& .wp-block-post-excerpt__more-link {
+		color: #fff;
+	}
+}
+
+.editor-styles-wrapper .wp-block-post-content .podcasting-latest-episode__content .wp-block-post-excerpt__more-link:where(:not(.wp-element-button)) {
+	color: #fff;
+}
