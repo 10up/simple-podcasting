@@ -2,7 +2,7 @@
  * Internal block libraries
  */
 import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, registerBlockVariation } from '@wordpress/blocks';
 const { select } = wp.data;
 
 // Split the Edit component out.
@@ -143,3 +143,39 @@ export default registerBlockType(
 		},
 	},
 );
+
+const VARIATION_NAME = 'podcasting/latest-episode';
+
+registerBlockVariation('core/query', {
+	name: VARIATION_NAME,
+	title: 'Latest Podcast Episode',
+	description: 'Displays the latest podcast episode.',
+	isActive: ['simple-podcasting'],
+	icon: 'microphone',
+	attributes: {
+		namespace: VARIATION_NAME,
+		query: {
+			postType: 'post',
+			podcastingQuery: 'not_empty',
+		},
+	},
+	allowedControls: [ ],
+	scope: [ 'inserter' ],
+	innerBlocks: [
+		[
+			'core/post-template',
+			{},
+			[ [
+				'core/group',
+				{ className: 'podcasting-latest-episode' },
+				[
+					[ 'core/post-featured-image' ],
+					[ 'core/group', { className: 'podcasting-latest-episode__content' }, [
+						[ 'core/post-title' ], [ 'core/post-date' ], [ 'core/post-excerpt' ]
+					] ],
+				]
+			] ],
+		],
+		[ 'core/query-no-results' ],
+	],
+});
