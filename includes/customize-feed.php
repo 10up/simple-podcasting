@@ -7,6 +7,8 @@
 
 namespace tenup_podcasting;
 
+use function tenup_podcasting\transcripts\get_transcript_link_from_post;
+
 /**
  * Add an itunes podcasting header.
  */
@@ -109,16 +111,6 @@ function feed_head() {
 		echo '<itunes:subtitle>' . esc_html( wp_strip_all_tags( $subtitle ) ) . "</itunes:subtitle>\n";
 	}
 
-	$summary = get_term_meta( $term->term_id, 'podcasting_summary', true );
-
-	if ( empty( $summary ) ) {
-		$summary = get_bloginfo( 'description' );
-	}
-
-	if ( ! empty( $summary ) ) {
-		echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $summary ) ) . "</itunes:summary>\n";
-	}
-
 	$author = get_term_meta( $term->term_id, 'podcasting_talent_name', true );
 	if ( ! empty( $author ) ) {
 		echo '<itunes:author>' . esc_html( wp_strip_all_tags( $author ) ) . "</itunes:author>\n";
@@ -200,6 +192,7 @@ function feed_item() {
 		'season'      => get_post_meta( $post->ID, 'podcast_season_number', true ),
 		'episode'     => get_post_meta( $post->ID, 'podcast_episode_number', true ),
 		'episodeType' => get_post_meta( $post->ID, 'podcast_episode_type', true ),
+		'transcript'  => get_post_meta( $post->ID, 'podcast_transcript', true ),
 	);
 
 	if ( empty( $feed_item['author'] ) ) {
@@ -276,7 +269,6 @@ function feed_item() {
 	if ( ! empty( $feed_item['keywords'] ) ) {
 		echo '<itunes:keywords>' . esc_html( $feed_item['keywords'] ) . "</itunes:keywords>\n";
 	}
-	echo '<itunes:summary>' . esc_html( wp_strip_all_tags( $feed_item['summary'] ) ) . "</itunes:summary>\n";
 	echo '<itunes:subtitle>' . esc_html( $feed_item['subtitle'] ) . "</itunes:subtitle>\n";
 	if ( ! empty( $feed_item['duration'] ) ) {
 		echo '<itunes:duration>' . esc_html( $feed_item['duration'] ) . "</itunes:duration>\n";
@@ -289,6 +281,9 @@ function feed_item() {
 	}
 	if ( ! empty( $feed_item['episodeType'] ) && 'none' !== $feed_item['episodeType'] ) {
 		echo '<itunes:episodeType>' . esc_html( $feed_item['episodeType'] ) . "</itunes:episodeType>\n";
+	}
+	if ( ! empty( $feed_item['transcript'] ) && '' !== $feed_item['transcript'] ) {
+		echo '<podcast:transcript>' . esc_url( get_transcript_link_from_post( $post ) ) . "</podcast:transcript>\n";
 	}
 }
 add_action( 'rss2_item', __NAMESPACE__ . '\feed_item' );

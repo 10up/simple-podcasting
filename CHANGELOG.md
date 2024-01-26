@@ -4,6 +4,71 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [1.7.0] - 2024-01-16
+### Added
+- Ability to add a transcript to a podcast episode by utilizing a new Podcast Transcript block. This block is added by clicking the `Add Transcript` button that will now show in the sidebar panel of the Podcast block (props [@nateconley](https://github.com/nateconley), [@peterwilsoncc](https://github.com/peterwilsoncc), [@sksaju](https://github.com/sksaju), [@kirtangajjar](https://github.com/kirtangajjar) via [#221](https://github.com/10up/simple-podcasting/pull/221)).
+- Support for the WordPress.org plugin preview (props [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#265](https://github.com/10up/simple-podcasting/pull/265)).
+
+### Fixed
+- Ensure we show all Podcasting terms in the Block Editor sidebar (props [@dkotter](https://github.com/dkotter), [@channchetra](https://github.com/channchetra), [@Sidsector9](https://github.com/Sidsector9) via [#268](https://github.com/10up/simple-podcasting/pull/268)).
+
+### Security
+- Bump `axios` from 0.25.0 to 1.6.2 and `@wordpress/scripts` from 26.9.0 to 26.18.0 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#263](https://github.com/10up/simple-podcasting/pull/263)).
+- Bump `follow-redirects` from 1.15.3 to 1.15.4 (props [@dependabot](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#269](https://github.com/10up/simple-podcasting/pull/269)).
+
+## [1.6.1] - 2023-11-21
+### Added
+- Repo Automator GitHub Action (props [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#253](https://github.com/10up/simple-podcasting/pull/253)).
+
+### Changed
+- Bump WordPress "tested up to" version to 6.4 (props [@qasumitbagthariya](https://github.com/qasumitbagthariya), [@jeffpaul](https://github.com/jeffpaul) via [#259](https://github.com/10up/simple-podcasting/pull/259), [#260](https://github.com/10up/simple-podcasting/pull/260)).
+- Ensure end-to-end tests work on Cypress v13 and bump `cypress` from 11.2.0 to 13.2.0, `@10up/cypress-wp-utils` from 0.1.0 to 0.2.0, `@wordpress/env` from 5.4.0 to 8.7.0, `cypress-localstorage-commands` from 2.2.2 to 2.2.4 and `cypress-mochawesome-reporter` from 3.4.0 to 3.6.0 (props [@iamdharmesh](https://github.com/iamdharmesh), [@Sidsector9](https://github.com/Sidsector9) via [#254](https://github.com/10up/simple-podcasting/pull/254)).
+
+### Security
+- Bump `postcss` from 8.4.27 to 8.4.31 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#256](https://github.com/10up/simple-podcasting/pull/256)).
+- Bump `@babel/traverse` from 7.22.8 to 7.23.2 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#257](https://github.com/10up/simple-podcasting/pull/257)).
+
+## [1.6.0] - 2023-08-31
+### Added
+- Ability to create a Podcast from within the Block Editor (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh) via [#232](https://github.com/10up/simple-podcasting/pull/232)).
+- New Podcast Platforms block that allows you to display icons and links to multiple podcast platforms (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#241](https://github.com/10up/simple-podcasting/pull/241)).
+- Check for minimum required PHP version before loading the plugin (props [@kmgalanakis](https://github.com/kmgalanakis), [@dkotter](https://github.com/dkotter) via [#248](https://github.com/10up/simple-podcasting/pull/248)).
+
+### Changed
+- Rename `TAXONOMY_NAME` constant to `PODCASTING_TAXONOMY_NAME` (props [@jayedul](https://github.com/jayedul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#238](https://github.com/10up/simple-podcasting/pull/238)).
+- Bump WordPress "tested up to" version to 6.3 (props [@dkotter](https://github.com/dkotter) via [#248](https://github.com/10up/simple-podcasting/pull/248)).
+
+### Fixed
+- Resolved a PHP warning when creating a new podcast (props [@kmgalanakis](https://github.com/kmgalanakis), [@iamdharmesh](https://github.com/iamdharmesh) via [#247](https://github.com/10up/simple-podcasting/pull/247)).
+
+### Security
+- Bump `word-wrap` from 1.2.3 to 1.2.4 (props [@dependabot](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#243](https://github.com/10up/simple-podcasting/pull/243)).
+
+## [1.5.0] - 2023-06-29
+### Added
+- Post Grid Block to display a grid of episode posts (props [@mehul0810](https://github.com/mehul0810), [@cadic](https://github.com/cadic), [@nateconley](https://github.com/nateconley), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul), [@ajmaurya99](https://github.com/ajmaurya99), [@nickolas-kola](https://github.com/nickolas-kola), [@achchu93](https://github.com/achchu93) via [#214](https://github.com/10up/simple-podcasting/pull/214)).
+- Mochawesome reporter added for Cypress end-to-end test report (props [@jayedul](https://github.com/jayedul), [@iamdharmesh](https://github.com/iamdharmesh) via [#236](https://github.com/10up/simple-podcasting/pull/236)).
+
+### Changed
+- Mark any required fields when adding/editing a podcast feed (props [@mehul0810](https://github.com/mehul0810), [@cadic](https://github.com/cadic), [@nateconley](https://github.com/nateconley), [@jeffpaul](https://github.com/jeffpaul), [@Spoygg](https://github.com/Spoygg), [@ggutenberg](https://github.com/ggutenberg), [@peterwilsoncc](https://github.com/peterwilsoncc), [@Sidsector9](https://github.com/Sidsector9), [@ravinderk](https://github.com/ravinderk), [@faisal-alvi](https://github.com/faisal-alvi), [@helen](https://github.com/helen) via [#216](https://github.com/10up/simple-podcasting/pull/216)).
+- Bumped WordPress "tested up to" version 6.2 (props [@jayedul](https://github.com/jayedul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@jeffpaul](https://github.com/jeffpaul) via [#230](https://github.com/10up/simple-podcasting/pull/230)).
+- Run end-to-end tests on the zip generated by the "Build Release ZIP" GitHub Action (props [@jayedul](https://github.com/jayedul), [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh) via [#227](https://github.com/10up/simple-podcasting/pull/227)).
+- GitHub Action `uses` updates (props [@Sidsector9](https://github.com/Sidsector9), [@iamdharmesh](https://github.com/iamdharmesh) via [#234](https://github.com/10up/simple-podcasting/pull/234)).
+- Updated Dependency Review GitHub Action (props [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9) via [#237](https://github.com/10up/simple-podcasting/pull/237)).
+
+### Removed
+- Deprecated `<itunes:summary>` tag (props [@ggutenberg](https://github.com/ggutenberg), [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic), [@jeffpaul](https://github.com/jeffpaul) via [#223](https://github.com/10up/simple-podcasting/pull/223)).
+- Unnecessary term meta registration on "init" (props [@kmgalanakis](https://github.com/kmgalanakis), [@faisal-alvi](https://github.com/faisal-alvi), [@cadic](https://github.com/cadic) via [#225](https://github.com/10up/simple-podcasting/pull/225)).
+
+### Fixed
+- Deprecation notices for `strpos` and `str_replace` on PHP >= 8.1 (props [@bmarshall511](https://github.com/bmarshall511), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#239](https://github.com/10up/simple-podcasting/pull/239)).
+
+### Security
+- Bump `simple-git` from 3.15.1 to 3.16.0 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#215](https://github.com/10up/simple-podcasting/pull/215)).
+- Bump `http-cache-semantics` from 4.1.0 to 4.1.1 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#219](https://github.com/10up/simple-podcasting/pull/219)).
+- Bump `@sideway/formula` from 3.0.0 to 3.0.1 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#220](https://github.com/10up/simple-podcasting/pull/220)).
+- Bump `webpack` from 5.75.0 to 5.76.1 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#222](https://github.com/10up/simple-podcasting/pull/222)).
+
 ## [1.4.0] - 2023-01-23
 ### Added
 - New podcast onboarding flow (props [@Sidsector9](https://github.com/Sidsector9), [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@helen](https://github.com/helen), [@jeffpaul](https://github.com/jeffpaul), [@Nicolas-knight](https://github.com/Nicolas-knight), [@jnetek](https://github.com/jnetek) via [#193](https://github.com/10up/simple-podcasting/pull/193)).
@@ -164,6 +229,10 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.7.0]: https://github.com/10up/simple-podcasting/compare/1.6.1...1.7.0
+[1.6.1]: https://github.com/10up/simple-podcasting/compare/1.6.0...1.6.1
+[1.6.0]: https://github.com/10up/simple-podcasting/compare/1.5.0...1.6.0
+[1.5.0]: https://github.com/10up/simple-podcasting/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/10up/simple-podcasting/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/10up/simple-podcasting/compare/1.2.4...1.3.0
 [1.2.4]: https://github.com/10up/simple-podcasting/compare/1.2.3-deploy...1.2.4

@@ -110,15 +110,111 @@ function register_meta() {
 			'single'       => true,
 		)
 	);
+
+	\register_meta(
+		'post',
+		'podcast_transcript',
+		array(
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'sanitize_callback' => function( $val ) {
+				return wp_kses_post( $val );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_talent_name',
+		array(
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_summary',
+		array(
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_category_1',
+		array(
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return sanitize_text_field( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_image',
+		array(
+			'show_in_rest'      => true,
+			'type'              => 'number',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return absint( wp_unslash( $val ) );
+			},
+		)
+	);
+
+	\register_term_meta(
+		'podcasting_podcasts',
+		'podcasting_image_url',
+		array(
+			'show_in_rest'      => true,
+			'type'              => 'string',
+			'single'            => true,
+			'auth_callback'     => 'podcasting_term_auth_callback',
+			'sanitize_callback' => function( $val ) {
+				return filter_var( $val, FILTER_VALIDATE_URL );
+			},
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_meta' );
+
+/**
+ * Podcasting term meta generic auth callback.
+ *
+ * @return boolean
+ */
+function podcasting_term_auth_callback() {
+	if ( current_user_can( 'manage_categories' ) ) {
+		return true;
+	}
+
+	return false;
+}
 
 /**
  * Add a custom podcasts taxonomy.
  */
 function create_podcasts_taxonomy() {
 	register_taxonomy(
-		TAXONOMY_NAME,
+		PODCASTING_TAXONOMY_NAME,
 		'post',
 		array(
 			'labels'            => array(
@@ -143,6 +239,8 @@ function create_podcasts_taxonomy() {
 			'hierarchical'      => true,
 			'show_tagcloud'     => false,
 			'public'            => true,
+			'show_ui'           => true,
+			'show_in_menu'      => false,
 			'show_in_rest'      => true,
 			'show_in_nav_menus' => false,
 			'show_admin_column' => true,
@@ -200,6 +298,120 @@ function add_podcasting_taxonomy_help_text() {
 add_action( 'after-podcasting_podcasts-table', __NAMESPACE__ . '\add_podcasting_taxonomy_help_text' );
 
 /**
+ * Returns array of supported podcast platforms.
+ *
+ * @return array
+ */
+function get_supported_platforms() {
+	$platforms = array(
+		'pocket-casts'    => array(
+			'slug'  => 'pocket-casts',
+			'title' => esc_html__( 'Pocket Casts', 'simple-podcasting' ),
+		),
+		'apple-podcasts'  => array(
+			'slug'  => 'apple-podcasts',
+			'title' => esc_html__( 'Apple Podcasts', 'simple-podcasting' ),
+		),
+		'google-podcasts' => array(
+			'slug'  => 'google-podcasts',
+			'title' => esc_html__( 'Google Podcasts', 'simple-podcasting' ),
+		),
+		'stitcher'        => array(
+			'slug'  => 'stitcher',
+			'title' => esc_html__( 'Stitcher', 'simple-podcasting' ),
+		),
+		'playerfm'        => array(
+			'slug'  => 'playerfm',
+			'title' => esc_html__( 'PlayerFM', 'simple-podcasting' ),
+		),
+		'overcast'        => array(
+			'slug'  => 'overcast',
+			'title' => esc_html__( 'Overcast', 'simple-podcasting' ),
+		),
+		'pandora'         => array(
+			'slug'  => 'pandora',
+			'title' => esc_html__( 'Pandora', 'simple-podcasting' ),
+		),
+		'castro'          => array(
+			'slug'  => 'castro',
+			'title' => esc_html__( 'Castro', 'simple-podcasting' ),
+		),
+		'tunein'          => array(
+			'slug'  => 'tunein',
+			'title' => esc_html__( 'TuneIn', 'simple-podcasting' ),
+		),
+		'spotify'         => array(
+			'slug'  => 'spotify',
+			'title' => esc_html__( 'Spotify', 'simple-podcasting' ),
+		),
+	);
+
+	return apply_filters( 'simple_podcasting_get_supported_platforms', $platforms );
+}
+
+/**
+ * Renders the terms fields for platforms
+ *
+ * @param  array   $field   The field data.
+ * @param  string  $value   The existing field value.
+ * @param  boolean $term_id The term id, or false for the new term form.
+ */
+function render_platform_fields( $field, $value, $term_id ) {
+	$theme = get_term_meta( $term_id, 'podcasting_icon_theme', true );
+
+	if ( empty( $theme ) ) {
+		$theme = 'color';
+	}
+
+	$platforms = get_supported_platforms();
+	?>
+
+	<table id="simple_podcasting__platforms" class="simple_podcasting__platforms widefat striped">
+		<thead>
+			<th><?php esc_html_e( 'Platform', 'simple-podcasting' ); ?></th>
+			<th><?php esc_html_e( 'Podcast URL', 'simple-podcasting' ); ?></th>
+			<th><?php esc_html_e( 'Icon', 'simple-podcasting' ); ?></th>
+		</thead>
+
+		<tbody>
+			<?php foreach ( $platforms as $slug => $platform ) : ?>
+				<tr>
+					<td class="simple_podcasting__platforms-title"><?php echo esc_html( $platform['title'] ); ?></td>
+					<td class="simple_podcasting__platforms-url">
+						<input
+							name="<?php printf( '%s[%s]', esc_attr( $field['slug'] ), esc_attr( $slug ) ); ?>"
+							id="<?php printf( '%s[%s]', esc_attr( $field['slug'] ), esc_attr( $slug ) ); ?>"
+							type="url"
+							value="<?php echo isset( $value[ $slug ] ) ? esc_url( $value[ $slug ] ) : ''; ?>"
+							class="widefat"
+						>
+					</td>
+					<td class="simple_podcasting__platforms-icon <?php echo 'white' === $theme ? 'simple_podcasting__platforms-icon--darken-bg' : ''; ?>">
+						<img
+							src="
+							<?php
+							printf(
+								'%s%s/%s/%s',
+								esc_url( PODCASTING_URL ),
+								'dist/images/icons',
+								esc_attr( $slug ),
+								esc_attr( $theme ) . '-100.png'
+							)
+							?>
+							"
+							data-platform="<?php echo esc_attr( $slug ); ?>"
+						/>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+
+	<?php
+}
+add_action( 'simple_podcasting_custom_field_platform_fields', __NAMESPACE__ . '\render_platform_fields', 10, 3 );
+
+/**
  * Add fields to the add term screen.
  *
  * @param \WP_Term $term The term object.
@@ -245,90 +457,116 @@ function the_field( $field, $value = '', $term_id = false ) {
 				)
 			);
 			break;
+
 		case 'textfield':
 			?>
-			<input
-				name="<?php echo esc_attr( $field['slug'] ); ?>"
-				id="<?php echo esc_attr( $field['slug'] ); ?>"
-				type="text"
-				value="<?php echo esc_attr( $value ); ?>"
-				size="40"
-			>
-			<?php
+				<input
+					name="<?php echo esc_attr( $field['slug'] ); ?>"
+					id="<?php echo esc_attr( $field['slug'] ); ?>"
+					type="text"
+					value="<?php echo esc_attr( $value ); ?>"
+					size="40"
+				>
+				<?php
 			break;
+
 		case 'textarea':
 			?>
-			<textarea name="<?php echo esc_attr( $field['slug'] ); ?>" id="<?php echo esc_attr( $field['slug'] ); ?>" rows="5" cols="40"><?php echo esc_textarea( $value ); ?></textarea>
-			<?php
+				<textarea name="<?php echo esc_attr( $field['slug'] ); ?>" id="<?php echo esc_attr( $field['slug'] ); ?>" rows="5" cols="40"><?php echo esc_textarea( $value ); ?></textarea>
+				<?php
 			break;
+
 		case 'select':
 			?>
-			<select
-				name="<?php echo esc_attr( $field['slug'] ); ?>"
-				id="<?php echo esc_attr( $field['slug'] ); ?>"
-				class="postform"
-			>
-			<?php
-			$options = $field['options'];
-			foreach ( $options as $key => $label ) {
-				?>
-				<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $value ); ?>>
-					<?php echo esc_html( $label ); ?>
-				</option>
+				<select
+					name="<?php echo esc_attr( $field['slug'] ); ?>"
+					id="<?php echo esc_attr( $field['slug'] ); ?>"
+					class="postform"
+				>
 				<?php
-			}
-			?>
-			</select>
-			<?php
+				$options = $field['options'];
+				foreach ( $options as $key => $label ) {
+					?>
+					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $value ); ?>>
+						<?php echo esc_html( $label ); ?>
+					</option>
+					<?php
+				}
+				?>
+				</select>
+				<?php
 			break;
+
 		case 'image':
 			$image_url = get_term_meta( $term_id, $field['slug'] . '_url', true );
 			?>
-			<div class="media-wrapper">
+				<div class="media-wrapper">
 				<?php
 				$has_image = ( '' === $value );
 				?>
-				<div class="podasting-existing-image <?php echo ( $has_image ? 'hidden' : '' ); ?>">
-					<a href="#" >
-						<img
-						src="<?php echo esc_url( $image_url ); ?>"
-						alt=""
-						class="podcast-image-thumbnail"
-					>
-					</a>
-					<input
-						type="hidden"
-						id="<?php echo esc_attr( $field['slug'] ); ?>"
-						name="<?php echo esc_attr( $field['slug'] ); ?>"
-						value="<?php echo esc_attr( $value ); ?>"
-					>
-					<br />
-					<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
-						remove image
-					</a>
+					<div class="podasting-existing-image <?php echo ( $has_image ? 'hidden' : '' ); ?>">
+						<a href="#" >
+							<img
+							src="<?php echo esc_url( $image_url ); ?>"
+							alt=""
+							class="podcast-image-thumbnail"
+						>
+						</a>
+						<input
+							type="hidden"
+							id="<?php echo esc_attr( $field['slug'] ); ?>"
+							name="<?php echo esc_attr( $field['slug'] ); ?>"
+							value="<?php echo esc_attr( $value ); ?>"
+						>
+						<br />
+						<a href="#" class="podcast-media-remove" data-media-id="<?php echo esc_attr( $value ); ?>">
+							remove image
+						</a>
+					</div>
+					<div class="podcasting-upload-image <?php echo ( ! $has_image ? 'hidden' : '' ); ?>">
+						<input
+							type="button"
+							class="podcasting-media-button button-secondary"
+							id="image-<?php echo esc_attr( $field['slug'] ); ?>"
+							value="<?php esc_attr_e( 'Select Image', 'simple-podcasting' ); ?>"
+							data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
+							data-choose="<?php esc_attr_e( 'Podcast Image', 'simple-podcasting' ); ?>"
+							data-update="<?php esc_attr_e( 'Choose Selected Image', 'simple-podcasting' ); ?>"
+							data-preview-size="thumbnail"
+							data-mime-type="image"
+						>
+					</div>
 				</div>
-				<div class="podcasting-upload-image <?php echo ( ! $has_image ? 'hidden' : '' ); ?>">
-					<input
-						type="button"
-						class="podcasting-media-button button-secondary"
-						id="image-<?php echo esc_attr( $field['slug'] ); ?>"
-						value="<?php esc_attr_e( 'Select Image', 'simple-podcasting' ); ?>"
-						data-slug="<?php echo esc_attr( $field['slug'] ); ?>"
-						data-choose="<?php esc_attr_e( 'Podcast Image', 'simple-podcasting' ); ?>"
-						data-update="<?php esc_attr_e( 'Choose Selected Image', 'simple-podcasting' ); ?>"
-						data-preview-size="thumbnail"
-						data-mime-type="image"
-					>
-				</div>
-			</div>
-			<?php
+				<?php
 			break;
 
+		case 'radio':
+			$selected = empty( $value ) ? 'color' : $value;
+
+			foreach ( $field['options'] as $option ) {
+				?>
+				<label>
+					<input
+						type="radio"
+						name="podcasting_icon_theme"
+						value="<?php echo esc_attr( $option['value'] ); ?>"
+						<?php checked( $selected, $option['value'] ); ?>
+					/>
+					<?php echo esc_html( $option['label'] ); ?>
+				</label>
+				<?php
+			}
+			break;
+
+		case $field['type']:
+			do_action( 'simple_podcasting_custom_field_' . $field['type'], $field, $value, $term_id );
+			break;
 	}
+
 	if ( isset( $field['description'] ) ) {
 		?>
 		<p class="description"><?php echo esc_html( $field['description'] ); ?></p>
-		<?php
+			<?php
 	}
 }
 
@@ -338,7 +576,7 @@ function the_field( $field, $value = '', $term_id = false ) {
  * @param int $term_id The term is being saved.
  */
 function save_podcasting_term_meta( $term_id ) {
-	$tax = get_taxonomy( TAXONOMY_NAME );
+	$tax = get_taxonomy( PODCASTING_TAXONOMY_NAME );
 
 	if ( ! current_user_can( $tax->cap->edit_terms ) ) {
 		return;
@@ -349,11 +587,30 @@ function save_podcasting_term_meta( $term_id ) {
 	}
 
 	$podcasting_meta_fields = get_meta_fields();
+
 	foreach ( $podcasting_meta_fields as $field ) {
 		$slug = $field['slug'];
 
 		if ( isset( $_POST[ $slug ] ) ) {
-			$sanitized_value = sanitize_text_field( wp_unslash( $_POST[ $slug ] ) );
+			if ( is_array( $_POST[ $slug ] ) ) {
+				$sanitized_value = filter_var_array(
+					$_POST[ $slug ],
+					array(
+						'pocket-casts'    => FILTER_SANITIZE_URL,
+						'apple-podcasts'  => FILTER_SANITIZE_URL,
+						'google-podcasts' => FILTER_VALIDATE_URL,
+						'stitcher'        => FILTER_VALIDATE_URL,
+						'playerfm'        => FILTER_VALIDATE_URL,
+						'overcast'        => FILTER_VALIDATE_URL,
+						'pandora'         => FILTER_VALIDATE_URL,
+						'castro'          => FILTER_VALIDATE_URL,
+						'tunein'          => FILTER_VALIDATE_URL,
+						'spotify'         => FILTER_VALIDATE_URL,
+					)
+				);
+			} else {
+				$sanitized_value = sanitize_text_field( wp_unslash( $_POST[ $slug ] ) );
+			}
 
 			// If the field is an image field, store the image URL along with the slug.
 			if ( strpos( $slug, '_image' ) ) {
@@ -364,8 +621,8 @@ function save_podcasting_term_meta( $term_id ) {
 		}
 	}
 }
-add_action( 'edited_' . TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
-add_action( 'created_' . TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
+add_action( 'edited_' . PODCASTING_TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
+add_action( 'created_' . PODCASTING_TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
 
 /**
  * Add podcasting fields to the term screen.
@@ -416,17 +673,17 @@ function add_podcasting_term_meta_nonce( $term, $taxonomy = false ) {
 	wp_nonce_field( 'podcasting_edit', 'podcasting_nonce' );
 	wp_enqueue_media();
 	if ( $taxonomy ) {
-		$url = get_term_feed_link( $term->term_id, TAXONOMY_NAME );
+		$url = get_term_feed_link( $term->term_id, PODCASTING_TAXONOMY_NAME );
 		esc_html_e( 'Your Podcast Feed: ', 'simple-podcasting' );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a><br />';
 		esc_html_e( 'This is the URL you submit to iTunes or podcasting service.', 'simple-podcasting' );
 	}
 }
-add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
-add_action( TAXONOMY_NAME . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
+add_action( PODCASTING_TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce' );
+add_action( PODCASTING_TAXONOMY_NAME . '_edit_form_fields', __NAMESPACE__ . '\add_podcasting_term_meta_nonce', 99, 2 );
 
-add_action( TAXONOMY_NAME . '_edit_form', __NAMESPACE__ . '\add_podcasting_term_edit_meta_fields' );
-add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_add_meta_fields' );
+add_action( PODCASTING_TAXONOMY_NAME . '_edit_form', __NAMESPACE__ . '\add_podcasting_term_edit_meta_fields' );
+add_action( PODCASTING_TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting_term_add_meta_fields' );
 
 /**
  * Add a feed link to the podcasting term table.
@@ -440,12 +697,12 @@ add_action( TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add_podcasting
 function add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
 
 	if ( 'feedurl' === $column_name ) {
-		$url = get_term_feed_link( $term_id, TAXONOMY_NAME );
+		$url = get_term_feed_link( $term_id, PODCASTING_TAXONOMY_NAME );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a>';
 	}
 	return $string;
 }
-add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column', 10, 3 );
+add_filter( 'manage_' . PODCASTING_TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column', 10, 3 );
 
 /**
  * Add a podcasting image to the podcasting term table.
@@ -464,7 +721,7 @@ function add_podcasting_term_podcasting_image_column( $string, $column_name, $te
 	}
 	return $string;
 }
-add_filter( 'manage_' . TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_podcasting_image_column', 10, 3 );
+add_filter( 'manage_' . PODCASTING_TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_podcasting_image_column', 10, 3 );
 
 
 /**
@@ -488,7 +745,7 @@ function add_custom_term_columns( $columns ) {
 	unset( $columns['author'] );
 	return $columns;
 }
-add_filter( 'manage_edit-' . TAXONOMY_NAME . '_columns', __NAMESPACE__ . '\add_custom_term_columns', 99 );
+add_filter( 'manage_edit-' . PODCASTING_TAXONOMY_NAME . '_columns', __NAMESPACE__ . '\add_custom_term_columns', 99 );
 
 /**
  * Get the meta fields used for podcasts.
@@ -502,7 +759,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'  => 'podcasting_talent_name',
-			'title' => __( 'Artist / Author name', 'simple-podcasting' ),
+			'title' => __( 'Artist / Author name (required)', 'simple-podcasting' ),
 			'type'  => 'textfield',
 		),
 		array(
@@ -512,7 +769,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'  => 'podcasting_summary',
-			'title' => __( 'Summary', 'simple-podcasting' ),
+			'title' => __( 'Summary (required)', 'simple-podcasting' ),
 			'type'  => 'textarea',
 		),
 		array(
@@ -538,7 +795,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'        => 'podcasting_image',
-			'title'       => __( 'Cover image', 'simple-podcasting' ),
+			'title'       => __( 'Cover image (required)', 'simple-podcasting' ),
 			'type'        => 'image',
 			'description' => __( 'Minimum size: 1400px x 1400 px — maximum size: 2048px x 2048px', 'simple-podcasting' ),
 		),
@@ -560,7 +817,7 @@ function get_meta_fields() {
 		),
 		array(
 			'slug'    => 'podcasting_category_1',
-			'title'   => __( 'Category 1', 'simple-podcasting' ),
+			'title'   => __( 'Category 1 (required)', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories_options(),
 		),
@@ -575,6 +832,30 @@ function get_meta_fields() {
 			'title'   => __( 'Category 3', 'simple-podcasting' ),
 			'type'    => 'select',
 			'options' => get_podcasting_categories_options(),
+		),
+		array(
+			'slug'  => 'podcasting_platforms',
+			'title' => __( 'Podcasting Platforms', 'simple-podcasting' ),
+			'type'  => 'platform_fields',
+		),
+		array(
+			'slug'    => 'podcasting_icon_theme',
+			'title'   => __( 'Podcasting Platforms icon theme', 'simple-podcasting' ),
+			'type'    => 'radio',
+			'options' => array(
+				array(
+					'label' => 'Color',
+					'value' => 'color',
+				),
+				array(
+					'label' => 'Black',
+					'value' => 'black',
+				),
+				array(
+					'label' => 'White',
+					'value' => 'white',
+				),
+			),
 		),
 	);
 }
@@ -793,7 +1074,7 @@ function get_podcasting_categories_options() {
 
 		if ( ! empty( $category['subcategories'] ) ) {
 			foreach ( $category['subcategories'] as $subkey => $subcategory ) {
-				$to_return[ "$key:$subkey" ] = '&mdash; ' . $subcategory;
+				$to_return[ "$key:$subkey" ] = '— ' . $subcategory;
 			}
 		}
 	}

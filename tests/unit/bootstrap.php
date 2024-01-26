@@ -15,7 +15,7 @@ WP_Mock::bootstrap();
 define( 'PODCASTING_VERSION', '1.2.1' );
 define( 'PODCASTING_PATH', TEST_PLUGIN_DIR );
 define( 'PODCASTING_URL', 'https://example.com/wp-content/plugins/simple-podcasting/' );
-define( 'TAXONOMY_NAME', 'podcasting_podcasts' );
+define( 'PODCASTING_TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );
 
 require TEST_PLUGIN_DIR . 'includes/blocks.php';
@@ -24,3 +24,4 @@ require TEST_PLUGIN_DIR . 'includes/datatypes.php';
 require TEST_PLUGIN_DIR . 'includes/helpers.php';
 require TEST_PLUGIN_DIR . 'includes/post-meta-box.php';
 require TEST_PLUGIN_DIR . 'includes/rest-external-url.php';
+require TEST_PLUGIN_DIR . 'includes/transcripts.php';

@@ -1,13 +1,18 @@
-const { randomName } = require('../support/functions');
+const {
+	randomName,
+	populatePodcast,
+	deleteAllTerms,
+} = require('../support/functions');
 
 describe('Onboarding tests', () => {
-	before(() => {
-		cy.login();
-	});
-
 	beforeEach(() => {
+		cy.login();
+		cy.uploadMedia('tests/cypress/fixtures/example.jpg');
 		cy.activatePlugin('simple-podcasting');
-		cy.deleteAllTerms('podcasting_podcasts');
+		cy.visit(
+			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
+		);
+		deleteAllTerms();
 		cy.deactivatePlugin('simple-podcasting');
 		cy.visit('/wp-admin/options.php');
 		cy.get('body').then(($body) => {
@@ -29,8 +34,10 @@ describe('Onboarding tests', () => {
 			.closest('form')
 			.submit();
 
-		cy.contains('Show name is required.');
-		cy.contains('Podcast category is required.');
+		cy.get('.notice-error').should(
+			'contain',
+			'A podcast name is required.'
+		);
 	});
 
 	it('Should pass onboarding', () => {
@@ -39,8 +46,12 @@ describe('Onboarding tests', () => {
 
 		const podcastName = 'Onboarding ' + randomName();
 		cy.get('input[name=podcast-name]').click().type(podcastName);
-		cy.get('select[name=podcast-category]').select('Arts');
-
+		populatePodcast({
+			author: 'Person Doe',
+			summary: 'Lorem ipsum dolor',
+			category: 'Arts',
+			onboarding: true,
+		});
 		cy.get('#simple-podcasting__create-podcast-button')
 			.closest('form')
 			.submit();
