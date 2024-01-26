@@ -5,12 +5,14 @@ const {
 	InspectorControls,
 	MediaPlaceholder,
 	MediaReplaceFlow,
+	MediaUpload,
 	RichText,
 } = wp.blockEditor;
 const {
 	FormToggle,
 	PanelBody,
 	PanelRow,
+	PanelHeader,
 	SelectControl,
 	TextControl,
 	RadioControl,
@@ -57,6 +59,7 @@ class Edit extends Component {
 		const seasonNumber = attributes.seasonNumber || '';
 		const episodeNumber = attributes.episodeNumber || '';
 		const episodeType = attributes.episodeType || '';
+		const episodeCover = attributes.episodeCover || '';
 		const { className, src } = this.state;
 
 		const onSelectAttachment = (attachment) => {
@@ -273,6 +276,35 @@ class Edit extends Component {
 								{__('Add Transcript', 'simple-podcasting')}
 							</Button>
 						</PanelRow>
+						<PanelRow>
+							<MediaUpload
+								onSelect={(media) => {
+									setAttributes({
+										episodeCover: media.url
+									})
+								}}
+								multiple={false}
+								allowedTypes={['image/gif']}
+								value={episodeCover}
+								render={({ open }) => (
+									<Button onClick={open} variant='secondary'>
+										{episodeCover ?
+										__('Replace Cover', 'simple-podcasting') :
+										__('Add Cover Art', 'simple-podcasting')}
+									</Button>
+								)}
+							/>
+							{episodeCover && (		
+								<Button variant='secondary' isDestructive onClick={() => setAttributes({ episodeCover: '' })}>
+									{__('Remove Cover', 'simple-podcasting')}
+								</Button>
+							)}
+						</PanelRow>
+						{episodeCover && (
+							<PanelRow>
+								<img src={episodeCover} alt='Episode cover image' />
+							</PanelRow>
+						)}
 					</PanelBody>
 				</InspectorControls>
 				<div className={className}>

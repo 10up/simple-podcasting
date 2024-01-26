@@ -88,7 +88,12 @@ export default registerBlockType(
 				type: 'string',
 				source: 'meta',
 				meta: 'podcast_episode_type',
-			}
+			},
+			episodeCover: {
+				type: 'string',
+				source: 'meta',
+				meta: 'podcast_episode_cover',
+			},
 		},
 		transforms,
 

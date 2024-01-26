@@ -113,6 +113,16 @@ function register_meta() {
 
 	\register_meta(
 		'post',
+		'podcast_episode_cover',
+		array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+		)
+	);
+
+	\register_meta(
+		'post',
 		'podcast_transcript',
 		array(
 			'show_in_rest'      => true,

@@ -215,6 +215,11 @@ function feed_item() {
 		if ( ! empty( $feed_item['image'] ) && is_array( $feed_item['image'] ) ) {
 			$feed_item['image'] = $feed_item['image'][0];
 		}
+	} else {
+		$episode_cover = get_post_meta( $post->ID, 'podcast_episode_cover', true );
+		if ( ! empty( $episode_cover ) ) {
+			$feed_item['image'] = $episode_cover;
+		}
 	}
 
 	if ( has_excerpt() ) {
