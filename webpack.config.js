@@ -55,4 +55,7 @@ module.exports = {
 			],
 		}),
 	],
+	externals: {
+		'@wordpress/plugins': 'wp.plugins',
+	}
 };
