@@ -387,17 +387,16 @@ function latest_episode_query_loop( $query ) {
 /**
  * Latest podcast check.
  *
- * @param String   $pre_render   pre render object.
- * @param Array    $parsed_block parsed block object.
- * @param WP_Block $parent_block parent block object.
+ * @param String $pre_render   pre render object.
+ * @param Array  $parsed_block parsed block object.
  */
-function latest_episode_check( $pre_render, $parsed_block, $parent_block ) {
+function latest_episode_check( $pre_render, $parsed_block ) {
 
 	if ( isset( $parsed_block['attrs']['namespace'] ) && 'podcasting/latest-episode' === $parsed_block['attrs']['namespace'] ) {
 		add_action( 'query_loop_block_query_vars', __NAMESPACE__ . '\latest_episode_query_loop' );
 	}
 }
-add_filter( 'pre_render_block', __NAMESPACE__ . '\latest_episode_check', 10, 3 );
+add_filter( 'pre_render_block', __NAMESPACE__ . '\latest_episode_check', 10, 2 );
 
 /**
  * Latest podcast query in editor.
