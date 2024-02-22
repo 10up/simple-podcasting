@@ -177,20 +177,20 @@ class CustomizeFeedTests extends TestCase {
 	}
 
 	public function test_rss_title_can_be_filtered() {
+		$queried_object = (object) array(
+			'term_id' => 42,
+			'name' => 'Original Podcast Name'
+		);
 		\WP_Mock::userFunction( 'get_queried_object' )
-			->andReturn(
-				(object) array(
-					'term_id' => 42,
-					'name' => 'Original Podcast Name'
-				)
-			);
+			->andReturn( $queried_object );
 
 		\WP_Mock::userFunction( 'get_bloginfo' )
 			->with( 'name' )
 			->andReturn( 'Blogname' );
+			
 
 		\WP_Mock::onFilter( 'simple_podcasting_feed_title' )
-			->with( 'Blogname &#187; Original Podcast Name' )
+			->with( 'Blogname &#187; Original Podcast Name', $queried_object )
 			->reply( 'Filtered Podcast Title' );
 
 		$this->assertEquals(

@@ -49,8 +49,9 @@ function bloginfo_rss_name( $output ) {
 	} else {
 		$output = $title;
 	}
-	$output = apply_filters( 'simple_podcasting_feed_title', $output, $term );
-	return $output;
+
+	return apply_filters( 'simple_podcasting_feed_title', $output, $term );
+
 }
 add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
 
