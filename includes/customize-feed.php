@@ -45,11 +45,11 @@ function bloginfo_rss_name( $output ) {
 	$title = get_term_meta( $term->term_id, 'podcasting_title', true );
 	if ( empty( $title ) ) {
 		$title = get_bloginfo( 'name' );
-		$title = "$title &#187; {$term->name}";
+		$output = "$title &#187; {$term->name}";
 	} else {
 		$output = $title;
 	}
-
+	$output = apply_filters( 'simple_podcasting_feed_title', $output, $term );
 	return $output;
 }
 add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
