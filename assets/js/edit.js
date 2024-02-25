@@ -6,13 +6,13 @@ const {
 	MediaPlaceholder,
 	MediaReplaceFlow,
 	MediaUpload,
+	MediaUploadCheck,
 	RichText,
 } = wp.blockEditor;
 const {
 	FormToggle,
 	PanelBody,
 	PanelRow,
-	PanelHeader,
 	SelectControl,
 	TextControl,
 	RadioControl,
@@ -23,7 +23,7 @@ const { apiFetch } = wp;
 const ALLOWED_MEDIA_TYPES = ['audio'];
 
 import { Button } from '@wordpress/components';
-import { dispatch } from '@wordpress/data';
+import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
 /*
@@ -32,6 +32,23 @@ import { createBlock } from '@wordpress/blocks';
  * @TODO Import from `@wordpress/editor` once minimum WP version is 6.0.
  */
 import HierarchicalTermSelector from './term-selector/hierarchical-term-selector';
+
+function useFeaturedImage() {
+    const featuredImageId = useSelect((select) => select('core/editor').getEditedPostAttribute('featured_media'), []);
+    const { editPost } = useDispatch('core/editor');
+
+    const featuredImageUrl = useSelect((select) => {
+        const { getMedia } = select('core');
+        const image = getMedia(featuredImageId);
+        return image?.source_url;
+    }, [featuredImageId]);
+
+    const setFeaturedImage = (imageId) => {
+        editPost({ featured_media: imageId });
+    };
+
+    return { featuredImageUrl, setFeaturedImage };
+}
 
 class Edit extends Component {
 	constructor({ className }) {
@@ -52,14 +69,19 @@ class Edit extends Component {
 	}
 
 	render() {
-		const { setAttributes, isSelected, attributes } = this.props;
+		const {
+			setAttributes,
+			isSelected,
+			attributes,
+			featuredImageUrl,
+			setFeaturedImage
+		} = this.props;
 		const { caption, explicit } = attributes;
 		const duration = attributes.duration || '';
 		const captioned = attributes.captioned || '';
 		const seasonNumber = attributes.seasonNumber || '';
 		const episodeNumber = attributes.episodeNumber || '';
 		const episodeType = attributes.episodeType || '';
-		const episodeCover = attributes.episodeCover || '';
 		const { className, src } = this.state;
 
 		const onSelectAttachment = (attachment) => {
@@ -146,6 +168,10 @@ class Edit extends Component {
 				) : null}
 			</BlockControls>
 		);
+
+		const onUpdateImage = (image) => {
+            setFeaturedImage(image.id);
+        };
 
 		return (
 			<Fragment>
@@ -276,35 +302,23 @@ class Edit extends Component {
 								{__('Add Transcript', 'simple-podcasting')}
 							</Button>
 						</PanelRow>
+						<h3 style={{marginTop: '20px'}}>{__('Cover Image', 'simple-podcasting')}</h3>
+						<p>{__('The featured image of the current post is used as the episode cover art. Please select a featured image to set it.', 'simple-podcasting')}</p>
 						<PanelRow>
-							<MediaUpload
-								onSelect={(media) => {
-									setAttributes({
-										episodeCover: media.url
-									})
-								}}
-								multiple={false}
-								allowedTypes={['image/gif']}
-								value={episodeCover}
-								render={({ open }) => (
-									<Button onClick={open} variant='secondary'>
-										{episodeCover ?
-										__('Replace Cover', 'simple-podcasting') :
-										__('Add Cover Art', 'simple-podcasting')}
-									</Button>
-								)}
-							/>
-							{episodeCover && (		
-								<Button variant='secondary' isDestructive onClick={() => setAttributes({ episodeCover: '' })}>
-									{__('Remove Cover', 'simple-podcasting')}
-								</Button>
+							{featuredImageUrl && (
+								<img src={featuredImageUrl} alt="Cover Image" />
 							)}
+
+							<MediaUploadCheck>
+								<MediaUpload
+									onSelect={onUpdateImage}
+									allowedTypes={['image/gif']}
+									render={({ open }) => (
+										<Button onClick={open}>{__('Select Cover Art', 'simple-podcasting')}</Button>
+									)}
+								/>
+							</MediaUploadCheck>
 						</PanelRow>
-						{episodeCover && (
-							<PanelRow>
-								<img src={episodeCover} alt='Episode cover image' />
-							</PanelRow>
-						)}
 					</PanelBody>
 				</InspectorControls>
 				<div className={className}>
@@ -350,4 +364,10 @@ class Edit extends Component {
 	}
 }
 
-export default Edit;
+function PodcastBlockWithHooks(props) {
+    const featuredImageProp = useFeaturedImage();
+
+    return <Edit {...props} {...featuredImageProp} />;
+}
+
+export default PodcastBlockWithHooks;
