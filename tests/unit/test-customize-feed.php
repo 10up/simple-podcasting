@@ -88,7 +88,7 @@ class CustomizeFeedTests extends TestCase {
 	}
 
 	public function test_pre_get_posts_feed() {
-		 $query_mock = \Mockery::mock( '\WP_Query' );
+		$query_mock = \Mockery::mock( '\WP_Query' );
 
 		$query_mock->shouldReceive( 'is_feed' )->andReturn( true );
 
@@ -174,6 +174,31 @@ class CustomizeFeedTests extends TestCase {
 				$this->assertMatchesRegularExpression( $regex_string, $output, $message );
 			}
 		}
+	}
+
+	public function test_rss_title_can_be_filtered() {
+		$queried_object = (object) array(
+			'term_id' => 42,
+			'name' => 'Original Podcast Name'
+		);
+		\WP_Mock::userFunction( 'get_queried_object' )
+			->andReturn( $queried_object );
+
+		\WP_Mock::userFunction( 'get_bloginfo' )
+			->with( 'name' )
+			->andReturn( 'Blogname' );
+			
+
+		\WP_Mock::onFilter( 'simple_podcasting_feed_title' )
+			->with( 'Blogname &#187; Original Podcast Name', $queried_object )
+			->reply( 'Filtered Podcast Title' );
+
+		$this->assertEquals(
+			'Filtered Podcast Title',
+			tenup_podcasting\bloginfo_rss_name( 'Podcast Title' ),
+			'tenup_podcasting\bloginfo_rss_name() should return the filtered value.'
+		);
+	
 	}
 
 	public function data_provider_for_test_feed_item() {
