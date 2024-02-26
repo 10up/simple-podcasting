@@ -111,6 +111,30 @@ function podcasting_feed_episodes_per_page( $qty ) {
 
 ```
 
+## Customize the RSS feed title
+
+The `<title>` element of the RSS feed can be adjusted using the `simple_podcasting_feed_title` filter.
+
+```php
+<?php
+
+add_filter( 'simple_podcasting_feed_title', 'podcasting_feed_update_feed_title', 10, 2 );
+
+/**
+ * Filter the name of the of the feed channel
+ *
+ * @param $output Output to be modified.
+ * @param $term WP_Term object representing the podcast
+ * @return string
+ */
+function podcasting_feed_update_feed_title( $output, $term ) {
+	$term_name = $term->name;
+
+	return '10up Presents: ' . $term_name;
+}
+
+```
+
 ## Customize RSS feed
 
 If you want to modify RSS feed items output, there is a filter for that:
