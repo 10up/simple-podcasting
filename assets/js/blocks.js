@@ -3,6 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType, registerBlockVariation } from '@wordpress/blocks';
+const { select } = wp.data;
 
 // Split the Edit component out.
 import Edit from './edit';
@@ -88,6 +89,38 @@ export default registerBlockType(
 				type: 'string',
 				source: 'meta',
 				meta: 'podcast_episode_type',
+			},
+			displayDuration: {
+				type: 'boolean',
+				default: false,
+			},
+			displayShowTitle: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeTitle: {
+				type: 'boolean',
+				default: false,
+			},
+			displayArt: {
+				type: 'boolean',
+				default: false,
+			},
+			displayExplicitBadge: {
+				type: 'boolean',
+				default: false,
+			},
+			displaySeasonNumber: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeNumber: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeType: {
+				type: 'boolean',
+				default: false,
 			}
 		},
 		transforms,
@@ -95,11 +128,16 @@ export default registerBlockType(
 		edit: Edit,
 
 		save: props => {
-			const { id, src, caption } = props.attributes;
+			const {
+				id,
+				src,
+				caption
+			} = props.attributes;
+
 			return (
 				<figure className={ id ? `podcast-${ id }` : null }>
+					{ caption && caption.length > 0 && <figcaption className="wp-block-podcasting-podcast__caption">{ caption }</figcaption> }
 					<audio controls="controls" src={ src } />
-					{ caption && caption.length > 0 && <figcaption>{ caption }</figcaption> }
 				</figure>
 			);
 		},
