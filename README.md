@@ -112,6 +112,7 @@ function podcasting_feed_episodes_per_page( $qty ) {
 ```
 
 ## Customize the RSS feed title
+
 The `<title>` element of the RSS feed can be adjusted using the `simple_podcasting_feed_title` filter.
 
 ```php
