@@ -47,7 +47,11 @@ function useFeaturedImage() {
         editPost({ featured_media: imageId });
     };
 
-    return { featuredImageUrl, setFeaturedImage };
+	const removeFeaturedImage = () => {
+		editPost({ featured_media: 0 });
+	};
+
+    return { featuredImageUrl, setFeaturedImage, removeFeaturedImage };
 }
 
 class Edit extends Component {
@@ -74,7 +78,8 @@ class Edit extends Component {
 			isSelected,
 			attributes,
 			featuredImageUrl,
-			setFeaturedImage
+			setFeaturedImage,
+			removeFeaturedImage
 		} = this.props;
 		const { caption, explicit } = attributes;
 		const duration = attributes.duration || '';
@@ -304,7 +309,7 @@ class Edit extends Component {
 						</PanelRow>
 						<h3 style={{marginTop: '20px'}}>{__('Cover Image', 'simple-podcasting')}</h3>
 						<p>{__('The featured image of the current post is used as the episode cover art. Please select a featured image to set it.', 'simple-podcasting')}</p>
-						<PanelRow>
+						<PanelRow className="cover-art-container">
 							{featuredImageUrl && (
 								<img src={featuredImageUrl} alt="Cover Image" />
 							)}
@@ -312,12 +317,21 @@ class Edit extends Component {
 							<MediaUploadCheck>
 								<MediaUpload
 									onSelect={onUpdateImage}
-									allowedTypes={['image/gif']}
+									allowedTypes={['image']}
 									render={({ open }) => (
-										<Button onClick={open}>{__('Select Cover Art', 'simple-podcasting')}</Button>
+										<Button isSecondary onClick={open}>
+											{featuredImageUrl ?
+											__('Replace Cover Art', 'simple-podcasting')
+											:
+											__('Select Cover Art', 'simple-podcasting')
+											}
+										</Button>
 									)}
 								/>
 							</MediaUploadCheck>
+							{featuredImageUrl && (
+								<Button isLink isDestructive onClick={removeFeaturedImage}>{__('Delete Cover Art', 'simple-podcasting')}</Button>
+							)}
 						</PanelRow>
 					</PanelBody>
 				</InspectorControls>
