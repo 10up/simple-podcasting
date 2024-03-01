@@ -51,7 +51,7 @@ function useFeaturedImage() {
 		editPost({ featured_media: 0 });
 	};
 
-    return { featuredImageUrl, setFeaturedImage, removeFeaturedImage };
+    return { featuredImageUrl, setFeaturedImage, removeFeaturedImage, featuredImageId };
 }
 
 class Edit extends Component {
@@ -79,7 +79,8 @@ class Edit extends Component {
 			attributes,
 			featuredImageUrl,
 			setFeaturedImage,
-			removeFeaturedImage
+			removeFeaturedImage,
+			featuredImageId
 		} = this.props;
 		const { caption, explicit } = attributes;
 		const duration = attributes.duration || '';
@@ -327,6 +328,7 @@ class Edit extends Component {
 											}
 										</Button>
 									)}
+									value={featuredImageId}
 								/>
 							</MediaUploadCheck>
 							{featuredImageUrl && (
