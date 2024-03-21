@@ -4,7 +4,7 @@ Tags:              simple podcasting, podcasting, podcast, apple podcasts, episo
 Requires at least: 5.7
 Tested up to:      6.4
 Requires PHP:      7.4
-Stable tag:        1.7.0
+Stable tag:        1.8.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,15 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
+
+= 1.8.0 - 2024-03-13 =
+* **Added:** "Latest Podcast Episode" query block variation (props [#jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic), [@barneyjeffries](https://github.com/barneyjeffries), [@faisal-alvi](https://github.com/faisal-alvi)) via [#266](https://github.com/10up/simple-podcasting/pull/266).
+* **Added:** Ability to add Unique Cover Art for Episodes (props [@jamesburgos](https://github.com/jamesburgos), [@jeffpaul](https://github.com/jeffpaul), [@zamanq](https://github.com/zamanq), [@iamdharmesh](https://github.com/iamdharmesh)) via [#273](https://github.com/10up/simple-podcasting/pull/273).
+* **Added:** `simple_podcasting_feed_title` filter hook to modify feed title (props [@martinburch](https://github.com/martinburch), [@psorensen](https://github.com/psorensen), [@dkotter](https://github.com/dkotter)) via [#279](https://github.com/10up/simple-podcasting/pull/279).
+* **Fixed:** Incorrect feed title (props [@martinburch](https://github.com/martinburch), [@psorensen](https://github.com/psorensen), [@dkotter](https://github.com/dkotter)) via [#279](https://github.com/10up/simple-podcasting/pull/279).
+* **Fixed:** Fatal error in WordPress 5.8 and earlier (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@Sidsector9](https://github.com/Sidsector9)) via [#277](https://github.com/10up/simple-podcasting/pull/277).
+* **Changed:** Disabled auto sync pull requests with target branch (props [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul)) via [#281](https://github.com/10up/simple-podcasting/pull/281).
+* **Security:** Bumps `ip` from `1.1.8` to `1.1.9` (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9)) via [#278](https://github.com/10up/simple-podcasting/pull/278).
 
 = 1.7.0 - 2024-01-16 =
 * **Added:** Ability to add a transcript to a podcast episode by utilizing a new Podcast Transcript block. This block is added by clicking the `Add Transcript` button that will now show in the sidebar panel of the Podcast block (props [@nateconley](https://github.com/nateconley), [@peterwilsoncc](https://github.com/peterwilsoncc), [@sksaju](https://github.com/sksaju), [@kirtangajjar](https://github.com/kirtangajjar) via [#221](https://github.com/10up/simple-podcasting/pull/221)).
