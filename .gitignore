@@ -32,6 +32,9 @@ Session.vim
 Thumbs.db
 Desktop.ini
 
+.env
+setup.log
+
 # E2E testing
 .wp-env.override.json
 artifacts
