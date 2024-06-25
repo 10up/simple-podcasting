@@ -27,8 +27,8 @@
     "wp-env": "wp-env",
     "env:start": "wp-env start",
     "env:stop": "wp-env stop",
-    "cypress:open": "cypress open --browser chromium --config-file tests/cypress/config.config.js",
-    "cypress:run": "cypress run --browser chromium --config-file tests/cypress/config.config.js"
+    "cypress:open": "cypress open --browser chrome --config-file tests/cypress/config.config.js",
+    "cypress:run": "cypress run --browser chrome --config-file tests/cypress/config.config.js"
   },
   "lint-staged": {
     "*.php": [
