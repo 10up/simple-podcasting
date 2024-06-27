@@ -107,8 +107,12 @@ describe('Create podcast setting panel', () => {
 		);
 
 		cy.get('.podcasting__select-image-btn').click();
-		cy.get('[aria-label="example"]').first().click();
-		cy.get('.media-button-select').click();
+		cy.get('.supports-drag-drop:not([aria-hidden="true"]) .attachment')
+			.first()
+			.click();
+		cy.get(
+			'.supports-drag-drop:not([aria-hidden="true"]) .media-button-select'
+		).click();
 		cy.get('.podcasting__select-image-btn').should(
 			'have.text',
 			'Replace Image'
@@ -131,8 +135,12 @@ describe('Create podcast setting panel', () => {
 		);
 
 		cy.get('.podcasting__select-image-btn').click();
-		cy.get('[aria-label="example"]').first().click();
-		cy.get('.media-button-select').click();
+		cy.get('.supports-drag-drop:not([aria-hidden="true"]) .attachment')
+			.first()
+			.click();
+		cy.get(
+			'.supports-drag-drop:not([aria-hidden="true"]) .media-button-select'
+		).click();
 
 		cy.get('.podcasting__create-podcast-btn').click();
 		cy.get('.components-modal__header-heading').should(

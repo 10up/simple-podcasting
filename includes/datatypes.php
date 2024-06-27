@@ -28,6 +28,7 @@ function register_meta() {
 			'show_in_rest' => true,
 			'type'         => 'string',
 			'single'       => true,
+			'default'      => 'no',
 		)
 	);
 
@@ -108,6 +109,7 @@ function register_meta() {
 			'show_in_rest' => true,
 			'type'         => 'string',
 			'single'       => true,
+			'default'      => 'none',
 		)
 	);
 

@@ -40,7 +40,9 @@ describe('Admin can publish posts with podcast block', () => {
 				.first()
 				.as('title-input');
 			cy.get('@title-input').click().type('Test episode');
-			cy.get('.edit-post-header-toolbar__inserter-toggle').click();
+			cy.get(
+				'.edit-post-header-toolbar__inserter-toggle, .editor-document-tools__inserter-toggle'
+			).click();
 			cy.get(
 				'#components-search-control-0, #block-editor-inserter__search-0'
 			)
@@ -50,13 +52,16 @@ describe('Admin can publish posts with podcast block', () => {
 			cy.get('.editor-block-list-item-podcasting-podcast', {
 				timeout: 4000,
 			}).click();
-			cy.get('.edit-post-header-toolbar__inserter-toggle').click();
+			cy.get(
+				'.edit-post-header-toolbar__inserter-toggle, .editor-document-tools__inserter-toggle'
+			).click();
 			cy.get(
 				'.wp-block-podcasting-podcast input[type="file"]'
 			).attachFile('example.mp3');
 			cy.get('.wp-block-podcasting-podcast audio')
 				.should('have.attr', 'src')
 				.and('include', 'example');
+			cy.openDocumentSettingsSidebar();
 			cy.openDocumentSettingsPanel('Podcasts');
 			cy.get('.components-panel__body')
 				.contains('Podcasts')

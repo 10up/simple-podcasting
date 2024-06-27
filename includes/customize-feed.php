@@ -44,7 +44,7 @@ function bloginfo_rss_name( $output ) {
 	}
 	$title = get_term_meta( $term->term_id, 'podcasting_title', true );
 	if ( empty( $title ) ) {
-		$title = get_bloginfo( 'name' );
+		$title  = get_bloginfo( 'name' );
 		$output = "$title &#187; {$term->name}";
 	} else {
 		$output = $title;
