@@ -15,9 +15,3 @@
 
 import '@10up/cypress-wp-utils';
 import 'cypress-file-upload';
-
-beforeEach(() => {
-	Cypress.Cookies.defaults({
-		preserve: /^wordpress.*?/,
-	});
-});

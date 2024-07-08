@@ -1,19 +1,9 @@
 # Simple Podcasting for WordPress
 
-> Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the WordPress block editor (aka Gutenberg).
+> Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor (aka Gutenberg).
 
-[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) [![E2E Test](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
-
-## Table of Contents
-* [Overview](#overview)
-* [Requirements](#requirements)
-* [Installation](#installation)
-* [Create Podcast](#create-your-podcast)
-* [Add Content to Podcast](#add-content-to-your-podcast)
-* [Submit Podcast Feed to Apple Podcasts](#submit-your-podcast-feed-to-apple-podcasts)
-* [Control how many episodes are listed on the feed](#control-how-many-episodes-are-listed-on-the-feed)
-* [Customize RSS feed](#customize-rss-feed)
-* [Contributing](#contributing)
+[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/releases/latest) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md)
+[![E2E Test](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/test-e2e.yml) [![Unit Tests](https://github.com/10up/simple-podcasting/actions/workflows/phpunit.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/phpunit.yml) [![PHPCS](https://github.com/10up/simple-podcasting/actions/workflows/phpcs.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/phpcs.yml) [![PHP Compatibility](https://github.com/10up/simple-podcasting/actions/workflows/php-compatibility.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/php-compatibility.yml) [![Dependency Review](https://github.com/10up/simple-podcasting/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/dependency-review.yml)
 
 ## Overview
 
@@ -58,7 +48,8 @@ Repeat for each podcast you would like to create.
 
  * Create a new post and assign it to one or more Podcasts using the panel labeled Podcasts.
  * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (sometimes referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
- * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available, season number, episode number, episode type and to optionally specify one media item in the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available, season number, episode number, episode type, add a transcript and to optionally specify one media item in the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
+ * Transcript: If desired, an optional transcript can be added from the settings of the Podcast block. This will add a Podcast Transcript block, allowing you to add a transcript consisting of time codes, citations, and paragrah text that can be embedded in the post, linked to an external plain HTML file, or linked in a special `<podcast:transcript>` XML element.
 
 ## Submit your podcast feed to Apple Podcasts
 
@@ -105,6 +96,30 @@ add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per
  */
 function podcasting_feed_episodes_per_page( $qty ) {
 	return 300;
+}
+
+```
+
+## Customize the RSS feed title
+
+The `<title>` element of the RSS feed can be adjusted using the `simple_podcasting_feed_title` filter.
+
+```php
+<?php
+
+add_filter( 'simple_podcasting_feed_title', 'podcasting_feed_update_feed_title', 10, 2 );
+
+/**
+ * Filter the name of the of the feed channel
+ *
+ * @param $output Output to be modified.
+ * @param $term WP_Term object representing the podcast
+ * @return string
+ */
+function podcasting_feed_update_feed_title( $output, $term ) {
+	$term_name = $term->name;
+
+	return '10up Presents: ' . $term_name;
 }
 
 ```

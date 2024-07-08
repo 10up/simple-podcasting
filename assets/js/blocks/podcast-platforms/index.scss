@@ -1,0 +1,87 @@
+.wp-block {
+	.simple-podcasting__podcasting-platform-list {
+		margin-bottom: 3rem;
+	}
+
+	.simple-podcasting__podcast-platforms {
+		padding: 2.5rem 1rem 1rem 1rem;
+	}
+}
+
+.simple-podcasting {
+	&__podcast-platforms {
+		padding: 1rem 0 1rem 0;
+	}
+
+	&__podcast-search-results {
+		cursor: pointer;
+	}
+
+	&__select-show-popover {
+		max-width: 400px;
+		width: 100%;
+
+		.components-popover__content {
+			width: 100%;
+			padding: 1rem;
+		}
+	}
+
+	&__podcasting-platform-list {
+		display: flex;
+		flex-flow: row wrap;
+
+		&--left {
+			justify-content: start;
+		}
+
+		&--center {
+			justify-content: center;
+		}
+
+		&--right {
+			justify-content: end;
+		}
+
+		a {
+			text-decoration: none !important;
+		}
+
+		img {
+			display: block;
+
+			@for $i from 1 through 6 {
+				&.simple-pocasting__icon-size--#{$i * 16} {
+					max-width: #{$i * 16}px;
+				}
+			}
+		}
+	}
+
+	&__podcasting-platform-list-item {
+		display: flex;
+		align-self: center;
+		padding: 0.75rem;
+
+		@media screen and ( max-width: 480px ) {
+			justify-content: center;
+			width: 25%;
+		}
+	}
+
+	&__podcasting-search-controls {
+		position: relative;
+
+		input[type="search"] {
+			font-size: 1rem;
+		}
+	}
+
+	&__podcasting-search-results {
+		position: absolute;
+		border: 1px solid;
+		background-color: #fff;
+		min-width: 200px;
+		z-index: 10;
+	}
+}

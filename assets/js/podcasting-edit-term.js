@@ -88,4 +88,25 @@ jQuery( document ).ready( function( $ ) {
 		e.preventDefault();
 		clearImageField( e.currentTarget );
 	} );
+
+	const iconThemeRadioEl = $( 'input[name="podcasting_icon_theme"]' );
+	const iconWrappers = $( '.simple_podcasting__platforms-icon' );
+
+	iconThemeRadioEl.on( 'change', function() {
+		const current = $( this );
+		const selected = current.val();
+
+		if ( 'white' === selected ) {
+			iconWrappers.addClass( 'simple_podcasting__platforms-icon--darken-bg' );
+		} else {
+			iconWrappers.removeClass( 'simple_podcasting__platforms-icon--darken-bg' );
+		}
+
+		iconWrappers.each( ( index, icon ) => {
+			const imgEl = $( icon ).find( 'img' );
+			const platform = imgEl.data( 'platform' );
+			imgEl.attr( 'src', `${ podcastingEditPostVars.iconUrl }/${ platform }/${ selected }-100.png` );
+		});
+	} );
 } );
+

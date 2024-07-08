@@ -2,3 +2,12 @@
 .components-base-control {
 	width: 100%;
 }
+.cover-art-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.cover-art-container button {
+	margin: 10px 0;
+}

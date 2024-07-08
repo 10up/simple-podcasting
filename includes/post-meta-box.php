@@ -37,6 +37,7 @@ function meta_box_html( $post ) {
 	$season_number     = get_post_meta( $post->ID, 'podcast_season_number', true );
 	$episode_number    = get_post_meta( $post->ID, 'podcast_episode_number', true );
 	$episode_type      = get_post_meta( $post->ID, 'podcast_episode_type', true );
+	$episode_cover     = has_post_thumbnail( $post->ID ) ? get_the_post_thumbnail_url( $post->ID, 'thumbnail' ) : '';
 
 	wp_nonce_field( plugin_basename( __FILE__ ), 'simple-podcasting' );
 	?>
@@ -82,6 +83,13 @@ function meta_box_html( $post ) {
 			<label for="bonus"><?php esc_html_e( 'Bonus', 'simple-podcasting' ); ?></label>
 		</p>
 	</div>
+	<p>
+		<label for="podcasting-episode-cover"><?php esc_html_e( 'Episode Cover', 'simple-podcasting' ); ?></label>
+		<p><?php esc_html_e( 'The featured image of the current post is used as the episode cover art. Please select a featured image to set it.', 'simple-podcasting' ); ?></p>
+		<?php if ( ! empty( $episode_cover ) ) : ?>
+			<img src="<?php echo esc_url( $episode_cover ); ?>" alt="<?php esc_attr_e( 'Cover Art', 'simple-podcasting' ); ?>" />
+		<?php endif; ?>
+	</p>
 	<p>
 		<label for="podcasting-enclosure-url"><?php esc_html_e( 'Enclosure', 'simple-podcasting' ); ?></label>
 		<input type="text" id="podcasting-enclosure-url" name="podcast_enclosure_url" value="<?php echo esc_url( $podcast_url ); ?>" size="35" />

@@ -2,7 +2,7 @@
  * Internal block libraries
  */
 import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, registerBlockVariation } from '@wordpress/blocks';
 
 // Split the Edit component out.
 import Edit from './edit';
@@ -67,7 +67,6 @@ export default registerBlockType(
 				type: 'string',
 				source: 'meta',
 				meta: 'podcast_explicit',
-				default: 'no',
 			},
 			enclosure: {
 				type: 'string',
@@ -88,6 +87,38 @@ export default registerBlockType(
 				type: 'string',
 				source: 'meta',
 				meta: 'podcast_episode_type',
+			},
+			displayDuration: {
+				type: 'boolean',
+				default: false,
+			},
+			displayShowTitle: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeTitle: {
+				type: 'boolean',
+				default: false,
+			},
+			displayArt: {
+				type: 'boolean',
+				default: false,
+			},
+			displayExplicitBadge: {
+				type: 'boolean',
+				default: false,
+			},
+			displaySeasonNumber: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeNumber: {
+				type: 'boolean',
+				default: false,
+			},
+			displayEpisodeType: {
+				type: 'boolean',
+				default: false,
 			}
 		},
 		transforms,
@@ -95,13 +126,54 @@ export default registerBlockType(
 		edit: Edit,
 
 		save: props => {
-			const { id, src, caption } = props.attributes;
+			const {
+				id,
+				src,
+				caption
+			} = props.attributes;
+
 			return (
 				<figure className={ id ? `podcast-${ id }` : null }>
+					{ caption && caption.length > 0 && <figcaption className="wp-block-podcasting-podcast__caption">{ caption }</figcaption> }
 					<audio controls="controls" src={ src } />
-					{ caption && caption.length > 0 && <figcaption>{ caption }</figcaption> }
 				</figure>
 			);
 		},
 	},
 );
+
+const VARIATION_NAME = 'podcasting/latest-episode';
+
+registerBlockVariation('core/query', {
+	name: VARIATION_NAME,
+	title: 'Latest Podcast Episode',
+	description: 'Displays the latest podcast episode.',
+	isActive: ['simple-podcasting'],
+	icon: 'microphone',
+	attributes: {
+		namespace: VARIATION_NAME,
+		query: {
+			postType: 'post',
+			podcastingQuery: 'not_empty',
+		},
+	},
+	allowedControls: [ ],
+	scope: [ 'inserter' ],
+	innerBlocks: [
+		[
+			'core/post-template',
+			{},
+			[ [
+				'core/group',
+				{ className: 'podcasting-latest-episode' },
+				[
+					[ 'core/post-featured-image' ],
+					[ 'core/group', { className: 'podcasting-latest-episode__content' }, [
+						[ 'core/post-title' ], [ 'core/post-date' ], [ 'core/post-excerpt' ]
+					] ],
+				]
+			] ],
+		],
+		[ 'core/query-no-results' ],
+	],
+});

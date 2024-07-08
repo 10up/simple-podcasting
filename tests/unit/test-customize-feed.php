@@ -88,7 +88,7 @@ class CustomizeFeedTests extends TestCase {
 	}
 
 	public function test_pre_get_posts_feed() {
-		 $query_mock = \Mockery::mock( '\WP_Query' );
+		$query_mock = \Mockery::mock( '\WP_Query' );
 
 		$query_mock->shouldReceive( 'is_feed' )->andReturn( true );
 
@@ -176,6 +176,31 @@ class CustomizeFeedTests extends TestCase {
 		}
 	}
 
+	public function test_rss_title_can_be_filtered() {
+		$queried_object = (object) array(
+			'term_id' => 42,
+			'name' => 'Original Podcast Name'
+		);
+		\WP_Mock::userFunction( 'get_queried_object' )
+			->andReturn( $queried_object );
+
+		\WP_Mock::userFunction( 'get_bloginfo' )
+			->with( 'name' )
+			->andReturn( 'Blogname' );
+			
+
+		\WP_Mock::onFilter( 'simple_podcasting_feed_title' )
+			->with( 'Blogname &#187; Original Podcast Name', $queried_object )
+			->reply( 'Filtered Podcast Title' );
+
+		$this->assertEquals(
+			'Filtered Podcast Title',
+			tenup_podcasting\bloginfo_rss_name( 'Podcast Title' ),
+			'tenup_podcasting\bloginfo_rss_name() should return the filtered value.'
+		);
+	
+	}
+
 	public function data_provider_for_test_feed_item() {
 		return array(
 			'Term not found'              => array(
@@ -215,7 +240,6 @@ class CustomizeFeedTests extends TestCase {
 					'No explicit if all defaults'   => '/<itunes:explicit>no<\/itunes:explicit>/',
 					'Doesnt contain closed caption' => '/^((?!isClosedCaptioned).)*$/s',
 					'Episode thumbnail'             => "/<itunes:image href='http:\/\/example\.com\/image\.jpg' \/>/",
-					'Post excerpt as summary'       => '/<itunes:summary>Post Excerpt<\/itunes:summary>/',
 					'Post excerpt as subtitle'      => '/<itunes:subtitle>Post Excerpt<\/itunes:subtitle>/',
 					'Duration is empty'             => '/^((?!<itunes:duration>).)*$/s',
 					'Doesnt contain season'         => '/^((?!season).)*$/s',
@@ -249,7 +273,6 @@ class CustomizeFeedTests extends TestCase {
 					'Explicit from episode'    => '/<itunes:explicit>yes<\/itunes:explicit>/',
 					'Contain Closed Captioned' => '/<itunes:isClosedCaptioned>Yes<\/itunes:isClosedCaptioned>/',
 					'Doesnt contain thumbnail' => '/^((?!<itunes:image).)*$/s',
-					'Long Summary'             => '/<itunes:summary>Very Long Post Excerpt Very Long Post Excerpt Very Long Post Excerpt Very Long Post Excerpt<\/itunes:summary>/',
 					'Short Subtitle'           => '/<itunes:subtitle>Short Excerpt<\/itunes:subtitle>/',
 					'Duration'                 => '/<itunes:duration>1:23<\/itunes:duration>/',
 					'Season'                   => '/<itunes:season>2<\/itunes:season>/',
@@ -279,7 +302,6 @@ class CustomizeFeedTests extends TestCase {
 					'Explicit from plugin settings' => '/<itunes:explicit>clean<\/itunes:explicit>/',
 					'Contain Closed Captioned'      => '/<itunes:isClosedCaptioned>Yes<\/itunes:isClosedCaptioned>/',
 					'Doesnt contain thumbnail'      => '/^((?!<itunes:image).)*$/s',
-					'Summary from plugin settings'  => '/<itunes:summary>Summary from plugin settings<\/itunes:summary>/',
 					'Subtitle from plugin settings' => '/<itunes:subtitle>Summary from plugin settings<\/itunes:subtitle>/',
 					'Duration'                      => '/<itunes:duration>1:23<\/itunes:duration>/',
 				),
