@@ -4,6 +4,7 @@
  * Plugin URI:        https://github.com/10up/simple-podcasting
  * Description:       Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block for the new WordPress editor.
  * Version:           1.8.0
+ * Requires at least: 6.4
  * Requires PHP:      7.4
  * Author:            10up
  * Author URI:        http://10up.com/
@@ -250,6 +251,54 @@ function setup_edit_screen() {
 	}
 }
 add_action( 'admin_init', __NAMESPACE__ . '\setup_edit_screen' );
+
+/**
+ * Registers block assets for Podcast block.
+ */
+function register_podcast_block_assets() {
+	$block_asset = [
+		'version'      => PODCASTING_VERSION,
+		'dependencies' => [],
+	];
+	if ( file_exists( PODCASTING_PATH . 'dist/podcast.asset.php' ) ) {
+		$block_asset = require PODCASTING_PATH . 'dist/podcast.asset.php';
+	}
+
+	wp_register_style(
+		'podcast-block',
+		PODCASTING_URL . 'dist/podcast.css',
+		array(),
+		$block_asset['version'],
+		'all'
+	);
+
+	wp_enqueue_style( 'podcast-block' );
+}
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\register_podcast_block_assets' );
+
+/**
+ * Registers block assets for Podcast block in admin.
+ */
+function register_podcast_block_assets_admin() {
+	$block_asset = [
+		'version'      => PODCASTING_VERSION,
+		'dependencies' => [],
+	];
+	if ( file_exists( PODCASTING_PATH . 'dist/podcast.asset.php' ) ) {
+		$block_asset = require PODCASTING_PATH . 'dist/podcast.asset.php';
+	}
+
+	wp_register_style(
+		'podcast-block',
+		PODCASTING_URL . 'dist/podcast.css',
+		array(),
+		$block_asset['version'],
+		'all'
+	);
+
+	wp_enqueue_style( 'podcast-block' );
+}
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\register_podcast_block_assets_admin' );
 
 /**
  * Registers block assets for Latest Episode.

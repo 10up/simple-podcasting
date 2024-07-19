@@ -1,18 +1,16 @@
 === Simple Podcasting ===
 Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
-Tags:              simple podcasting, podcasting, podcast, apple podcasts, episode, gutenberg, blocks, block
-Requires at least: 5.7
-Tested up to:      6.4
-Requires PHP:      7.4
+Tags:              podcasting, podcast, apple podcasts, episode, season
+Tested up to:      6.6
 Stable tag:        1.8.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor (aka Gutenberg).
+Set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor.
 
 == Description ==
 
-Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor (aka Gutenberg).
+Set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor (aka Gutenberg).
 
 Podcasting is a method to distribute audio and video episodes through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 

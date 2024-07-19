@@ -63,6 +63,7 @@ class BlockTests extends TestCase {
 					array(
 						'editor_script' => 'podcasting-block-editor',
 						'editor_style'  => 'podcasting-block-editor',
+						'render_callback' => 'tenup_podcasting\block\render',
 					),
 				),
 			)

@@ -31,12 +31,27 @@ function init() {
 	register_block_type(
 		'podcasting/podcast',
 		array(
-			'editor_script' => 'podcasting-block-editor',
-			'editor_style'  => 'podcasting-block-editor',
+			'editor_script'   => 'podcasting-block-editor',
+			'editor_style'    => 'podcasting-block-editor',
+			'render_callback' => __NAMESPACE__ . '\render',
 		)
 	);
 }
 add_action( 'init', __NAMESPACE__ . '\init' );
+
+/**
+ * Render the block.
+ *
+ * @param array    $attributes Block attributes.
+ * @param string   $content Block content.
+ * @param WP_Block $block Block instance.
+ * @return string HTML output
+ */
+function render( $attributes, $content, $block ) {
+	ob_start();
+	include PODCASTING_PATH . 'includes/blocks/podcast/markup.php';
+	return ob_get_clean();
+}
 
 /**
  * Register block and its assets.
@@ -401,8 +416,8 @@ add_filter( 'pre_render_block', __NAMESPACE__ . '\latest_episode_check', 10, 2 )
 /**
  * Latest podcast query in editor.
  *
- * @param Array $args    query args.
- * @param Array $request request object.
+ * @param Array           $args    query args.
+ * @param WP_REST_Request $request request object.
  */
 function latest_episode_query_api( $args, $request ) {
 

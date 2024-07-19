@@ -45,6 +45,11 @@ module.exports = {
 			'assets/js/blocks/latest-episode',
 			'index.js'
 		),
+		'podcast': path.resolve(
+			process.cwd(),
+			'assets/js/blocks/podcast',
+			'index.js'
+		),
 	},
 	plugins: [
 		...defaultConfig.plugins,
