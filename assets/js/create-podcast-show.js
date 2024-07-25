@@ -1,5 +1,5 @@
 import { registerPlugin } from "@wordpress/plugins";
-import { PluginDocumentSettingPanel, store as editPostStore } from '@wordpress/edit-post';
+import { PluginDocumentSettingPanel, store as editPostStore } from '@wordpress/editor';
 import { __ } from "@wordpress/i18n";
 import {
 	Button,
