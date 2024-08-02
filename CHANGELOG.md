@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [1.8.0] - 2024-04-03
 ### Added
-- "Latest Podcast Episode" query block variation (props [#jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic), [@barneyjeffries](https://github.com/barneyjeffries), [@faisal-alvi](https://github.com/faisal-alvi) via [#266](https://github.com/10up/simple-podcasting/pull/266)).
+- "Latest Podcast Episode" query block variation (props [@jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic), [@barneyjeffries](https://github.com/barneyjeffries), [@faisal-alvi](https://github.com/faisal-alvi) via [#266](https://github.com/10up/simple-podcasting/pull/266)).
 - Ability to add Unique Cover Art for Episodes (props [@jamesburgos](https://github.com/jamesburgos), [@jeffpaul](https://github.com/jeffpaul), [@zamanq](https://github.com/zamanq), [@iamdharmesh](https://github.com/iamdharmesh) via [#273](https://github.com/10up/simple-podcasting/pull/273)).
 - `simple_podcasting_feed_title` filter hook to modify feed title (props [@martinburch](https://github.com/martinburch), [@psorensen](https://github.com/psorensen), [@dkotter](https://github.com/dkotter) via [#279](https://github.com/10up/simple-podcasting/pull/279)).
 
