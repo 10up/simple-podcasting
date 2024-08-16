@@ -53,9 +53,22 @@ describe('Create podcast setting panel', () => {
 		});
 	}
 
+	function openComplementaryArea() {
+		cy.window().then((win) => {
+			if (
+				win.wp.data.dispatch('core/interface').enableComplementaryArea
+			) {
+				win.wp.data
+					.dispatch('core/interface')
+					.enableComplementaryArea('core', 'edit-post/block');
+			}
+		});
+	}
+
 	it('Podcast setting panel exists', () => {
 		cy.visit('/wp-admin/post-new.php');
 		closeWelcomeGuide();
+		openComplementaryArea();
 		cy.get('.podcasting__podcast-list').should('exist');
 	});
 
