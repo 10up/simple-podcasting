@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Update how we import the `PluginDocumentSettingPanel` component to use the new `@wordpress/editor` package if it exists (props [@gabriel-glo](https://github.com/gabriel-glo), [@dkotter](https://github.com/dkotter) via [#309](https://github.com/10up/simple-podcasting/pull/309)).
 
 ### Security
+- Bump `express` from 4.18.2 to 4.19.2, `follow-redirects` from 1.15.4 to 1.15.6, and `webpack-dev-middleware` from 5.3.3 to 5.3.4 (props [@dependabot](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#290](https://github.com/10up/simple-podcasting/pull/290)).
 - Bump `braces` from 3.0.2 to 3.0.3, `pac-resolver` from 7.0.0 to 7.0.1, `socks` from 2.7.1 to 2.8.3, `ws` from 7.5.9 to 7.5.10 and removes `ip` (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#297](https://github.com/10up/simple-podcasting/pull/297), [#306](https://github.com/10up/simple-podcasting/pull/306)).
 - Bump `axios` from 1.7.2 to 1.7.4 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#312](https://github.com/10up/simple-podcasting/pull/312)).
 
