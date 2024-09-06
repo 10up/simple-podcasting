@@ -105,7 +105,7 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 
 == Screenshots ==
 
-1. Podcast in classic editor
+1. Podcast in block editor
 2. Podcast block in the WordPress block editor (aka Gutenberg)
 3. Creating a podcast
 4. Podcast feed
