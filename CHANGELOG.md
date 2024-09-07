@@ -4,9 +4,33 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [1.8.1] - 2024-08-22
+**Note that this release bumps the WordPress minimum version from 5.7 to 6.4.**
+
+### Added
+- New options to the Podcast block to allow for more display customization (props [@barneyjeffries](https://github.com/barneyjeffries), [@Firestorm980](https://github.com/Firestorm980), [@mehidi258](https://github.com/mehidi258), [@jayedul](https://github.com/jayedul), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc), [@faisal-alvi](https://github.com/faisal-alvi), [@gusaus](https://github.com/gusaus), [@jeffpaul](https://github.com/jeffpaul) via [#272](https://github.com/10up/simple-podcasting/pull/272)).
+
+### Changed
+- Update the rendering of the Podcast block to be more full featured and use all the newly added customization options (props [@barneyjeffries](https://github.com/barneyjeffries), [@Firestorm980](https://github.com/Firestorm980), [@mehidi258](https://github.com/mehidi258), [@jayedul](https://github.com/jayedul), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc), [@faisal-alvi](https://github.com/faisal-alvi), [@gusaus](https://github.com/gusaus), [@jeffpaul](https://github.com/jeffpaul) via [#272](https://github.com/10up/simple-podcasting/pull/272)).
+- Bump WordPress "tested up to" version to 6.6 (props [@qasumitbagthariya](https://github.com/qasumitbagthariya), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@sonali886](https://github.com/sonali886), [@mehul0810](https://github.com/mehul0810) via [#291](https://github.com/10up/simple-podcasting/pull/291), [#307](https://github.com/10up/simple-podcasting/pull/307)).
+- Bump WordPress minimum from 5.7 to 6.4 (props [@qasumitbagthariya](https://github.com/qasumitbagthariya), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@sonali886](https://github.com/sonali886), [@mehul0810](https://github.com/mehul0810) via [#291](https://github.com/10up/simple-podcasting/pull/291), [#307](https://github.com/10up/simple-podcasting/pull/307)).
+- Update how we import the `PluginDocumentSettingPanel` component to use the new `@wordpress/editor` package if it exists (props [@gabriel-glo](https://github.com/gabriel-glo), [@dkotter](https://github.com/dkotter) via [#309](https://github.com/10up/simple-podcasting/pull/309)).
+
+### Security
+- Bump `express` from 4.18.2 to 4.19.2, `follow-redirects` from 1.15.4 to 1.15.6, and `webpack-dev-middleware` from 5.3.3 to 5.3.4 (props [@dependabot](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#290](https://github.com/10up/simple-podcasting/pull/290)).
+- Bump `braces` from 3.0.2 to 3.0.3, `pac-resolver` from 7.0.0 to 7.0.1, `socks` from 2.7.1 to 2.8.3, `ws` from 7.5.9 to 7.5.10 and removes `ip` (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#297](https://github.com/10up/simple-podcasting/pull/297), [#306](https://github.com/10up/simple-podcasting/pull/306)).
+- Bump `axios` from 1.7.2 to 1.7.4 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#312](https://github.com/10up/simple-podcasting/pull/312)).
+
+### Developer
+- Clean up NPM dependencies and update node to v20 (props [@Sidsector9](https://github.com/Sidsector9), [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#275](https://github.com/10up/simple-podcasting/pull/275)).
+- Add "Testing" section to the `CONTRIBUTING.md` file (props [@kmgalanakis](https://github.com/kmgalanakis), [@jeffpaul](https://github.com/jeffpaul), [@iamdharmesh](https://github.com/iamdharmesh) via [#294](https://github.com/10up/simple-podcasting/pull/294)).
+- Change support level from Active to Stable (props [@Sidsector9](https://github.com/Sidsector9), [@jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic) via [#217](https://github.com/10up/simple-podcasting/pull/217)).
+- Switch from using `actions/upload-release-asset` to `softprops/action-gh-release` GitHub action (props [@Sidsector9](https://github.com/Sidsector9), [@jeffpaul](https://github.com/jeffpaul) via [#308](https://github.com/10up/simple-podcasting/pull/308)).
+- Update repo badges, add WordPress Playground badge (props [@jeffpaul](https://github.com/jeffpaul), [@faisal-alvi](https://github.com/faisal-alvi), [@dkotter](https://github.com/dkotter) via [#311](https://github.com/10up/simple-podcasting/pull/311)).
+
 ## [1.8.0] - 2024-04-03
 ### Added
-- "Latest Podcast Episode" query block variation (props [#jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic), [@barneyjeffries](https://github.com/barneyjeffries), [@faisal-alvi](https://github.com/faisal-alvi) via [#266](https://github.com/10up/simple-podcasting/pull/266)).
+- "Latest Podcast Episode" query block variation (props [@jeffpaul](https://github.com/jeffpaul), [@cadic](https://github.com/cadic), [@barneyjeffries](https://github.com/barneyjeffries), [@faisal-alvi](https://github.com/faisal-alvi) via [#266](https://github.com/10up/simple-podcasting/pull/266)).
 - Ability to add Unique Cover Art for Episodes (props [@jamesburgos](https://github.com/jamesburgos), [@jeffpaul](https://github.com/jeffpaul), [@zamanq](https://github.com/zamanq), [@iamdharmesh](https://github.com/iamdharmesh) via [#273](https://github.com/10up/simple-podcasting/pull/273)).
 - `simple_podcasting_feed_title` filter hook to modify feed title (props [@martinburch](https://github.com/martinburch), [@psorensen](https://github.com/psorensen), [@dkotter](https://github.com/dkotter) via [#279](https://github.com/10up/simple-podcasting/pull/279)).
 
@@ -248,6 +272,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.8.1]: https://github.com/10up/simple-podcasting/compare/1.8.0...1.8.1
 [1.8.0]: https://github.com/10up/simple-podcasting/compare/1.7.0...1.8.0
 [1.7.0]: https://github.com/10up/simple-podcasting/compare/1.6.1...1.7.0
 [1.6.1]: https://github.com/10up/simple-podcasting/compare/1.6.0...1.6.1

@@ -53,9 +53,22 @@ describe('Create podcast setting panel', () => {
 		});
 	}
 
+	function openComplementaryArea() {
+		cy.window().then((win) => {
+			if (
+				win.wp.data.dispatch('core/interface').enableComplementaryArea
+			) {
+				win.wp.data
+					.dispatch('core/interface')
+					.enableComplementaryArea('core', 'edit-post/block');
+			}
+		});
+	}
+
 	it('Podcast setting panel exists', () => {
 		cy.visit('/wp-admin/post-new.php');
 		closeWelcomeGuide();
+		openComplementaryArea();
 		cy.get('.podcasting__podcast-list').should('exist');
 	});
 
@@ -107,8 +120,12 @@ describe('Create podcast setting panel', () => {
 		);
 
 		cy.get('.podcasting__select-image-btn').click();
-		cy.get('[aria-label="example"]').first().click();
-		cy.get('.media-button-select').click();
+		cy.get('.supports-drag-drop:not([aria-hidden="true"]) .attachment')
+			.first()
+			.click();
+		cy.get(
+			'.supports-drag-drop:not([aria-hidden="true"]) .media-button-select'
+		).click();
 		cy.get('.podcasting__select-image-btn').should(
 			'have.text',
 			'Replace Image'
@@ -131,8 +148,12 @@ describe('Create podcast setting panel', () => {
 		);
 
 		cy.get('.podcasting__select-image-btn').click();
-		cy.get('[aria-label="example"]').first().click();
-		cy.get('.media-button-select').click();
+		cy.get('.supports-drag-drop:not([aria-hidden="true"]) .attachment')
+			.first()
+			.click();
+		cy.get(
+			'.supports-drag-drop:not([aria-hidden="true"]) .media-button-select'
+		).click();
 
 		cy.get('.podcasting__create-podcast-btn').click();
 		cy.get('.components-modal__header-heading').should(
