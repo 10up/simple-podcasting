@@ -17,8 +17,8 @@ namespace tenup_podcasting\endpoints\externalurl;
  * @return void
  */
 function setup() {
-	$n = function( $function ) {
-		return __NAMESPACE__ . "\\$function";
+	$n = function ( $function_name ) {
+		return __NAMESPACE__ . "\\$function_name";
 	};
 
 	add_action( 'rest_api_init', $n( 'define_endpoint_for_external_files_meta_check' ) );
