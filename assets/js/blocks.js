@@ -7,6 +7,7 @@ import { registerBlockType, registerBlockVariation } from '@wordpress/blocks';
 // Split the Edit component out.
 import Edit from './edit';
 import transforms from './transforms';
+import deprecated from './deprecated';
 import '../css/podcasting-editor-screen.css';
 
 /**
@@ -139,6 +140,7 @@ export default registerBlockType(
 				</figure>
 			);
 		},
+		deprecated,
 	},
 );
 
