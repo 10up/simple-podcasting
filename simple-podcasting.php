@@ -43,7 +43,7 @@ function site_meets_php_requirements() {
 if ( ! site_meets_php_requirements() ) {
 	add_action(
 		'admin_notices',
-		function() {
+		function () {
 			?>
 			<div class="notice notice-error">
 				<p>
@@ -65,7 +65,7 @@ if ( ! site_meets_php_requirements() ) {
 }
 
 define( 'PODCASTING_VERSION', '1.8.1' );
-define( 'PODCASTING_PATH', dirname( __FILE__ ) . '/' );
+define( 'PODCASTING_PATH', __DIR__ . '/' );
 define( 'PODCASTING_URL', plugin_dir_url( __FILE__ ) );
 define( 'PODCASTING_TAXONOMY_NAME', 'podcasting_podcasts' );
 define( 'PODCASTING_ITEMS_PER_PAGE', 250 );

@@ -59,7 +59,7 @@ class Create_Podcast {
 			return false;
 		}
 
-		$is_nonce_verified = wp_verify_nonce( $_POST['simple-podcasting-create-show-nonce-field'], 'simple-podcasting-create-show-action' );
+		$is_nonce_verified = wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['simple-podcasting-create-show-nonce-field'] ) ), 'simple-podcasting-create-show-action' );
 
 		if ( ! $is_nonce_verified ) {
 			return new \WP_Error(

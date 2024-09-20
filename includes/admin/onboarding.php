@@ -105,7 +105,7 @@ class Onboarding {
 
 			add_action(
 				'admin_notices',
-				function() use ( $error_message ) {
+				function () use ( $error_message ) {
 					if ( empty( $error_message ) ) {
 						return;
 					}

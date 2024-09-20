@@ -40,7 +40,11 @@ $explicit       = get_post_meta( $post_id, 'podcast_explicit', true );
 $episode_type   = get_post_meta( $post_id, 'podcast_episode_type', true );
 $episode_number = get_post_meta( $post_id, 'podcast_episode_number', true );
 $season_number  = get_post_meta( $post_id, 'podcast_season_number', true );
-$term_image_id  = get_term_meta( $podcast_show->term_id, 'podcasting_image', true );
+if ( is_a( $podcast_show, 'WP_Term' ) ) {
+	$term_image_id = get_term_meta( $podcast_show->term_id, 'podcasting_image', true );
+} else {
+	$term_image_id = '';
+}
 
 ?>
 <div class="wp-block-podcasting-podcast-outer">
@@ -53,7 +57,7 @@ $term_image_id  = get_term_meta( $podcast_show->term_id, 'podcasting_image', tru
 						the_post_thumbnail( 'medium' );
 					} elseif ( $podcast_show instanceof \WP_Term ) {
 						echo wp_get_attachment_image( $term_image_id, 'medium' );
-					};
+					}
 					?>
 				</div>
 			</div>
