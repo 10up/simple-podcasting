@@ -436,11 +436,11 @@ function Edit( props ) {
 				{src ? (
 					<>
 						<div className="wp-block-podcasting-podcast__container">
-							{showImage && displayArt && (
+							{displayArt && (featuredImageUrl || showImage) && (
 								<div className="wp-block-podcasting-podcast__show-art">
 									<div className="wp-block-podcasting-podcast__image">
 										<img
-											src={showImage}
+											src={featuredImageUrl ? featuredImageUrl : showImage}
 											alt={showName}
 										/>
 									</div>
