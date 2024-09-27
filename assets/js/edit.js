@@ -26,13 +26,7 @@ import { Button } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
-
-/*
- * Import hierarchical term selector.
- *
- * @TODO Import from `@wordpress/editor` once minimum WP version is 6.0.
- */
-import HierarchicalTermSelector from './term-selector/hierarchical-term-selector';
+import { PostTaxonomiesHierarchicalTermSelector as HierarchicalTermSelector } from '@wordpress/editor';
 
 function useFeaturedImage() {
     const featuredImageId = useSelect((select) => select('core/editor').getEditedPostAttribute('featured_media'), []);
