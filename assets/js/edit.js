@@ -82,7 +82,9 @@ function Edit( props ) {
 
 	const [ src, setSrc ] = useState( props.attributes.src );
 
-	useEffect( () => () => wp.data.dispatch('core/editor').editPost({ podcasting_podcasts: [] }) );
+	useEffect( () => {
+		return () => wp.data.dispatch('core/editor').editPost({ podcasting_podcasts: [] });
+	}, [] );
 	const postTitle = useSelect( ( select ) => select( 'core/editor' ).getEditedPostAttribute( 'title' ) );
 
 	const onSelectAttachment = (attachment) => {
@@ -193,6 +195,7 @@ function Edit( props ) {
 			<InspectorControls>
 				<PanelBody
 					title={__('Podcast Settings', 'simple-podcasting')}
+					className="simple-podcast-settings"
 				>
 					<PanelRow>
 						<div id="hierar-podcasting_podcasts">
