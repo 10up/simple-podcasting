@@ -1,7 +1,7 @@
 === Simple Podcasting ===
 Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
 Tags:              podcasting, podcast, apple podcasts, episode, season
-Tested up to:      6.6
+Tested up to:      6.7
 Stable tag:        1.8.1
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
