@@ -26,7 +26,6 @@ import { Button } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
-import { PostTaxonomiesHierarchicalTermSelector as HierarchicalTermSelector } from '@wordpress/editor';
 
 function useFeaturedImage() {
     const featuredImageId = useSelect((select) => select('core/editor').getEditedPostAttribute('featured_media'), []);
@@ -197,11 +196,6 @@ function Edit( props ) {
 					title={__('Podcast Settings', 'simple-podcasting')}
 					className="simple-podcast-settings"
 				>
-					<PanelRow>
-						<div id="hierar-podcasting_podcasts">
-							<HierarchicalTermSelector slug="podcasting_podcasts" />
-						</div>
-					</PanelRow>
 					<PanelRow>
 						<ToggleControl
 							id="podcast-captioned-form-toggle"
