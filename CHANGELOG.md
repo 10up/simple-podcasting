@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [1.8.1] - 2024-08-22
+## [1.9.0] - 2024-11-18
 **Note that this release bumps the WordPress minimum version from 5.7 to 6.4.**
 
 ### Added
@@ -272,7 +272,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
-[1.8.1]: https://github.com/10up/simple-podcasting/compare/1.8.0...1.8.1
+[1.9.0]: https://github.com/10up/simple-podcasting/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/10up/simple-podcasting/compare/1.7.0...1.8.0
 [1.7.0]: https://github.com/10up/simple-podcasting/compare/1.6.1...1.7.0
 [1.6.1]: https://github.com/10up/simple-podcasting/compare/1.6.0...1.6.1

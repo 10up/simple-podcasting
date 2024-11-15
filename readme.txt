@@ -2,7 +2,7 @@
 Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
 Tags:              podcasting, podcast, apple podcasts, episode, season
 Tested up to:      6.7
-Stable tag:        1.8.1
+Stable tag:        1.9.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,7 +118,7 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 
 == Changelog ==
 
-= 1.8.1 - 2024-08-22 =
+= 1.9.0 - 2024-11-18 =
 * **Added:** New options to the Podcast block to allow for more display customization (props [@barneyjeffries](https://github.com/barneyjeffries), [@Firestorm980](https://github.com/Firestorm980), [@mehidi258](https://github.com/mehidi258), [@jayedul](https://github.com/jayedul), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc), [@faisal-alvi](https://github.com/faisal-alvi), [@gusaus](https://github.com/gusaus), [@jeffpaul](https://github.com/jeffpaul) via [#272](https://github.com/10up/simple-podcasting/pull/272)).
 * **Changed:** Update the rendering of the Podcast block to be more full featured and use all the newly added customization options (props [@barneyjeffries](https://github.com/barneyjeffries), [@Firestorm980](https://github.com/Firestorm980), [@mehidi258](https://github.com/mehidi258), [@jayedul](https://github.com/jayedul), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc), [@faisal-alvi](https://github.com/faisal-alvi), [@gusaus](https://github.com/gusaus), [@jeffpaul](https://github.com/jeffpaul) via [#272](https://github.com/10up/simple-podcasting/pull/272)).
 * **Changed:** Bump WordPress "tested up to" version to 6.6 (props [@qasumitbagthariya](https://github.com/qasumitbagthariya), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@sonali886](https://github.com/sonali886), [@mehul0810](https://github.com/mehul0810) via [#291](https://github.com/10up/simple-podcasting/pull/291), [#307](https://github.com/10up/simple-podcasting/pull/307)).
@@ -167,7 +167,7 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 
 == Upgrade Notice ==
 
-= 1.8.1 =
+= 1.9.0 =
 This release bumps the minimum required version of WordPress from 5.7 to 6.4.
 
 = 1.3.0 =
