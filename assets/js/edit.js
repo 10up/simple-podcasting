@@ -27,13 +27,6 @@ import { useState, useEffect } from '@wordpress/element';
 import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
-/*
- * Import hierarchical term selector.
- *
- * @TODO Import from `@wordpress/editor` once minimum WP version is 6.0.
- */
-import HierarchicalTermSelector from './term-selector/hierarchical-term-selector';
-
 function useFeaturedImage() {
     const featuredImageId = useSelect((select) => select('core/editor').getEditedPostAttribute('featured_media'), []);
     const { editPost } = useDispatch('core/editor');
@@ -88,7 +81,6 @@ function Edit( props ) {
 
 	const [ src, setSrc ] = useState( props.attributes.src );
 
-	useEffect( () => () => wp.data.dispatch('core/editor').editPost({ podcasting_podcasts: [] }) );
 	const postTitle = useSelect( ( select ) => select( 'core/editor' ).getEditedPostAttribute( 'title' ) );
 
 	const onSelectAttachment = (attachment) => {
@@ -176,18 +168,18 @@ function Edit( props ) {
 		</BlockControls>
 	);
 
-	const { getCurrentPost } = select('core/editor');
-	const postDetails = getCurrentPost();
+	const showId = useSelect( ( __select ) => {
+		const attachedPodcastIds = __select( 'core/editor' ).getEditedPostAttribute( 'podcasting_podcasts' );
+		return attachedPodcastIds ? attachedPodcastIds[0] : null;
+	} );
+	const show = useSelect( ( __select ) => {
+		return __select('core').getEntityRecords('taxonomy', 'podcasting_podcasts', {
+			include: [ showId ],
+		});
+	} );
 
-	const showId = postDetails ? postDetails.podcasting_podcasts[0] : null;
-
-	const show = select('core').getEntityRecords('taxonomy', 'podcasting_podcasts', {
-		per_page: 1,
-		term_id: showId,
-	});
-
-	const showName = show ? show[0].name : null;
-	const showImage = show ? show[0].meta.podcasting_image_url : null;
+	const showName = show && show[0] ? show[0]?.name : null;
+	const showImage = show && show[0] ? show[0]?.meta?.podcasting_image_url : null;
 
 	const onUpdateImage = (image) => {
 		setFeaturedImage(image.id);
@@ -199,12 +191,8 @@ function Edit( props ) {
 			<InspectorControls>
 				<PanelBody
 					title={__('Podcast Settings', 'simple-podcasting')}
+					className="simple-podcast-settings"
 				>
-					<PanelRow>
-						<div id="hierar-podcasting_podcasts">
-							<HierarchicalTermSelector slug="podcasting_podcasts" />
-						</div>
-					</PanelRow>
 					<PanelRow>
 						<ToggleControl
 							id="podcast-captioned-form-toggle"
