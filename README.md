@@ -1,10 +1,10 @@
 # Simple Podcasting for WordPress
 
+![Simple Podcasting](https://github.com/10up/simple-podcasting/blob/develop/.wordpress-org/banner-1544x500.png)
+
+[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) ![Required PHP Version](https://img.shields.io/wordpress/plugin/required-php/simple-podcasting?label=Requires%20PHP) ![Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/simple-podcasting?label=Requires%20WordPress) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md) [![Dependency Review](https://github.com/10up/simple-podcasting/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/dependency-review.yml) [![E2E Test](https://github.com/10up/simple-podcasting/actions/workflows/cypress.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/cypress.yml) [![Unit Tests](https://github.com/10up/simple-podcasting/actions/workflows/phpunit.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/phpunit.yml) [![PHPCS](https://github.com/10up/simple-podcasting/actions/workflows/phpcs.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/phpcs.yml) [![PHP Compatibility](https://github.com/10up/simple-podcasting/actions/workflows/php-compatibility.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/php-compatibility.yml) [![CodeQL](https://github.com/10up/simple-podcasting/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/github-code-scanning/codeql) [![WordPress Playground Demo](https://img.shields.io/wordpress/plugin/v/simple-podcasting?logo=wordpress&logoColor=FFFFFF&label=Playground%20Demo&labelColor=3858E9&color=3858E9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/10up/simple-podcasting/add/playground/.wordpress-org/blueprints/blueprint.json)
+
 > Easily set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor (aka Gutenberg).
-
-[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/simple-podcasting?label=WordPress) [![GPLv2 License](https://img.shields.io/github/license/10up/simple-podcasting.svg)](https://github.com/10up/simple-podcasting/blob/develop/LICENSE.md) [![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/simple-podcasting?logo=wordpress&logoColor=FFFFFF&label=Playground%20Demo&labelColor=3858E9&color=3858E9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/10up/simple-podcasting/add/playground/.wordpress-org/blueprints/blueprint.json)
-
-[![E2E Test](https://github.com/10up/simple-podcasting/actions/workflows/cypress.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/cypress.yml) [![Unit Tests](https://github.com/10up/simple-podcasting/actions/workflows/phpunit.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/phpunit.yml) [![PHPCS](https://github.com/10up/simple-podcasting/actions/workflows/phpcs.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/phpcs.yml) [![PHP Compatibility](https://github.com/10up/simple-podcasting/actions/workflows/php-compatibility.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/php-compatibility.yml) [![Dependency Review](https://github.com/10up/simple-podcasting/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/10up/simple-podcasting/actions/workflows/dependency-review.yml)
 
 ## Overview
 
@@ -15,7 +15,7 @@ Podcasting is a method to distribute audio messages through a feed to which list
 ## Requirements
 
 * PHP 7.4+
-* [WordPress](http://wordpress.org) 6.4+
+* [WordPress](http://wordpress.org) 6.5+
 * RSS feeds must not be disabled
 
 ## Installation
@@ -98,7 +98,6 @@ add_filter( 'simple_podcasting_episodes_per_page', 'podcasting_feed_episodes_per
 function podcasting_feed_episodes_per_page( $qty ) {
 	return 300;
 }
-
 ```
 
 ## Customize the RSS feed title
@@ -122,7 +121,6 @@ function podcasting_feed_update_feed_title( $output, $term ) {
 
 	return '10up Presents: ' . $term_name;
 }
-
 ```
 
 ## Customize RSS feed

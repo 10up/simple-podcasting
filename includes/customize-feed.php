@@ -51,7 +51,6 @@ function bloginfo_rss_name( $output ) {
 	}
 
 	return apply_filters( 'simple_podcasting_feed_title', $output, $term );
-
 }
 add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
 
@@ -360,16 +359,16 @@ function generate_categories() {
 		}
 
 		if ( empty( $subs ) ) {
-			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\" />\n";
+			echo '<itunes:category text="' . esc_attr( $categories[ $parent ]['name'] ) . "\" />\n";
 		} else {
-			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\">\n";
+			echo '<itunes:category text="' . esc_attr( $categories[ $parent ]['name'] ) . "\">\n";
 
 			foreach ( $subs as $sub ) {
 				if ( ! isset( $categories[ $parent ]['subcategories'][ $sub ] ) ) {
 					continue;
 				}
 
-				echo "\t<itunes:category text=\"" . esc_html( $categories[ $parent ]['subcategories'][ $sub ] ) . "\" />\n";
+				echo "\t<itunes:category text=\"" . esc_attr( $categories[ $parent ]['subcategories'][ $sub ] ) . "\" />\n";
 			}
 
 			echo "</itunes:category>\n";

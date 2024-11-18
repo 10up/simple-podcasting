@@ -22,7 +22,7 @@ jobs:
         core:
           - {name: 'WP latest', version: 'latest'}
           - {name: 'WP trunk', version: 'WordPress/WordPress#master'}
-          - {name: 'WP minimum', version: 'WordPress/WordPress#6.4'}
+          - {name: 'WP minimum', version: 'WordPress/WordPress#6.5'}
 
     steps:
     - name: Checkout
