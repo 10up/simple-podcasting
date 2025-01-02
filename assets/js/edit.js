@@ -70,7 +70,8 @@ function Edit( props ) {
 		displayExplicitBadge,
 		displaySeasonNumber,
 		displayEpisodeNumber,
-		displayEpisodeType
+		displayEpisodeType,
+		isDocked,
 	} = attributes;
 
 	const duration = attributes.duration || '';
@@ -185,6 +186,53 @@ function Edit( props ) {
 		setFeaturedImage(image.id);
 	};
 
+	// Docked Player
+	const dockedClass = isDocked !== 'none' ? `docked-${isDocked}` : '';
+	const [showPodcastMeta, setShowPodcastMeta] = useState(false);
+	const [isDisplayingSettings, setIsDisplayingSettings] = useState(false);
+
+	const checkDisplaySettings = () => {
+		if (displayDuration || displayShowTitle ||
+			// displayEpisodeTitle ||
+			// displayArt ||
+			displayExplicitBadge || displaySeasonNumber || displayEpisodeNumber || displayEpisodeType) {
+			setIsDisplayingSettings(true);
+		}
+		else {
+			setIsDisplayingSettings(false);
+		}
+	}
+
+	// If the user changes one of the toggles, the checkDisplaySettings function will be called to check if any of the display settings are enabled.
+	// If at least one of the display settings are enabled, then we want to show the More/Less button.
+	useEffect(() => {
+		checkDisplaySettings();
+	}, [displayDuration,
+		displayShowTitle,
+		// displayEpisodeTitle,
+		// displayArt,
+		displayExplicitBadge,
+		displaySeasonNumber,
+		displayEpisodeNumber,
+		displayEpisodeType])
+
+	// Reset the More/Less button when the user docks or undocks the player.
+	useEffect(() => {
+		setShowPodcastMeta(false)
+	}, [isDocked])
+
+	useEffect(() => {
+		// Remove any existing classes
+		document.body.classList.remove('has-docked-top', 'has-docked-bottom', 'docked-in-editor');
+
+		// Add the appropriate class based on the isDocked value
+		if (isDocked === 'top') {
+			document.body.classList.add('has-docked-top', 'docked-in-editor');
+		} else if (isDocked === 'bottom') {
+			document.body.classList.add('has-docked-bottom', 'docked-in-editor');
+		}
+	}, [isDocked]); // Run this effect when isDocked changes
+
 	return (
 		<Fragment>
 			{controls}
@@ -285,7 +333,33 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displayEpisodeType}
-							onChange={() => setAttributes({ displayEpisodeType: !displayEpisodeType})}
+							onChange={() => setAttributes({ displayEpisodeType: !displayEpisodeType })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<RadioControl
+							label={__('Dock Player', 'simple-podcasting')}
+							selected={isDocked}
+							options={[
+								{
+									label: __('None', 'simple-podcasting'),
+									value: 'none',
+								},
+								{
+									label: __('Top', 'simple-podcasting'),
+									value: 'top',
+								},
+								{
+									label: __(
+										'Bottom',
+										'simple-podcasting'
+									),
+									value: 'bottom',
+								},
+							]}
+							onChange={(isDocked) =>
+								setAttributes({ isDocked })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -420,7 +494,7 @@ function Edit( props ) {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div className="wp-block-podcasting-podcast-outer">
+			<div className={`wp-block-podcasting-podcast-outer ${dockedClass}`}>
 				{src ? (
 					<>
 						<div className="wp-block-podcasting-podcast__container">
@@ -448,76 +522,109 @@ function Edit( props ) {
 									</h3>
 								)}
 
-								<div className="wp-block-podcasting-podcast__show-details">
-									{displayShowTitle && (
-										<span className="wp-block-podcasting-podcast__title">
-											{showName}
-										</span>
-									)}
-									{displaySeasonNumber && seasonNumber && (
-										<span className="wp-block-podcasting-podcast__season">
-											{__(
-												'Season: ',
-												'simple-podcasting'
+								{(isDocked === 'none' || showPodcastMeta) && (
+									<>
+										<div className="wp-block-podcasting-podcast__show-details">
+											{displayShowTitle && (
+												<span className="wp-block-podcasting-podcast__title">
+													{showName}
+												</span>
 											)}
-											{seasonNumber}
-										</span>
-									)}
-									{displayEpisodeNumber && episodeNumber && (
-										<span className="wp-block-podcasting-podcast__episode">
-											{__('Episode: ', 'simple-podcasting')}
-											{episodeNumber}
-										</span>
-									)}
-								</div>
+											{displaySeasonNumber && seasonNumber && (
+												<span className="wp-block-podcasting-podcast__season">
+													{__(
+														'Season: ',
+														'simple-podcasting'
+													)}
+													{seasonNumber}
+												</span>
+											)}
+											{displayEpisodeNumber && episodeNumber && (
+												<span className="wp-block-podcasting-podcast__episode">
+													{__('Episode: ', 'simple-podcasting')}
+													{episodeNumber}
+												</span>
+											)}
+										</div>
 
-								<div className="wp-block-podcasting-podcast__show-details">
-									{displayDuration && duration && (
-										<span className="wp-block-podcasting-podcast__duration">
-											{__('Listen Time: ', 'simple-podcasting')}
-											{duration}
-										</span>
-									)}
-									{displayEpisodeType && (episodeType !== 'none') && (
-										<span className="wp-block-podcasting-podcast__episode-type">
-											{__(
-												'Episode type: ',
-												'simple-podcasting'
+										<div className="wp-block-podcasting-podcast__show-details">
+											{displayDuration && duration && (
+												<span className="wp-block-podcasting-podcast__duration">
+													{__('Listen Time: ', 'simple-podcasting')}
+													{duration}
+												</span>
 											)}
-											{episodeType}
-										</span>
-									)}
-									{displayExplicitBadge && (
-										<span className="wp-block-podcasting-podcast__explicit-badge">
-											{__(
-												'Explicit: ',
-												'simple-podcasting'
+											{displayEpisodeType && (episodeType !== 'none') && (
+												<span className="wp-block-podcasting-podcast__episode-type">
+													{__(
+														'Episode type: ',
+														'simple-podcasting'
+													)}
+													{episodeType}
+												</span>
 											)}
-											{explicit}
-										</span>
-									)}
-								</div>
+											{displayExplicitBadge && (
+												<span className="wp-block-podcasting-podcast__explicit-badge">
+													{__(
+														'Explicit: ',
+														'simple-podcasting'
+													)}
+													{explicit}
+												</span>
+											)}
+										</div>
+									</>
+								)}
+
+								{isDocked !== 'none' && isDisplayingSettings && (
+									<button onClick={() => setShowPodcastMeta(!showPodcastMeta)} id="toggle-details-button">
+										{showPodcastMeta ? 'Less' : 'More'}
+									</button>
+								)}
+
+								{isDocked !== 'none' && (
+									<figure key="audio" className={className}>
+										{((caption && caption.length) || !!isSelected) && (
+											<RichText
+												tagName="figcaption"
+												placeholder={__(
+													'Write caption…',
+													'simple-podcasting'
+												)}
+												className="wp-block-podcasting-podcast__caption"
+												value={caption}
+												onChange={(value) =>
+													setAttributes({ caption: value })
+												}
+												isSelected={isSelected}
+											/>
+										)}
+										<audio controls="controls" src={src} />
+									</figure>
+								)}
 							</div>
 						</div>
 
-						<figure key="audio" className={className}>
-							{((caption && caption.length) || !!isSelected) && (
-								<RichText
-									tagName="figcaption"
-									placeholder={__(
-										'Write caption…',
-										'simple-podcasting'
-									)}
-									className="wp-block-podcasting-podcast__caption"
-									value={caption}
-									onChange={(value) =>
-										setAttributes({ caption: value })
-									}
-									isSelected={isSelected}
-								/>
-							)}
-							<audio controls="controls" src={src} />
-						</figure>
+						{isDocked === 'none' && (
+							<figure key="audio" className={className}>
+								{((caption && caption.length) || !!isSelected) && (
+									<RichText
+										tagName="figcaption"
+										placeholder={__(
+											'Write caption…',
+											'simple-podcasting'
+										)}
+										className="wp-block-podcasting-podcast__caption"
+										value={caption}
+										onChange={(value) =>
+											setAttributes({ caption: value })
+										}
+										isSelected={isSelected}
+									/>
+								)}
+								<audio controls="controls" src={src} />
+							</figure>
+						)}
 					</>
 				) : (
 					<MediaPlaceholder

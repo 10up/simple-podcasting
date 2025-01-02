@@ -23,6 +23,7 @@ $attributes = wp_parse_args(
 		'displaySeasonNumber'  => false,
 		'displayEpisodeNumber' => false,
 		'displayEpisodeType'   => false,
+		'isDocked'             => 'none',
 	]
 );
 
@@ -46,8 +47,17 @@ if ( is_a( $podcast_show, 'WP_Term' ) ) {
 	$term_image_id = '';
 }
 
+// Output the body class based on isDocked value
+$body_class = '';
+if ( $attributes['isDocked'] === 'top' ) {
+    $body_class = 'has-docked-top';
+} elseif ( $attributes['isDocked'] === 'bottom' ) {
+    $body_class = 'has-docked-bottom';
+}
+
 ?>
-<div class="wp-block-podcasting-podcast-outer">
+
+<div class="wp-block-podcasting-podcast-outer <?php echo 'docked-' . esc_attr( $attributes['isDocked'] ); ?>">
 	<div class="wp-block-podcasting-podcast__container">
 		<?php if ( $attributes['displayArt'] && ( has_post_thumbnail() || ! empty( $term_image_id ) ) ) : ?>
 			<div class="wp-block-podcasting-podcast__show-art">
@@ -74,46 +84,90 @@ if ( is_a( $podcast_show, 'WP_Term' ) ) {
 					<?php the_title(); ?>
 				</h3>
 			<?php endif; ?>
-			<div class="wp-block-podcasting-podcast__show-details">
-				<?php if ( $attributes['displayShowTitle'] && ! empty( $show_name ) ) : ?>
-					<span class="wp-block-podcasting-podcast__title">
-						<?php echo esc_html( $show_name ); ?>
-					</span>
-				<?php endif; ?>
-				<?php if ( $attributes['displaySeasonNumber'] && ! empty( $season_number ) ) : ?>
-					<span class="wp-block-podcasting-podcast__season">
-						<?php esc_html_e( 'Season: ', 'simple-podcasting' ); ?>
-						<?php echo esc_html( $season_number ); ?>
-					</span>
-				<?php endif; ?>
-				<?php if ( $attributes['displayEpisodeNumber'] && ! empty( $episode_number ) ) : ?>
-					<span class="wp-block-podcasting-podcast__episode">
-						<?php esc_html_e( 'Episode: ', 'simple-podcasting' ); ?>
-						<?php echo esc_html( $episode_number ); ?>
-					</span>
-				<?php endif; ?>
+			<div id="podcast-details" style="display: none;">
+				<div class="wp-block-podcasting-podcast__show-details">
+					<?php if ( $attributes['displayShowTitle'] && ! empty( $show_name ) ) : ?>
+						<span class="wp-block-podcasting-podcast__title">
+							<?php echo esc_html( $show_name ); ?>
+						</span>
+					<?php endif; ?>
+					<?php if ( $attributes['displaySeasonNumber'] && ! empty( $season_number ) ) : ?>
+						<span class="wp-block-podcasting-podcast__season">
+							<?php esc_html_e( 'Season: ', 'simple-podcasting' ); ?>
+							<?php echo esc_html( $season_number ); ?>
+						</span>
+					<?php endif; ?>
+					<?php if ( $attributes['displayEpisodeNumber'] && ! empty( $episode_number ) ) : ?>
+						<span class="wp-block-podcasting-podcast__episode">
+							<?php esc_html_e( 'Episode: ', 'simple-podcasting' ); ?>
+							<?php echo esc_html( $episode_number ); ?>
+						</span>
+					<?php endif; ?>
+				</div>
+				<div class="wp-block-podcasting-podcast__show-details">
+					<?php if ( $attributes['displayDuration'] && ! empty( $duration ) ) : ?>
+						<span class="wp-block-podcasting-podcast__duration">
+							<?php esc_html_e( 'Listen Time: ', 'simple-podcasting' ); ?>
+							<?php echo esc_html( $duration ); ?>
+						</span>
+					<?php endif; ?>
+					<?php if ( $attributes['displayEpisodeType'] && ! empty( $episode_type ) && 'none' !== $episode_type ) : ?>
+						<span class="wp-block-podcasting-podcast__episode-type">
+							<?php esc_html_e( 'Episode type: ', 'simple-podcasting' ); ?>
+							<?php echo esc_html( $episode_type ); ?>
+						</span>
+					<?php endif; ?>
+					<?php if ( $attributes['displayExplicitBadge'] && ! empty( $explicit ) ) : ?>
+						<span class="wp-block-podcasting-podcast__explicit-badge">
+							<?php esc_html_e( 'Explicit: ', 'simple-podcasting' ); ?>
+							<?php echo esc_html( $explicit ); ?>
+						</span>
+					<?php endif; ?>
+				</div>
 			</div>
-			<div class="wp-block-podcasting-podcast__show-details">
-				<?php if ( $attributes['displayDuration'] && ! empty( $duration ) ) : ?>
-					<span class="wp-block-podcasting-podcast__duration">
-						<?php esc_html_e( 'Listen Time: ', 'simple-podcasting' ); ?>
-						<?php echo esc_html( $duration ); ?>
-					</span>
-				<?php endif; ?>
-				<?php if ( $attributes['displayEpisodeType'] && ! empty( $episode_type ) && 'none' !== $episode_type ) : ?>
-					<span class="wp-block-podcasting-podcast__episode-type">
-						<?php esc_html_e( 'Episode type: ', 'simple-podcasting' ); ?>
-						<?php echo esc_html( $episode_type ); ?>
-					</span>
-				<?php endif; ?>
-				<?php if ( $attributes['displayExplicitBadge'] && ! empty( $explicit ) ) : ?>
-					<span class="wp-block-podcasting-podcast__explicit-badge">
-						<?php esc_html_e( 'Explicit: ', 'simple-podcasting' ); ?>
-						<?php echo esc_html( $explicit ); ?>
-					</span>
-				<?php endif; ?>
-			</div>
+			<div class="wp-block-podcasting-podcast__toggle-details">
+        <button id="toggle-details-button">More</button>
+    	</div>
+			<?php
+				if ( isset( $attributes['isDocked'] ) && $attributes['isDocked'] !== 'none' ) {
+					echo wp_kses_post( $content );
+				}
+			?>
 		</div>
 	</div>
-	<?php echo wp_kses_post( $content ); ?>
+
+	<?php
+	if ( isset( $attributes['isDocked'] ) && $attributes['isDocked'] === 'none' ) {
+			echo wp_kses_post( $content );
+	}
+	?>
 </div>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add the body class for docked position
+        <?php if ( $body_class ) : ?>
+            document.body.classList.add('<?php echo esc_attr( $body_class ); ?>');
+        <?php endif; ?>
+
+        var toggleButton = document.getElementById('toggle-details-button');
+        var detailsDiv = document.getElementById('podcast-details');
+
+        // If isDocked is 'none', show details by default
+        <?php if ( $attributes['isDocked'] === 'none' ) : ?>
+            detailsDiv.style.display = 'block';
+            toggleButton.textContent = 'Less';
+            toggleButton.style.display = 'none';
+        <?php endif; ?>
+
+        toggleButton.addEventListener('click', function() {
+            if (detailsDiv.style.display === 'none') {
+                detailsDiv.style.display = 'block';
+                toggleButton.textContent = 'Less';
+            } else {
+                detailsDiv.style.display = 'none';
+                toggleButton.textContent = 'More';
+            }
+        });
+    });
+</script>

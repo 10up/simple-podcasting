@@ -1,7 +1,80 @@
+body.has-docked-bottom {
+	padding-bottom: 150px;
+	&.docked-in-editor .docked-bottom {
+		bottom: 24px;
+	}
+}
+body.has-docked-top {
+	padding-top: 150px;
+	&.docked-in-editor {
+		padding-top: 0px;
+	}
+	&.docked-in-editor .editor-styles-wrapper {
+		padding-top: 150px;
+	}
+	&.docked-in-editor .docked-top {
+		top: 60px;
+	}
+
+	&.logged-in.admin-bar {
+		padding-top: 182px;
+	}
+
+	&.logged-in.admin-bar .docked-top {
+		top: 32px;
+	}
+}
+
+
 .wp-block-podcasting-podcast-outer {
     border: 1px solid #707070;
     border-radius: 4px;
     padding: 20px;
+
+	&.docked-bottom {
+		margin: 0;
+		background-color: var(--wp--preset--color--base);
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 34;
+		border-radius: 4px 4px 0px 0px;
+		max-width: initial;
+		.wp-block-podcasting-podcast__container {
+    		margin-bottom: 0px;
+		}
+
+		.wp-block-podcasting-podcast__details {
+			width: 100%;
+		}
+
+		#toggle-details-button {
+			margin-bottom: 20px;
+		}
+	}
+	&.docked-top {
+		margin: 0;
+		background-color: var(--wp--preset--color--base);
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 34;
+		border-radius: 0px 0px 4px 4px;
+		max-width: initial;
+		.wp-block-podcasting-podcast__container {
+    		margin-bottom: 0px;
+		}
+
+		.wp-block-podcasting-podcast__details {
+			width: 100%;
+		}
+
+		#toggle-details-button {
+			margin-bottom: 20px;
+		}
+	}
 }
 
 .wp-block-podcasting-podcast__container {
@@ -13,9 +86,11 @@
 }
 
 .wp-block-podcasting-podcast__show-art {
+	display: none;
     margin-bottom: 20px;
 
     @media (min-width: 768px) {
+		display: block;
         flex-basis: 100px;
         margin-bottom: 0;
         margin-right: 20px;
