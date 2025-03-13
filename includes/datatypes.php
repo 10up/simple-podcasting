@@ -120,7 +120,7 @@ function register_meta() {
 			'show_in_rest'      => true,
 			'type'              => 'string',
 			'single'            => true,
-			'sanitize_callback' => function( $val ) {
+			'sanitize_callback' => function ( $val ) {
 				return wp_kses_post( $val );
 			},
 		)
@@ -134,7 +134,7 @@ function register_meta() {
 			'type'              => 'string',
 			'single'            => true,
 			'auth_callback'     => 'podcasting_term_auth_callback',
-			'sanitize_callback' => function( $val ) {
+			'sanitize_callback' => function ( $val ) {
 				return sanitize_text_field( wp_unslash( $val ) );
 			},
 		)
@@ -148,7 +148,7 @@ function register_meta() {
 			'type'              => 'string',
 			'single'            => true,
 			'auth_callback'     => 'podcasting_term_auth_callback',
-			'sanitize_callback' => function( $val ) {
+			'sanitize_callback' => function ( $val ) {
 				return sanitize_text_field( wp_unslash( $val ) );
 			},
 		)
@@ -162,7 +162,7 @@ function register_meta() {
 			'type'              => 'string',
 			'single'            => true,
 			'auth_callback'     => 'podcasting_term_auth_callback',
-			'sanitize_callback' => function( $val ) {
+			'sanitize_callback' => function ( $val ) {
 				return sanitize_text_field( wp_unslash( $val ) );
 			},
 		)
@@ -176,7 +176,7 @@ function register_meta() {
 			'type'              => 'number',
 			'single'            => true,
 			'auth_callback'     => 'podcasting_term_auth_callback',
-			'sanitize_callback' => function( $val ) {
+			'sanitize_callback' => function ( $val ) {
 				return absint( wp_unslash( $val ) );
 			},
 		)
@@ -190,7 +190,7 @@ function register_meta() {
 			'type'              => 'string',
 			'single'            => true,
 			'auth_callback'     => 'podcasting_term_auth_callback',
-			'sanitize_callback' => function( $val ) {
+			'sanitize_callback' => function ( $val ) {
 				return filter_var( $val, FILTER_VALIDATE_URL );
 			},
 		)
@@ -584,7 +584,7 @@ function save_podcasting_term_meta( $term_id ) {
 		return;
 	}
 
-	if ( empty( $_POST['podcasting_nonce'] ) || ! wp_verify_nonce( $_POST['podcasting_nonce'], 'podcasting_edit' ) ) {
+	if ( empty( $_POST['podcasting_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['podcasting_nonce'] ) ), 'podcasting_edit' ) ) {
 		return;
 	}
 
@@ -596,7 +596,7 @@ function save_podcasting_term_meta( $term_id ) {
 		if ( isset( $_POST[ $slug ] ) ) {
 			if ( is_array( $_POST[ $slug ] ) ) {
 				$sanitized_value = filter_var_array(
-					$_POST[ $slug ],
+					$_POST[ $slug ], // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 					array(
 						'pocket-casts'    => FILTER_SANITIZE_URL,
 						'apple-podcasts'  => FILTER_SANITIZE_URL,
@@ -690,38 +690,38 @@ add_action( PODCASTING_TAXONOMY_NAME . '_add_form_fields', __NAMESPACE__ . '\add
 /**
  * Add a feed link to the podcasting term table.
  *
- * @param string $string      Blank string.
+ * @param string $content     Blank string.
  * @param string $column_name Name of the column.
  * @param int    $term_id     Term ID.
  *
  * @return string
  */
-function add_podcasting_term_feed_link_column( $string, $column_name, $term_id ) {
+function add_podcasting_term_feed_link_column( $content, $column_name, $term_id ) {
 
 	if ( 'feedurl' === $column_name ) {
 		$url = get_term_feed_link( $term_id, PODCASTING_TAXONOMY_NAME );
 		echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_url( $url ) . '</a>';
 	}
-	return $string;
+	return $content;
 }
 add_filter( 'manage_' . PODCASTING_TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_feed_link_column', 10, 3 );
 
 /**
  * Add a podcasting image to the podcasting term table.
  *
- * @param string $string      Blank string.
+ * @param string $content     Blank string.
  * @param string $column_name Name of the column.
  * @param int    $term_id     Term ID.
  *
  * @return string
  */
-function add_podcasting_term_podcasting_image_column( $string, $column_name, $term_id ) {
+function add_podcasting_term_podcasting_image_column( $content, $column_name, $term_id ) {
 
 	if ( 'podcasting_image' === $column_name ) {
 		$image = get_term_meta( $term_id, 'podcasting_image', true );
 		echo wp_get_attachment_image( $image, 'thumbnail' );
 	}
-	return $string;
+	return $content;
 }
 add_filter( 'manage_' . PODCASTING_TAXONOMY_NAME . '_custom_column', __NAMESPACE__ . '\add_podcasting_term_podcasting_image_column', 10, 3 );
 

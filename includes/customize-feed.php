@@ -352,16 +352,16 @@ function generate_categories() {
 		}
 
 		if ( empty( $subs ) ) {
-			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\" />\n";
+			echo '<itunes:category text="' . esc_attr( $categories[ $parent ]['name'] ) . "\" />\n";
 		} else {
-			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\">\n";
+			echo '<itunes:category text="' . esc_attr( $categories[ $parent ]['name'] ) . "\">\n";
 
 			foreach ( $subs as $sub ) {
 				if ( ! isset( $categories[ $parent ]['subcategories'][ $sub ] ) ) {
 					continue;
 				}
 
-				echo "\t<itunes:category text=\"" . esc_html( $categories[ $parent ]['subcategories'][ $sub ] ) . "\" />\n";
+				echo "\t<itunes:category text=\"" . esc_attr( $categories[ $parent ]['subcategories'][ $sub ] ) . "\" />\n";
 			}
 
 			echo "</itunes:category>\n";

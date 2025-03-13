@@ -116,7 +116,7 @@ function save_meta_box( $post_id ) {
 		return;
 	}
 
-	if ( empty( $_POST['simple-podcasting'] ) || ! wp_verify_nonce( $_POST['simple-podcasting'], plugin_basename( __FILE__ ) ) ) {
+	if ( empty( $_POST['simple-podcasting'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['simple-podcasting'] ) ), plugin_basename( __FILE__ ) ) ) {
 		return;
 	}
 
@@ -182,7 +182,6 @@ function save_meta_box( $post_id ) {
 	update_post_meta( $post_id, 'podcast_season_number', $season_number );
 	update_post_meta( $post_id, 'podcast_episode_number', $episode_number );
 	update_post_meta( $post_id, 'podcast_episode_type', $episode_type );
-
 }
 add_action( 'save_post_post', __NAMESPACE__ . '\save_meta_box' );
 
