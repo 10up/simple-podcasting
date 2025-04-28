@@ -22,6 +22,7 @@ jobs:
       run: |
         npm ci
         npm run build
+        npm run makepot
 
     - name: WordPress Plugin Deploy
       id: deploy
