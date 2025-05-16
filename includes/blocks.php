@@ -105,7 +105,7 @@ function init_transcript() {
 		),
 	);
 
-	$transcript_block_args['render_callback'] = function( $attributes, $content, $block ) {
+	$transcript_block_args['render_callback'] = function ( $attributes, $content, $block ) {
 		ob_start();
 		include PODCASTING_PATH . 'includes/blocks/podcast-transcript/markup.php';
 		return ob_get_clean();
@@ -356,7 +356,7 @@ function ajax_get_podcast_platforms() {
 
 	$platforms = array_filter(
 		$platforms,
-		function( $platform ) {
+		function ( $platform ) {
 			return ! empty( $platform );
 		}
 	);

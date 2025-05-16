@@ -42,16 +42,8 @@ function bloginfo_rss_name( $output ) {
 	if ( ! $term ) {
 		return $output;
 	}
-	$title = get_term_meta( $term->term_id, 'podcasting_title', true );
-	if ( empty( $title ) ) {
-		$title  = get_bloginfo( 'name' );
-		$output = "$title &#187; {$term->name}";
-	} else {
-		$output = $title;
-	}
 
 	return apply_filters( 'simple_podcasting_feed_title', $output, $term );
-
 }
 add_filter( 'wp_title_rss', __NAMESPACE__ . '\bloginfo_rss_name' );
 
@@ -360,16 +352,16 @@ function generate_categories() {
 		}
 
 		if ( empty( $subs ) ) {
-			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\" />\n";
+			echo '<itunes:category text="' . esc_attr( $categories[ $parent ]['name'] ) . "\" />\n";
 		} else {
-			echo '<itunes:category text="' . esc_html( $categories[ $parent ]['name'] ) . "\">\n";
+			echo '<itunes:category text="' . esc_attr( $categories[ $parent ]['name'] ) . "\">\n";
 
 			foreach ( $subs as $sub ) {
 				if ( ! isset( $categories[ $parent ]['subcategories'][ $sub ] ) ) {
 					continue;
 				}
 
-				echo "\t<itunes:category text=\"" . esc_html( $categories[ $parent ]['subcategories'][ $sub ] ) . "\" />\n";
+				echo "\t<itunes:category text=\"" . esc_attr( $categories[ $parent ]['subcategories'][ $sub ] ) . "\" />\n";
 			}
 
 			echo "</itunes:category>\n";

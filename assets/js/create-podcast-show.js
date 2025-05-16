@@ -1,5 +1,5 @@
 import { registerPlugin } from "@wordpress/plugins";
-import { PluginDocumentSettingPanel, store as editPostStore } from '@wordpress/edit-post';
+import { store as editPostStore } from '@wordpress/edit-post';
 import { __ } from "@wordpress/i18n";
 import {
 	Button,
@@ -15,6 +15,10 @@ import {
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { useState, useEffect } from "@wordpress/element";
 import { useSelect, dispatch } from "@wordpress/data";
+
+// Once WordPress 6.6 becomes our minimum, change this back to `import { PluginDocumentSettingPanel } from '@wordpress/editor';`.
+const PluginDocumentSettingPanel = wp.editor?.PluginDocumentSettingPanel ?? ( wp.editPost?.PluginDocumentSettingPanel ?? wp.editSite?.PluginDocumentSettingPanel );
+
 // Due to unsupported versions of React, we're importing stores from the
 // `wp` namespace instead of @wordpress NPM packages for the following.
 const { store: editorStore } = wp.editor;
@@ -259,18 +263,9 @@ const CreatePodcastShowPlugin = () => {
 	const [ isModalOpen, setIsModalOpen ] = useState( false );
 	const openModal = () => setIsModalOpen( true );
 	const closeModal = () => setIsModalOpen( false );
-	const initAttachedPodcastIds = attachedPodcasts.map( ( item ) => item.id );
-	const [attachedPodcastIds, setAttachedPodcastIds] = useState([]);
-
-	/*
-	 * This is a workaround for WP 5.7 to prevent infinite loop
-	 * when setting state.
-	 *
-	 * @todo remove this when the min supported WP version is bumped
-	 * to 6.1
-	 */
-	const [isAttached, setisAttached] = useState( true );
-
+	const attachedPodcastIds = useSelect( ( select ) => {
+		return select( 'core/editor' ).getEditedPostAttribute( 'podcasting_podcasts' );
+	} );
 
 	/**
 	 * Attaches the podcast term to the current post if selected.
@@ -279,12 +274,12 @@ const CreatePodcastShowPlugin = () => {
 	 * @param {Integer} podcastId The podcast term ID.
 	 */
 	function attachPodcastToPost( isChecked, podcastId ) {
-		let updatedAttachedPodcastIds = [ ...initAttachedPodcastIds, ...attachedPodcastIds, podcastId ];
+		let updatedAttachedPodcastIds = [ ...attachedPodcastIds, podcastId ];
 
 		if ( isChecked ) {
-			updatedAttachedPodcastIds = [ ...initAttachedPodcastIds, ...attachedPodcastIds, podcastId ];
+			updatedAttachedPodcastIds = [ ...attachedPodcastIds, podcastId ];
 		} else {
-			updatedAttachedPodcastIds = [...initAttachedPodcastIds,...attachedPodcastIds].filter( ( currentPodcastId ) => currentPodcastId !== podcastId );
+			updatedAttachedPodcastIds = attachedPodcastIds.filter( ( currentPodcastId ) => currentPodcastId !== podcastId );
 		}
 
 		dispatch( coreDataStore ).editEntityRecord(
@@ -295,9 +290,6 @@ const CreatePodcastShowPlugin = () => {
 				podcasting_podcasts: updatedAttachedPodcastIds,
 			}
 		)
-
-		setAttachedPodcastIds( updatedAttachedPodcastIds );
-		setisAttached( false );
 	}
 
 	return (
@@ -314,7 +306,7 @@ const CreatePodcastShowPlugin = () => {
 								key={ index }
 								label={ item.name }
 								onChange={ ( isChecked ) => attachPodcastToPost( isChecked, item.id ) }
-								checked={ isAttached ? initAttachedPodcastIds.includes( item.id ) : attachedPodcastIds.includes( item.id ) }
+								checked={ attachedPodcastIds.includes( item.id ) }
 							/>
 						)
 					} )
