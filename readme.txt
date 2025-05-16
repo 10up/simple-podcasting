@@ -121,6 +121,13 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 
 == Changelog ==
 
+= 1.9.1 - 2025-05-16 =
+* **Added:** Screenshots for all new features (props [@gabriel-glo](https://github.com/gabriel-glo), [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9), [@dkotter](https://github.com/dkotter) via [#310](https://github.com/10up/simple-podcasting/pull/310)).
+* **Changed:** Bump WordPress "tested up to" version to 6.8 (props [@jeffpaul](https://github.com/jeffpaul) via [#335](https://github.com/10up/simple-podcasting/pull/335), [#336](https://github.com/10up/simple-podcasting/pull/336)).
+* **Changed:** Bump WordPress minimum from 6.5 to 6.6 (props [@jeffpaul](https://github.com/jeffpaul) via [#335](https://github.com/10up/simple-podcasting/pull/335), [#336](https://github.com/10up/simple-podcasting/pull/336)).
+* **Security:** Bump `@wordpress/scripts` from 27.9.0 to 30.6.0 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#328](https://github.com/10up/simple-podcasting/pull/328)).
+* **Security:** Bump `cookie` from 0.4.2 to 0.7.1, `express` from 4.21.0 to 4.21.2, `@wordpress/e2e-test-utils-playwright` from 0.26.0 to 1.18.0, `serialize-javascript` from 6.0.0 to 6.0.2 and `mocha` from 10.4.0 to 11.1.0 (props [@dependabot](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#332](https://github.com/10up/simple-podcasting/pull/332)).
+
 = 1.9.0 - 2024-11-18 =
 * **Added:** New options to the Podcast block to allow for more display customization (props [@barneyjeffries](https://github.com/barneyjeffries), [@Firestorm980](https://github.com/Firestorm980), [@mehidi258](https://github.com/mehidi258), [@jayedul](https://github.com/jayedul), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc), [@faisal-alvi](https://github.com/faisal-alvi), [@gusaus](https://github.com/gusaus), [@jeffpaul](https://github.com/jeffpaul) via [#272](https://github.com/10up/simple-podcasting/pull/272)).
 * **Changed:** Update the rendering of the Podcast block to be more full featured and use all the newly added customization options (props [@barneyjeffries](https://github.com/barneyjeffries), [@Firestorm980](https://github.com/Firestorm980), [@mehidi258](https://github.com/mehidi258), [@jayedul](https://github.com/jayedul), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc), [@faisal-alvi](https://github.com/faisal-alvi), [@gusaus](https://github.com/gusaus), [@sudar](https://github.com/sudar), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter) via [#272](https://github.com/10up/simple-podcasting/pull/272), [#318](https://github.com/10up/simple-podcasting/pull/318), [#320](https://github.com/10up/simple-podcasting/pull/320), [#322](https://github.com/10up/simple-podcasting/pull/322)).
@@ -171,6 +178,9 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 [View historical changelog details here](https://github.com/10up/simple-podcasting/blob/develop/CHANGELOG.md).
 
 == Upgrade Notice ==
+
+= 1.9.1 =
+This release bumps the minimum required version of WordPress from 6.5 to 6.6.
 
 = 1.9.0 =
 This release bumps the minimum required version of WordPress from 5.7 to 6.5.
