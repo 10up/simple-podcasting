@@ -106,11 +106,14 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 == Screenshots ==
 
 1. Podcast in block editor
-2. Podcast block in the WordPress block editor (aka Gutenberg)
+2. Podcast Platforms block in the block editor
 3. Creating a podcast
 4. Podcast feed
+5. Podcast Grid pattern
+6. Podcast Transcript block
 
 == Installation ==
+
 1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
 2. Activate the plugin.
 3. Head to Posts → Podcasts and add at least one podcast.
