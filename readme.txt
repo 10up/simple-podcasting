@@ -2,7 +2,7 @@
 Contributors: 10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
 Tags:         podcasting, podcast, apple podcasts, episode, season
 Tested up to: 6.8
-Stable tag:   1.9.0
+Stable tag:   1.9.1
 License:      GPLv2 or later
 License URI:  http://www.gnu.org/licenses/gpl-2.0.html
 
