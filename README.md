@@ -10,7 +10,7 @@
 
 Podcasting is a method to distribute audio messages through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
-![Screenshot of podcast block](.wordpress-org/screenshot-2.png "Example of a podcast block in the new WordPress editor")
+![Screenshot of podcast block](.wordpress-org/screenshot-1.png "Example of a podcast block in the new WordPress editor")
 
 ## Requirements
 
@@ -58,9 +58,13 @@ Repeat for each podcast you would like to create.
 * Ensure you test feeds before submitting them, see https://help.apple.com/itc/podcasts_connect/#/itcac471c970.
 * Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9
 
-Podcast setup | Podcast in editor | Podcast feed
+Podcast setup | Podcast in block editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
+
+Podcast Platforms block | Podcast Grid pattern | Podcast Transcript block
+------------- | ----------------- | ------------
+[![Podcast Platforms block](.wordpress-org/screenshot-2.png)](.wordpress-org/screenshot-2.png) | [![Podcast Grid pattern](.wordpress-org/screenshot-5.png)](.wordpress-org/screenshot-5.png) | [![Podcast Transcript block](.wordpress-org/screenshot-6.png)](.wordpress-org/screenshot-6.png)
 
 ## Submit your podcast feed to Pocket Casts
 
