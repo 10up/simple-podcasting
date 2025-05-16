@@ -50,7 +50,7 @@ Repeat for each podcast you would like to create.
 === Submit your podcast feed to Pocket Casts
 
 * Validate your feeds at [https://www.castfeedvalidator.com/ Cast Feed Validator] before submitting them.
-* Submit the podcast feed to https://pocketcasts.com/submit/
+* Submit the podcast feed to https://pocketcasts.com/submit/.
 
 === How do I get my podcast featured on Pocket Casts?
 
