@@ -187,10 +187,10 @@ class CustomizeFeedTests extends TestCase {
 		\WP_Mock::userFunction( 'get_bloginfo' )
 			->with( 'name' )
 			->andReturn( 'Blogname' );
-			
+
 
 		\WP_Mock::onFilter( 'simple_podcasting_feed_title' )
-			->with( 'Blogname &#187; Original Podcast Name', $queried_object )
+			->with( 'Podcast Title', $queried_object )
 			->reply( 'Filtered Podcast Title' );
 
 		$this->assertEquals(
@@ -198,7 +198,7 @@ class CustomizeFeedTests extends TestCase {
 			tenup_podcasting\bloginfo_rss_name( 'Podcast Title' ),
 			'tenup_podcasting\bloginfo_rss_name() should return the filtered value.'
 		);
-	
+
 	}
 
 	public function data_provider_for_test_feed_item() {

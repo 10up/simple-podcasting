@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [1.9.1] - 2025-05-19
+**Note that this release bumps the WordPress minimum version from 6.5 to 6.6.**
+
+### Added
+- Screenshots for all new features (props [@gabriel-glo](https://github.com/gabriel-glo), [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9), [@dkotter](https://github.com/dkotter) via [#310](https://github.com/10up/simple-podcasting/pull/310)).
+
+### Changed
+- Bump WordPress "tested up to" version to 6.8 (props [@jeffpaul](https://github.com/jeffpaul) via [#335](https://github.com/10up/simple-podcasting/pull/335), [#336](https://github.com/10up/simple-podcasting/pull/336)).
+- Bump WordPress minimum from 6.5 to 6.6 (props [@jeffpaul](https://github.com/jeffpaul) via [#335](https://github.com/10up/simple-podcasting/pull/335), [#336](https://github.com/10up/simple-podcasting/pull/336)).
+
+### Fixed
+- Issue where podcast feed title unexpectedly adding site title (props [@kirtangajjar](https://github.com/kirtangajjar), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dabowman](https://github.com/dabowman) via [#295](https://github.com/10up/simple-podcasting/pull/295)).
+
+### Security
+- Bump `@wordpress/scripts` from 27.9.0 to 30.6.0 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#328](https://github.com/10up/simple-podcasting/pull/328)).
+- Bump `cookie` from 0.4.2 to 0.7.1, `express` from 4.21.0 to 4.21.2, `@wordpress/e2e-test-utils-playwright` from 0.26.0 to 1.18.0, `serialize-javascript` from 6.0.0 to 6.0.2 and `mocha` from 10.4.0 to 11.1.0 (props [@dependabot](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#332](https://github.com/10up/simple-podcasting/pull/332)).
+- Bump `axios` from 1.7.4 to 1.9.0 and `http-proxy-middleware` from 2.0.6 to 2.0.9 (props [@dependabot](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#338](https://github.com/10up/simple-podcasting/pull/338)).
+
+### Developer
+- Update all third-party actions our workflows rely on to use versions based on specific commit hashes (props [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter) via [#333](https://github.com/10up/simple-podcasting/pull/333)).
+- Adjust `makepot` to only happen during deploy instead of during every prebuild (props [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter) via [#337](https://github.com/10up/simple-podcasting/pull/337)).
+
 ## [1.9.0] - 2024-11-18
 **Note that this release bumps the WordPress minimum version from 5.7 to 6.5.**
 
@@ -274,6 +296,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[1.9.1]: https://github.com/10up/simple-podcasting/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/10up/simple-podcasting/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/10up/simple-podcasting/compare/1.7.0...1.8.0
 [1.7.0]: https://github.com/10up/simple-podcasting/compare/1.6.1...1.7.0
