@@ -1,5 +1,9 @@
 name: 'Repo Automator'
 
+permissions:
+  contents: read
+  issues: write
+
 on:
   issues:
     types:
