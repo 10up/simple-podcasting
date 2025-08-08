@@ -47,16 +47,26 @@ if ( is_a( $podcast_show, 'WP_Term' ) ) {
 	$term_image_id = '';
 }
 
+/**
+ * If not on a single post, set isDocked to none.
+ *
+ * This is to prevent having multiple instances of the podcast block with same docked position.
+ */
+$is_docked = ! is_single() ? 'none' : $attributes['isDocked'];
+
 // Output the body class based on isDocked value
 $body_class = '';
-if ( 'top' === $attributes['isDocked'] ) {
+if ( 'top' === $is_docked ) {
 	$body_class = 'has-docked-top';
-} elseif ( 'bottom' === $attributes['isDocked'] ) {
+} elseif ( 'bottom' === $is_docked ) {
 	$body_class = 'has-docked-bottom';
 }
+
+$podcast_details_id       = wp_unique_prefixed_id( 'podcast-details' );
+$toggle_details_button_id = wp_unique_prefixed_id( 'toggle-details-button' );
 ?>
 
-<div class="wp-block-podcasting-podcast-outer <?php echo 'docked-' . sanitize_html_class( $attributes['isDocked'] ); ?>">
+<div class="wp-block-podcasting-podcast-outer <?php echo 'docked-' . sanitize_html_class( $is_docked ); ?>">
 	<div class="wp-block-podcasting-podcast__container">
 		<?php if ( $attributes['displayArt'] && ( has_post_thumbnail() || ! empty( $term_image_id ) ) ) : ?>
 			<div class="wp-block-podcasting-podcast__show-art">
@@ -83,7 +93,7 @@ if ( 'top' === $attributes['isDocked'] ) {
 					<?php the_title(); ?>
 				</h3>
 			<?php endif; ?>
-			<div id="podcast-details" style="display: none;" aria-hidden="true">
+			<div id="<?php echo esc_attr( $podcast_details_id ); ?>" style="display: none;" aria-hidden="true">
 				<div class="wp-block-podcasting-podcast__show-details">
 					<?php if ( $attributes['displayShowTitle'] && ! empty( $show_name ) ) : ?>
 						<span class="wp-block-podcasting-podcast__title">
@@ -125,12 +135,12 @@ if ( 'top' === $attributes['isDocked'] ) {
 				</div>
 			</div>
 			<div class="wp-block-podcasting-podcast__toggle-details">
-				<button id="toggle-details-button" aria-expanded="false" aria-controls="podcast-details" aria-label="<?php esc_attr_e( 'Toggle podcast details', 'simple-podcasting' ); ?>">
+				<button id="<?php echo esc_attr( $toggle_details_button_id ); ?>" aria-expanded="false" aria-controls="<?php echo esc_attr( $podcast_details_id ); ?>" aria-label="<?php esc_attr_e( 'Toggle podcast details', 'simple-podcasting' ); ?>">
 					<?php esc_html_e( 'More', 'simple-podcasting' ); ?>
 				</button>
 			</div>
 			<?php
-			if ( isset( $attributes['isDocked'] ) && 'none' !== $attributes['isDocked'] ) {
+			if ( isset( $is_docked ) && 'none' !== $is_docked ) {
 				echo wp_kses_post( $content );
 			}
 			?>
@@ -138,7 +148,7 @@ if ( 'top' === $attributes['isDocked'] ) {
 	</div>
 
 	<?php
-	if ( isset( $attributes['isDocked'] ) && 'none' === $attributes['isDocked'] ) {
+	if ( isset( $is_docked ) && 'none' === $is_docked ) {
 		echo wp_kses_post( $content );
 	}
 	?>
@@ -151,16 +161,17 @@ if ( 'top' === $attributes['isDocked'] ) {
 			document.body.classList.add('<?php echo esc_attr( $body_class ); ?>');
 		<?php endif; ?>
 
-		var toggleButton = document.getElementById('toggle-details-button');
-		var detailsDiv = document.getElementById('podcast-details');
+		var toggleButton = document.getElementById('<?php echo esc_attr( $toggle_details_button_id ); ?>');
+		var detailsDiv = document.getElementById('<?php echo esc_attr( $podcast_details_id ); ?>');
 
 		// If isDocked is 'none', show details by default
-		<?php if ( 'none' === $attributes['isDocked'] ) : ?>
+		<?php if ( 'none' === $is_docked ) : ?>
 			detailsDiv.style.display = 'block';
 			detailsDiv.setAttribute('aria-hidden', 'false');
 			toggleButton.textContent = <?php echo wp_json_encode( __( 'Less', 'simple-podcasting' ) ); ?>;
 			toggleButton.style.display = 'none';
 			toggleButton.setAttribute('aria-expanded', 'true');
+			toggleButton.setAttribute('aria-hidden', 'true');
 		<?php endif; ?>
 
 		toggleButton.addEventListener('click', function() {
