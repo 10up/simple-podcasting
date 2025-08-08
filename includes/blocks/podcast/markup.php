@@ -135,7 +135,7 @@ $toggle_details_button_id = wp_unique_prefixed_id( 'toggle-details-button' );
 				</div>
 			</div>
 			<div class="wp-block-podcasting-podcast__toggle-details">
-				<button id="<?php echo esc_attr( $toggle_details_button_id ); ?>" aria-expanded="false" aria-controls="<?php echo esc_attr( $podcast_details_id ); ?>" aria-label="<?php esc_attr_e( 'Toggle podcast details', 'simple-podcasting' ); ?>">
+				<button class="wp-block-podcasting-podcast__toggle-details-button" id="<?php echo esc_attr( $toggle_details_button_id ); ?>" aria-expanded="false" aria-controls="<?php echo esc_attr( $podcast_details_id ); ?>" aria-label="<?php esc_attr_e( 'Toggle podcast details', 'simple-podcasting' ); ?>">
 					<?php esc_html_e( 'More', 'simple-podcasting' ); ?>
 				</button>
 			</div>
