@@ -193,8 +193,6 @@ function Edit( props ) {
 
 	const checkDisplaySettings = () => {
 		if (displayDuration || displayShowTitle ||
-			// displayEpisodeTitle ||
-			// displayArt ||
 			displayExplicitBadge || displaySeasonNumber || displayEpisodeNumber || displayEpisodeType) {
 			setIsDisplayingSettings(true);
 		}
@@ -209,8 +207,6 @@ function Edit( props ) {
 		checkDisplaySettings();
 	}, [displayDuration,
 		displayShowTitle,
-		// displayEpisodeTitle,
-		// displayArt,
 		displayExplicitBadge,
 		displaySeasonNumber,
 		displayEpisodeNumber,

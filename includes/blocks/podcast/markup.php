@@ -49,15 +49,14 @@ if ( is_a( $podcast_show, 'WP_Term' ) ) {
 
 // Output the body class based on isDocked value
 $body_class = '';
-if ( $attributes['isDocked'] === 'top' ) {
-    $body_class = 'has-docked-top';
-} elseif ( $attributes['isDocked'] === 'bottom' ) {
-    $body_class = 'has-docked-bottom';
+if ( 'top' === $attributes['isDocked'] ) {
+	$body_class = 'has-docked-top';
+} elseif ( 'bottom' === $attributes['isDocked'] ) {
+	$body_class = 'has-docked-bottom';
 }
-
 ?>
 
-<div class="wp-block-podcasting-podcast-outer <?php echo 'docked-' . esc_attr( $attributes['isDocked'] ); ?>">
+<div class="wp-block-podcasting-podcast-outer <?php echo 'docked-' . sanitize_html_class( $attributes['isDocked'] ); ?>">
 	<div class="wp-block-podcasting-podcast__container">
 		<?php if ( $attributes['displayArt'] && ( has_post_thumbnail() || ! empty( $term_image_id ) ) ) : ?>
 			<div class="wp-block-podcasting-podcast__show-art">
@@ -84,7 +83,7 @@ if ( $attributes['isDocked'] === 'top' ) {
 					<?php the_title(); ?>
 				</h3>
 			<?php endif; ?>
-			<div id="podcast-details" style="display: none;">
+			<div id="podcast-details" style="display: none;" aria-hidden="true">
 				<div class="wp-block-podcasting-podcast__show-details">
 					<?php if ( $attributes['displayShowTitle'] && ! empty( $show_name ) ) : ?>
 						<span class="wp-block-podcasting-podcast__title">
@@ -126,48 +125,56 @@ if ( $attributes['isDocked'] === 'top' ) {
 				</div>
 			</div>
 			<div class="wp-block-podcasting-podcast__toggle-details">
-        <button id="toggle-details-button">More</button>
-    	</div>
+				<button id="toggle-details-button" aria-expanded="false" aria-controls="podcast-details" aria-label="<?php esc_attr_e( 'Toggle podcast details', 'simple-podcasting' ); ?>">
+					<?php esc_html_e( 'More', 'simple-podcasting' ); ?>
+				</button>
+			</div>
 			<?php
-				if ( isset( $attributes['isDocked'] ) && $attributes['isDocked'] !== 'none' ) {
-					echo wp_kses_post( $content );
-				}
+			if ( isset( $attributes['isDocked'] ) && 'none' !== $attributes['isDocked'] ) {
+				echo wp_kses_post( $content );
+			}
 			?>
 		</div>
 	</div>
 
 	<?php
-	if ( isset( $attributes['isDocked'] ) && $attributes['isDocked'] === 'none' ) {
-			echo wp_kses_post( $content );
+	if ( isset( $attributes['isDocked'] ) && 'none' === $attributes['isDocked'] ) {
+		echo wp_kses_post( $content );
 	}
 	?>
 </div>
 
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add the body class for docked position
-        <?php if ( $body_class ) : ?>
-            document.body.classList.add('<?php echo esc_attr( $body_class ); ?>');
-        <?php endif; ?>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Add the body class for docked position
+		<?php if ( $body_class ) : ?>
+			document.body.classList.add('<?php echo esc_attr( $body_class ); ?>');
+		<?php endif; ?>
 
-        var toggleButton = document.getElementById('toggle-details-button');
-        var detailsDiv = document.getElementById('podcast-details');
+		var toggleButton = document.getElementById('toggle-details-button');
+		var detailsDiv = document.getElementById('podcast-details');
 
-        // If isDocked is 'none', show details by default
-        <?php if ( $attributes['isDocked'] === 'none' ) : ?>
-            detailsDiv.style.display = 'block';
-            toggleButton.textContent = 'Less';
-            toggleButton.style.display = 'none';
-        <?php endif; ?>
+		// If isDocked is 'none', show details by default
+		<?php if ( 'none' === $attributes['isDocked'] ) : ?>
+			detailsDiv.style.display = 'block';
+			detailsDiv.setAttribute('aria-hidden', 'false');
+			toggleButton.textContent = <?php echo wp_json_encode( __( 'Less', 'simple-podcasting' ) ); ?>;
+			toggleButton.style.display = 'none';
+			toggleButton.setAttribute('aria-expanded', 'true');
+		<?php endif; ?>
 
-        toggleButton.addEventListener('click', function() {
-            if (detailsDiv.style.display === 'none') {
-                detailsDiv.style.display = 'block';
-                toggleButton.textContent = 'Less';
-            } else {
-                detailsDiv.style.display = 'none';
-                toggleButton.textContent = 'More';
-            }
-        });
-    });
+		toggleButton.addEventListener('click', function() {
+			if (detailsDiv.style.display === 'none') {
+				detailsDiv.style.display = 'block';
+				detailsDiv.setAttribute('aria-hidden', 'false');
+				toggleButton.textContent = <?php echo wp_json_encode( __( 'Less', 'simple-podcasting' ) ); ?>;
+				toggleButton.setAttribute('aria-expanded', 'true');
+			} else {
+				detailsDiv.style.display = 'none';
+				detailsDiv.setAttribute('aria-hidden', 'true');
+				toggleButton.textContent = <?php echo wp_json_encode( __( 'More', 'simple-podcasting' ) ); ?>;
+				toggleButton.setAttribute('aria-expanded', 'false');
+			}
+		});
+	});
 </script>
