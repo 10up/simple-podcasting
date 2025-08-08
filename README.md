@@ -10,12 +10,12 @@
 
 Podcasting is a method to distribute audio messages through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
-![Screenshot of podcast block](.wordpress-org/screenshot-2.png "Example of a podcast block in the new WordPress editor")
+![Screenshot of podcast block](.wordpress-org/screenshot-1.png "Example of a podcast block in the new WordPress editor")
 
 ## Requirements
 
 * PHP 7.4+
-* [WordPress](http://wordpress.org) 6.5+
+* [WordPress](http://wordpress.org) 6.6+
 * RSS feeds must not be disabled
 
 ## Installation
@@ -58,9 +58,13 @@ Repeat for each podcast you would like to create.
 * Ensure you test feeds before submitting them, see https://help.apple.com/itc/podcasts_connect/#/itcac471c970.
 * Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9
 
-Podcast setup | Podcast in editor | Podcast feed
+Podcast setup | Podcast in block editor | Podcast feed
 ------------- | ----------------- | ------------
 [![Podcast setup](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) | [![Podcast in editor](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png) | [![Podcast feed](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
+
+Podcast Platforms block | Podcast Grid pattern | Podcast Transcript block
+------------- | ----------------- | ------------
+[![Podcast Platforms block](.wordpress-org/screenshot-2.png)](.wordpress-org/screenshot-2.png) | [![Podcast Grid pattern](.wordpress-org/screenshot-5.png)](.wordpress-org/screenshot-5.png) | [![Podcast Transcript block](.wordpress-org/screenshot-6.png)](.wordpress-org/screenshot-6.png)
 
 ## Submit your podcast feed to Pocket Casts
 
@@ -153,6 +157,4 @@ Please read [CODE_OF_CONDUCT.md](https://github.com/10up/simple-podcasting/blob/
 
 ## Like what you see?
 
-<p align="center">
-<a href="http://10up.com/contact/"><img src="https://10up.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
-</p>
+<a href="http://10up.com/contact/"><img src="https://github.com/10up/.github/blob/trunk/profile/10up-github-banner.jpg" width="850" alt="Work with the 10up WordPress Practice at Fueled"></a>
