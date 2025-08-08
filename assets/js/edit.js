@@ -23,7 +23,7 @@ const ALLOWED_MEDIA_TYPES = ['audio'];
 const { select } = wp.data;
 
 import { Button } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback, useRef } from '@wordpress/element';
 import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
@@ -201,6 +201,9 @@ function Edit( props ) {
 		}
 	}
 
+	const adminMenuElement = document.getElementById('adminmenuwrap');
+	const blockRef = useRef(document.querySelector('.wp-block-podcasting-podcast-outer'));
+
 	// If the user changes one of the toggles, the checkDisplaySettings function will be called to check if any of the display settings are enabled.
 	// If at least one of the display settings are enabled, then we want to show the More/Less button.
 	useEffect(() => {
@@ -217,6 +220,28 @@ function Edit( props ) {
 		setShowPodcastMeta(false)
 	}, [isDocked])
 
+	/**
+	 * Update the position and width of the block depending on the isDocked value.
+	 *
+	 * @param {string} isDocked - The value of the isDocked attribute.
+	 * @param {number} containerWidth - The width of the container.
+	 */
+	const updateBlockPosition = useCallback((isDocked, containerWidth) => {
+		if (isDocked === 'none') {
+			blockRef.current.style.left = '0px';
+			blockRef.current.style.width = `auto`;
+
+			return;
+		}
+
+		const blockElementStyle = window.getComputedStyle(blockRef.current);
+		const paddingLeft = parseInt(blockElementStyle.paddingLeft, 10);
+		const paddingRight = parseInt(blockElementStyle.paddingRight, 10);
+		const left = adminMenuElement ? adminMenuElement.offsetWidth : 0;
+		blockRef.current.style.left = `${left}px`;
+		blockRef.current.style.width = `${containerWidth - paddingLeft - paddingRight - 2}px`;
+	}, [adminMenuElement]);
+
 	useEffect(() => {
 		// Remove any existing classes
 		document.body.classList.remove('has-docked-top', 'has-docked-bottom', 'docked-in-editor');
@@ -227,7 +252,18 @@ function Edit( props ) {
 		} else if (isDocked === 'bottom') {
 			document.body.classList.add('has-docked-bottom', 'docked-in-editor');
 		}
-	}, [isDocked]); // Run this effect when isDocked changes
+
+		// Update the position and width of the block depending on the isDocked value.
+		const editorArea = document.querySelector('.editor-visual-editor');
+		if (editorArea) {
+			const resizeObserver = new ResizeObserver(entries => {
+				for (let entry of entries) {
+					updateBlockPosition(isDocked, entry.contentRect.width);
+				}
+			});
+			resizeObserver.observe(editorArea);
+		}
+	}, [isDocked, updateBlockPosition]); // Run this effect when isDocked changes
 
 	return (
 		<Fragment>
@@ -490,7 +526,7 @@ function Edit( props ) {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div className={`wp-block-podcasting-podcast-outer ${dockedClass}`}>
+			<div ref={blockRef} className={`wp-block-podcasting-podcast-outer ${dockedClass}`}>
 				{src ? (
 					<>
 						<div className="wp-block-podcasting-podcast__container">
