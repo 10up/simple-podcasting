@@ -1,7 +1,7 @@
 name: Deploy to WordPress.org
 
 permissions:
-  contents: read
+  contents: write
   packages: read
   actions: write
 
