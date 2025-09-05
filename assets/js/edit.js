@@ -187,7 +187,6 @@ function Edit( props ) {
 	};
 
 	// Docked Player
-	const dockedClass = isDocked !== 'none' ? `docked-${isDocked}` : '';
 	const [showPodcastMeta, setShowPodcastMeta] = useState(false);
 	const [isDisplayingSettings, setIsDisplayingSettings] = useState(false);
 
@@ -241,29 +240,6 @@ function Edit( props ) {
 		blockRef.current.style.left = `${left}px`;
 		blockRef.current.style.width = `${containerWidth - paddingLeft - paddingRight - 2}px`;
 	}, [adminMenuElement]);
-
-	useEffect(() => {
-		// Remove any existing classes
-		document.body.classList.remove('has-docked-top', 'has-docked-bottom', 'docked-in-editor');
-
-		// Add the appropriate class based on the isDocked value
-		if (isDocked === 'top') {
-			document.body.classList.add('has-docked-top', 'docked-in-editor');
-		} else if (isDocked === 'bottom') {
-			document.body.classList.add('has-docked-bottom', 'docked-in-editor');
-		}
-
-		// Update the position and width of the block depending on the isDocked value.
-		const editorArea = document.querySelector('.editor-visual-editor');
-		if (editorArea) {
-			const resizeObserver = new ResizeObserver(entries => {
-				for (let entry of entries) {
-					updateBlockPosition(isDocked, entry.contentRect.width);
-				}
-			});
-			resizeObserver.observe(editorArea);
-		}
-	}, [isDocked, updateBlockPosition]); // Run this effect when isDocked changes
 
 	return (
 		<Fragment>
@@ -371,6 +347,7 @@ function Edit( props ) {
 					<PanelRow>
 						<RadioControl
 							label={__('Dock Player', 'simple-podcasting')}
+							help={__('This will only affect the display of the player on the frontend.', 'simple-podcasting')}
 							selected={isDocked}
 							options={[
 								{
@@ -382,10 +359,7 @@ function Edit( props ) {
 									value: 'top',
 								},
 								{
-									label: __(
-										'Bottom',
-										'simple-podcasting'
-									),
+									label: __('Bottom', 'simple-podcasting'),
 									value: 'bottom',
 								},
 							]}
@@ -526,7 +500,7 @@ function Edit( props ) {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div ref={blockRef} className={`wp-block-podcasting-podcast-outer ${dockedClass}`}>
+			<div ref={blockRef} className="wp-block-podcasting-podcast-outer">
 				{src ? (
 					<>
 						<div className="wp-block-podcasting-podcast__container">

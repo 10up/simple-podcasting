@@ -47,7 +47,7 @@ if ( is_a( $podcast_show, 'WP_Term' ) ) {
 	$term_image_id = '';
 }
 
-/**
+/*
  * If not on a single post, set isDocked to none.
  *
  * This is to prevent having multiple instances of the podcast block with same docked position.

@@ -343,33 +343,3 @@ function register_latest_episode_assets_admin() {
 	wp_enqueue_style( 'latest-episode-block' );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\register_latest_episode_assets_admin' );
-
-/**
- * Add custom body class for podcast block in admin.
- *
- * @param string $classes Body classes.
- *
- * @return string
- */
-function add_custom_admin_body_class( $classes ) {
-
-	global $post;
-
-	if ( $post ) {
-		$blocks = parse_blocks( $post->post_content );
-
-		foreach ( $blocks as $block ) {
-			if ( 'podcasting/podcast' === $block['blockName'] && isset( $block['attrs']['isDocked'] ) ) {
-				$is_docked = $block['attrs']['isDocked'];
-				if ( 'top' === $is_docked ) {
-					$classes .= ' has-docked-top docked-in-editor';
-				} elseif ( 'bottom' === $is_docked ) {
-					$classes .= ' has-docked-bottom docked-in-editor';
-				}
-			}
-		}
-	}
-
-	return $classes;
-}
-add_filter( 'admin_body_class', __NAMESPACE__ . '\add_custom_admin_body_class' );
