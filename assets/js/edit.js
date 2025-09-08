@@ -23,7 +23,7 @@ const ALLOWED_MEDIA_TYPES = ['audio'];
 const { select } = wp.data;
 
 import { Button } from '@wordpress/components';
-import { useState, useEffect, useCallback, useRef } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
