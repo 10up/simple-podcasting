@@ -52,7 +52,7 @@ if ( is_a( $podcast_show, 'WP_Term' ) ) {
  *
  * This is to prevent having multiple instances of the podcast block with same docked position.
  */
-$is_docked = ! is_single() ? 'none' : $attributes['isDocked'];
+$is_docked = ! is_singular() ? 'none' : $attributes['isDocked'];
 
 // Output the body class based on isDocked value
 $body_class = '';
