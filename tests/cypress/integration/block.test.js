@@ -74,7 +74,9 @@ describe('Admin can publish posts with podcast block', () => {
 			cy.get('.components-snackbar', { timeout: 10000 }).should(
 				'be.visible'
 			);
-			cy.get('a.components-button.components-snackbar__action').click();
+			cy.get(
+				'a.components-snackbar__action:is(.components-button, .components-external-link)'
+			).click();
 			cy.get('.wp-block-podcasting-podcast audio')
 				.should('have.attr', 'src')
 				.and('include', 'example');
