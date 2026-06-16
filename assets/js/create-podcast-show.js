@@ -15,14 +15,9 @@ import {
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { useState, useEffect } from "@wordpress/element";
 import { useSelect, dispatch } from "@wordpress/data";
+import { PluginDocumentSettingPanel, store as editorStore } from '@wordpress/editor';
+import { store as coreDataStore } from '@wordpress/core-data';
 
-// Once WordPress 6.6 becomes our minimum, change this back to `import { PluginDocumentSettingPanel } from '@wordpress/editor';`.
-const PluginDocumentSettingPanel = wp.editor?.PluginDocumentSettingPanel ?? ( wp.editPost?.PluginDocumentSettingPanel ?? wp.editSite?.PluginDocumentSettingPanel );
-
-// Due to unsupported versions of React, we're importing stores from the
-// `wp` namespace instead of @wordpress NPM packages for the following.
-const { store: editorStore } = wp.editor;
-const { store: coreDataStore } = wp.coreData;
 const DEFAULT_QUERY = {
 	per_page: -1,
 	orderby: 'name',
