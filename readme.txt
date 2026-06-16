@@ -1,10 +1,11 @@
 === Simple Podcasting ===
-Contributors: 10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
-Tags:         podcasting, podcast, apple podcasts, episode, season
-Tested up to: 7.0
-Stable tag:   1.9.1
-License:      GPLv2 or later
-License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
+Tags:              podcasting, podcast, apple podcasts, episode, season
+Requires at least: 6.8
+Tested up to:      7.0
+Stable tag:        1.9.1
+License:           GPLv2 or later
+License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 Set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor.
 
