@@ -415,6 +415,41 @@ class PluginHeadersTests extends TestCase {
 	}
 
 	/**
+	 * Test minimum PHP requirement matches across composer.json, readme.txt,
+	 * and minimum_php_requirement() in the plugin file.
+	 */
+	public function test_minimum_php_requirement_matches_across_files() {
+		$composer_file = self::PLUGIN_ROOT_DIR . '/composer.json';
+		$plugin_file   = self::$file_names['plugin'];
+
+		$composer_contents = file_get_contents( $composer_file );
+		$this->assertNotFalse( $composer_contents, 'Unable to read composer.json.' );
+
+		$composer_data = json_decode( $composer_contents, true );
+		$this->assertIsArray( $composer_data, 'composer.json is not valid JSON.' );
+		$this->assertArrayHasKey( 'require', $composer_data, 'composer.json is missing the require section.' );
+		$this->assertArrayHasKey( 'php', $composer_data['require'], 'composer.json is missing require.php.' );
+
+		preg_match( '/\d+(?:\.\d+)+/', (string) $composer_data['require']['php'], $composer_match );
+		$this->assertNotEmpty( $composer_match, 'Unable to parse PHP minimum version from composer.json require.php.' );
+		$composer_min_php = $composer_match[0];
+
+		$this->assertArrayHasKey( 'Requires PHP', self::$defined_readme_headers, "The readme.txt header 'Requires PHP' is missing." );
+		$readme_min_php = self::$defined_readme_headers['Requires PHP'];
+
+		$plugin_contents = file_get_contents( $plugin_file );
+		$this->assertNotFalse( $plugin_contents, 'Unable to read plugin file.' );
+
+		$function_pattern = '/function\s+minimum_php_requirement\s*\(\s*\)\s*\{[\s\S]*?return\s+[\"\']([^\"\']+)[\"\']\s*;/';
+		preg_match( $function_pattern, $plugin_contents, $plugin_match );
+		$this->assertNotEmpty( $plugin_match, 'Unable to parse minimum_php_requirement() return value from plugin file.' );
+		$function_min_php = $plugin_match[1];
+
+		$this->assertSame( $function_min_php, $readme_min_php, 'Minimum PHP version mismatch between minimum_php_requirement() and readme.txt Requires PHP.' );
+		$this->assertSame( $function_min_php, $composer_min_php, 'Minimum PHP version mismatch between minimum_php_requirement() and composer.json require.php.' );
+	}
+
+	/**
 	 * Ensure that the plugin banner includes a low resolution version.
 	 *
 	 * Per the plugin asset guidelines, the high resolution (retina) banner can
