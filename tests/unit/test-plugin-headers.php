@@ -439,7 +439,7 @@ class PluginHeadersTests extends TestCase {
 		$low_res_files = array_filter(
 			$file_list,
 			function ( $file ) use ( $low_res_banner_prefix ) {
-				return str_starts_with( $file, $low_res_banner_prefix );
+				return 0 === strpos( $file, $low_res_banner_prefix );
 			}
 		);
 
@@ -471,7 +471,7 @@ class PluginHeadersTests extends TestCase {
 		$banner_files = array_filter(
 			$file_list,
 			function ( $file ) {
-				return str_starts_with( $file, 'banner-1544x500' );
+				return 0 === strpos( $file, 'banner-1544x500' );
 			}
 		);
 
