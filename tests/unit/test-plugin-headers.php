@@ -8,9 +8,9 @@
 use PHPUnit\Framework\TestCase;
 
 /**
- * The HeadersTests class tests the plugin headers are in sync and located in the correct files.
+ * The PluginHeadersTests class tests the plugin headers are in sync and located in the correct files.
  */
-class HeadersTests extends TestCase {
+class PluginHeadersTests extends TestCase {
 
 	const OPTIONAL  = 0;
 	const REQUIRED  = 1;
