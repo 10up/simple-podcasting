@@ -32,6 +32,8 @@ class HeadersTests extends TestCase {
 		'Stable tag'        => self::REQUIRED,
 		'License'           => self::REQUIRED,
 		'License URI'       => self::OPTIONAL,
+		'Requires at least' => self::REQUIRED, // Opinionated: Allows out of release cycle bumps.
+		'Requires PHP'      => self::REQUIRED, // Opinionated: Allows out of release cycle bumps.
 
 		// Plugin file headers that do not belong in the readme.
 		'Plugin Name'       => self::FORBIDDEN,
@@ -44,8 +46,6 @@ class HeadersTests extends TestCase {
 		'Domain Path'       => self::FORBIDDEN,
 		'Network'           => self::FORBIDDEN,
 		'Update URI'        => self::FORBIDDEN,
-		'Requires at least' => self::FORBIDDEN, // Both WP and the plugin directory prefer the version in the plugin file.
-		'Requires PHP'      => self::FORBIDDEN, // Both WP and the plugin directory prefer the version in the plugin file.
 		'Requires Plugins'  => self::FORBIDDEN,
 	);
 
@@ -59,8 +59,6 @@ class HeadersTests extends TestCase {
 		'Plugin URI'        => self::OPTIONAL,
 		'Description'       => self::REQUIRED,
 		'Version'           => self::REQUIRED,
-		'Requires at least' => self::REQUIRED, // Not required by the spec but I'm enforcing it.
-		'Requires PHP'      => self::REQUIRED, // Not required by the spec but I'm enforcing it.
 		'Author'            => self::REQUIRED,
 		'Author URI'        => self::OPTIONAL,
 		'License'           => self::REQUIRED,
@@ -76,6 +74,8 @@ class HeadersTests extends TestCase {
 		'Tags'              => self::FORBIDDEN,
 		'Donate link'       => self::FORBIDDEN,
 		'Stable tag'        => self::FORBIDDEN,
+		'Requires PHP'      => self::FORBIDDEN, // Opinionated: Allows out of release cycle bumps.
+		'Requires at least' => self::FORBIDDEN, // Opinionated: Allows out of release cycle bumps.
 
 		/*
 		 * Opinionated: Allowed by the spec.
