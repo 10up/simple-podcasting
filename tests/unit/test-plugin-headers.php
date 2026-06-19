@@ -108,7 +108,7 @@ class PluginHeadersTests extends TestCase {
 	);
 
 	/**
-	 * Headers defined in the plugins readme.text file.
+	 * Headers defined in the plugin's readme.txt file.
 	 *
 	 * @var string[] Headers defined in the readme spec Header => value.
 	 */
@@ -172,13 +172,7 @@ class PluginHeadersTests extends TestCase {
 		// Get the file names.
 		self::$file_names['readme'] = self::PLUGIN_ROOT_DIR . '/readme.txt';
 
-		$plugin_file_name = basename( realpath( self::PLUGIN_ROOT_DIR ) ) . '.php';
-		if ( ! file_exists( self::PLUGIN_ROOT_DIR . "/{$plugin_file_name}" ) ) {
-			// Fallback to the generic plugin file name.
-			$plugin_file_name = 'plugin.php';
-		}
-
-		self::$file_names['plugin'] = self::PLUGIN_ROOT_DIR . "/{$plugin_file_name}";
+		self::$file_names['plugin'] = self::PLUGIN_ROOT_DIR . '/simple-podcasting.php';
 
 		// Get the readme headers.
 		$readme_file_data = array();
@@ -274,7 +268,7 @@ class PluginHeadersTests extends TestCase {
 	 */
 	public function test_required_plugin_headers( $header ) {
 		$this->assertArrayHasKey( $header, self::$defined_plugin_headers, "The plugin file header '{$header}' is missing." );
-		$this->assertNotEmpty( self::$defined_plugin_headers[ $header ], "The readme file header '{$header}' is empty." );
+		$this->assertNotEmpty( self::$defined_plugin_headers[ $header ], "The plugin file header '{$header}' is empty." );
 	}
 
 	/**
