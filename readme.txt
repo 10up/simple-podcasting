@@ -1,10 +1,11 @@
 === Simple Podcasting ===
-Contributors: 10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
-Tags:         podcasting, podcast, apple podcasts, episode, season
-Tested up to: 6.8
-Stable tag:   1.9.1
-License:      GPLv2 or later
-License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
+Tags:              podcasting, podcast, apple podcasts, episode, season
+Requires at least: 6.8
+Tested up to:      7.0
+Stable tag:        1.9.1
+License:           GPLv2 or later
+License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 Set up multiple podcast feeds using built-in WordPress posts. Includes a podcast block and podcast transcript block for the WordPress block editor.
 
@@ -14,7 +15,21 @@ Set up multiple podcast feeds using built-in WordPress posts. Includes a podcast
 
 Podcasting is a method to distribute audio and video episodes through a feed to which listeners can subscribe. You can publish podcasts on your WordPress site and make them available for listeners in Apple Podcasts and through direct feed links for other podcasting apps by following these steps:
 
-=== Create your podcast ===
+= Technical Notes =
+
+* Requires PHP 7.4+.
+* RSS feeds must not be disabled.
+
+== Installation ==
+
+1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
+2. Activate the plugin.
+3. Head to Posts → Podcasts and add at least one podcast.
+4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
+
+== Usage ==
+
+= Create your podcast =
 
 From the WordPress Admin, go to Podcasts.
 To create a podcast, complete all of the "Add New Podcast" fields and click "Add New Podcast".
@@ -34,37 +49,25 @@ To create a podcast, complete all of the "Add New Podcast" fields and click "Add
 
 Repeat for each podcast you would like to create.
 
-=== Add content to your podcast ===
+= Add content to your podcast =
 
  * Create a new post and assign it to one or more Podcasts using the panel labeled Podcasts.
  * Upload or embed an audio file into this post using any of the usual WordPress methods. If using the new block-based WordPress editor (sometimes referred to as Gutenberg), insert a Podcast block. Only one Podcast block can be inserted per post.
  * For more advanced settings, use the Podcasting meta box to mark explicit content or closed captioning available, season number, episode number, episode type, add a transcript and to optionally specify one media item in the post if you have more than one in your post. In the block-based editor, these are the block settings that appear in the sidebar when the podcast block is selected.
  * Transcript: If desired, an optional transcript can be added from the settings of the Podcast block. This will add a Podcast Transcript block, allowing you to add a transcript consisting of time codes, citations, and paragrah text that can be embedded in the post, linked to an external plain HTML file, or linked in a special `<podcast:transcript>` XML element.
 
-=== Submit your podcast feed to Apple Podcasts ===
+= Submit your podcast feed to Apple Podcasts =
 
 * Each podcast has a unique feed URL you can find on the Podcasts page. This is the URL you will submit to Apple.
 * Ensure you test feeds before submitting them, see [Apple's "Test a Podcast page"](https://help.apple.com/itc/podcasts_connect/#/itcac471c970) for more information.
 * Once the validator passes, submit your podcast. Podcasts submitted to Apple Podcasts do not become immediately available for subscription by others. They are submitted for review by Apple staff, see [Apple's "Submit a podcast" page](https://help.apple.com/itc/podcasts_connect/#/itcd88ea40b9) for more information.
 
-=== Submit your podcast feed to Pocket Casts
+= Submit your podcast feed to Pocket Casts =
 
 * Validate your feeds at [https://www.castfeedvalidator.com/ Cast Feed Validator] before submitting them.
 * Submit the podcast feed to https://pocketcasts.com/submit/.
 
-=== How do I get my podcast featured on Pocket Casts?
-
-The Featured section of Pocket Casts is human-curated. To ensure that all podcasts have an equal opportunity at being featured, selections are made on the basis of merit.
-
-If you’d like to suggest your podcast for a featured spot, reach out to `curation@pocketcasts.com`
-
-For more information, [https://pocketcasts.com/podcast-producers/ read more].
-
-=== How do I submit private and paid podcast feeds?
-
-Follow this documentation to submit [https://support.pocketcasts.com/article/password-protected-podcasts-2/ private and paid podcast feeds]
-
-=== Control how many episodes are listed on the feed ===
+= Control how many episodes are listed on the feed =
 
 If you want to adjust the default number of episodes included in a podcast RSS feed, then utilize the following to do so...
 
@@ -84,7 +87,7 @@ function podcasting_feed_episodes_per_page( $qty ) {
 }
 `
 
-=== Customize RSS feed ===
+= Customize RSS feed =
 
 If you want to modify RSS feed items output, there is a filter for that:
 
@@ -98,10 +101,23 @@ function podcasting_feed_item_filter( $feed_item = array(), $post_id = null, $te
 add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 );
 `
 
-=== Technical Notes ===
+== Frequently Asked Questions ==
 
-* Requires PHP 7.4+.
-* RSS feeds must not be disabled.
+= How do I get my podcast featured on Pocket Casts? =
+
+The Featured section of Pocket Casts is human-curated. To ensure that all podcasts have an equal opportunity at being featured, selections are made on the basis of merit.
+
+If you’d like to suggest your podcast for a featured spot, reach out to `curation@pocketcasts.com`
+
+For more information, [https://pocketcasts.com/podcast-producers/ read more].
+
+= How do I submit private and paid podcast feeds? =
+
+Follow this documentation to submit [https://support.pocketcasts.com/article/password-protected-podcasts-2/ private and paid podcast feeds]
+
+= Where do I report security bugs found in this plugin? =
+
+Please report security bugs found in the source code of the Simple Podcasting plugin through the [Patchstack Vulnerability Disclosure  Program](https://patchstack.com/database/vdp/0d49ba54-688e-484d-9411-4716696aa79b).  The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Screenshots ==
 
@@ -111,13 +127,6 @@ add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 
 4. Podcast feed
 5. Podcast Grid pattern
 6. Podcast Transcript block
-
-== Installation ==
-
-1. Install the plugin via the plugin installer, either by searching for it or uploading a .zip file.
-2. Activate the plugin.
-3. Head to Posts → Podcasts and add at least one podcast.
-4. Create a post and insert an audio embed (or a podcast block in Gutenberg) and select a Podcast feed to include it in.
 
 == Changelog ==
 

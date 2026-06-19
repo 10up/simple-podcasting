@@ -15,7 +15,7 @@ Podcasting is a method to distribute audio messages through a feed to which list
 ## Requirements
 
 * PHP 7.4+
-* [WordPress](http://wordpress.org) 6.6+
+* [WordPress](http://wordpress.org) 6.8+
 * RSS feeds must not be disabled
 
 ## Installation
@@ -70,18 +70,6 @@ Podcast Platforms block | Podcast Grid pattern | Podcast Transcript block
 
 * Validate your feeds at [Cast Feed Validator](https://www.castfeedvalidator.com/) before submitting them.
 * Submit the podcast feed to https://pocketcasts.com/submit/
-
-### How do I get my podcast featured on Pocket Casts?
-
-The Featured section of Pocket Casts is human-curated. To ensure that all podcasts have an equal opportunity at being featured, selections are made on the basis of merit.
-
-If you’d like to suggest your podcast for a featured spot, reach out to curation@pocketcasts.com.
-
-For more information, [read more](https://pocketcasts.com/podcast-producers/).
-
-### How do I submit private and paid podcast feeds?
-
-Follow this documentation to submit [private and paid podcast feeds](https://support.pocketcasts.com/article/password-protected-podcasts-2/)
 
 ## Control how many episodes are listed on the feed
 
@@ -142,6 +130,24 @@ function podcasting_feed_item_filter( $feed_item = array(), $post_id = null, $te
 }
 add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 );
 ```
+
+## Frequently Asked Questions
+
+### How do I get my podcast featured on Pocket Casts?
+
+The Featured section of Pocket Casts is human-curated. To ensure that all podcasts have an equal opportunity at being featured, selections are made on the basis of merit.
+
+If you’d like to suggest your podcast for a featured spot, reach out to curation@pocketcasts.com.
+
+For more information, [read more](https://pocketcasts.com/podcast-producers/).
+
+### How do I submit private and paid podcast feeds?
+
+Follow this documentation to submit [private and paid podcast feeds](https://support.pocketcasts.com/article/password-protected-podcasts-2/)
+
+### Where do I report security bugs found in this plugin?
+
+Please report security bugs found in the source code of the Simple Podcasting plugin through the [Patchstack Vulnerability Disclosure  Program](https://patchstack.com/database/vdp/0d49ba54-688e-484d-9411-4716696aa79b).  The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 ## Support Level
 

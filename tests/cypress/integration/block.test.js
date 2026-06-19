@@ -36,7 +36,8 @@ describe('Admin can publish posts with podcast block', () => {
 
 			cy.visit('/wp-admin/post-new.php');
 			cy.closeWelcomeGuide();
-			cy.get('h1.editor-post-title__input, #post-title-0')
+			cy.getBlockEditor()
+				.find('h1.editor-post-title__input, #post-title-0')
 				.first()
 				.as('title-input');
 			cy.get('@title-input').click().type('Test episode');
@@ -74,7 +75,9 @@ describe('Admin can publish posts with podcast block', () => {
 			cy.get('.components-snackbar', { timeout: 10000 }).should(
 				'be.visible'
 			);
-			cy.get('a.components-button.components-snackbar__action').click();
+			cy.get(
+				'a.components-snackbar__action:is(.components-button, .components-external-link)'
+			).click();
 			cy.get('.wp-block-podcasting-podcast audio')
 				.should('have.attr', 'src')
 				.and('include', 'example');
