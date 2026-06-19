@@ -23,7 +23,7 @@ const ALLOWED_MEDIA_TYPES = ['audio'];
 const { select } = wp.data;
 
 import { Button } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
@@ -70,7 +70,8 @@ function Edit( props ) {
 		displayExplicitBadge,
 		displaySeasonNumber,
 		displayEpisodeNumber,
-		displayEpisodeType
+		displayEpisodeType,
+		isDocked,
 	} = attributes;
 
 	const duration = attributes.duration || '';
@@ -185,6 +186,8 @@ function Edit( props ) {
 		setFeaturedImage(image.id);
 	};
 
+	const blockRef = useRef(document.querySelector('.wp-block-podcasting-podcast-outer'));
+
 	return (
 		<Fragment>
 			{controls}
@@ -285,7 +288,31 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displayEpisodeType}
-							onChange={() => setAttributes({ displayEpisodeType: !displayEpisodeType})}
+							onChange={() => setAttributes({ displayEpisodeType: !displayEpisodeType })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<RadioControl
+							label={__('Dock Player', 'simple-podcasting')}
+							help={__('This will only affect the position of the player on the frontend.', 'simple-podcasting')}
+							selected={isDocked}
+							options={[
+								{
+									label: __('None', 'simple-podcasting'),
+									value: 'none',
+								},
+								{
+									label: __('Top', 'simple-podcasting'),
+									value: 'top',
+								},
+								{
+									label: __('Bottom', 'simple-podcasting'),
+									value: 'bottom',
+								},
+							]}
+							onChange={(isDocked) =>
+								setAttributes({ isDocked })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -420,7 +447,7 @@ function Edit( props ) {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div className="wp-block-podcasting-podcast-outer">
+			<div ref={blockRef} className="wp-block-podcasting-podcast-outer">
 				{src ? (
 					<>
 						<div className="wp-block-podcasting-podcast__container">
