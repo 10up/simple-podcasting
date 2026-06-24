@@ -39,7 +39,7 @@ repo_dir="$(cd "$script_dir/.." && pwd)"
 
 cd "$repo_dir"
 
-for required_file in readme.txt simple-podcasting.php class-simple-podcasting.php package.json package-lock.json CHANGELOG.md; do
+for required_file in readme.txt simple-podcasting.php package.json package-lock.json CHANGELOG.md; do
 	if [[ ! -f "$required_file" ]]; then
 		echo "Missing required file: $required_file" >&2
 		exit 1
@@ -134,8 +134,8 @@ mv "$readme_tmp" readme.txt
 perl -0pi -e "s/^(\s*\* Version:\s+).*
 /\${1}$new_version\n/m" simple-podcasting.php
 
-perl -0pi -e "s/^(define\( 'SIMPLE_PAGE_ORDERING_VERSION', ')([^']+)('\s*\);)
-/\${1}$new_version\${3}\n/m" class-simple-podcasting.php
+perl -0pi -e "s/^(define\( 'PODCASTING_VERSION', ')([^']+)('\s*\);)
+/\${1}$new_version\${3}\n/m" simple-podcasting.php
 
 perl -0pi -e "s/^(## \[Unreleased\].*\n\n)/\${1}## [$new_version] - TBD\n\n/m" CHANGELOG.md
 
