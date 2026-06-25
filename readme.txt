@@ -131,7 +131,7 @@ Please report security bugs found in the source code of the Simple Podcasting pl
 
 == Changelog ==
 
-= 2.0.0 - TBD =
+= 2.0.0 - 2026-06-25 =
 **Note that this release bumps the WordPress minimum version from 6.6 to 6.8.**
 
 * **Added:** Ability to dock podcast player to top or bottom of browser window. (props [@wadebekker](https://github.com/wadebekker), [@sanketio](https://github.com/sanketio), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions), [@jeffpaul](https://github.com/jeffpaul) via [#331](https://github.com/10up/simple-podcasting/pull/331)).

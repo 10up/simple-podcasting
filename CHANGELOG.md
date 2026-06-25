@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.0.0] - TBD
+## [2.0.0] - 2026-06-25
 **Note that this release bumps the WordPress minimum version from 6.6 to 6.8.**
 
 ### Added
