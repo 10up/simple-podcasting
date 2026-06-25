@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Introduce tests for the plugin meta data. (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@Copilot](https://github.com/apps/copilot-pull-request-reviewer), [@dkotter](https://github.com/dkotter) via [#364](https://github.com/10up/simple-podcasting/pull/364))
 - Update Cypress-WP-Utils to 0.6.0 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#351](https://github.com/10up/simple-podcasting/pull/351))
 - Update WP-Scripts to 31.2.0 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#351](https://github.com/10up/simple-podcasting/pull/351))
+- Introduce version bump script (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#367](https://github.com/10up/simple-podcasting/pull/351))
 
 ### Security
 - Bump `@babel/plugin-transform-modules-systemjs` from 7.28.5 to 7.29.7 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
