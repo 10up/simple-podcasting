@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file, per [the Ke
 ## [Unreleased] - TBD
 
 ## [2.0.0] - TBD
+**Note that this release bumps the WordPress minimum version from 6.6 to 6.8.**
+
 ### Added
 - Ability to dock podcast player to top or bottom of browser window. (props [@wadebekker](https://github.com/wadebekker), [@sanketio](https://github.com/sanketio), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions), [@jeffpaul](https://github.com/jeffpaul) via [#331](https://github.com/10up/simple-podcasting/pull/331))
 
