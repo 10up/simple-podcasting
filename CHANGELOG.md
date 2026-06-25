@@ -4,6 +4,52 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.0.0] - 2026-06-25
+**Note that this release bumps the WordPress minimum version from 6.6 to 6.8.**
+
+### Added
+- Ability to dock podcast player to top or bottom of browser window. (props [@wadebekker](https://github.com/wadebekker), [@sanketio](https://github.com/sanketio), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions), [@jeffpaul](https://github.com/jeffpaul) via [#331](https://github.com/10up/simple-podcasting/pull/331))
+
+### Changed
+- Bump tested up to header to indicate WordPress 7.0 support. (props [@phpbits](https://github.com/phpbits), [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#349](https://github.com/10up/simple-podcasting/pull/349), [#360](https://github.com/10up/simple-podcasting/pull/360))
+- Update NPM dependencies via npm audit fix. (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#351](https://github.com/10up/simple-podcasting/pull/351))
+
+### Developer
+- Add Patchstack security-reporting FAQ. (props [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#350](https://github.com/10up/simple-podcasting/pull/350))
+- Fix issue with attaching release assets during release deploy action. (props [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#345](https://github.com/10up/simple-podcasting/pull/345))
+- Introduce tests for the plugin meta data. (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@Copilot](https://github.com/apps/copilot-pull-request-reviewer), [@dkotter](https://github.com/dkotter) via [#364](https://github.com/10up/simple-podcasting/pull/364))
+- Update Cypress-WP-Utils to 0.6.0 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#351](https://github.com/10up/simple-podcasting/pull/351))
+- Update WP-Scripts to 31.2.0 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#351](https://github.com/10up/simple-podcasting/pull/351))
+- Introduce version bump script (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#367](https://github.com/10up/simple-podcasting/pull/351))
+
+### Security
+- Bump `@babel/plugin-transform-modules-systemjs` from 7.28.5 to 7.29.7 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `@cypress/request` from 3.0.1 to 3.0.8 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#344](https://github.com/10up/simple-podcasting/pull/344))
+- Bump `@wordpress/env` from 9.10.0 to 10.37.0 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#346](https://github.com/10up/simple-podcasting/pull/346), [#351](https://github.com/10up/simple-podcasting/pull/351))
+- Bump `axios` from 1.13.2 to 1.18.0 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `basic-ftp` from 5.1.0 to 5.3.1 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#357](https://github.com/10up/simple-podcasting/pull/357), [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `compression` from 1.7.4 to 1.8.1 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#343](https://github.com/10up/simple-podcasting/pull/343))
+- Bump `fast-uri` from 3.1.0 to 3.1.2 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `flatted` from 3.3.3 to 3.4.2 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `follow-redirects` from 1.15.11 to 1.16.0 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `form-data` from 4.0.0 to 4.0.6 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#344](https://github.com/10up/simple-podcasting/pull/344), [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `immutable` from 5.1.4 to 5.1.5 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#358](https://github.com/10up/simple-podcasting/pull/358))
+- Bump `ip-address` from 10.1.0 to 10.2.0 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `launch-editor` from 2.12.0 to 2.14.1 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `lodash` from 4.17.21 to 4.18.1 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#353](https://github.com/10up/simple-podcasting/pull/353), [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `lodash-es` from 4.17.22 to 4.18.1 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#354](https://github.com/10up/simple-podcasting/pull/354), [#363](https://github.com/10up/simple-podcasting/pull/363))
+- Bump `markdown-it` from 13.0.2 to 14.2.0 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `node-forge` from 1.3.3 to 1.4.0 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `on-headers` from 1.0.2 to 1.1.0 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#343](https://github.com/10up/simple-podcasting/pull/343))
+- Bump `phpunit/phpunit` from 9.6.20 to 9.6.33 in the composer group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#355](https://github.com/10up/simple-podcasting/pull/355))
+- Bump `postcss` from 8.5.6 to 8.5.15 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `qs` from 6.14.1 to 6.15.2 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#356](https://github.com/10up/simple-podcasting/pull/356), [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `shivammathur/setup-php` from 2.32.0 to 2.37.1 in /.github/workflows in the github_actions group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#361](https://github.com/10up/simple-podcasting/pull/361))
+- Bump `simple-git` from 3.30.0 to 3.36.0 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `svgo` from 3.3.2 to 3.3.3 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#362](https://github.com/10up/simple-podcasting/pull/362))
+- Bump `tar-fs` from 3.0.8 to 3.0.9 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#341](https://github.com/10up/simple-podcasting/pull/341))
+- Bump `tmp` from 0.2.3 to 0.2.7 in the npm_and_yarn group across 1 directory (props [@dependabot[bot]](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#346](https://github.com/10up/simple-podcasting/pull/346), [#362](https://github.com/10up/simple-podcasting/pull/362))
+
 ## [1.9.1] - 2025-05-19
 **Note that this release bumps the WordPress minimum version from 6.5 to 6.6.**
 
@@ -18,9 +64,9 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Issue where podcast feed title unexpectedly adding site title (props [@kirtangajjar](https://github.com/kirtangajjar), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dabowman](https://github.com/dabowman) via [#295](https://github.com/10up/simple-podcasting/pull/295)).
 
 ### Security
-- Bump `@wordpress/scripts` from 27.9.0 to 30.6.0 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#328](https://github.com/10up/simple-podcasting/pull/328)).
-- Bump `cookie` from 0.4.2 to 0.7.1, `express` from 4.21.0 to 4.21.2, `@wordpress/e2e-test-utils-playwright` from 0.26.0 to 1.18.0, `serialize-javascript` from 6.0.0 to 6.0.2 and `mocha` from 10.4.0 to 11.1.0 (props [@dependabot](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#332](https://github.com/10up/simple-podcasting/pull/332)).
-- Bump `axios` from 1.7.4 to 1.9.0 and `http-proxy-middleware` from 2.0.6 to 2.0.9 (props [@dependabot](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#338](https://github.com/10up/simple-podcasting/pull/338)).
+- Bump `@wordpress/scripts` from 27.9.0 to 30.6.0 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#328](https://github.com/10up/simple-podcasting/pull/328)).
+- Bump `cookie` from 0.4.2 to 0.7.1, `express` from 4.21.0 to 4.21.2, `@wordpress/e2e-test-utils-playwright` from 0.26.0 to 1.18.0, `serialize-javascript` from 6.0.0 to 6.0.2 and `mocha` from 10.4.0 to 11.1.0 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#332](https://github.com/10up/simple-podcasting/pull/332)).
+- Bump `axios` from 1.7.4 to 1.9.0 and `http-proxy-middleware` from 2.0.6 to 2.0.9 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#338](https://github.com/10up/simple-podcasting/pull/338)).
 
 ### Developer
 - Update all third-party actions our workflows rely on to use versions based on specific commit hashes (props [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter) via [#333](https://github.com/10up/simple-podcasting/pull/333)).
@@ -39,11 +85,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Update how we import the `PluginDocumentSettingPanel` component to use the new `@wordpress/editor` package if it exists (props [@gabriel-glo](https://github.com/gabriel-glo), [@dkotter](https://github.com/dkotter) via [#309](https://github.com/10up/simple-podcasting/pull/309)).
 
 ### Security
-- Bump `express` from 4.18.2 to 4.19.2, `follow-redirects` from 1.15.4 to 1.15.6, and `webpack-dev-middleware` from 5.3.3 to 5.3.4 (props [@dependabot](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#290](https://github.com/10up/simple-podcasting/pull/290)).
-- Bump `braces` from 3.0.2 to 3.0.3, `pac-resolver` from 7.0.0 to 7.0.1, `socks` from 2.7.1 to 2.8.3, `ws` from 7.5.9 to 7.5.10 and removes `ip` (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#297](https://github.com/10up/simple-podcasting/pull/297), [#306](https://github.com/10up/simple-podcasting/pull/306)).
-- Bump `axios` from 1.7.2 to 1.7.4 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#312](https://github.com/10up/simple-podcasting/pull/312)).
-- Bump `webpack` from 5.91.0 to 5.94.0 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#315](https://github.com/10up/simple-podcasting/pull/315)).
-- Bump `ws` from 7.5.10 to 8.18.0, `serve-static` from 1.15.0 to 1.16.2 and `express` from 4.19.2 to 4.21.0 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#319](https://github.com/10up/simple-podcasting/pull/319)).
+- Bump `express` from 4.18.2 to 4.19.2, `follow-redirects` from 1.15.4 to 1.15.6, and `webpack-dev-middleware` from 5.3.3 to 5.3.4 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#290](https://github.com/10up/simple-podcasting/pull/290)).
+- Bump `braces` from 3.0.2 to 3.0.3, `pac-resolver` from 7.0.0 to 7.0.1, `socks` from 2.7.1 to 2.8.3, `ws` from 7.5.9 to 7.5.10 and removes `ip` (props [@dependabot[bot]](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#297](https://github.com/10up/simple-podcasting/pull/297), [#306](https://github.com/10up/simple-podcasting/pull/306)).
+- Bump `axios` from 1.7.2 to 1.7.4 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#312](https://github.com/10up/simple-podcasting/pull/312)).
+- Bump `webpack` from 5.91.0 to 5.94.0 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#315](https://github.com/10up/simple-podcasting/pull/315)).
+- Bump `ws` from 7.5.10 to 8.18.0, `serve-static` from 1.15.0 to 1.16.2 and `express` from 4.19.2 to 4.21.0 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#319](https://github.com/10up/simple-podcasting/pull/319)).
 
 ### Developer
 - Clean up NPM dependencies and update node to v20 (props [@Sidsector9](https://github.com/Sidsector9), [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#275](https://github.com/10up/simple-podcasting/pull/275)).
@@ -69,7 +115,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Upgrade the download-artifact from v3 to v4 (props [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#285](https://github.com/10up/simple-podcasting/pull/285)).
 
 ### Security
-- Bumps `ip` from `1.1.8` to `1.1.9` (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#278](https://github.com/10up/simple-podcasting/pull/278)).
+- Bumps `ip` from `1.1.8` to `1.1.9` (props [@dependabot[bot]](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#278](https://github.com/10up/simple-podcasting/pull/278)).
 
 ## [1.7.0] - 2024-01-16
 ### Added
@@ -80,8 +126,8 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Ensure we show all Podcasting terms in the Block Editor sidebar (props [@dkotter](https://github.com/dkotter), [@channchetra](https://github.com/channchetra), [@Sidsector9](https://github.com/Sidsector9) via [#268](https://github.com/10up/simple-podcasting/pull/268)).
 
 ### Security
-- Bump `axios` from 0.25.0 to 1.6.2 and `@wordpress/scripts` from 26.9.0 to 26.18.0 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#263](https://github.com/10up/simple-podcasting/pull/263)).
-- Bump `follow-redirects` from 1.15.3 to 1.15.4 (props [@dependabot](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#269](https://github.com/10up/simple-podcasting/pull/269)).
+- Bump `axios` from 0.25.0 to 1.6.2 and `@wordpress/scripts` from 26.9.0 to 26.18.0 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#263](https://github.com/10up/simple-podcasting/pull/263)).
+- Bump `follow-redirects` from 1.15.3 to 1.15.4 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#269](https://github.com/10up/simple-podcasting/pull/269)).
 
 ## [1.6.1] - 2023-11-21
 ### Added
@@ -92,8 +138,8 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Ensure end-to-end tests work on Cypress v13 and bump `cypress` from 11.2.0 to 13.2.0, `@10up/cypress-wp-utils` from 0.1.0 to 0.2.0, `@wordpress/env` from 5.4.0 to 8.7.0, `cypress-localstorage-commands` from 2.2.2 to 2.2.4 and `cypress-mochawesome-reporter` from 3.4.0 to 3.6.0 (props [@iamdharmesh](https://github.com/iamdharmesh), [@Sidsector9](https://github.com/Sidsector9) via [#254](https://github.com/10up/simple-podcasting/pull/254)).
 
 ### Security
-- Bump `postcss` from 8.4.27 to 8.4.31 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#256](https://github.com/10up/simple-podcasting/pull/256)).
-- Bump `@babel/traverse` from 7.22.8 to 7.23.2 (props [@dependabot](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#257](https://github.com/10up/simple-podcasting/pull/257)).
+- Bump `postcss` from 8.4.27 to 8.4.31 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#256](https://github.com/10up/simple-podcasting/pull/256)).
+- Bump `@babel/traverse` from 7.22.8 to 7.23.2 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@Sidsector9](https://github.com/Sidsector9) via [#257](https://github.com/10up/simple-podcasting/pull/257)).
 
 ## [1.6.0] - 2023-08-31
 ### Added
@@ -109,7 +155,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Resolved a PHP warning when creating a new podcast (props [@kmgalanakis](https://github.com/kmgalanakis), [@iamdharmesh](https://github.com/iamdharmesh) via [#247](https://github.com/10up/simple-podcasting/pull/247)).
 
 ### Security
-- Bump `word-wrap` from 1.2.3 to 1.2.4 (props [@dependabot](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#243](https://github.com/10up/simple-podcasting/pull/243)).
+- Bump `word-wrap` from 1.2.3 to 1.2.4 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@iamdharmesh](https://github.com/iamdharmesh) via [#243](https://github.com/10up/simple-podcasting/pull/243)).
 
 ## [1.5.0] - 2023-06-29
 ### Added
@@ -131,10 +177,10 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Deprecation notices for `strpos` and `str_replace` on PHP >= 8.1 (props [@bmarshall511](https://github.com/bmarshall511), [@Sidsector9](https://github.com/Sidsector9), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#239](https://github.com/10up/simple-podcasting/pull/239)).
 
 ### Security
-- Bump `simple-git` from 3.15.1 to 3.16.0 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#215](https://github.com/10up/simple-podcasting/pull/215)).
-- Bump `http-cache-semantics` from 4.1.0 to 4.1.1 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#219](https://github.com/10up/simple-podcasting/pull/219)).
-- Bump `@sideway/formula` from 3.0.0 to 3.0.1 (props [@dependabot](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#220](https://github.com/10up/simple-podcasting/pull/220)).
-- Bump `webpack` from 5.75.0 to 5.76.1 (props [@dependabot](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#222](https://github.com/10up/simple-podcasting/pull/222)).
+- Bump `simple-git` from 3.15.1 to 3.16.0 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#215](https://github.com/10up/simple-podcasting/pull/215)).
+- Bump `http-cache-semantics` from 4.1.0 to 4.1.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#219](https://github.com/10up/simple-podcasting/pull/219)).
+- Bump `@sideway/formula` from 3.0.0 to 3.0.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@cadic](https://github.com/cadic) via [#220](https://github.com/10up/simple-podcasting/pull/220)).
+- Bump `webpack` from 5.75.0 to 5.76.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@faisal-alvi](https://github.com/faisal-alvi) via [#222](https://github.com/10up/simple-podcasting/pull/222)).
 
 ## [1.4.0] - 2023-01-23
 ### Added
@@ -186,7 +232,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Incorrect Language value in the Feed (props [@zamanq](https://github.com/zamanq), [@dchucks](https://github.com/dchucks), [@cadic](https://github.com/cadic) via [#176](https://github.com/10up/simple-podcasting/pull/176)).
 
 ### Security
-- Bump `terser` from 5.12.1 to 5.14.2 (props [@dependabot](https://github.com/apps/dependabot) via [#180](https://github.com/10up/simple-podcasting/pull/180)).
+- Bump `terser` from 5.12.1 to 5.14.2 (props [@dependabot[bot]](https://github.com/apps/dependabot) via [#180](https://github.com/10up/simple-podcasting/pull/180)).
 
 ## [1.2.3] - 2022-04-28
 ### Added
@@ -206,9 +252,9 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ### Security
 - Upgraded node dependencies (props [@cadic](https://github.com/cadic), [@iamdharmesh](https://github.com/iamdharmesh), [@jeffpaul](https://github.com/jeffpaul) via [#158](https://github.com/10up/simple-podcasting/pull/158) and [#163](https://github.com/10up/simple-podcasting/pull/163)).
-- Bump async from 2.6.3 to 2.6.4 (props [@dependabot](https://github.com/apps/dependabot) via [#166](https://github.com/10up/simple-podcasting/pull/166)).
-- Bump node-forge from 1.2.1 to 1.3.0 (props [@dependabot](https://github.com/apps/dependabot) via [#160](https://github.com/10up/simple-podcasting/pull/160)).
-- Bump minimist from 1.2.5 to 1.2.6 (props [@dependabot](https://github.com/apps/dependabot) via [#159](https://github.com/10up/simple-podcasting/pull/159)).
+- Bump async from 2.6.3 to 2.6.4 (props [@dependabot[bot]](https://github.com/apps/dependabot) via [#166](https://github.com/10up/simple-podcasting/pull/166)).
+- Bump node-forge from 1.2.1 to 1.3.0 (props [@dependabot[bot]](https://github.com/apps/dependabot) via [#160](https://github.com/10up/simple-podcasting/pull/160)).
+- Bump minimist from 1.2.5 to 1.2.6 (props [@dependabot[bot]](https://github.com/apps/dependabot) via [#159](https://github.com/10up/simple-podcasting/pull/159)).
 
 ## [1.2.2] - 2022-03-01
 ### Added
@@ -227,7 +273,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Missing and incorrect text-domain (props [@dkotter](https://github.com/dkotter), [@cadic](https://github.com/cadic) via [#131](https://github.com/10up/simple-podcasting/pull/131)).
 
 ### Security
-- Bump `nanoid` from 3.1.25 to 3.2.0 (props [@dependabot](https://github.com/apps/dependabot) via [#143](https://github.com/10up/simple-podcasting/pull/143)).
+- Bump `nanoid` from 3.1.25 to 3.2.0 (props [@dependabot[bot]](https://github.com/apps/dependabot) via [#143](https://github.com/10up/simple-podcasting/pull/143)).
 
 ## [1.2.1] - 2021-12-16
 ### Added
@@ -296,6 +342,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[2.0.0]: https://github.com/10up/simple-podcasting/compare/1.9.1...2.0.0
 [1.9.1]: https://github.com/10up/simple-podcasting/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/10up/simple-podcasting/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/10up/simple-podcasting/compare/1.7.0...1.8.0

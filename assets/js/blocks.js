@@ -120,7 +120,12 @@ export default registerBlockType(
 			displayEpisodeType: {
 				type: 'boolean',
 				default: false,
-			}
+			},
+			isDocked: {
+				type: 'string',
+				default: 'none',
+				enum: ['none', 'top', 'bottom'],
+			},
 		},
 		transforms,
 

@@ -36,7 +36,8 @@ describe('Admin can publish posts with podcast block', () => {
 
 			cy.visit('/wp-admin/post-new.php');
 			cy.closeWelcomeGuide();
-			cy.get('h1.editor-post-title__input, #post-title-0')
+			cy.getBlockEditor()
+				.find('h1.editor-post-title__input, #post-title-0')
 				.first()
 				.as('title-input');
 			cy.get('@title-input').click().type('Test episode');

@@ -56,8 +56,8 @@ New releases are targeted based on number and severity of changes along with hum
 ### Release instructions
 
 1. Branch: Starting from `develop`, cut a release branch named `release/X.Y.Z` for your changes.
-2. Version bump: Bump the version number in `simple-podcasting.php`, `package-lock.json`, `package.json`, and `readme.txt` if it does not already reflect the version being released.  Update both the plugin "Version:" property and the plugin `PODCASTING_VERSION` constant in `simple-podcasting.php`.
-3. Changelog: Add/update the changelog in both `CHANGELOG.md` and `readme.txt`.
+2. Version bump: Run `bin/version-bump.sh <major|minor|patch>` to bump the version number in `package.json`, `package-lock.json`, `readme.txt`, and `simple-podcasting.php` if it does not already reflect the version being released. In `simple-podcasting.php` update the plugin `PODCASTING_VERSION` constant.
+3. Changelog: Populate the changelog entries in `readme.txt` and `CHANGELOG.md` with the log and to include the date of release.
 4. Props: update `CREDITS.md` with any new contributors, confirm maintainers are accurate.
 5. New files: Check to be sure any new files/paths that are unnecessary in the production version are included in `.distignore`.
 6. Readme updates: Make any other readme changes as necessary. `README.md` is geared toward GitHub and `readme.txt` contains WordPress.org-specific content. The two are slightly different.

@@ -1,5 +1,8 @@
 name: PHP Compatibility
 
+permissions:
+  contents: read
+
 env:
   COMPOSER_VERSION: "2"
   COMPOSER_CACHE: "${{ github.workspace }}/.composer-cache"
@@ -35,7 +38,7 @@ jobs:
           composer-${{ env.COMPOSER_VERSION }}-
 
     - name: Set PHP version
-      uses: shivammathur/setup-php@9e72090525849c5e82e596468b86eb55e9cc5401 # v2.32.0
+      uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # v2.37.1
       with:
         php-version: '7.4'
         coverage: none
