@@ -9,9 +9,8 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Ability to dock podcast player to top or bottom of browser window. (props [@wadebekker](https://github.com/wadebekker), [@sanketio](https://github.com/sanketio), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions), [@jeffpaul](https://github.com/jeffpaul) via [#331](https://github.com/10up/simple-podcasting/pull/331))
 
 ### Changed
-- Bump tested up to header to indicate WordPress 6.9 support. (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#349](https://github.com/10up/simple-podcasting/pull/349))
+- Bump tested up to header to indicate WordPress 7.0 support. (props [@phpbits](https://github.com/phpbits), [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#349](https://github.com/10up/simple-podcasting/pull/349), [#360](https://github.com/10up/simple-podcasting/pull/360))
 - Update NPM dependencies via npm audit fix. (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#351](https://github.com/10up/simple-podcasting/pull/351))
-- Bump WordPress "tested up to" version 7.0 (props [@phpbits](https://github.com/phpbits), [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#360](https://github.com/10up/simple-podcasting/pull/360))
 
 ### Developer
 - Add Patchstack security-reporting FAQ. (props [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#350](https://github.com/10up/simple-podcasting/pull/350))
