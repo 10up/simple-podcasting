@@ -132,6 +132,11 @@ Please report security bugs found in the source code of the Simple Podcasting pl
 == Changelog ==
 
 = 2.0.0 - TBD =
+**Note that this release bumps the WordPress minimum version from 6.6 to 6.8.**
+
+* **Added:** Ability to dock podcast player to top or bottom of browser window. (props [@wadebekker](https://github.com/wadebekker), [@sanketio](https://github.com/sanketio), [@peterwilsoncc](https://github.com/peterwilsoncc), [@github-actions[bot]](https://github.com/apps/github-actions), [@jeffpaul](https://github.com/jeffpaul) via [#331](https://github.com/10up/simple-podcasting/pull/331)).
+* **Changed:** Bump tested up to header to indicate WordPress 7.0 support. (props [@phpbits](https://github.com/phpbits), [@jeffpaul](https://github.com/jeffpaul), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#349](https://github.com/10up/simple-podcasting/pull/349), [#360](https://github.com/10up/simple-podcasting/pull/360)).
+* **Changed:** Update NPM dependencies via npm audit fix. (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#351](https://github.com/10up/simple-podcasting/pull/351)).
 
 = 1.9.1 - 2025-05-16 =
 * **Added:** Screenshots for all new features (props [@gabriel-glo](https://github.com/gabriel-glo), [@jeffpaul](https://github.com/jeffpaul), [@Sidsector9](https://github.com/Sidsector9), [@dkotter](https://github.com/dkotter) via [#310](https://github.com/10up/simple-podcasting/pull/310)).
