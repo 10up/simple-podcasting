@@ -40,6 +40,7 @@
   "devDependencies": {
     "@10up/cypress-wp-utils": "^0.6.0",
     "@wordpress/env": "^10.37.0",
+    "@wordpress/eslint-plugin": "^23.0.0",
     "@wordpress/plugins": "^6.2.0",
     "@wordpress/prettier-config": "^2.2.0",
     "@wordpress/scripts": "^31.2.0",
@@ -48,6 +49,8 @@
     "cypress-file-upload": "^5.0.8",
     "cypress-localstorage-commands": "^2.2.4",
     "cypress-mochawesome-reporter": "^3.6.0",
+    "eslint-import-resolver-typescript": "3.5.5",
+    "eslint-plugin-cypress": "^3.6.0",
     "husky": "^8.0.1",
     "json-schema": ">=0.4.0",
     "lint-staged": "^13.0.3",
