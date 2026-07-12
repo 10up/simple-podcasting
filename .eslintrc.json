@@ -1,0 +1,28 @@
+{
+	"globals": {
+		"jQuery": "readonly",
+		"wp": "readonly",
+		"FormData": "readonly",
+		"fetch": "readonly",
+		"ajaxurl": "readonly"
+	},
+	"settings": {
+		"import/core-modules": [
+			"@wordpress/api-fetch",
+			"@wordpress/block-editor",
+			"@wordpress/blocks",
+			"@wordpress/components",
+			"@wordpress/compose",
+			"@wordpress/core-data",
+			"@wordpress/data",
+			"@wordpress/date",
+			"@wordpress/edit-post",
+			"@wordpress/element",
+			"@wordpress/i18n",
+			"@wordpress/plugins",
+			"@wordpress/primitives",
+			"@wordpress/rich-text"
+		]
+	},
+	"extends": "plugin:@wordpress/eslint-plugin/recommended"
+}
