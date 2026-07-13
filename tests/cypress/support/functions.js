@@ -8,12 +8,12 @@ export const getFirstImage = () => {
 
 /**
  * Populates a podcast taxonomy.
- * @param {Object} args The podcast data to populate.
- * @param {string} args.typeOfShowName The type of show.
- * @param {string} args.author The author of the podcast.
- * @param {string} args.summary The summary of the podcast.
- * @param {string} args.category The category of the podcast.
- * @param {boolean} args.onboarding Whether this is onboarding or not.
+ * @param {Object}  args                The podcast data to populate.
+ * @param {string}  args.typeOfShowName The type of show.
+ * @param {string}  args.author         The author of the podcast.
+ * @param {string}  args.summary        The summary of the podcast.
+ * @param {string}  args.category       The category of the podcast.
+ * @param {boolean} args.onboarding     Whether this is onboarding or not.
  */
 export const populatePodcast = (args) => {
 	for (const [key, value] of Object.entries(args)) {

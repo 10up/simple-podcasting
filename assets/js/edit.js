@@ -28,27 +28,39 @@ import { dispatch, useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
 function useFeaturedImage() {
-    const featuredImageId = useSelect((select) => select('core/editor').getEditedPostAttribute('featured_media'), []);
-    const { editPost } = useDispatch('core/editor');
+	const featuredImageId = useSelect(
+		(select) =>
+			select('core/editor').getEditedPostAttribute('featured_media'),
+		[]
+	);
+	const { editPost } = useDispatch('core/editor');
 
-    const featuredImageUrl = useSelect((select) => {
-        const { getMedia } = select('core');
-        const image = getMedia(featuredImageId);
-        return image?.source_url;
-    }, [featuredImageId]);
+	const featuredImageUrl = useSelect(
+		(select) => {
+			const { getMedia } = select('core');
+			const image = getMedia(featuredImageId);
+			return image?.source_url;
+		},
+		[featuredImageId]
+	);
 
-    const setFeaturedImage = (imageId) => {
-        editPost({ featured_media: imageId });
-    };
+	const setFeaturedImage = (imageId) => {
+		editPost({ featured_media: imageId });
+	};
 
 	const removeFeaturedImage = () => {
 		editPost({ featured_media: 0 });
 	};
 
-    return { featuredImageUrl, setFeaturedImage, removeFeaturedImage, featuredImageId };
+	return {
+		featuredImageUrl,
+		setFeaturedImage,
+		removeFeaturedImage,
+		featuredImageId,
+	};
 }
 
-function Edit( props ) {
+function Edit(props) {
 	const {
 		className,
 		setAttributes,
@@ -57,7 +69,7 @@ function Edit( props ) {
 		featuredImageUrl,
 		setFeaturedImage,
 		removeFeaturedImage,
-		featuredImageId
+		featuredImageId,
 	} = props;
 
 	const {
@@ -80,9 +92,11 @@ function Edit( props ) {
 	const episodeNumber = attributes.episodeNumber || '';
 	const episodeType = attributes.episodeType || '';
 
-	const [ src, setSrc ] = useState( props.attributes.src );
+	const [src, setSrc] = useState(props.attributes.src);
 
-	const postTitle = useSelect( ( select ) => select( 'core/editor' ).getEditedPostAttribute( 'title' ) );
+	const postTitle = useSelect((select) =>
+		select('core/editor').getEditedPostAttribute('title')
+	);
 
 	const onSelectAttachment = (attachment) => {
 		// Upload and Media Library return different attachment objects.
@@ -123,7 +137,7 @@ function Edit( props ) {
 			caption: attachment.title,
 			enclosure: attachment.url + '\n' + filesize + '\n' + mime,
 		});
-		setSrc( attachment.url );
+		setSrc(attachment.url);
 	};
 
 	const onSelectURL = (newSrc) => {
@@ -151,7 +165,7 @@ function Edit( props ) {
 					console.error(err);
 				});
 
-			setSrc( newSrc );
+			setSrc(newSrc);
 		}
 	};
 
@@ -169,24 +183,33 @@ function Edit( props ) {
 		</BlockControls>
 	);
 
-	const showId = useSelect( ( __select ) => {
-		const attachedPodcastIds = __select( 'core/editor' ).getEditedPostAttribute( 'podcasting_podcasts' );
+	const showId = useSelect((__select) => {
+		const attachedPodcastIds = __select(
+			'core/editor'
+		).getEditedPostAttribute('podcasting_podcasts');
 		return attachedPodcastIds ? attachedPodcastIds[0] : null;
-	} );
-	const show = useSelect( ( __select ) => {
-		return __select('core').getEntityRecords('taxonomy', 'podcasting_podcasts', {
-			include: [ showId ],
-		});
-	} );
+	});
+	const show = useSelect((__select) => {
+		return __select('core').getEntityRecords(
+			'taxonomy',
+			'podcasting_podcasts',
+			{
+				include: [showId],
+			}
+		);
+	});
 
 	const showName = show && show[0] ? show[0]?.name : null;
-	const showImage = show && show[0] ? show[0]?.meta?.podcasting_image_url : null;
+	const showImage =
+		show && show[0] ? show[0]?.meta?.podcasting_image_url : null;
 
 	const onUpdateImage = (image) => {
 		setFeaturedImage(image.id);
 	};
 
-	const blockRef = useRef(document.querySelector('.wp-block-podcasting-podcast-outer'));
+	const blockRef = useRef(
+		document.querySelector('.wp-block-podcasting-podcast-outer')
+	);
 
 	return (
 		<Fragment>
@@ -199,12 +222,11 @@ function Edit( props ) {
 					<PanelRow>
 						<ToggleControl
 							id="podcast-captioned-form-toggle"
-							label={__(
-								'Closed Captioned',
-								'simple-podcasting'
-							)}
+							label={__('Closed Captioned', 'simple-podcasting')}
 							checked={captioned}
-							onChange={() => setAttributes({ captioned: !captioned})}
+							onChange={() =>
+								setAttributes({ captioned: !captioned })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -214,7 +236,11 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displayDuration}
-							onChange={() => setAttributes({ displayDuration: !displayDuration})}
+							onChange={() =>
+								setAttributes({
+									displayDuration: !displayDuration,
+								})
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -224,7 +250,11 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displayShowTitle}
-							onChange={() => setAttributes({ displayShowTitle: !displayShowTitle})}
+							onChange={() =>
+								setAttributes({
+									displayShowTitle: !displayShowTitle,
+								})
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -234,17 +264,20 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displayEpisodeTitle}
-							onChange={() => setAttributes({ displayEpisodeTitle: !displayEpisodeTitle})}
+							onChange={() =>
+								setAttributes({
+									displayEpisodeTitle: !displayEpisodeTitle,
+								})
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__(
-								'Display Show Art',
-								'simple-podcasting'
-							)}
+							label={__('Display Show Art', 'simple-podcasting')}
 							checked={displayArt}
-							onChange={() => setAttributes({ displayArt: !displayArt})}
+							onChange={() =>
+								setAttributes({ displayArt: !displayArt })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -254,7 +287,11 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displayExplicitBadge}
-							onChange={() => setAttributes({ displayExplicitBadge: !displayExplicitBadge})}
+							onChange={() =>
+								setAttributes({
+									displayExplicitBadge: !displayExplicitBadge,
+								})
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -264,7 +301,11 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displaySeasonNumber}
-							onChange={() => setAttributes({ displaySeasonNumber: !displaySeasonNumber})}
+							onChange={() =>
+								setAttributes({
+									displaySeasonNumber: !displaySeasonNumber,
+								})
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -274,10 +315,17 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displayEpisodeNumber}
-							onChange={() => setAttributes({ displayEpisodeNumber: !displayEpisodeNumber})}
+							onChange={() =>
+								setAttributes({
+									displayEpisodeNumber: !displayEpisodeNumber,
+								})
+							}
 							help={
-								! displayEpisodeTitle
-								&& __( 'The "Display Episode Title" setting should be enabled for this to display the episode number.', 'simple-podcasting' )
+								!displayEpisodeTitle &&
+								__(
+									'The "Display Episode Title" setting should be enabled for this to display the episode number.',
+									'simple-podcasting'
+								)
 							}
 						/>
 					</PanelRow>
@@ -288,13 +336,20 @@ function Edit( props ) {
 								'simple-podcasting'
 							)}
 							checked={displayEpisodeType}
-							onChange={() => setAttributes({ displayEpisodeType: !displayEpisodeType })}
+							onChange={() =>
+								setAttributes({
+									displayEpisodeType: !displayEpisodeType,
+								})
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<RadioControl
 							label={__('Dock Player', 'simple-podcasting')}
-							help={__('This will only affect the position of the player on the frontend.', 'simple-podcasting')}
+							help={__(
+								'This will only affect the position of the player on the frontend.',
+								'simple-podcasting'
+							)}
 							selected={isDocked}
 							options={[
 								{
@@ -310,17 +365,12 @@ function Edit( props ) {
 									value: 'bottom',
 								},
 							]}
-							onChange={(isDocked) =>
-								setAttributes({ isDocked })
-							}
+							onChange={(isDocked) => setAttributes({ isDocked })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__(
-								'Explicit Content',
-								'simple-podcasting'
-							)}
+							label={__('Explicit Content', 'simple-podcasting')}
 							value={explicit}
 							options={[
 								{
@@ -336,21 +386,14 @@ function Edit( props ) {
 									label: __('Clean', 'simple-podcasting'),
 								},
 							]}
-							onChange={(explicit) =>
-								setAttributes({ explicit })
-							}
+							onChange={(explicit) => setAttributes({ explicit })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__(
-								'Length (MM:SS)',
-								'simple-podcasting'
-							)}
+							label={__('Length (MM:SS)', 'simple-podcasting')}
 							value={duration}
-							onChange={(duration) =>
-								setAttributes({ duration })
-							}
+							onChange={(duration) => setAttributes({ duration })}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -364,10 +407,7 @@ function Edit( props ) {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__(
-								'Episode Number',
-								'simple-podcasting'
-							)}
+							label={__('Episode Number', 'simple-podcasting')}
 							value={episodeNumber}
 							onChange={(episodeNumber) =>
 								setAttributes({ episodeNumber })
@@ -388,10 +428,7 @@ function Edit( props ) {
 									value: 'full',
 								},
 								{
-									label: __(
-										'Trailer',
-										'simple-podcasting'
-									),
+									label: __('Trailer', 'simple-podcasting'),
 									value: 'trailer',
 								},
 								{
@@ -409,17 +446,22 @@ function Edit( props ) {
 							variant="secondary"
 							onClick={() =>
 								dispatch('core/block-editor').insertBlocks(
-									createBlock(
-										'podcasting/podcast-transcript'
-									)
+									createBlock('podcasting/podcast-transcript')
 								)
 							}
 						>
 							{__('Add Transcript', 'simple-podcasting')}
 						</Button>
 					</PanelRow>
-					<h3 style={{marginTop: '20px'}}>{__('Cover Image', 'simple-podcasting')}</h3>
-					<p>{__('The featured image of the current post is used as the episode cover art. Please select a featured image to set it.', 'simple-podcasting')}</p>
+					<h3 style={{ marginTop: '20px' }}>
+						{__('Cover Image', 'simple-podcasting')}
+					</h3>
+					<p>
+						{__(
+							'The featured image of the current post is used as the episode cover art. Please select a featured image to set it.',
+							'simple-podcasting'
+						)}
+					</p>
 					<PanelRow className="cover-art-container">
 						{featuredImageUrl && (
 							<img src={featuredImageUrl} alt="Cover Image" />
@@ -431,18 +473,28 @@ function Edit( props ) {
 								allowedTypes={['image']}
 								render={({ open }) => (
 									<Button isSecondary onClick={open}>
-										{featuredImageUrl ?
-										__('Replace Cover Art', 'simple-podcasting')
-										:
-										__('Select Cover Art', 'simple-podcasting')
-										}
+										{featuredImageUrl
+											? __(
+													'Replace Cover Art',
+													'simple-podcasting'
+												)
+											: __(
+													'Select Cover Art',
+													'simple-podcasting'
+												)}
 									</Button>
 								)}
 								value={featuredImageId}
 							/>
 						</MediaUploadCheck>
 						{featuredImageUrl && (
-							<Button isLink isDestructive onClick={removeFeaturedImage}>{__('Delete Cover Art', 'simple-podcasting')}</Button>
+							<Button
+								isLink
+								isDestructive
+								onClick={removeFeaturedImage}
+							>
+								{__('Delete Cover Art', 'simple-podcasting')}
+							</Button>
 						)}
 					</PanelRow>
 				</PanelBody>
@@ -455,7 +507,11 @@ function Edit( props ) {
 								<div className="wp-block-podcasting-podcast__show-art">
 									<div className="wp-block-podcasting-podcast__image">
 										<img
-											src={featuredImageUrl ? featuredImageUrl : showImage}
+											src={
+												featuredImageUrl
+													? featuredImageUrl
+													: showImage
+											}
 											alt={showName}
 										/>
 									</div>
@@ -463,14 +519,12 @@ function Edit( props ) {
 							)}
 
 							<div className="wp-block-podcasting-podcast__details">
-
 								{displayEpisodeTitle && postTitle && (
 									<h3 className="wp-block-podcasting-podcast__show-title">
-										{displayEpisodeNumber && episodeNumber && (
-											<span>
-												{episodeNumber}.
-											</span>
-										)}
+										{displayEpisodeNumber &&
+											episodeNumber && (
+												<span>{episodeNumber}.</span>
+											)}
 										{postTitle}
 									</h3>
 								)}
@@ -483,16 +537,16 @@ function Edit( props ) {
 									)}
 									{displaySeasonNumber && seasonNumber && (
 										<span className="wp-block-podcasting-podcast__season">
-											{__(
-												'Season: ',
-												'simple-podcasting'
-											)}
+											{__('Season:', 'simple-podcasting')}
 											{seasonNumber}
 										</span>
 									)}
 									{displayEpisodeNumber && episodeNumber && (
 										<span className="wp-block-podcasting-podcast__episode">
-											{__('Episode: ', 'simple-podcasting')}
+											{__(
+												'Episode:',
+												'simple-podcasting'
+											)}
 											{episodeNumber}
 										</span>
 									)}
@@ -501,23 +555,27 @@ function Edit( props ) {
 								<div className="wp-block-podcasting-podcast__show-details">
 									{displayDuration && duration && (
 										<span className="wp-block-podcasting-podcast__duration">
-											{__('Listen Time: ', 'simple-podcasting')}
+											{__(
+												'Listen Time:',
+												'simple-podcasting'
+											)}
 											{duration}
 										</span>
 									)}
-									{displayEpisodeType && (episodeType !== 'none') && (
-										<span className="wp-block-podcasting-podcast__episode-type">
-											{__(
-												'Episode type: ',
-												'simple-podcasting'
-											)}
-											{episodeType}
-										</span>
-									)}
+									{displayEpisodeType &&
+										episodeType !== 'none' && (
+											<span className="wp-block-podcasting-podcast__episode-type">
+												{__(
+													'Episode type:',
+													'simple-podcasting'
+												)}
+												{episodeType}
+											</span>
+										)}
 									{displayExplicitBadge && (
 										<span className="wp-block-podcasting-podcast__explicit-badge">
 											{__(
-												'Explicit: ',
+												'Explicit:',
 												'simple-podcasting'
 											)}
 											{explicit}
@@ -551,10 +609,7 @@ function Edit( props ) {
 						icon="microphone"
 						labels={{
 							title: __('Podcast', 'simple-podcasting'),
-							name: __(
-								'a podcast episode',
-								'simple-podcasting'
-							),
+							name: __('a podcast episode', 'simple-podcasting'),
 						}}
 						className={className}
 						onSelect={onSelectAttachment}
@@ -570,9 +625,9 @@ function Edit( props ) {
 }
 
 function PodcastBlockWithHooks(props) {
-    const featuredImageProp = useFeaturedImage();
+	const featuredImageProp = useFeaturedImage();
 
-    return <Edit {...props} {...featuredImageProp} />;
+	return <Edit {...props} {...featuredImageProp} />;
 }
 
 export default PodcastBlockWithHooks;

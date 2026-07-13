@@ -20,11 +20,9 @@ const wpEnvLibPath = path.join(path.dirname(wpEnvPackagePath), 'lib');
 
 // Directly require the files using their resolved paths
 const { loadConfig } = require(path.join(wpEnvLibPath, 'config', 'index.js'));
-const getCacheDirectory = require(path.join(
-	wpEnvLibPath,
-	'config',
-	'get-cache-directory.js'
-));
+const getCacheDirectory = require(
+	path.join(wpEnvLibPath, 'config', 'get-cache-directory.js')
+);
 
 /**
  * @type {Cypress.PluginConfig}
