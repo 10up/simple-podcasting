@@ -66,22 +66,20 @@ export default [
 				type: 'string',
 				source: 'meta',
 				meta: 'podcast_episode_type',
-			}
+			},
 		},
 		supports: {
 			multiple: false,
 		},
-		save: props => {
-			const {
-				id,
-				src,
-				caption
-			} = props.attributes;
+		save: (props) => {
+			const { id, src, caption } = props.attributes;
 
 			return (
-				<figure className={ id ? `podcast-${ id }` : null }>
-					<audio controls="controls" src={ src } />
-					{ caption && caption.length > 0 && <figcaption>{ caption }</figcaption> }
+				<figure className={id ? `podcast-${id}` : null}>
+					<audio controls="controls" src={src} />
+					{caption && caption.length > 0 && (
+						<figcaption>{caption}</figcaption>
+					)}
 				</figure>
 			);
 		},
