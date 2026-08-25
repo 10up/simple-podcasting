@@ -2,7 +2,7 @@
 Contributors:      10up, helen, adamsilverstein, jakemgold, jeffpaul, cadic
 Tags:              podcasting, podcast, apple podcasts, episode, season
 Requires PHP:      7.4
-Requires at least: 6.8
+Requires at least: 6.9
 Tested up to:      7.1
 Stable tag:        2.0.0
 License:           GPLv2 or later
