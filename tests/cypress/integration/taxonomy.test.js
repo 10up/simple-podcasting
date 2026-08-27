@@ -80,7 +80,7 @@ describe('Admin can create and update podcast taxonomy', () => {
 		cy.visit(
 			'/wp-admin/edit-tags.php?taxonomy=podcasting_podcasts&podcasts=true'
 		);
-		cy.get('.row-title').contains('Distributed').should('not.exist');
+		cy.get('.row-title:contains(Distributed)').should('not.exist');
 	});
 
 	const tests = {
