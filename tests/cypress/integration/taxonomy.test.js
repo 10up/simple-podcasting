@@ -10,6 +10,7 @@ describe('Admin can create and update podcast taxonomy', () => {
 	});
 
 	before(() => {
+		cy.login();
 		deleteAllTerms();
 	});
 
