@@ -56,10 +56,11 @@ describe('Admin can publish posts with podcast block', () => {
 			cy.get(
 				'.edit-post-header-toolbar__inserter-toggle, .editor-document-tools__inserter-toggle'
 			).click();
-			cy.get(
-				'.wp-block-podcasting-podcast input[type="file"]'
-			).attachFile('example.mp3');
-			cy.get('.wp-block-podcasting-podcast audio')
+			cy.getBlockEditor()
+				.find('.wp-block-podcasting-podcast input[type="file"]')
+				.attachFile('example.mp3');
+			cy.getBlockEditor()
+				.find('.wp-block-podcasting-podcast audio')
 				.should('have.attr', 'src')
 				.and('include', 'example');
 			cy.openDocumentSettingsSidebar();
