@@ -75,7 +75,7 @@ describe('Create podcast setting panel', () => {
 	it('Create podcast popup shows when clicking creating a podcast', () => {
 		cy.visit('/wp-admin/post-new.php');
 		closeWelcomeGuide();
-		cy.get('.podcasting__podcast-list').click();
+		cy.openDocumentSettingsPanel('Podcasts');
 		cy.get('.podcasting__add-new-podcast').click();
 		cy.get('.components-modal__content').should('exist');
 	});
@@ -83,7 +83,7 @@ describe('Create podcast setting panel', () => {
 	it('Create podcast popup has valid fields', () => {
 		cy.visit('/wp-admin/post-new.php');
 		closeWelcomeGuide();
-		cy.get('.podcasting__podcast-list').click();
+		cy.openDocumentSettingsPanel('Podcasts');
 		cy.get('.podcasting__add-new-podcast').click();
 
 		cy.get('.podcasting__modal-name-field input').should(
@@ -107,7 +107,7 @@ describe('Create podcast setting panel', () => {
 	it('Create podcast using popup', () => {
 		cy.visit('/wp-admin/post-new.php');
 		closeWelcomeGuide();
-		cy.get('.podcasting__podcast-list').click();
+		cy.openDocumentSettingsPanel('Podcasts');
 		cy.get('.podcasting__add-new-podcast').click();
 
 		cy.get('.podcasting__modal-name-field input').type('Family People');
