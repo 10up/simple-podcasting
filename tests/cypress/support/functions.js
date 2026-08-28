@@ -55,7 +55,10 @@ export const populatePodcast = (args) => {
 
 export const deleteAllTerms = () => {
 	cy.get('body').then(($body) => {
-		if ($body.find('#doaction').length > 0) {
+		if (
+			$body.find('#doaction').length > 0 &&
+			$body.find('#the-list tr.no-items').length !== 1
+		) {
 			cy.get('#cb-select-all-1').click({ force: true });
 			cy.get('#bulk-action-selector-top').select('delete');
 			cy.get('#doaction').click();
