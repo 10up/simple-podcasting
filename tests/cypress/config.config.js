@@ -1,6 +1,6 @@
-const { defineConfig } = require('cypress');
+const { defineConfig } = require( 'cypress' );
 
-module.exports = defineConfig({
+module.exports = defineConfig( {
 	fixturesFolder: __dirname + '/fixtures',
 	screenshotsFolder: __dirname + '/screenshots',
 	videosFolder: __dirname + '/videos',
@@ -21,8 +21,8 @@ module.exports = defineConfig({
 	e2e: {
 		// We've imported your old cypress plugins here.
 		// You may want to clean this up later by importing these.
-		setupNodeEvents(on, config) {
-			return require(__dirname + '/plugins/index.js')(on, config);
+		setupNodeEvents( on, config ) {
+			return require( __dirname + '/plugins/index.js' )( on, config );
 		},
 		supportFile: __dirname + '/support/index.js',
 		specPattern: [
@@ -33,4 +33,4 @@ module.exports = defineConfig({
 			'tests/cypress/integration/podcast-setting-panel.test.js',
 		],
 	},
-});
+} );

@@ -12,30 +12,32 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-const path = require('path');
+const path = require( 'path' );
 
 // Resolve the package directory
-const wpEnvPackagePath = require.resolve('@wordpress/env/package.json');
-const wpEnvLibPath = path.join(path.dirname(wpEnvPackagePath), 'lib');
+const wpEnvPackagePath = require.resolve( '@wordpress/env/package.json' );
+const wpEnvLibPath = path.join( path.dirname( wpEnvPackagePath ), 'lib' );
 
 // Directly require the files using their resolved paths
-const { loadConfig } = require(path.join(wpEnvLibPath, 'config', 'index.js'));
+const { loadConfig } = require(
+	path.join( wpEnvLibPath, 'config', 'index.js' )
+);
 const getCacheDirectory = require(
-	path.join(wpEnvLibPath, 'config', 'get-cache-directory.js')
+	path.join( wpEnvLibPath, 'config', 'get-cache-directory.js' )
 );
 
 /**
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-module.exports = async (on, config) => {
+module.exports = async ( on, config ) => {
 	const cacheDirectory = await getCacheDirectory();
-	const wpEnvConfig = await loadConfig(cacheDirectory);
+	const wpEnvConfig = await loadConfig( cacheDirectory );
 
-	if (wpEnvConfig) {
+	if ( wpEnvConfig ) {
 		const port = wpEnvConfig.env.tests.port || null;
 
-		if (port) {
+		if ( port ) {
 			config.baseUrl = wpEnvConfig.env.tests.config.WP_SITEURL;
 		}
 	}
