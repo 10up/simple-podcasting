@@ -38,7 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@10up/cypress-wp-utils": "^0.6.0",
+    "@10up/cypress-wp-utils": "^0.7.2",
     "@wordpress/env": "^11.14.0",
     "@wordpress/scripts": "^34.2.0",
     "ansi-regex": ">=6.0.1",
