@@ -26,6 +26,44 @@ function query_vars( $vars ) {
 add_filter( 'query_vars', __NAMESPACE__ . '\\query_vars', 10, 1 );
 
 /**
+ * Resolves the episode whose transcript the current request is allowed to read.
+ *
+ * @return WP_Post|null The episode, or null when this request may not read it.
+ */
+function get_requested_transcript_post() {
+	$episode_slug = get_query_var( 'podcasting-episode' );
+
+	if ( empty( $episode_slug ) ) {
+		return null;
+	}
+
+	$post_object = get_page_by_path( $episode_slug, OBJECT, 'post' );
+
+	if ( ! $post_object instanceof WP_Post ) {
+		return null;
+	}
+
+	// Ensure the post is in the requested show.
+	if ( true !== is_object_in_term( $post_object->ID, PODCASTING_TAXONOMY_NAME, get_query_var( 'podcasting_podcasts' ) ) ) {
+		return null;
+	}
+
+	// Ensure the post is publicly viewable or the user can read it.
+	if (
+		! is_post_publicly_viewable( $post_object ) &&
+		! current_user_can( 'read_post', $post_object->ID )
+	) {
+		return null;
+	}
+
+	if ( post_password_required( $post_object ) ) {
+		return null;
+	}
+
+	return $post_object;
+}
+
+/**
  * Renders transcript template.
  *
  * @param string $template Template path.
@@ -36,6 +74,21 @@ function template( $template ) {
 	if ( ! get_query_var( 'podcast-transcript' ) || ! get_query_var( 'podcasting_podcasts' ) ) {
 		return $template;
 	}
+
+	$transcript_post = get_requested_transcript_post();
+
+	if ( ! $transcript_post ) {
+		global $wp_query;
+
+		$wp_query->set_404();
+		status_header( 404 );
+		nocache_headers();
+
+		return get_404_template();
+	} elseif ( ! empty( $transcript_post->post_password ) ) {
+		nocache_headers();
+	}
+
 	return PODCASTING_PATH . 'templates/transcript.php';
 }
 add_filter( 'taxonomy_template', __NAMESPACE__ . '\\template', 10, 1 );
