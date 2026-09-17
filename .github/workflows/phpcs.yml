@@ -27,7 +27,7 @@ jobs:
     - name: Set PHP version
       uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # v2.37.1
       with:
-        php-version: '7.4'
+        php-version: '8.2'
         coverage: none
         tools: composer:v2
 
@@ -35,4 +35,4 @@ jobs:
       run: composer install
 
     - name: Test
-      run: ./vendor/bin/phpcs --runtime-set testVersion 7.4 .
+      run: ./vendor/bin/phpcs --runtime-set testVersion 8.2 .

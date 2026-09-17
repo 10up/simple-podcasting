@@ -25,8 +25,10 @@ jobs:
       fail-fast: false
       matrix:
         php:
-          - {name: 'PHP 7.4', version: '7.4'}
-          - {name: 'PHP 8.1', version: '8.1'}
+          - {name: 'PHP 8.2', version: '8.2'}
+          - {name: 'PHP 8.3', version: '8.3'}
+          - {name: 'PHP 8.4', version: '8.4'}
+          - {name: 'PHP 8.5', version: '8.5'}
 
     steps:
     - name: Checkout

@@ -23,7 +23,7 @@ namespace tenup_podcasting;
  * @return string Minimum version required.
  */
 function minimum_php_requirement() {
-	return '7.4';
+	return '8.2';
 }
 
 /**

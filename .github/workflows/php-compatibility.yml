@@ -20,6 +20,9 @@ jobs:
   php_compatibility:
     name: PHP ${{ matrix.php }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.2', '8.3', '8.4', '8.5']
 
     steps:
     - name: Checkout
@@ -40,7 +43,7 @@ jobs:
     - name: Set PHP version
       uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # v2.37.1
       with:
-        php-version: '7.4'
+        php-version: ${{ matrix.php }}
         coverage: none
         tools: prestissimo, composer:v2
 
@@ -48,4 +51,4 @@ jobs:
       run: composer install
 
     - name: Check PHP Compatibility
-      run: ./vendor/bin/phpcs -p simple-podcasting.php includes --standard=PHPCompatibilityWP --extensions=php --runtime-set testVersion 7.4-
+      run: ./vendor/bin/phpcs -p simple-podcasting.php includes --standard=PHPCompatibilityWP --extensions=php --runtime-set testVersion ${{ matrix.php }}-
