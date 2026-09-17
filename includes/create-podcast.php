@@ -72,6 +72,15 @@ class Create_Podcast {
 	}
 
 	/**
+	 * Whether the create-show nonce is present and valid.
+	 *
+	 * @return boolean True only when the nonce is present and verifies.
+	 */
+	public function has_valid_nonce() {
+		return true === $this->verify_nonce();
+	}
+
+	/**
 	 * Sanitizes the podcast fields.
 	 */
 	public function sanitize_podcast_fields() {
