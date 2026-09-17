@@ -30,9 +30,19 @@ function get_podcast_meta_from_url( $url ) {
 		}
 
 		// Grab a temporary copy of the file to determine the audio duration.
+		$duration  = false;
 		$temp_file = \download_url( $url, 30 );
-		$meta_data = \wp_read_audio_metadata( $temp_file );
-		$duration  = isset( $meta_data['length_formatted'] ) ? $meta_data['length_formatted'] : false;
+
+		if ( \is_wp_error( $temp_file ) ) {
+			$temp_file = false;
+		}
+
+		if ( $temp_file ) {
+			$meta_data = \wp_read_audio_metadata( $temp_file );
+			$duration  = isset( $meta_data['length_formatted'] ) ? $meta_data['length_formatted'] : false;
+
+			\wp_delete_file( $temp_file );
+		}
 
 		$len           = isset( $headers['content-length'] ) ? (int) $headers['content-length'] : 0;
 		$type          = isset( $headers['content-type'] ) ? $headers['content-type'] : '';
