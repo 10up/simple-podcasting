@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.1.0] - 2026-09-17
+**Note that this release bumps the WordPress minimum version from 6.8 to 6.9.**
+
+### Changed
+- Bump WordPress "tested up to" version to 7.1 (props [@zamanq](https://github.com/zamanq), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#377](https://github.com/10up/simple-podcasting/pull/377)).
+- Bump WordPress minimum from 6.8 to 6.9 (props [@zamanq](https://github.com/zamanq), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#377](https://github.com/10up/simple-podcasting/pull/377)).
+
+### Fixed
+- ESLint plugin dependency resolution and fix existing lint errors (props [@mariozenmedina](https://github.com/mariozenmedina), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#368](https://github.com/10up/simple-podcasting/pull/368)).
+
+### Security
+- Resolve GHSA-mqmr-8cv4-gjjg (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [GHSA-mqmr-8cv4-gjjg](https://github.com/10up/simple-podcasting/security/advisories/GHSA-mqmr-8cv4-gjjg)).
+- Resolve GHSA-pr32-87xv-q63x (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [GHSA-pr32-87xv-q63x](https://github.com/10up/simple-podcasting/security/advisories/GHSA-pr32-87xv-q63x)).
+- Resolve GHSA-qjpr-6f87-cfcm (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [GHSA-qjpr-6f87-cfcm](https://github.com/10up/simple-podcasting/security/advisories/GHSA-qjpr-6f87-cfcm)).
+
+### Developer
+- Bump `ws` from 8.19.0 to 8.21.0 and from 7.5.10 to 7.5.11 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#369](https://github.com/10up/simple-podcasting/pull/369), [#370](https://github.com/10up/simple-podcasting/pull/370)).
+- Bump `wp-coding-standards/wpcs` from 3.1.0 to 3.4.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#371](https://github.com/10up/simple-podcasting/pull/371)).
+- Bump `squizlabs/php_codesniffer` from 3.13.5 to 3.13.6 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#373](https://github.com/10up/simple-podcasting/pull/373)).
+- Bump `brace-expansion from 1.1.12 to 1.1.18,`fast-uri` from 3.1.2 to 3.1.6, `immutable` from 5.1.5 to 5.1.9, `ip-address` from 10.2.0 to 10.5.0, `postcss` from 8.5.15 to 8.5.26, `shell-quote` from 1.8.4 to 1.10.0, `svgo` from 3.3.3 to 3.3.5, `webpack-dev-server` from 4.15.2 to 5.2.6, and `websocket-driver` from 0.7.4 to 0.7.5 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#374](https://github.com/10up/simple-podcasting/pull/374)).
+- Bump `@10up/cypress-wp-utils` from 0.6.0 to 0.7.2 (props [@peterwilsoncc](https://github.com/peterwilsoncc), [@dkotter](https://github.com/dkotter) via [#378](https://github.com/10up/simple-podcasting/pull/378)).
+- Bump `js-yaml` from 4.1.1 to 4.3.2 and `picomatch` from 2.3.1 to 2.3.2 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#379](https://github.com/10up/simple-podcasting/pull/379)).
+- Bump `adm-zip` from 0.6.0 to 0.6.1 (props [@dependabot[bot]](https://github.com/apps/dependabot), [@dkotter](https://github.com/dkotter) via [#381](https://github.com/10up/simple-podcasting/pull/381)).
+
 ## [2.0.0] - 2026-06-25
 **Note that this release bumps the WordPress minimum version from 6.6 to 6.8.**
 
@@ -342,6 +366,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial plugin release.
 
 [Unreleased]: https://github.com/10up/simple-podcasting/compare/trunk...develop
+[2.1.0]: https://github.com/10up/simple-podcasting/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/10up/simple-podcasting/compare/1.9.1...2.0.0
 [1.9.1]: https://github.com/10up/simple-podcasting/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/10up/simple-podcasting/compare/1.8.0...1.9.0
