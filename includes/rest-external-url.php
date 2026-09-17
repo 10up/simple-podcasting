@@ -36,7 +36,7 @@ function define_endpoint_for_external_files_meta_check() {
 			'methods'             => \WP_REST_Server::READABLE,
 			'callback'            => __NAMESPACE__ . '\handle_request',
 			'permission_callback' => function () {
-				return true;
+				return current_user_can( 'edit_posts' );
 			},
 			'args'                => array(
 				'url' => array(
@@ -58,7 +58,7 @@ function define_endpoint_for_external_files_meta_check() {
 function handle_request( \WP_REST_Request $request ) {
 
 	$url          = $request['url'];
-	$cache_key    = 'spc_external_url_' . $url;
+	$cache_key    = 'spc_external_url_' . md5( $url );
 	$podcast_meta = get_transient( $cache_key );
 	if ( false === $podcast_meta ) {
 		if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
