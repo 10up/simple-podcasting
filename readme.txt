@@ -4,7 +4,7 @@ Tags:              podcasting, podcast, apple podcasts, episode, season
 Requires PHP:      7.4
 Requires at least: 6.9
 Tested up to:      7.1
-Stable tag:        2.0.0
+Stable tag:        2.1.0
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,16 @@ Please report security bugs found in the source code of the Simple Podcasting pl
 
 == Changelog ==
 
+= 2.0.0 - 2026-09-17 =
+**Note that this release bumps the WordPress minimum version from 6.8 to 6.9.**
+
+* **Changed:** Bump WordPress "tested up to" version to 7.1 (props [@zamanq](https://github.com/zamanq), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#377](https://github.com/10up/simple-podcasting/pull/377)).
+* **Changed:** Bump WordPress minimum from 6.8 to 6.9 (props [@zamanq](https://github.com/zamanq), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#377](https://github.com/10up/simple-podcasting/pull/377)).
+* **Fixed:** ESLint plugin dependency resolution and fix existing lint errors (props [@mariozenmedina](https://github.com/mariozenmedina), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#368](https://github.com/10up/simple-podcasting/pull/368)).
+* **Security:** Resolve GHSA-mqmr-8cv4-gjjg (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [GHSA-mqmr-8cv4-gjjg](https://github.com/10up/simple-podcasting/security/advisories/GHSA-mqmr-8cv4-gjjg)).
+* **Security:** Resolve GHSA-pr32-87xv-q63x (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [GHSA-pr32-87xv-q63x](https://github.com/10up/simple-podcasting/security/advisories/GHSA-pr32-87xv-q63x)).
+* **Security:** Resolve GHSA-qjpr-6f87-cfcm (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [GHSA-qjpr-6f87-cfcm](https://github.com/10up/simple-podcasting/security/advisories/GHSA-qjpr-6f87-cfcm)).
+
 = 2.0.0 - 2026-06-25 =
 **Note that this release bumps the WordPress minimum version from 6.6 to 6.8.**
 
@@ -174,6 +184,9 @@ Please report security bugs found in the source code of the Simple Podcasting pl
 [View historical changelog details here](https://github.com/10up/simple-podcasting/blob/develop/CHANGELOG.md).
 
 == Upgrade Notice ==
+
+= 2.1.0 =
+This includes several security updates. Please update promptly.
 
 = 1.9.1 =
 This release bumps the minimum required version of WordPress from 6.5 to 6.6.
