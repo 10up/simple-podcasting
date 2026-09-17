@@ -1,1 +1,5 @@
+node_modules/
+dist/
+build/
+vendor/
 assets/js/frontend/vendor/*.js

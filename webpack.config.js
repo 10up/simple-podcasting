@@ -45,7 +45,7 @@ module.exports = {
 			'assets/js/blocks/latest-episode',
 			'index.js'
 		),
-		'podcast': path.resolve(
+		podcast: path.resolve(
 			process.cwd(),
 			'assets/js/blocks/podcast',
 			'index.js'

@@ -6,6 +6,12 @@
  * @package tenup_podcasting
  */
 
+$post_object = \tenup_podcasting\transcripts\get_requested_transcript_post();
+
+if ( ! $post_object instanceof WP_Post ) {
+	return;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo esc_attr( get_locale() ); ?>">
@@ -24,22 +30,18 @@
 		printf(
 			/* translators: %s: The page title */
 			esc_html__( 'Transcript - %s', 'simple-podcasting' ),
-			wp_strip_all_tags( get_the_title() ) // phpcs:ignore WordPress.Security.EscapeOutput
+			wp_strip_all_tags( get_the_title( $post_object ) ) // phpcs:ignore WordPress.Security.EscapeOutput
 		);
 		?>
 	</title>
 </head>
 <body>
 <?php
-$podcast_slug = get_query_var( 'podcasting-episode' );
-$post_object  = get_page_by_path( $podcast_slug, OBJECT, 'post' );
-if ( $post_object instanceof WP_Post ) {
-	echo wp_kses_post(
-		do_blocks(
-			get_post_meta( $post_object->ID, 'podcast_transcript', true )
-		)
-	);
-}
+echo wp_kses_post(
+	do_blocks(
+		get_post_meta( $post_object->ID, 'podcast_transcript', true )
+	)
+);
 ?>
 </body>
 </html>

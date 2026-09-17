@@ -36,7 +36,7 @@ class RestExternalUrlTests extends TestCase {
 			->with( 'url' )
 			->andReturn( true );
 
-		$cache_key = 'spc_external_url_' . $url;
+		$cache_key = 'spc_external_url_' . md5( $url );
 
 		\WP_Mock::userFunction( 'get_transient' )
 			->with( $cache_key )

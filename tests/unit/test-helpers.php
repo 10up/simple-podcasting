@@ -56,7 +56,9 @@ class HelpersTests extends TestCase {
 		}
 
 		\WP_Mock::userFunction( 'download_url' )->with( $url, 30 )->andReturn( 'downloaded_file_blob' );
+		\WP_Mock::userFunction( 'is_wp_error' )->with( 'downloaded_file_blob' )->andReturn( false );
 		\WP_Mock::userFunction( 'wp_read_audio_metadata' )->with( 'downloaded_file_blob' )->andReturn( $audio_metadata );
+		\WP_Mock::userFunction( 'wp_delete_file' )->with( 'downloaded_file_blob' );
 		\WP_Mock::userFunction( 'wp_parse_url' )->andReturnUsing(
 			function( $url ) {
 				return parse_url( $url );

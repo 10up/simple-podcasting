@@ -46,11 +46,13 @@ class Onboarding {
 	 * Registers a hidden sub menu page for the onboarding wizard.
 	 */
 	public function register_onoarding_page() {
+		$taxonomy = get_taxonomy( PODCASTING_TAXONOMY_NAME );
+
 		add_submenu_page(
 			'admin.php',
 			esc_html__( 'Simple Podcasting Onboarding' ),
 			'',
-			'manage_options',
+			$taxonomy ? $taxonomy->cap->manage_terms : 'manage_options',
 			'simple-podcasting-onboarding',
 			array( $this, 'render_page_contents' )
 		);
@@ -92,7 +94,13 @@ class Onboarding {
 	 * Onboarding data saving handler.
 	 */
 	public function onboarding_action_handler() {
-		if ( ! $this->create_podcast->verify_nonce() ) {
+		$taxonomy = get_taxonomy( PODCASTING_TAXONOMY_NAME );
+
+		if ( ! $taxonomy || ! current_user_can( $taxonomy->cap->edit_terms ) ) {
+			return;
+		}
+
+		if ( ! $this->create_podcast->has_valid_nonce() ) {
 			return;
 		}
 
