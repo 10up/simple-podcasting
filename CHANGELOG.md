@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+### Added
+- Add `simple-podcasting/list-podcasts`, `get-podcast`, `create-podcast`, `update-podcast` and `delete-podcast` abilities to the WordPress Abilities API so AI agents and other clients can manage podcasts, including their Apple Podcasts settings ([#387](https://github.com/10up/simple-podcasting/issues/387)).
+
 ## [2.1.0] - 2026-09-17
 **Note that this release bumps the WordPress minimum version from 6.8 to 6.9.**
 

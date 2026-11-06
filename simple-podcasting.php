@@ -77,6 +77,11 @@ require_once PODCASTING_PATH . 'includes/rest-external-url.php';
 require_once PODCASTING_PATH . 'includes/transcripts.php';
 require_once PODCASTING_PATH . 'includes/upgrade.php';
 
+// Abilities API support (WordPress 6.9+).
+if ( function_exists( 'wp_register_ability' ) ) {
+	require_once PODCASTING_PATH . 'includes/abilities.php';
+}
+
 // Init the endpoint.
 endpoints\externalurl\setup();
 
