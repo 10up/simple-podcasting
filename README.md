@@ -131,6 +131,24 @@ function podcasting_feed_item_filter( $feed_item = array(), $post_id = null, $te
 add_filter( 'simple_podcasting_feed_item', 'podcasting_feed_item_filter', 10, 3 );
 ```
 
+## Abilities API
+
+Simple Podcasting registers abilities with the [WordPress Abilities API](https://make.wordpress.org/ai/handbook/projects/abilities-api/) so AI agents and other clients can manage podcasts. The abilities are also exposed to REST and listed by the MCP Adapter.
+
+| Ability | Description |
+| --- | --- |
+| `simple-podcasting/list-podcasts` | List podcasts with their feed URLs and settings. |
+| `simple-podcasting/get-podcast` | Get one podcast, including its Apple Podcasts link. |
+| `simple-podcasting/create-podcast` | Create a podcast. Only `name` is required. |
+| `simple-podcasting/update-podcast` | Change the given settings of a podcast. |
+| `simple-podcasting/delete-podcast` | Delete a podcast. Requires `confirm: true`. Episodes stay as posts. |
+
+Users need the permission to manage podcast terms, the same as in wp-admin. Example from the block editor console:
+
+```js
+wp.apiFetch( { path: '/wp-abilities/v1/abilities/simple-podcasting/create-podcast/run', method: 'POST', data: { input: { name: 'My Show', talent_name: 'Jane Doe', summary: 'A show.', platforms: { 'apple-podcasts': 'https://podcasts.apple.com/us/podcast/id123' } } } } )
+```
+
 ## Frequently Asked Questions
 
 ### How do I get my podcast featured on Pocket Casts?
