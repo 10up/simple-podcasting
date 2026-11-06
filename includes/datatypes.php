@@ -573,6 +573,49 @@ function the_field( $field, $value = '', $term_id = false ) {
 }
 
 /**
+ * Sanitize and save podcast term meta values.
+ *
+ * Shared by the term screen and the Abilities API. The caller must check
+ * capabilities (and the nonce, for form requests) and pass unslashed values
+ * keyed by meta slug.
+ *
+ * @since x.x.x
+ *
+ * @param int   $term_id The podcast term ID.
+ * @param array $values  Unslashed values keyed by meta slug.
+ */
+function update_podcast_term_meta( $term_id, $values ) {
+	foreach ( $values as $slug => $value ) {
+		if ( is_array( $value ) ) {
+			$sanitized_value = filter_var_array(
+				$value,
+				array(
+					'pocket-casts'    => FILTER_SANITIZE_URL,
+					'apple-podcasts'  => FILTER_SANITIZE_URL,
+					'google-podcasts' => FILTER_VALIDATE_URL,
+					'stitcher'        => FILTER_VALIDATE_URL,
+					'playerfm'        => FILTER_VALIDATE_URL,
+					'overcast'        => FILTER_VALIDATE_URL,
+					'pandora'         => FILTER_VALIDATE_URL,
+					'castro'          => FILTER_VALIDATE_URL,
+					'tunein'          => FILTER_VALIDATE_URL,
+					'spotify'         => FILTER_VALIDATE_URL,
+				)
+			);
+		} else {
+			$sanitized_value = sanitize_text_field( $value );
+		}
+
+		// If the field is an image field, store the image URL along with the slug.
+		if ( strpos( $slug, '_image' ) ) {
+			$image_url = wp_get_attachment_url( (int) $sanitized_value );
+			update_term_meta( $term_id, $slug . '_url', $image_url );
+		}
+		update_term_meta( $term_id, $slug, $sanitized_value );
+	}
+}
+
+/**
  * Save podcasting fields from the term screen to term meta.
  *
  * @param int $term_id The term is being saved.
@@ -588,40 +631,18 @@ function save_podcasting_term_meta( $term_id ) {
 		return;
 	}
 
-	$podcasting_meta_fields = get_meta_fields();
+	$values = array();
 
-	foreach ( $podcasting_meta_fields as $field ) {
+	foreach ( get_meta_fields() as $field ) {
 		$slug = $field['slug'];
 
 		if ( isset( $_POST[ $slug ] ) ) {
-			if ( is_array( $_POST[ $slug ] ) ) {
-				$sanitized_value = filter_var_array(
-					$_POST[ $slug ], // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-					array(
-						'pocket-casts'    => FILTER_SANITIZE_URL,
-						'apple-podcasts'  => FILTER_SANITIZE_URL,
-						'google-podcasts' => FILTER_VALIDATE_URL,
-						'stitcher'        => FILTER_VALIDATE_URL,
-						'playerfm'        => FILTER_VALIDATE_URL,
-						'overcast'        => FILTER_VALIDATE_URL,
-						'pandora'         => FILTER_VALIDATE_URL,
-						'castro'          => FILTER_VALIDATE_URL,
-						'tunein'          => FILTER_VALIDATE_URL,
-						'spotify'         => FILTER_VALIDATE_URL,
-					)
-				);
-			} else {
-				$sanitized_value = sanitize_text_field( wp_unslash( $_POST[ $slug ] ) );
-			}
-
-			// If the field is an image field, store the image URL along with the slug.
-			if ( strpos( $slug, '_image' ) ) {
-				$image_url = wp_get_attachment_url( (int) $sanitized_value );
-				update_term_meta( $term_id, $slug . '_url', $image_url );
-			}
-			update_term_meta( $term_id, $slug, $sanitized_value );
+			// The helper sanitizes each value.
+			$values[ $slug ] = wp_unslash( $_POST[ $slug ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		}
 	}
+
+	update_podcast_term_meta( $term_id, $values );
 }
 add_action( 'edited_' . PODCASTING_TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
 add_action( 'created_' . PODCASTING_TAXONOMY_NAME, __NAMESPACE__ . '\save_podcasting_term_meta' );
